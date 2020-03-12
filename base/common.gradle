@@ -44,6 +44,7 @@ dependencies {
 	compileOnly("org.checkerframework:checker-qual:3.0.1")
 }
 
+// todo: test changes to this section specifically.
 processResources {
 	inputs.property "mod_version", mod_version
 	from(sourceSets.main.resources.srcDirs) {
