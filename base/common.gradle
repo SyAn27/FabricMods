@@ -20,7 +20,6 @@ java {
 }
 
 repositories {
-	maven { url "https://tehnut.info/maven/" }
 	mavenLocal()
 }
 
