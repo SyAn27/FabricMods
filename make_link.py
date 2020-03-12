@@ -5,10 +5,7 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Utility to create sym-links needed for mods.')
     parser.add_argument("mod_id")
-
-    #args = parser.parse_args()
-    args = parser.parse_args(["torcherino"])
-
+    args = parser.parse_args()
     if not os.path.exists(args.mod_id):
         os.mkdir(args.mod_id)
     os.chdir(args.mod_id)
