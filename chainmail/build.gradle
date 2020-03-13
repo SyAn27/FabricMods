@@ -1,0 +1,5 @@
+ext {
+    mod_id = "chainmail"
+    mod_version = "0.0.2"
+}
+apply from: "../base/common.gradle"

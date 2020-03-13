@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ninjaphenix.chainmail.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+	"ExpandedBlockEntityMixin", "WorldMixin", "PlayerManagerMixin"
+  ],
+  "client": [
+    "BuiltinModelItemRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
