@@ -62,10 +62,10 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
             randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // update via mixin
             loaded = true;
         }
-        if (!active || speed == 0 || (xRange == 0 && yRange == 0 && zRange == 0)) return;
+        if (!active || speed == 0 || (xRange == 0 && yRange == 0 && zRange == 0)) { return; }
         if (!onlineMode.equals(""))
         {
-            if (!Torcherino.hasIsOnline(getOwner())) return;
+            if (!Torcherino.hasIsOnline(getOwner())) { return; }
 
         }
         area.forEach(this::tickBlock);
@@ -75,19 +75,19 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     {
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
-        if (TorcherinoAPI.INSTANCE.isBlockBlacklisted(block)) return;
+        if (TorcherinoAPI.INSTANCE.isBlockBlacklisted(block)) { return; }
         if (world instanceof ServerWorld && block.hasRandomTicks(blockState) &&
                 world.getRandom().nextInt(MathHelper.clamp(4096 / (speed * Config.INSTANCE.random_tick_rate), 1, 4096)) < randomTicks)
         {
             block.randomTick(blockState, (ServerWorld) world, pos, world.getRandom());
         }
-        if (!block.hasBlockEntity()) return;
+        if (!block.hasBlockEntity()) { return; }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity == null || blockEntity.isRemoved() || TorcherinoAPI.INSTANCE.isBlockEntityBlacklisted(blockEntity.getType()) ||
                 !(blockEntity instanceof Tickable)) { return; }
         for (int i = 0; i < speed; i++)
         {
-            if (blockEntity.isRemoved()) break;
+            if (blockEntity.isRemoved()) { break; }
             ((Tickable) blockEntity).tick();
         }
     }
@@ -148,7 +148,7 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     public CompoundTag toTag(CompoundTag tag)
     {
         super.toTag(tag);
-        if (hasCustomName()) tag.putString("CustomName", Text.Serializer.toJson(getCustomName()));
+        if (hasCustomName()) { tag.putString("CustomName", Text.Serializer.toJson(getCustomName())); }
         tag.putInt("XRange", xRange);
         tag.putInt("ZRange", zRange);
         tag.putInt("YRange", yRange);
@@ -163,7 +163,7 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     public void fromTag(CompoundTag tag)
     {
         super.fromTag(tag);
-        if (tag.contains("CustomName", 8)) setCustomName(Text.Serializer.fromJson(tag.getString("CustomName")));
+        if (tag.contains("CustomName", 8)) { setCustomName(Text.Serializer.fromJson(tag.getString("CustomName"))); }
         xRange = tag.getInt("XRange");
         zRange = tag.getInt("ZRange");
         yRange = tag.getInt("YRange");

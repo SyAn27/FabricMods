@@ -50,7 +50,7 @@ public class TorcherinoLogic
     public static void neighborUpdate(BlockState state, World world, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean boolean_1,
             Consumer<TorcherinoBlockEntity> func)
     {
-        if (world.isClient) return;
+        if (world.isClient) { return; }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof TorcherinoBlockEntity) { func.accept((TorcherinoBlockEntity) blockEntity); }
     }

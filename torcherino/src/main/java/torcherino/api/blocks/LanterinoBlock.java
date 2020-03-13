@@ -71,7 +71,7 @@ public class LanterinoBlock extends LanternBlock implements BlockEntityProvider,
     {
         TorcherinoLogic.neighborUpdate(state, world, pos, neighborBlock, neighborPos, boolean_1, (be) ->
         {
-            if (state == null) return;
+            if (state == null) { return; }
             if (state.get(Properties.HANGING).equals(true))
             {
                 be.setPoweredByRedstone(world.isEmittingRedstonePower(pos.up(), Direction.UP));

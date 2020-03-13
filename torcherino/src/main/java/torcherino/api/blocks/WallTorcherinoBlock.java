@@ -37,7 +37,7 @@ public class WallTorcherinoBlock extends WallTorchBlock implements BlockEntityPr
         super(FabricBlockSettings.copy(Blocks.WALL_TORCH).drops(dropID).build());
         this.tierID = tier;
         String path = tier.getPath() + "_flame";
-        if (path.equals("normal_flame")) path = "flame";
+        if (path.equals("normal_flame")) { path = "flame"; }
         flameParticle = (DefaultParticleType) Registry.PARTICLE_TYPE.get(new Identifier(tier.getNamespace(), path));
     }
 

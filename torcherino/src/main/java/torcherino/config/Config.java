@@ -60,10 +60,10 @@ public class Config
     private void onConfigLoaded()
     {
         online_mode = online_mode.toUpperCase();
-        if (!(online_mode.equals("ONLINE") || online_mode.equals("RESTART"))) online_mode = "";
-        for (Tier tier : tiers) TorcherinoAPI.INSTANCE.registerTier(new Identifier("torcherino", tier.name), tier.max_speed, tier.xz_range, tier.y_range);
-        for (Identifier id : blacklisted_blocks) TorcherinoAPI.INSTANCE.blacklistBlock(id);
-        for (Identifier id : blacklisted_blockentities) TorcherinoAPI.INSTANCE.blacklistBlockEntity(id);
+        if (!(online_mode.equals("ONLINE") || online_mode.equals("RESTART"))) { online_mode = ""; }
+        for (Tier tier : tiers) { TorcherinoAPI.INSTANCE.registerTier(new Identifier("torcherino", tier.name), tier.max_speed, tier.xz_range, tier.y_range); }
+        for (Identifier id : blacklisted_blocks) { TorcherinoAPI.INSTANCE.blacklistBlock(id); }
+        for (Identifier id : blacklisted_blockentities) { TorcherinoAPI.INSTANCE.blacklistBlockEntity(id); }
     }
 
     static class Tier

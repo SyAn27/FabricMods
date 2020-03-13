@@ -33,9 +33,9 @@ public class TorcherinoClient implements ClientModInitializer
     {
         ClientSpriteRegistryCallback.event(SpriteAtlasTexture.PARTICLE_ATLAS_TEX).register(((spriteAtlasTexture, registry) ->
                 TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) -> {
-                    if (!id.getNamespace().equals(MOD_ID)) return;
+                    if (!id.getNamespace().equals(MOD_ID)) { return; }
                     String path = id.getPath() + "_flame";
-                    if (path.equals("normal_flame")) path = "flame";
+                    if (path.equals("normal_flame")) { path = "flame"; }
                     registry.register(new Identifier("torcherino", "particle/" + path));
                 })));
         Torcherino.particles.forEach((pt) -> ParticleFactoryRegistry.getInstance().register(pt, FlameParticle.Factory::new));
@@ -54,8 +54,10 @@ public class TorcherinoClient implements ClientModInitializer
             {
                 BlockEntity blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof TorcherinoBlockEntity)
+                {
                     MinecraftClient.getInstance().openScreen(new TorcherinoScreen(title, xRange, zRange, yRange, speed, redstoneMode, pos,
                             ((TierSupplier) blockEntity).getTier()));
+                }
             });
         });
         // Torcherino Tier Sync

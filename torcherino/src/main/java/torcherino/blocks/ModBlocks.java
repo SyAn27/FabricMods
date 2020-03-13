@@ -93,7 +93,7 @@ public class ModBlocks
 
     private Identifier getIdentifier(Identifier tierID, String type)
     {
-        if (tierID.getPath().equals("normal")) return new Identifier(Torcherino.MOD_ID, type);
+        if (tierID.getPath().equals("normal")) { return new Identifier(Torcherino.MOD_ID, type); }
         return new Identifier(Torcherino.MOD_ID, tierID.getPath() + '_' + type);
     }
 }

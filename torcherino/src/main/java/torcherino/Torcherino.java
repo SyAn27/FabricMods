@@ -36,7 +36,7 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
 
     public static boolean hasIsOnline(String uuid) { return allowedUuids.contains(uuid); }
 
-    public static void playerDisconnect(String uuid) { if (Config.INSTANCE.online_mode.equals("ONLINE")) allowedUuids.remove(uuid); }
+    public static void playerDisconnect(String uuid) { if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(uuid); } }
 
     @Override
     public void onInitialize()
@@ -44,9 +44,9 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
         Config.initialize();
         TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) ->
         {
-            if (!id.getNamespace().equals(MOD_ID)) return;
+            if (!id.getNamespace().equals(MOD_ID)) { return; }
             String path = id.getPath() + "_flame";
-            if (path.equals("normal_flame")) path = "flame";
+            if (path.equals("normal_flame")) { path = "flame"; }
             particles.add(Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, path), FabricParticleTypes.simple()));
         });
         ModBlocks.INSTANCE.initialize();
@@ -60,7 +60,7 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
                 try
                 {
                     BlockEntity blockEntity = world.getBlockEntity(pos);
-                    if (blockEntity instanceof TorcherinoBlockEntity) ((TorcherinoBlockEntity) blockEntity).readClientData(buffer);
+                    if (blockEntity instanceof TorcherinoBlockEntity) { ((TorcherinoBlockEntity) blockEntity).readClientData(buffer); }
                 }
                 finally
                 {

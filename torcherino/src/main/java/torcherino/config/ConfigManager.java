@@ -91,7 +91,7 @@ public class ConfigManager
         String result = json.toJson(true, true);
         try
         {
-            if (!configFile.exists()) configFile.createNewFile();
+            if (!configFile.exists()) { configFile.createNewFile(); }
             FileOutputStream out = new FileOutputStream(configFile, false);
             out.write(result.getBytes());
             out.flush();

@@ -36,7 +36,7 @@ public class TorcherinoBlock extends TorchBlock implements BlockEntityProvider, 
         super(FabricBlockSettings.copy(Blocks.TORCH).build());
         tierID = tier;
         String path = tier.getPath() + "_flame";
-        if (path.equals("normal_flame")) path = "flame";
+        if (path.equals("normal_flame")) { path = "flame"; }
         flameParticle = (DefaultParticleType) Registry.PARTICLE_TYPE.get(new Identifier(tier.getNamespace(), path));
     }
 

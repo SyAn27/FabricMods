@@ -29,7 +29,7 @@ public abstract class FixedSliderWidget extends SliderWidget
     {
         double currentValue = this.value;
         this.value = MathHelper.clamp(value, 0, 1);
-        if (currentValue != this.value) this.applyValue();
+        if (currentValue != this.value) { this.applyValue(); }
         this.updateMessage();
     }
 }

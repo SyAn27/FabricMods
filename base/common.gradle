@@ -3,95 +3,94 @@ apply plugin: "maven-publish"
 apply plugin: "fabric-loom"
 
 ext {
-	maven_group = "ninjaphenix"
+    maven_group = "ninjaphenix"
 
-	minecraft_version = "1.15.2"
-	yarn_version = "14"
-	loader_version = "0.7.8+build.187"
-	fabric_api_version = "0.5.1+build.294-1.15"
+    minecraft_version = "1.15.2"
+    yarn_version = "14"
+    loader_version = "0.7.8+build.187"
+    fabric_api_version = "0.5.1+build.294-1.15"
 
-	rei_version = "3.6.4"
-	modmenu_version = "1.10.1+build.30"
+    rei_version = "3.6.4"
+    modmenu_version = "1.10.1+build.30"
 }
 
 group = maven_group
 archivesBaseName = mod_id
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 minecraft {
-	refmapName = "${mod_id}-refmap.json"
+    refmapName = "${mod_id}-refmap.json"
 }
 
 repositories {
-	mavenLocal()
+    mavenLocal()
 }
 
 dependencies {
-	minecraft("com.mojang:minecraft:${minecraft_version}")
-	mappings("net.fabricmc:yarn:${minecraft_version}+build.${yarn_version}:v2")
-	modImplementation("net.fabricmc:fabric-loader:${loader_version}")
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+    minecraft("com.mojang:minecraft:${minecraft_version}")
+    mappings("net.fabricmc:yarn:${minecraft_version}+build.${yarn_version}:v2")
+    modImplementation("net.fabricmc:fabric-loader:${loader_version}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 
-	modImplementation("me.shedaniel:RoughlyEnoughItems:${rei_version}") {
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-		exclude(group: "net.fabricmc.fabric-api")
-		exclude(group: "io.github.prospector", module: "modmenu")
-	}
+    modImplementation("me.shedaniel:RoughlyEnoughItems:${rei_version}") {
+        exclude(group: "net.fabricmc", module: "fabric-loader")
+        exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "io.github.prospector", module: "modmenu")
+    }
 
-	modImplementation("io.github.prospector:modmenu:${modmenu_version}") {
-		exclude(group: "net.fabricmc", module: "fabric-loader")
-		exclude(group: "net.fabricmc.fabric-api")
-	}
+    modImplementation("io.github.prospector:modmenu:${modmenu_version}") {
+        exclude(group: "net.fabricmc", module: "fabric-loader")
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 
-	compileOnly("org.checkerframework:checker-qual:3.0.1")
+    compileOnly("org.checkerframework:checker-qual:3.0.1")
 }
 
-// todo: test changes to this section specifically.
 processResources {
-	inputs.property "mod_version", mod_version
-	from(sourceSets.main.resources.srcDirs) {
-		include("fabric.mod.json")
-		expand("version": mod_version)
-	}
-	from(sourceSets.main.resources.srcDirs) {
-		exclude("fabric.mod.json")
-	}
+    inputs.property "mod_version", mod_version
+    from(sourceSets.main.resources.srcDirs) {
+        include("fabric.mod.json")
+        expand("version": mod_version)
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude("fabric.mod.json")
+    }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	archiveClassifier.set("sources")
-	from sourceSets.main.allSource
+    archiveClassifier.set("sources")
+    from sourceSets.main.allSource
 }
 
 jar { from("LICENSE") }
 
 runClient {
-	args = ["--username", "Dev"]
+    args = ["--username", "Dev"]
 }
 
 tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			groupId = maven_group
-			artifactId = mod_id
-			version = "${mod_version}+${minecraft_version}"
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				classifier = "sources"
-				builtBy remapSourcesJar
-			}
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = maven_group
+            artifactId = mod_id
+            version = "${mod_version}+${minecraft_version}"
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                classifier = "sources"
+                builtBy remapSourcesJar
+            }
+        }
+    }
 
-	repositories {
-		mavenLocal()
-	}
+    repositories {
+        mavenLocal()
+    }
 }
