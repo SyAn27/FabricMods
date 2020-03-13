@@ -1,0 +1,5 @@
+ext {
+    mod_id = "fatxporbs"
+    mod_version = "0.0.7"
+}
+apply from: "../base/common.gradle"
