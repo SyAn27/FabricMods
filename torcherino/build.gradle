@@ -1,5 +1,14 @@
 ext {
     mod_id = "torcherino"
-    mod_version = "0.0.1"
+    mod_version = "2.11.60"
 }
 apply from: "../base/common.gradle"
+
+repositories {
+    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+}
+
+dependencies {
+    modImplementation "io.github.cottonmc:Jankson-Fabric:2.0.0+j1.2.0"
+    include "io.github.cottonmc:Jankson-Fabric:2.0.0+j1.2.0"
+}
