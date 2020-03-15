@@ -1,0 +1,28 @@
+ext {
+    mod_id = "expandedstorage"
+    mod_version = "0.0.2"
+}
+apply from: "../base/common.gradle"
+
+dependencies {
+		modImplementation("virtuoel:Statement:${statement_version}")
+	modImplementation("virtuoel:Towelette:${towelette_version}") {
+		exclude(group: "com.github.Virtuoel", module: "Statement")
+	}
+
+	modRuntime("ninjaphenix:ninjaphenix-container-lib:${container_library_version}")
+	include("ninjaphenix:ninjaphenix-container-lib:${container_library_version}")
+
+	modApi("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}") {
+		exclude(group: "com.github.Virtuoel", module: "Statement")
+		exclude(group: "com.github.Virtuoel", module: "Towelette")
+	}
+	include("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}")
+
+	modApi("ninjaphenix:chainmail:${chainmail_version}")
+	include("ninjaphenix:chainmail:${chainmail_version}")
+
+	modRuntime("ninjaphenix:creativebuttonmover:${creative_button_mover_version}")
+	include("ninjaphenix:creativebuttonmover:${creative_button_mover_version}")
+
+}

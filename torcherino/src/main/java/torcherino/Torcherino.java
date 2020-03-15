@@ -42,6 +42,7 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
     public void onInitialize()
     {
         Config.initialize();
+        TorcherinoAPI.INSTANCE.registerTier(new Identifier("null"), 4, 4, 4);
         TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) ->
         {
             if (!id.getNamespace().equals(MOD_ID)) { return; }

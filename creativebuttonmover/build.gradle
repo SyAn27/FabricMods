@@ -1,0 +1,5 @@
+ext {
+    mod_id = "creativebuttonmover"
+    mod_version = "0.1.2"
+}
+apply from: "../base/common.gradle"

@@ -1,0 +1,16 @@
+ext {
+    mod_id = "noncorrelatedextras"
+    mod_version = "0.2.3"
+}
+apply from: "../base/common.gradle"
+
+repositories {
+    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/"}
+	maven {url = "https://jitpack.io"}
+}
+
+dependencies {
+    modCompileOnly "com.github.emilyploszaj:trinkets:v2.4.1"
+    modImplementation "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
+    include "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
+}
