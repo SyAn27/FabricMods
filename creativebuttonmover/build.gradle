@@ -1,3 +1,4 @@
+apply from: "../base/constants.gradle"
 ext {
     mod_id = "creativebuttonmover"
     mod_version = "0.1.2"

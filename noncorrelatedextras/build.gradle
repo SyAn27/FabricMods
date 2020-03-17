@@ -1,3 +1,4 @@
+apply from: "../base/constants.gradle"
 ext {
     mod_id = "noncorrelatedextras"
     mod_version = "0.2.3"

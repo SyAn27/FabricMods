@@ -2,18 +2,6 @@ apply plugin: "java"
 apply plugin: "maven-publish"
 apply plugin: "fabric-loom"
 
-ext {
-    maven_group = "ninjaphenix"
-
-    minecraft_version = "1.15.2"
-    yarn_version = "14"
-    loader_version = "0.7.8+build.187"
-    fabric_api_version = "0.5.1+build.294-1.15"
-
-    rei_version = "3.6.4"
-    modmenu_version = "1.10.1+build.30"
-}
-
 group = maven_group
 archivesBaseName = mod_id
 version = "${mod_version}+${minecraft_version}"

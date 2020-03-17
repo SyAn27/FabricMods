@@ -1,6 +1,10 @@
+apply from: "../base/constants.gradle"
 ext {
     mod_id = "expandedstorage"
     mod_version = "0.0.2"
+
+    statement_version = "0"
+    towelette_version = "0"
 }
 apply from: "../base/common.gradle"
 

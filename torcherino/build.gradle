@@ -1,3 +1,4 @@
+apply from: "../base/constants.gradle"
 ext {
     mod_id = "torcherino"
     mod_version = "2.11.60"
