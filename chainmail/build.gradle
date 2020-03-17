@@ -1,4 +1,3 @@
-apply from: "../base/constants.gradle"
 ext {
     mod_id = "chainmail"
     mod_version = chainmail_version

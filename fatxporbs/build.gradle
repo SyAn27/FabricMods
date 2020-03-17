@@ -1,4 +1,3 @@
-apply from: "../base/constants.gradle"
 ext {
     mod_id = "fatxporbs"
     mod_version = "0.0.7"

@@ -1,32 +1,31 @@
-apply from: "../base/constants.gradle"
 ext {
     mod_id = "expandedstorage"
     mod_version = "0.0.2"
 
-    statement_version = "0"
-    towelette_version = "0"
+    statement_version = "2.1.2+20w11a"
+    towelette_version = "3.1.4-0-api+20w11a"
 }
 apply from: "../base/common.gradle"
 
 dependencies {
-		modImplementation("virtuoel:Statement:${statement_version}")
+
+    modImplementation("virtuoel:Statement:${statement_version}")
 	modImplementation("virtuoel:Towelette:${towelette_version}") {
 		exclude(group: "com.github.Virtuoel", module: "Statement")
 	}
 
-	modRuntime("ninjaphenix:ninjaphenix-container-lib:${container_library_version}")
-	include("ninjaphenix:ninjaphenix-container-lib:${container_library_version}")
+	modApi("ninjaphenix:ninjaphenix-container-lib:${container_library_version}+${minecraft_version}")
+	include("ninjaphenix:ninjaphenix-container-lib:${container_library_version}+${minecraft_version}")
 
-	modApi("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}") {
-		exclude(group: "com.github.Virtuoel", module: "Statement")
-		exclude(group: "com.github.Virtuoel", module: "Towelette")
-	}
-	include("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}")
+	//modApi("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}") {
+	//	exclude(group: "com.github.Virtuoel", module: "Statement")
+	//	exclude(group: "com.github.Virtuoel", module: "Towelette")
+	//}
+	//include("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}")
 
-	modApi("ninjaphenix:chainmail:${chainmail_version}")
-	include("ninjaphenix:chainmail:${chainmail_version}")
+	modApi("ninjaphenix:chainmail:${chainmail_version}+${minecraft_version}")
+	include("ninjaphenix:chainmail:${chainmail_version}+${minecraft_version}")
 
-	modRuntime("ninjaphenix:creativebuttonmover:${creative_button_mover_version}")
-	include("ninjaphenix:creativebuttonmover:${creative_button_mover_version}")
-
+	modRuntime("ninjaphenix:creativebuttonmover:${creative_button_mover_version}+${minecraft_version}")
+	include("ninjaphenix:creativebuttonmover:${creative_button_mover_version}+${minecraft_version}")
 }

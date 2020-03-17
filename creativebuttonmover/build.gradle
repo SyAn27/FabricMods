@@ -1,6 +1,5 @@
-apply from: "../base/constants.gradle"
 ext {
     mod_id = "creativebuttonmover"
-    mod_version = "0.1.2"
+    mod_version = creative_button_mover_version
 }
 apply from: "../base/common.gradle"
