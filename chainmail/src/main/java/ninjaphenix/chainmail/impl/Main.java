@@ -1,6 +1,5 @@
 package ninjaphenix.chainmail.impl;
 
-import com.google.common.reflect.ClassPath;
 import net.fabricmc.api.ModInitializer;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class Main implements ModInitializer
         {
             try
             {
-                ClassPath.from(this.getClass().getClassLoader()).getTopLevelClasses("ninjaphenix.test").forEach(c -> {
+                com.google.common.reflect.ClassPath.from(this.getClass().getClassLoader()).getTopLevelClasses("ninjaphenix.test").forEach(c -> {
                     try
                     {
                         Object inst = c.load().newInstance();
