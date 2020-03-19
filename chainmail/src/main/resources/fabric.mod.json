@@ -12,6 +12,11 @@
   },
   "license": "MIT-0",
   "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ninjaphenix.chainmail.impl.Main"
+    ]
+  },
   "mixins": [
     "chainmail.common.mixins.json"
   ],

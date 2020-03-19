@@ -10,6 +10,16 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+if (!gradle.startParameter.getTaskNames()[0].equals("runClient")) {
+    sourceSets {
+        main {
+            java {
+                exclude "ninjaphenix/test/**"
+            }
+        }
+    }
+
+}
 
 minecraft {
     refmapName = "${mod_id}-refmap.json"
