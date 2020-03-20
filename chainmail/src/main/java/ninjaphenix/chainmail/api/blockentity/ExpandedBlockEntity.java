@@ -10,11 +10,10 @@ public interface ExpandedBlockEntity
     default void onLoad() {}
 
     /**
-     * Called when the chunk the block entity is in is unloaded...
+     * Called when the chunk the block entity is in is unloaded, note does not trigger when world is saving.
      *
      * @since 0.0.1
      */
-    // todo: or the world is unloaded (before toTag).
     default void onUnload() {}
 
 }
