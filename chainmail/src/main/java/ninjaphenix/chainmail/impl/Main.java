@@ -11,6 +11,10 @@ public class Main implements ModInitializer
     @Override
     public void onInitialize()
     {
+        // todo: Consider making this a separate sub-project,
+        //  whilst may require some initial effort will mean there's no pre-release steps.
+        //  would also shrink mod size by an insignificant amount.
+        //  also would simplify the build process.
         if (DEBUG)
         {
             final ClassLoader loader = this.getClass().getClassLoader();
