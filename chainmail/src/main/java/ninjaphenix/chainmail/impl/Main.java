@@ -15,6 +15,8 @@ public class Main implements ModInitializer
         //  whilst may require some initial effort will mean there's no pre-release steps.
         //  would also shrink mod size by an insignificant amount.
         //  also would simplify the build process.
+        //  negatives: delay switching between tests and code
+        //  clutters root folder
         if (DEBUG)
         {
             final ClassLoader loader = this.getClass().getClassLoader();
