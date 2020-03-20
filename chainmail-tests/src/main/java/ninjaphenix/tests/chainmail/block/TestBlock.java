@@ -1,10 +1,10 @@
-package ninjaphenix.test.a.block;
+package ninjaphenix.tests.chainmail.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.BlockView;
-import ninjaphenix.test.a.block.entity.TestBlockEntity;
+import ninjaphenix.tests.chainmail.block.entity.TestBlockEntity;
 
 public class TestBlock extends Block implements BlockEntityProvider
 {

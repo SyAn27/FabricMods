@@ -9,4 +9,5 @@ pluginManagement {
 }
 
 include 'chainmail'
+include 'chainmail-tests'
 include 'torcherino'

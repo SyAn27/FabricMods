@@ -1,4 +1,4 @@
-package ninjaphenix.test.a.block.entity;
+package ninjaphenix.tests.chainmail.block.entity;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;

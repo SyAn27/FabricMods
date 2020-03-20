@@ -12,16 +12,11 @@
   },
   "license": "MIT-0",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "ninjaphenix.chainmail.impl.Main"
-    ]
-  },
   "mixins": [
     "chainmail.common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4",
+    "fabricloader": ">=0.7",
     "fabric": "*",
     "minecraft": "~1.15"
   }
