@@ -31,7 +31,6 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     private int xRange, yRange, zRange, speed, redstoneMode;
     private Iterable<BlockPos> area;
     private boolean active;
-    private boolean loaded = false;
     private Identifier tierID;
     private String uuid = "";
 
@@ -55,9 +54,9 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     @Override
     public void onLoad()
     {
+        if(world.isClient) { return; }
         area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
                 pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
-        getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false);
         randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // update via mixin
     }
 
@@ -109,7 +108,9 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
         this.yRange = MathHelper.clamp(buffer.readInt(), 0, tier.getYRange());
         this.speed = MathHelper.clamp(buffer.readInt(), 1, tier.getMaxSpeed());
         this.redstoneMode = MathHelper.clamp(buffer.readInt(), 0, 3);
-        loaded = false;
+
+        area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
+                pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
     }
 
     @Override
