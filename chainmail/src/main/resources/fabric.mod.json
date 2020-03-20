@@ -16,7 +16,7 @@
     "chainmail.common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7",
+    "fabricloader": ">=0.7.0",
     "fabric": "*",
     "minecraft": "~1.15"
   }
