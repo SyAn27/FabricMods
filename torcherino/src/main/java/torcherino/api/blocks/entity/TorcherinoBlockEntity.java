@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
+import ninjaphenix.chainmail.api.blockentity.ExpandedBlockEntity;
 import torcherino.Torcherino;
 import torcherino.api.Tier;
 import torcherino.api.TierSupplier;
@@ -22,7 +23,7 @@ import torcherino.api.TorcherinoAPI;
 import torcherino.config.Config;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tickable, TierSupplier
+public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tickable, TierSupplier, ExpandedBlockEntity
 {
     private static final String onlineMode = Config.INSTANCE.online_mode;
     public static int randomTicks;
@@ -52,22 +53,19 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     public Text getName() { return hasCustomName() ? customName : new TranslatableText(getCachedState().getBlock().getTranslationKey()); }
 
     @Override
+    public void onLoad()
+    {
+        area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
+                pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
+        getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false);
+        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // update via mixin
+    }
+
+    @Override
     public void tick()
     {
-        if (!loaded)
-        {
-            area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
-                    pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
-            getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false);
-            randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // update via mixin
-            loaded = true;
-        }
         if (!active || speed == 0 || (xRange == 0 && yRange == 0 && zRange == 0)) { return; }
-        if (!onlineMode.equals(""))
-        {
-            if (!Torcherino.hasIsOnline(getOwner())) { return; }
-
-        }
+        if (!onlineMode.equals("") && !Torcherino.hasIsOnline(getOwner())) { return; }
         area.forEach(this::tickBlock);
     }
 

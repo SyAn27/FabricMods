@@ -1,5 +1,7 @@
 package torcherino;
 
+import com.google.common.collect.ImmutableMap;
+import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -13,8 +15,11 @@ import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import ninjaphenix.chainmail.api.events.PlayerConnectCallback;
+import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import torcherino.api.Tier;
 import torcherino.api.TorcherinoAPI;
 import torcherino.api.blocks.entity.TorcherinoBlockEntity;
 import torcherino.api.entrypoints.TorcherinoInitializer;
@@ -32,12 +37,8 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
     private static final HashSet<String> allowedUuids = new HashSet<>();
     public static ArrayList<DefaultParticleType> particles = new ArrayList<>();
 
-    public static void playerConnected(String uuid) { allowedUuids.add(uuid); }
-
     public static boolean hasIsOnline(String uuid) { return allowedUuids.contains(uuid); }
-
-    public static void playerDisconnect(String uuid) { if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(uuid); } }
-
+    
     @Override
     public void onInitialize()
     {
@@ -70,6 +71,27 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
             });
         });
         FabricLoader.getInstance().getEntrypoints("torcherinoInitializer", TorcherinoInitializer.class).forEach(TorcherinoInitializer::onTorcherinoInitialize);
+
+        PlayerConnectCallback.EVENT.register(player ->
+        {
+            allowedUuids.add(player.getUuidAsString());
+            ImmutableMap<Identifier, Tier> tiers = TorcherinoAPI.INSTANCE.getTiers();
+            PacketByteBuf packetBuffer = new PacketByteBuf(Unpooled.buffer());
+            packetBuffer.writeInt(tiers.size());
+            tiers.forEach((id, tier) ->
+            {
+                packetBuffer.writeIdentifier(id);
+                packetBuffer.writeInt(tier.getMaxSpeed());
+                packetBuffer.writeInt(tier.getXZRange());
+                packetBuffer.writeInt(tier.getYRange());
+            });
+            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier(Torcherino.MOD_ID, "tts"), packetBuffer);
+        });
+
+        PlayerDisconnectCallback.EVENT.register(player ->
+        {
+            if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(player.getUuidAsString()); }
+        });
     }
 
     @Override
