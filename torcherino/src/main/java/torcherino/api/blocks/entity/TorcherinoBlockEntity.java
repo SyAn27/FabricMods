@@ -58,7 +58,6 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
         if (world.isClient) { return; }
         area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
                 pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
-        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // todo: use mixin to set a public static int when random tick speed is set.
         world.getServer().send(new ServerTask(world.getServer().getTicks(), () ->
                 getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false)));
     }
@@ -68,6 +67,7 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     {
         if (!active || speed == 0 || (xRange == 0 && yRange == 0 && zRange == 0)) { return; }
         if (!onlineMode.equals("") && !Torcherino.hasIsOnline(getOwner())) { return; }
+        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
         area.forEach(this::tickBlock);
     }
 
