@@ -38,7 +38,7 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
     public static ArrayList<DefaultParticleType> particles = new ArrayList<>();
 
     public static boolean hasIsOnline(String uuid) { return allowedUuids.contains(uuid); }
-    
+
     @Override
     public void onInitialize()
     {

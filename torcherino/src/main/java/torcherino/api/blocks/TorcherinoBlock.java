@@ -29,7 +29,7 @@ import java.util.Random;
 public class TorcherinoBlock extends TorchBlock implements BlockEntityProvider, TierSupplier
 {
     private final Identifier tierID;
-    private DefaultParticleType flameParticle;
+    private final DefaultParticleType flameParticle;
 
     public TorcherinoBlock(Identifier tier)
     {

@@ -12,7 +12,7 @@ import net.minecraft.text.TranslatableText;
 @Environment(EnvType.CLIENT)
 public abstract class StateButtonWidget extends ButtonWidget
 {
-    private static ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+    private static final ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
     private final Screen screen;
     private String narrationMessage;
 
