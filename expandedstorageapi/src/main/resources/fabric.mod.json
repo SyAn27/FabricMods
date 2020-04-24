@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "expandedstorageapi",
+  "version": "${version}",
+  "name": "ExpandedStorageAPI",
+  "description": "Base Implementation of Expanded Storage.",
+  "authors": [
+    "NinjaPhenix"
+  ],
+  "license": "MIT-0",
+  "icon": "assets/expandedstorageapi/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ninjaphenix.expandedstorage.api.ExpandedStorageAPI::INSTANCE"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "expandedstorageapi.mixins.common.json",
+      "environment": "*"
+    },
+    {
+      "config": "expandedstorageapi.mixins.client.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.7",
+    "fabric": ">=0.4.23",
+    "minecraft": ">=1.15",
+    "ninjaphenix-container-lib": ">=0.1.2 <1.0.0"
+  },
+  "custom": {
+    "modmenu:api": true
+  }
+}

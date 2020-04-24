@@ -9,8 +9,6 @@ allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'fabric-loom'
 
-    // todo: look into how get version from a sub project. For the case of lib mods like chainmail.
-    // project(":chainmail").mod_version ??
     group = maven_group
     archivesBaseName = mod_id
     version = "${mod_version}+${minecraft_version}"
@@ -20,20 +18,7 @@ allprojects {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    // hack for test mods might be easy to make them sub projects too
-    if (!gradle.startParameter.getTaskNames()[0].equals("runClient")) {
-        sourceSets {
-            main {
-                java {
-                    exclude "ninjaphenix/test/**"
-                }
-            }
-        }
-
-    }
-
     minecraft {
-        // todo eval if this works.
         refmapName = "${mod_id}-refmap.json"
     }
 

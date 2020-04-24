@@ -19,5 +19,8 @@
     "fabricloader": ">=0.7.0",
     "fabric": ">=0.4.5",
     "minecraft": "~1.15"
+  },
+  "custom": {
+    "modmenu:api": true
   }
 }
