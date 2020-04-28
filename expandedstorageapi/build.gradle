@@ -3,8 +3,12 @@ repositories {
 }
 
 dependencies {
-    compile project(path: ":ninjaphenix-container-library")
-    compile project(path: ":chainmail")
+    compile(project(path: ":ninjaphenix-container-library")) {
+        exclude(module: "minecraft")
+    }
+    compile(project(path: ":chainmail")) {
+        exclude(module: "minecraft")
+    }
 
     modCompileOnly("virtuoel:Towelette:${towelette_version}") {
         exclude(group: "com.github.Virtuoel", module: "Statement")

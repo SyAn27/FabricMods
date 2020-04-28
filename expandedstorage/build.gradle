@@ -3,9 +3,15 @@ repositories {
 }
 
 dependencies {
-    compile project(path: ":ninjaphenix-container-library")
-    compile project(path: ":expandedstorageapi")
-    compile project(path: ":chainmail")
+    compile(project(path: ":ninjaphenix-container-library")) {
+        exclude(module: "minecraft")
+    }
+    compile(project(path: ":expandedstorageapi")) {
+        exclude(module: "minecraft")
+    }
+    compile(project(path: ":chainmail")) {
+        exclude(module: "minecraft")
+    }
 
     include project(path: ":ninjaphenix-container-library")
     include project(path: ":expandedstorageapi")
