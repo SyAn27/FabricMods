@@ -28,7 +28,7 @@
   "accessWidener": "ninjaphenix-container-lib.accesswidener",
   "depends": {
     "fabricloader": ">=0.8.0",
-    "fabric": ">=0.5",
+    "fabric": ">=0.7.1",
     "minecraft": "~1.16-alpha.20.18.a"
   },
   "custom": {
