@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "userdefinedadditions",
+  "version": "${version}",
+  "name": "User Defined Additions",
+  "description": "Allows the creation of additional content through json.",
+  "authors": [
+    "NinjaPhenix"
+  ],
+  "license": "MIT",
+  "icon": "assets/userdefinedadditions/logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "ninjaphenix.userdefinedadditions.ClientMod"
+    ],
+    "main": [
+      "ninjaphenix.userdefinedadditions.CommonMod"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "userdefinedadditions.mixins.common.json",
+      "environment": "*"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.6.0",
+    "fabric": ">0.4.0"
+  }
+}
