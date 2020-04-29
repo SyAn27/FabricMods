@@ -145,7 +145,7 @@ public abstract class AbstractChestBlock extends BasicStorageBlock
     {
         BlockPos up = pos.up();
         BlockState state = view.getBlockState(up);
-        return state.isSimpleFullBlock(view, up) && !(state.getBlock() instanceof AbstractChestBlock);
+        return state.isSolidBlock(view, up) && !(state.getBlock() instanceof AbstractChestBlock);
     }
 
     private static boolean hasOcelotOnTop(IWorld world, BlockPos pos)

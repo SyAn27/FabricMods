@@ -3,17 +3,17 @@ package ninjaphenix.containerlib.inventory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.container.Container;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 
 import java.util.Arrays;
 
-public class ScrollableContainer extends Container
+public class ScrollableScreenHandler extends ScreenHandler
 {
     private final Text containerName;
     private final Inventory inventory;
@@ -29,18 +29,18 @@ public class ScrollableContainer extends Container
      * @param slotFactory The method which returns new (custom) slot objects.
      * @param playerInventory The player's inventory
      * @param inventory The block's inventory
-     * @param containerName The name to be displayed inside of the container.
+     * @param handleName The name to be displayed inside of the container.
      */
-    public ScrollableContainer(int syncId, AreaAwareSlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName)
+    public ScrollableScreenHandler(int syncId, AreaAwareSlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text handleName)
     {
         super(null, syncId);
         this.inventory = inventory;
-        this.containerName = containerName;
-        realRows = inventory.getInvSize() / 9;
+        this.containerName = handleName;
+        realRows = inventory.size() / 9;
         rows = Math.min(realRows, 6);
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { unsortedToSortedSlotMap = new Integer[realRows * 9]; }
         int int_3 = (rows - 4) * 18;
-        inventory.onInvOpen(playerInventory.player);
+        inventory.onOpen(playerInventory.player);
         for (int y = 0; y < realRows; ++y)
         {
             int yPos = -2000;
@@ -68,7 +68,7 @@ public class ScrollableContainer extends Container
      * @param inventory The block's inventory
      * @param containerName The name to be displayed inside of the container.
      */
-    public ScrollableContainer(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName)
+    public ScrollableScreenHandler(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName)
     {
         this(syncId, ((inventory1, area, index, x, y) -> slotFactory.create(inventory1, index, x, y)), playerInventory, inventory, containerName);
     }
@@ -81,7 +81,7 @@ public class ScrollableContainer extends Container
      * @param inventory The block's inventory
      * @param containerName The name to be displayed inside of the container.
      */
-    public ScrollableContainer(int syncId, PlayerInventory playerInventory, Inventory inventory, Text containerName)
+    public ScrollableScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, Text containerName)
     {
         this(syncId, Slot::new, playerInventory, inventory, containerName);
     }
@@ -95,13 +95,13 @@ public class ScrollableContainer extends Container
     public Text getDisplayName() { return containerName; }
 
     @Override
-    public boolean canUse(PlayerEntity player) { return inventory.canPlayerUseInv(player); }
+    public boolean canUse(PlayerEntity player) { return inventory.canPlayerUse(player); }
 
     @Override
     public void close(PlayerEntity player)
     {
         super.close(player);
-        inventory.onInvClose(player);
+        inventory.onClose(player);
     }
 
     @Environment(EnvType.CLIENT)
@@ -121,9 +121,8 @@ public class ScrollableContainer extends Container
         {
             final Slot slot = slots.get(slotID);
             final int y = (index / 9) - offset;
-
-            slot.xPosition = 8 + 18 * (index % 9);
-            slot.yPosition = (y >= rows || y < 0) ? -2000 : 18 + 18 * y;
+            slot.x = 8 + 18 * (index % 9);
+            slot.y = (y >= rows || y < 0) ? -2000 : 18 + 18 * y;
             index++;
         }
     }
@@ -150,8 +149,8 @@ public class ScrollableContainer extends Container
         {
             final ItemStack slotStack = slot.getStack();
             stack = slotStack.copy();
-            if (slotIndex < inventory.getInvSize()) { if (!insertItem(slotStack, inventory.getInvSize(), slots.size(), true)) { return ItemStack.EMPTY; } }
-            else if (!insertItem(slotStack, 0, inventory.getInvSize(), false)) { return ItemStack.EMPTY; }
+            if (slotIndex < inventory.size()) { if (!insertItem(slotStack, inventory.size(), slots.size(), true)) { return ItemStack.EMPTY; } }
+            else if (!insertItem(slotStack, 0, inventory.size(), false)) { return ItemStack.EMPTY; }
             if (slotStack.isEmpty()) { slot.setStack(ItemStack.EMPTY); }
             else { slot.markDirty(); }
         }
