@@ -21,12 +21,12 @@
       "ninjaphenix.containerlib.client.ContainerLibREIPlugin"
     ]
   },
+  "accessWidener": "ninjaphenix-container-lib.accesswidener",
   "depends": {
     "fabricloader": ">=0.8.0",
-    "fabric": ">=0.4.29",
-    "minecraft": ">=1.15.2"
+    "fabric": ">=0.5",
+    "minecraft": "~1.16-alpha.20.18.a"
   },
-  "accessWidener": "ninjaphenix-container-lib.accesswidener",
   "custom": {
     "modmenu:api": true
   }

@@ -13,6 +13,7 @@ Not all mods will have 20w18a versions.
 <li>Expanded Storage - ❌</li>
 <li>Expanded Storage API - ❌</li>
 <li>Creative Button Mover - ✔</li>
+<li>NinjaPhenix Container Library - ✔</li>
 <li>Chainmail - ❌</li>
 <li>Torcherino - ❌</li>
 </ul>

@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.containerlib.client.gui.screen.ingame.ScrollableScreen;
-import ninjaphenix.containerlib.inventory.ScrollableContainer;
+import ninjaphenix.containerlib.inventory.ScrollableScreenHandler;
 
 @EnvironmentInterface(value = EnvType.CLIENT, itf = ClientModInitializer.class)
 public final class ContainerLibrary implements ModInitializer, ClientModInitializer
@@ -51,7 +51,7 @@ public final class ContainerLibrary implements ModInitializer, ClientModInitiali
             final Block block = state.getBlock();
             if (block instanceof InventoryProvider)
             {
-                return new ScrollableContainer(syncId, player.inventory, ((InventoryProvider) block).getInventory(state, world, pos), name);
+                return new ScrollableScreenHandler(syncId, player.inventory, ((InventoryProvider) block).getInventory(state, world, pos), name);
             }
             return null;
         });
@@ -59,5 +59,5 @@ public final class ContainerLibrary implements ModInitializer, ClientModInitiali
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void onInitializeClient() { ScreenProviderRegistry.INSTANCE.registerFactory(CONTAINER_ID, ScrollableScreen::createScreen); }
+    public void onInitializeClient() { ScreenProviderRegistry.INSTANCE.registerFactory(CONTAINER_ID, ScrollableScreen::createMenu); }
 }
