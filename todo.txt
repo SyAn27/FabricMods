@@ -1,3 +1,1 @@
-1. Report loom genSources always using root project classpath even when executing subprojects tasks
-2. Make torcherino lantern textures consistant with soul-fire lantern in 1.16 snapshot ( mainly cause they look better )
-3. Hopefully start modding again soon.
+1. Make torcherino lantern textures consistant with soul-fire lantern in 1.16 snapshot ( mainly cause they look better )
