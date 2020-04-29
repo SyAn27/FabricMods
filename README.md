@@ -12,7 +12,7 @@ Not all mods will have 20w18a versions.
 <ul>
 <li>Expanded Storage - Not yet</li>
 <li>Expanded Storage API - Not yet</li>
-<li>Creative Button Mover - Not yet</li>
+<li>Creative Button Mover - Yes</li>
 <li>Chainmail - Not yet</li>
 <li>Torcherino - Not yet</li>
 </ul>
