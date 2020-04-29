@@ -17,4 +17,5 @@ dependencies {
         exclude(group: "com.github.Virtuoel", module: "Statement")
     }
     modCompileOnly("virtuoel:Statement:${statement_version}")
+    include "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
 }
