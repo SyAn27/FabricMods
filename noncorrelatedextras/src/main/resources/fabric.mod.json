@@ -25,7 +25,7 @@
   ],
   "accessWidener": "noncorrelatedextras.accesswidener",
   "depends": {
-    "fabricloader": ">=0.4.0",
+    "fabricloader": ">=0.8.0",
     "minecraft": ">=1.15.1",
     "fabric": ">=0.4.24"
   }
