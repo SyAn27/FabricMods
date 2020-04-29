@@ -68,7 +68,7 @@ public class PageSwitchWidget extends ButtonWidget
     @Override
     protected MutableText getNarrationMessage()
     {
-        return new TranslatableText("creativebuttonmover.gui.createTabPage", ((CreativeGuiExtensions) screen).fabric_currentPage() + 1,
+        return new TranslatableText("creativebuttonmover.gui.creativeTabPage", ((CreativeGuiExtensions) screen).fabric_currentPage() + 1,
                 (ItemGroup.GROUPS.length - 12) / 9 + 2);
     }
 

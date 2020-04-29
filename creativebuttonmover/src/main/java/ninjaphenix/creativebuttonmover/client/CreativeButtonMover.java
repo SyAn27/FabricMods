@@ -76,7 +76,7 @@ public class CreativeButtonMover implements ClientModInitializer
 		});
 		 */
         Config.INSTANCE = ConfigManager.loadConfig(Config.class, CONFIG_FILE);
-        if (true)
+        if (false)
         {
             for (int i = 0; i < 20; i++)
             {
