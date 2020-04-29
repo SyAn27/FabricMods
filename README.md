@@ -10,9 +10,9 @@
 Not all mods will have 20w18a versions.
 <br>The following mods/libraries will have 1.16 versions but may not be updated yet
 <ul>
-<li>Expanded Storage - Not yet</li>
-<li>Expanded Storage API - Not yet</li>
-<li>Creative Button Mover - Yes</li>
-<li>Chainmail - Not yet</li>
-<li>Torcherino - Not yet</li>
+<li>Expanded Storage - ❌</li>
+<li>Expanded Storage API - ❌</li>
+<li>Creative Button Mover - ✔</li>
+<li>Chainmail - ❌</li>
+<li>Torcherino - ❌</li>
 </ul>
