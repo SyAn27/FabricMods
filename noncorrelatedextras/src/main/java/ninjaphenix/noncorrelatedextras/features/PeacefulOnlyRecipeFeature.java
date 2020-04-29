@@ -11,19 +11,18 @@ import ninjaphenix.noncorrelatedextras.Main;
 import ninjaphenix.noncorrelatedextras.core.Feature;
 import ninjaphenix.noncorrelatedextras.recipe.PeacefulOnlyShapedRecipe;
 import ninjaphenix.noncorrelatedextras.recipe.PeacefulOnlyShapelessRecipe;
-import ninjaphenix.noncorrelatedextras.recipe.RecipeGroupAccessor;
 
 public class PeacefulOnlyRecipeFeature extends Feature
 {
     private static PeacefulOnlyShapedRecipe createRecipe(ShapedRecipe recipe)
     {
-        return new PeacefulOnlyShapedRecipe(recipe.getId(), ((RecipeGroupAccessor) recipe).getGroupA(), recipe.getWidth(),
+        return new PeacefulOnlyShapedRecipe(recipe.getId(), recipe.group, recipe.getWidth(),
                 recipe.getHeight(), recipe.getPreviewInputs(), recipe.getOutput());
     }
 
     private static PeacefulOnlyShapelessRecipe createRecipe(ShapelessRecipe recipe)
     {
-        return new PeacefulOnlyShapelessRecipe(recipe.getId(), ((RecipeGroupAccessor) recipe).getGroupA(), recipe.getOutput(), recipe.getPreviewInputs());
+        return new PeacefulOnlyShapelessRecipe(recipe.getId(), recipe.group, recipe.getOutput(), recipe.getPreviewInputs());
     }
 
     @Override

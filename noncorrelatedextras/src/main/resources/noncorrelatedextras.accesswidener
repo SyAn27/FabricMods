@@ -1,0 +1,3 @@
+accessWidener   v1  named
+accessible  field   net/minecraft/recipe/ShapedRecipe   group   Ljava/lang/String;
+accessible  field   net/minecraft/recipe/ShapelessRecipe   group   Ljava/lang/String;

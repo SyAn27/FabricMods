@@ -17,7 +17,6 @@ public class MagnetFeatureConfig extends FeatureConfig<MagnetFeature>
     {
         HashMap<String, Boolean> map = super.getMixins();
         map.put("MagnetTrinketCompat", isEnabled() && isTrinketLoaded);
-        map.put("TrinketModFix", isEnabled() && isTrinketLoaded);
         return map;
     }
 

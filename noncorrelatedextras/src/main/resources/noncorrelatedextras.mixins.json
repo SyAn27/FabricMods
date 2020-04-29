@@ -7,13 +7,10 @@
     "CreeperBreakBlocks",
     "EnchantableShear",
     "MagnetTrinketCompat",
-    "PolarizedArmorProjectileReflection",
-    "ShapedRecipeAccessor",
-    "ShapelessRecipeAccessor"
+    "PolarizedArmorProjectileReflection"
   ],
   "client": [
-    "PolarizedArmorTextureFix",
-    "TrinketModFix"
+    "PolarizedArmorTextureFix"
   ],
   "injectors": {
     "defaultRequire": 1

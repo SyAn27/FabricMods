@@ -1,6 +1,7 @@
 package ninjaphenix.noncorrelatedextras.mixins;
 
 import dev.emi.trinkets.api.ITrinket;
+import dev.emi.trinkets.api.Slots;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -16,14 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MagnetTrinketCompat implements ITrinket
 {
     @Override
-    public boolean canWearInSlot(String group, String slot) { return /*slot.equals(Slots.RING);*/ false; }
+    public boolean canWearInSlot(String group, String slot) { return slot.equals(Slots.RING); }
 
     @Override
-    public void tick(PlayerEntity player, ItemStack stack) { /*MagnetItem.magnetTick(player, stack);*/ }
+    public void tick(PlayerEntity player, ItemStack stack) { MagnetItem.magnetTick(player, stack); }
 
     @Inject(at = @At("HEAD"), method = "use(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/TypedActionResult;", cancellable = true)
     private void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir)
     {
-        //if (!user.isSneaking()) { cir.setReturnValue(ITrinket.equipTrinket(user, hand)); }
+        if (!user.isSneaking()) { cir.setReturnValue(ITrinket.equipTrinket(user, hand)); }
     }
 }

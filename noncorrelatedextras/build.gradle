@@ -3,8 +3,12 @@ repositories {
 	maven { url = "https://jitpack.io" }
 }
 
+minecraft {
+    accessWidener = file('src/main/resources/noncorrelatedextras.accesswidener')
+}
+
 dependencies {
-    modCompileOnly "com.github.emilyploszaj:trinkets:v2.4.1"
+    modCompile "com.github.emilyploszaj:trinkets:v2.4.2"
 
     modImplementation "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
     include "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
