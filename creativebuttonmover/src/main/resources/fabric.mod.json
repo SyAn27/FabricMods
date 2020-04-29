@@ -17,7 +17,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "ninjaphenix.creativebuttonmover.client.CreativeButtonMover::loadValues"
+      "ninjaphenix.creativebuttonmover.client.CreativeButtonMover"
     ],
     "modmenu": [
       "ninjaphenix.creativebuttonmover.client.CreativeButtonMoverModMenuPlugin"
@@ -30,9 +30,9 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.7.0",
-    "fabric": ">=0.4.29",
-    "minecraft": ">=1.15.2"
+    "fabricloader": ">=0.7.8",
+    "fabric": ">=0.5",
+    "minecraft": "~1.16-alpha.20.18.a"
   },
   "custom": {
     "modmenu:clientsideOnly": true
