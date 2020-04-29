@@ -1,11 +1,11 @@
 {
-	"required": true,
-	"package": "ninjaphenix.creativebuttonmover.mixins",
-	"compatibilityLevel": "JAVA_8",
-	"mixins": [
-		"FabricCreativeGuiComponentsMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "ninjaphenix.creativebuttonmover.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "FabricCreativeGuiComponentsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

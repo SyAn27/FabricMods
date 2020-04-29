@@ -12,5 +12,5 @@
   "screen.noncorrelatedextras.magnet.range": "Magnet Range: %s",
   "screen.noncorrelatedextras.magnet.pull": "Pull",
   "screen.noncorrelatedextras.magnet.teleport": "Teleport",
-	"text.noncorrelatedextras.magnet.fail_update_value": "Failed to update magnet values, try again, if this persist please report as bug."
+  "text.noncorrelatedextras.magnet.fail_update_value": "Failed to update magnet values, try again, if this persist please report as bug."
 }

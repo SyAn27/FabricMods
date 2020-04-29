@@ -1,0 +1,13 @@
+repositories {
+    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+}
+
+dependencies {
+    compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
+    compile project(path: ":chainmail"), withoutUnwanted
+
+    modCompileOnly("virtuoel:Towelette:${towelette_version}") {
+        exclude(group: "com.github.Virtuoel", module: "Statement")
+    }
+    modCompileOnly("virtuoel:Statement:${statement_version}")
+}

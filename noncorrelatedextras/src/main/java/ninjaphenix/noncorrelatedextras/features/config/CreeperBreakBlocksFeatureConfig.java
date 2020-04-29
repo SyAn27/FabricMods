@@ -6,13 +6,13 @@ import java.util.HashMap;
 
 public class CreeperBreakBlocksFeatureConfig extends MixinOnlyFeatureConfig
 {
-	public CreeperBreakBlocksFeatureConfig(Boolean enabled) { super(enabled); }
+    public CreeperBreakBlocksFeatureConfig(Boolean enabled) { super(enabled); }
 
-	@Override
-	public HashMap<String, Boolean> getMixins()
-	{
-		HashMap<String, Boolean> map = super.getMixins();
-		map.put("CreeperBreakBlocks", isEnabled());
-		return map;
-	}
+    @Override
+    public HashMap<String, Boolean> getMixins()
+    {
+        HashMap<String, Boolean> map = super.getMixins();
+        map.put("CreeperBreakBlocks", isEnabled());
+        return map;
+    }
 }

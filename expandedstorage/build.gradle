@@ -1,31 +1,20 @@
-ext {
-    mod_id = "expandedstorage"
-    mod_version = "0.0.2"
-
-    statement_version = "2.1.2+20w11a"
-    towelette_version = "3.1.4-0-api+20w11a"
+repositories {
+    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
 }
-apply from: "../base/common.gradle"
 
 dependencies {
+    compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
+    compile project(path: ":expandedstorageapi"), withoutUnwanted
+    compile project(path: ":chainmail"), withoutUnwanted
+    compile project(path: ":creativebuttonmover"), withoutUnwanted
 
-    modImplementation("virtuoel:Statement:${statement_version}")
-	modImplementation("virtuoel:Towelette:${towelette_version}") {
-		exclude(group: "com.github.Virtuoel", module: "Statement")
-	}
+    include project(path: ":ninjaphenix-container-library")
+    include project(path: ":expandedstorageapi")
+    include project(path: ":chainmail")
+    include project(path: ":creativebuttonmover")
 
-	modApi("ninjaphenix:ninjaphenix-container-lib:${container_library_version}+${minecraft_version}")
-	include("ninjaphenix:ninjaphenix-container-lib:${container_library_version}+${minecraft_version}")
-
-	//modApi("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}") {
-	//	exclude(group: "com.github.Virtuoel", module: "Statement")
-	//	exclude(group: "com.github.Virtuoel", module: "Towelette")
-	//}
-	//include("ninjaphenix:expandedstorageapi:${expandedstorageapi_version}")
-
-	modApi("ninjaphenix:chainmail:${chainmail_version}+${minecraft_version}")
-	include("ninjaphenix:chainmail:${chainmail_version}+${minecraft_version}")
-
-	modRuntime("ninjaphenix:creativebuttonmover:${creative_button_mover_version}+${minecraft_version}")
-	include("ninjaphenix:creativebuttonmover:${creative_button_mover_version}+${minecraft_version}")
+    modCompileOnly("virtuoel:Towelette:${towelette_version}") {
+        exclude(group: "com.github.Virtuoel", module: "Statement")
+    }
+    modCompileOnly("virtuoel:Statement:${statement_version}")
 }

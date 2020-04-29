@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "": { "model": "noncorrelatedextras:block/polarized_iron_block" }
+  "variants": {
+    "": {
+      "model": "noncorrelatedextras:block/polarized_iron_block"
     }
+  }
 }

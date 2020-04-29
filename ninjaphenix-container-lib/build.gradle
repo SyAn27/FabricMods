@@ -1,5 +1,0 @@
-ext {
-    mod_id = "ninjaphenix-container-lib"
-    mod_version = container_library_version
-}
-apply from: "../base/common.gradle"

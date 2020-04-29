@@ -15,13 +15,16 @@ import java.util.HashMap;
 import java.util.function.Predicate;
 
 @Mixin(BuiltinModelItemRenderer.class)
-public class BuiltinModelItemRendererMixin implements BuiltinModelItemRendererExtensions {
+public abstract class BuiltinModelItemRendererMixin implements BuiltinModelItemRendererExtensions
+{
     private final HashMap<Predicate<ItemStack>, ItemStackRenderFunction> chainmail_renderers = new HashMap<>();
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void chainmail_render(ItemStack stack, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, CallbackInfo ci) {
+    private void chainmail_render(ItemStack stack, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, CallbackInfo ci)
+    {
         chainmail_renderers.forEach((predicate, renderer) -> {
-            if (predicate.test(stack)) {
+            if (predicate.test(stack))
+            {
                 renderer.render(stack, matrix, vertexConsumerProvider, light, overlay);
                 ci.cancel();
                 return;
@@ -30,9 +33,10 @@ public class BuiltinModelItemRendererMixin implements BuiltinModelItemRendererEx
     }
 
     @Override
-    public void chainmail_addRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction) {
-        if (stackPredicate == null) throw new NullPointerException("Stack predicate must not be null.");
-        if (renderFunction == null) throw new NullPointerException("Render Function must not be null.");
+    public void chainmail_addRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction)
+    {
+        if (stackPredicate == null) { throw new NullPointerException("Stack predicate must not be null."); }
+        if (renderFunction == null) { throw new NullPointerException("Render Function must not be null."); }
         chainmail_renderers.put(stackPredicate, renderFunction);
     }
 }

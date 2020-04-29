@@ -11,15 +11,15 @@ import net.minecraft.world.World;
 
 public class PeacefulOnlyShapedRecipe extends ShapedRecipe
 {
-	public PeacefulOnlyShapedRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output)
-	{
-		super(id, group, width, height, ingredients, output);
-	}
+    public PeacefulOnlyShapedRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output)
+    {
+        super(id, group, width, height, ingredients, output);
+    }
 
-	@Override
-	public boolean matches(CraftingInventory craftingInventory, World world)
-	{
-		if (world.getDifficulty() == Difficulty.PEACEFUL) { return super.matches(craftingInventory, world); }
-		return false;
-	}
+    @Override
+    public boolean matches(CraftingInventory craftingInventory, World world)
+    {
+        if (world.getDifficulty() == Difficulty.PEACEFUL) { return super.matches(craftingInventory, world); }
+        return false;
+    }
 }

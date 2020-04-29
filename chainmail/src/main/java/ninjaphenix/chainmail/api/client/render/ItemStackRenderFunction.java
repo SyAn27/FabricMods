@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
  * @since 0.0.2
  */
 @FunctionalInterface
-public interface ItemStackRenderFunction {
+public interface ItemStackRenderFunction
+{
     void render(ItemStack stack, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay);
 }

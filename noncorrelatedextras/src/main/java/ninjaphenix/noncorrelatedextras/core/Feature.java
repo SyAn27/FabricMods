@@ -5,8 +5,8 @@ import net.fabricmc.api.Environment;
 
 public abstract class Feature
 {
-	public void initialise() {}
+    public void initialise() {}
 
-	@Environment(EnvType.CLIENT)
-	public void initialiseClient() {}
+    @Environment(EnvType.CLIENT)
+    public void initialiseClient() {}
 }

@@ -8,10 +8,14 @@
     "NinjaPhenix"
   ],
   "entrypoints": {
-    "main": ["ninjaphenix.noncorrelatedextras.Main::INSTANCE"],
-    "client": ["ninjaphenix.noncorrelatedextras.client.MainClient::INSTANCE"]
+    "main": [
+      "ninjaphenix.noncorrelatedextras.Main::INSTANCE"
+    ],
+    "client": [
+      "ninjaphenix.noncorrelatedextras.client.MainClient::INSTANCE"
+    ]
   },
-  "license": "MIT",
+  "license": "MIT-0",
   "environment": "*",
   "mixins": [
     {
@@ -19,8 +23,9 @@
       "environment": "*"
     }
   ],
+  "accessWidener": "noncorrelatedextras.accesswidener",
   "depends": {
-    "fabricloader": ">=0.4.0",
+    "fabricloader": ">=0.8.0",
     "minecraft": ">=1.15.1",
     "fabric": ">=0.4.24"
   }

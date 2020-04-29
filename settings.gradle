@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+    }
+}
+
+include 'chainmail'
+include 'chainmail-tests'
+include 'torcherino'
+include 'ninjaphenix-container-library'
+include 'expandedstorageapi'
+include 'expandedstorage'
+include 'noncorrelatedextras'
+include 'ninjatips'
+include 'creativebuttonmover'
+include 'userdefinedadditions'

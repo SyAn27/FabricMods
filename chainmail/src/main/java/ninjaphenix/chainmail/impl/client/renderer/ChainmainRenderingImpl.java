@@ -11,12 +11,14 @@ import ninjaphenix.chainmail.impl.mixinhelpers.BuiltinModelItemRendererExtension
 
 import java.util.function.Predicate;
 
-public class ChainmainRenderingImpl implements ChainmailRendering {
+public class ChainmainRenderingImpl implements ChainmailRendering
+{
 
     public static final BuiltinModelItemRendererExtensions ext = (BuiltinModelItemRendererExtensions) BuiltinModelItemRenderer.INSTANCE;
 
     @Override
-    public void registerBlockEntityItemStackRenderer(BlockEntityType<?> type, ItemStackRenderFunction renderFunction) {
+    public void registerBlockEntityItemStackRenderer(BlockEntityType<?> type, ItemStackRenderFunction renderFunction)
+    {
         ext.chainmail_addRenderer((stack) -> {
             final Item item = stack.getItem();
             return item instanceof BlockItem && type.supports(((BlockItem) item).getBlock());
@@ -24,7 +26,8 @@ public class ChainmainRenderingImpl implements ChainmailRendering {
     }
 
     @Override
-    public void registerItemStackRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction) {
+    public void registerItemStackRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction)
+    {
         ext.chainmail_addRenderer(stackPredicate, renderFunction);
     }
 }

@@ -11,15 +11,15 @@ import net.minecraft.world.World;
 
 public class PeacefulOnlyShapelessRecipe extends ShapelessRecipe
 {
-	public PeacefulOnlyShapelessRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input)
-	{
-		super(id, group, output, input);
-	}
+    public PeacefulOnlyShapelessRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input)
+    {
+        super(id, group, output, input);
+    }
 
-	@Override
-	public boolean matches(CraftingInventory craftingInventory, World world)
-	{
-		if (world.getDifficulty() == Difficulty.PEACEFUL) { return super.matches(craftingInventory, world); }
-		return false;
-	}
+    @Override
+    public boolean matches(CraftingInventory craftingInventory, World world)
+    {
+        if (world.getDifficulty() == Difficulty.PEACEFUL) { return super.matches(craftingInventory, world); }
+        return false;
+    }
 }

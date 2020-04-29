@@ -12,9 +12,9 @@
     "R": {
       "item": "minecraft:redstone"
     },
-	"D": {
-		"item": "minecraft:red_dye"
-	}
+    "D": {
+      "item": "minecraft:red_dye"
+    }
   },
   "result": {
     "item": "noncorrelatedextras:magnet"

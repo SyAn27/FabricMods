@@ -5,6 +5,7 @@ import ninjaphenix.chainmail.api.client.render.ItemStackRenderFunction;
 
 import java.util.function.Predicate;
 
-public interface BuiltinModelItemRendererExtensions {
+public interface BuiltinModelItemRendererExtensions
+{
     void chainmail_addRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction);
 }

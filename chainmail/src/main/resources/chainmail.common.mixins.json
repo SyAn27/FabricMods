@@ -4,7 +4,9 @@
   "package": "ninjaphenix.chainmail.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"ExpandedBlockEntityMixin", "WorldMixin", "PlayerManagerMixin"
+    "ExpandedBlockEntityMixin",
+    "WorldMixin",
+    "PlayerManagerMixin"
   ],
   "client": [
     "BuiltinModelItemRendererMixin"

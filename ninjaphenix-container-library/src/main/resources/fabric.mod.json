@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "ninjaphenix-container-lib",
+  "version": "${version}",
+  "name": "NinjaPhenix's Container Library",
+  "description": "Library for working with containers.",
+  "authors": [
+    "NinjaPhenix"
+  ],
+  "license": "MIT-0",
+  "icon": "assets/ninjaphenix-container-lib/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ninjaphenix.containerlib.ContainerLibrary::INSTANCE"
+    ],
+    "client": [
+      "ninjaphenix.containerlib.ContainerLibrary::INSTANCE"
+    ],
+    "rei_plugins_v0": [
+      "ninjaphenix.containerlib.client.ContainerLibREIPlugin"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.8.0",
+    "fabric": ">=0.4.29",
+    "minecraft": ">=1.15.2"
+  },
+  "accessWidener": "ninjaphenix-container-lib.accesswidener",
+  "custom": {
+    "modmenu:api": true
+  }
+}

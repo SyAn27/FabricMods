@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "chainmail-tests",
+  "version": "${version}",
+  "name": "Chainmail Test Mod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ninjaphenix.tests.chainmail.Main::INSTANCE"
+    ]
+  }
+}

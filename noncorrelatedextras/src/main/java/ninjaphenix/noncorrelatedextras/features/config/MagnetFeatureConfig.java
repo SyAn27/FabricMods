@@ -8,19 +8,18 @@ import java.util.HashMap;
 
 public class MagnetFeatureConfig extends FeatureConfig<MagnetFeature>
 {
-	public static final Boolean isTrinketLoaded = FabricLoader.getInstance().isModLoaded("trinkets");
+    public static final Boolean isTrinketLoaded = FabricLoader.getInstance().isModLoaded("trinkets");
 
-	public MagnetFeatureConfig(Boolean enabled) { super(enabled); }
+    public MagnetFeatureConfig(Boolean enabled) { super(enabled); }
 
-	@Override
-	public HashMap<String, Boolean> getMixins()
-	{
-		HashMap<String, Boolean> map = super.getMixins();
-		map.put("MagnetTrinketCompat", isEnabled() && isTrinketLoaded);
-		map.put("TrinketModFix", isEnabled() && isTrinketLoaded);
-		return map;
-	}
+    @Override
+    public HashMap<String, Boolean> getMixins()
+    {
+        HashMap<String, Boolean> map = super.getMixins();
+        map.put("MagnetTrinketCompat", isEnabled() && isTrinketLoaded);
+        return map;
+    }
 
-	@Override
-	public MagnetFeature getFeature() { return new MagnetFeature(); }
+    @Override
+    public MagnetFeature getFeature() { return new MagnetFeature(); }
 }

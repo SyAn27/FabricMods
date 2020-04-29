@@ -7,7 +7,8 @@ import ninjaphenix.chainmail.impl.client.renderer.ChainmainRenderingImpl;
 import java.util.function.Predicate;
 
 
-public interface ChainmailRendering {
+public interface ChainmailRendering
+{
     /**
      * @since 0.0.2
      */

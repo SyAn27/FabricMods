@@ -1,5 +1,0 @@
-ext {
-    mod_id = "chainmail"
-    mod_version = chainmail_version
-}
-apply from: "../base/common.gradle"
