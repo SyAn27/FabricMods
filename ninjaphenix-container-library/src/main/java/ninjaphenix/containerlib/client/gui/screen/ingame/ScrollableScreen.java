@@ -72,6 +72,7 @@ public class ScrollableScreen extends HandledScreen<ScrollableScreenHandler> imp
             });
             this.children.add(box);
             this.setInitialFocus(box);
+            this.focusOn(box);
         }
         else { searchBox = Optional.empty(); }
     }
