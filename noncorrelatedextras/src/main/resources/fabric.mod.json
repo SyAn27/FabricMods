@@ -15,7 +15,7 @@
       "ninjaphenix.noncorrelatedextras.client.MainClient::INSTANCE"
     ]
   },
-  "license": "MIT",
+  "license": "MIT-0",
   "environment": "*",
   "mixins": [
     {
