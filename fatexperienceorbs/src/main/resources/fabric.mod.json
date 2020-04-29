@@ -9,7 +9,7 @@
       "name": "NinjaPhenix"
     }
   ],
-  "license": "MIT",
+  "license": "MIT-0",
   "mixins": [
     {
       "config": "fatxporbs.mixins.json"
