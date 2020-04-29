@@ -1,8 +1,8 @@
 package ninjaphenix.expandedstorage.api.block.entity;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import ninjaphenix.expandedstorage.api.ExpandedStorageAPI;
 import ninjaphenix.expandedstorage.api.Registries;
 import org.checkerframework.checker.nullness.qual.NonNull;
