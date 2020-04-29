@@ -22,6 +22,15 @@ allprojects {
         refmapName = "${mod_id}-refmap.json"
     }
 
+    ext {
+        withoutUnwanted = {
+            exclude(module: "minecraft")
+            exclude(module: "fabric-loader")
+            exclude(module: "fabric-api")
+            exclude(module: "modmenu")
+        }
+    }
+
     // For external mod deps, internal ones should be able to include :projName
     repositories {
         mavenLocal()
@@ -33,16 +42,9 @@ allprojects {
         modImplementation("net.fabricmc:fabric-loader:${loader_version}")
         modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 
-        modImplementation("me.shedaniel:RoughlyEnoughItems:${rei_version}") {
-            exclude(group: "net.fabricmc", module: "fabric-loader")
-            exclude(group: "net.fabricmc.fabric-api")
-            exclude(group: "io.github.prospector", module: "modmenu")
-        }
+        modImplementation "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
 
-        modImplementation("io.github.prospector:modmenu:${modmenu_version}") {
-            exclude(group: "net.fabricmc", module: "fabric-loader")
-            exclude(group: "net.fabricmc.fabric-api")
-        }
+        modImplementation "io.github.prospector:modmenu:${modmenu_version}", withoutUnwanted
 
         compileOnly("org.checkerframework:checker-qual:3.0.1")
     }

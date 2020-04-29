@@ -3,19 +3,15 @@ repositories {
 }
 
 dependencies {
-    compile(project(path: ":ninjaphenix-container-library")) {
-        exclude(module: "minecraft")
-    }
-    compile(project(path: ":expandedstorageapi")) {
-        exclude(module: "minecraft")
-    }
-    compile(project(path: ":chainmail")) {
-        exclude(module: "minecraft")
-    }
+    compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
+    compile project(path: ":expandedstorageapi"), withoutUnwanted
+    compile project(path: ":chainmail"), withoutUnwanted
+    compile project(path: ":creativebuttonmover"), withoutUnwanted
 
     include project(path: ":ninjaphenix-container-library")
     include project(path: ":expandedstorageapi")
     include project(path: ":chainmail")
+    include project(path: ":creativebuttonmover")
 
     modCompileOnly("virtuoel:Towelette:${towelette_version}") {
         exclude(group: "com.github.Virtuoel", module: "Statement")
