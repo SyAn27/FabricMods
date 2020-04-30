@@ -9,9 +9,9 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import torcherino.api.Tier;
@@ -54,10 +54,8 @@ public class TorcherinoClient implements ClientModInitializer
             {
                 BlockEntity blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof TorcherinoBlockEntity)
-                {
                     MinecraftClient.getInstance().openScreen(new TorcherinoScreen(title, xRange, zRange, yRange, speed, redstoneMode, pos,
                             ((TierSupplier) blockEntity).getTier()));
-                }
             });
         });
         // Torcherino Tier Sync

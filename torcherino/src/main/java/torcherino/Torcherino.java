@@ -9,9 +9,9 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -43,7 +43,26 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
     public void onInitialize()
     {
         Config.initialize();
-        TorcherinoAPI.INSTANCE.registerTier(new Identifier("null"), 4, 4, 4);
+        PlayerConnectCallback.EVENT.register(player ->
+        {
+            allowedUuids.add(player.getUuidAsString());
+            ImmutableMap<Identifier, Tier> tiers = TorcherinoAPI.INSTANCE.getTiers();
+            PacketByteBuf packetBuffer = new PacketByteBuf(Unpooled.buffer());
+            packetBuffer.writeInt(tiers.size());
+            tiers.forEach((id, tier) ->
+            {
+                packetBuffer.writeIdentifier(id);
+                packetBuffer.writeInt(tier.getMaxSpeed());
+                packetBuffer.writeInt(tier.getXZRange());
+                packetBuffer.writeInt(tier.getYRange());
+            });
+            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier(Torcherino.MOD_ID, "tts"), packetBuffer);
+        });
+        PlayerDisconnectCallback.EVENT.register(player ->
+        {
+            System.out.println("Played disconnected: " + player.getName().asString());
+            if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(player.getUuidAsString()); }
+        });
         TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) ->
         {
             if (!id.getNamespace().equals(MOD_ID)) { return; }
@@ -71,27 +90,6 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
             });
         });
         FabricLoader.getInstance().getEntrypoints("torcherinoInitializer", TorcherinoInitializer.class).forEach(TorcherinoInitializer::onTorcherinoInitialize);
-
-        PlayerConnectCallback.EVENT.register(player ->
-        {
-            allowedUuids.add(player.getUuidAsString());
-            ImmutableMap<Identifier, Tier> tiers = TorcherinoAPI.INSTANCE.getTiers();
-            PacketByteBuf packetBuffer = new PacketByteBuf(Unpooled.buffer());
-            packetBuffer.writeInt(tiers.size());
-            tiers.forEach((id, tier) ->
-            {
-                packetBuffer.writeIdentifier(id);
-                packetBuffer.writeInt(tier.getMaxSpeed());
-                packetBuffer.writeInt(tier.getXZRange());
-                packetBuffer.writeInt(tier.getYRange());
-            });
-            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier(Torcherino.MOD_ID, "tts"), packetBuffer);
-        });
-
-        PlayerDisconnectCallback.EVENT.register(player ->
-        {
-            if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(player.getUuidAsString()); }
-        });
     }
 
     @Override
