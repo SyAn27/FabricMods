@@ -4,13 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.ServerTask;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Nameable;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -53,21 +52,14 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     public Text getName() { return hasCustomName() ? customName : new TranslatableText(getCachedState().getBlock().getTranslationKey()); }
 
     @Override
-    public void onLoad()
-    {
-        if (world.isClient) { return; }
-        area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
-                pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
-        world.getServer().send(new ServerTask(world.getServer().getTicks(), () ->
-                getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false)));
-    }
-
-    @Override
     public void tick()
     {
         if (!active || speed == 0 || (xRange == 0 && yRange == 0 && zRange == 0)) { return; }
-        if (!onlineMode.equals("") && !Torcherino.hasIsOnline(getOwner())) { return; }
-        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
+        if (!onlineMode.equals(""))
+        {
+            if (!Torcherino.hasIsOnline(getOwner())) { return; }
+
+        }
         area.forEach(this::tickBlock);
     }
 
@@ -111,7 +103,6 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
         this.yRange = MathHelper.clamp(buffer.readInt(), 0, tier.getYRange());
         this.speed = MathHelper.clamp(buffer.readInt(), 1, tier.getMaxSpeed());
         this.redstoneMode = MathHelper.clamp(buffer.readInt(), 0, 3);
-
         area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
                 pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
     }
@@ -162,9 +153,9 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     }
 
     @Override
-    public void fromTag(CompoundTag tag)
+    public void fromTag(BlockState state, CompoundTag tag)
     {
-        super.fromTag(tag);
+        super.fromTag(state, tag);
         if (tag.contains("CustomName", 8)) { setCustomName(Text.Serializer.fromJson(tag.getString("CustomName"))); }
         xRange = tag.getInt("XRange");
         zRange = tag.getInt("ZRange");
@@ -173,5 +164,14 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
         redstoneMode = tag.getInt("RedstoneMode");
         active = tag.getBoolean("Active");
         uuid = tag.getString("Owner");
+    }
+
+    @Override
+    public void onLoad()
+    {
+        area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
+                pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
+        getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false);
+        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // update via mixin
     }
 }
