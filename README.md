@@ -15,5 +15,5 @@ Not all mods will have 20w18a versions.
 <li>Creative Button Mover - ✔</li>
 <li>NinjaPhenix Container Library - ✔</li>
 <li>Chainmail - ✔</li>
-<li>Torcherino - ❌</li>
+<li>Torcherino - ✔</li>
 </ul>
