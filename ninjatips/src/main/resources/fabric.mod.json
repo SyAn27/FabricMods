@@ -7,6 +7,10 @@
   "authors": [
     "NinjaPhenix"
   ],
+  "contact": {
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/1.15.2",
+    "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
+  },
   "license": "MIT",
   "icon": "assets/ninjatips/icon.png",
   "environment": "*",
