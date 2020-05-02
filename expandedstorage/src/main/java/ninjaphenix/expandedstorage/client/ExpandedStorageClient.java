@@ -4,10 +4,8 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.SimpleRegistry;
-import ninjaphenix.chainmail.api.client.render.ChainmailRendering;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.api.block.misc.CursedChestType;
@@ -50,11 +48,5 @@ public class ExpandedStorageClient implements ClientModInitializer
                     registry.register(data.getChestTexture(CursedChestType.FRONT));
                 })
         );
-
-        ChainmailRendering.INSTANCE
-                .registerItemStackRenderer(stack -> stack.getItem().equals(Items.SHIELD), (itemStack, matrixStack, vertexConsumerProvider, i, i1) ->
-                {
-
-                });
     }
 }
