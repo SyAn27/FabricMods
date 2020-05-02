@@ -12,7 +12,6 @@
     "sources": "https://github.com/NinjaPhenix/FabricMods/tree/20w18a",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
-  "license": "MIT-0",
   "icon": "assets/expandedstorage/icon.png",
   "environment": "*",
   "entrypoints": {
