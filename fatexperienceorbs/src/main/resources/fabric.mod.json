@@ -5,10 +5,13 @@
   "name": "Fat Experience Orbs",
   "description": "Makes Experience orbs combine together.",
   "authors": [
-    {
-      "name": "NinjaPhenix"
-    }
+    "NinjaPhenix"
   ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/fat-experience-orbs",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/20w18a",
+    "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
+  },
   "license": "MIT-0",
   "mixins": [
     {

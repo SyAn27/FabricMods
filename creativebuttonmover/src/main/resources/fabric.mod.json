@@ -8,9 +8,8 @@
     "NinjaPhenix"
   ],
   "contact": {
-    "sources": "https://github.com/NinjaPhenix/CreativeButtonMover/",
-    "homepage": "https://github.com/NinjaPhenix/CreativeButtonMover/",
-    "issues": "https://github.com/NinjaPhenix/CreativeButtonMover/issues"
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/20w18a",
+    "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "license": "MIT-0",
   "icon": "assets/creativebuttonmover/icon.png",

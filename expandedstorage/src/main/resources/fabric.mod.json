@@ -8,7 +8,9 @@
     "NinjaPhenix"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/expanded-storage"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/expanded-storage-fabric",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/20w18a",
+    "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "icon": "assets/expandedstorage/icon.png",
   "environment": "*",
