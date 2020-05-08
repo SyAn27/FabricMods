@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "noncorrelatedextras",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "NonCorrelatedExtras",
   "description": "Adds random things such as enchantable shears.",
   "authors": [
@@ -9,7 +9,7 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/noncorrelatedextras",
-    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/20w18a",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/${minecraft_version}",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "entrypoints": {
@@ -30,8 +30,8 @@
   ],
   "accessWidener": "noncorrelatedextras.accesswidener",
   "depends": {
-    "fabricloader": ">=0.8.0",
-    "minecraft": ">=1.15.1",
-    "fabric": ">=0.4.24"
+    "fabricloader": ">=${dep_loader_version}",
+    "fabric": ">=${dep_fabric_version}",
+    "minecraft": ">=${dep_minecraft_version}"
   }
 }
