@@ -83,14 +83,14 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     }
 
     @Override
-    public boolean onBlockAction(int actionId, int value)
+    public boolean onSyncedBlockEvent(int actionId, int value)
     {
         if (actionId == 1)
         {
             viewerCount = value;
             return true;
         }
-        else { return super.onBlockAction(actionId, value); }
+        else { return super.onSyncedBlockEvent(actionId, value); }
     }
 
     @Environment(EnvType.CLIENT)
@@ -150,7 +150,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
         Block block = getCachedState().getBlock();
         if (block instanceof CursedChestBlock)
         {
-            world.addBlockAction(pos, block, 1, viewerCount);
+            world.addSyncedBlockEvent(pos, block, 1, viewerCount);
             world.updateNeighborsAlways(pos, block);
         }
     }

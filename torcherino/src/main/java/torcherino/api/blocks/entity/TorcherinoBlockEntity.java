@@ -5,6 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerTask;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -171,7 +173,11 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
     {
         area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
                 pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
-        getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false);
-        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED); // update via mixin
+        MinecraftServer server = world.getServer();
+        if (server != null)
+        {
+            server.send(new ServerTask(server.getTicks(), () -> world.updateNeighborsAlways(pos, getCachedState().getBlock())));
+        }
+        randomTicks = world.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
     }
 }
