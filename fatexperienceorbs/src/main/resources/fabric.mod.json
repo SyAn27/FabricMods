@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fatxporbs",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Fat Experience Orbs",
   "description": "Makes Experience orbs combine together.",
   "authors": [
@@ -9,7 +9,7 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/fat-experience-orbs",
-    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/1.15.2",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/${minecraft_version}",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "license": "MIT-0",
@@ -19,6 +19,6 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.4.0"
+    "fabricloader": ">=${dep_loader_version}"
   }
 }

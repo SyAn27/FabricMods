@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "chainmail",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Chainmail",
   "description": "Provides an expanded api for mod developers.",
   "authors": [
     "NinjaPhenix"
   ],
   "contact": {
-    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/1.15.2",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/${minecraft_version}",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "license": "MIT-0",
@@ -17,9 +17,9 @@
     "chainmail.common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.0",
-    "fabric": ">=0.4.5",
-    "minecraft": "~1.15"
+    "fabricloader": ">=${dep_loader_version}",
+    "fabric": ">=${dep_fabric_version}",
+    "minecraft": ">=${dep_minecraft_version}"
   },
   "custom": {
     "modmenu:api": true

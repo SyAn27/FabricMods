@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "userdefinedadditions",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "User Defined Additions",
   "description": "Allows the creation of additional content through json.",
   "authors": [
     "NinjaPhenix"
   ],
   "contact": {
-    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/1.15.2",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/${minecraft_version}",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "license": "MIT",
@@ -29,7 +29,8 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.6.0",
-    "fabric": ">0.4.0"
+    "fabricloader": ">=${dep_loader_version}",
+    "fabric": ">=${dep_fabric_version}",
+    "minecraft": ">=${dep_minecraft_version}"
   }
 }

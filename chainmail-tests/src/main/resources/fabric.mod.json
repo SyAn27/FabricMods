@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "chainmail-tests",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Chainmail Test Mod",
   "environment": "*",
   "entrypoints": {

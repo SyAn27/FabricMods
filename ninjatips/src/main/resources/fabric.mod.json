@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "ninjatips",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "NinjaTips",
   "description": "Add nbt and data tags to tooltips and more.",
   "authors": [
     "NinjaPhenix"
   ],
   "contact": {
-    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/1.15.2",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/${minecraft_version}",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "license": "MIT",
@@ -33,8 +33,8 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.6.2",
-    "fabric": ">=0.4.23",
-    "minecraft": ">=1.15"
+    "fabricloader": ">=${dep_loader_version}",
+    "fabric": ">=${dep_fabric_version}",
+    "minecraft": ">=${dep_minecraft_version}"
   }
 }

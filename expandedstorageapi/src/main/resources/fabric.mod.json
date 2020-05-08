@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "expandedstorageapi",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "ExpandedStorageAPI",
   "description": "Base Implementation of Expanded Storage.",
   "authors": [
     "NinjaPhenix"
   ],
   "contact": {
-    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/1.15.2",
+    "sources": "https://github.com/NinjaPhenix/FabricMods/tree/${minecraft_version}",
     "issues": "https://github.com/NinjaPhenix/FabricMods/issues"
   },
   "license": "MIT-0",
@@ -30,10 +30,10 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.7",
-    "fabric": ">=0.4.23",
-    "minecraft": ">=1.15",
-    "ninjaphenix-container-lib": ">=0.1.2 <1.0.0"
+    "fabricloader": ">=${dep_loader_version}",
+    "fabric": ">=${dep_fabric_version}",
+    "minecraft": ">=${dep_minecraft_version}",
+    "ninjaphenix-container-lib": ">=${dep_container_lib_version}"
   },
   "custom": {
     "modmenu:api": true
