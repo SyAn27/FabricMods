@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 public class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();
-    public static final Identifier CHEST_TEXTURE_ATLAS = new Identifier("expandedstorage", "chest_textures");
+    public static final Identifier CHEST_TEXTURE_ATLAS = ExpandedStorage.getId("chest_textures");
     private static final CursedChestBlockEntity CURSED_CHEST_RENDER_ENTITY = new CursedChestBlockEntity(null);
 
     @SuppressWarnings("SameParameterValue")

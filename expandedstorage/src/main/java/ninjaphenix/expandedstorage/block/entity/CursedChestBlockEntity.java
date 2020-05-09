@@ -124,7 +124,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     {
         if (player.isSpectator()) { return; }
         if (viewerCount < 0) { viewerCount = 0; }
-        ++viewerCount;
+        viewerCount++;
         onInvOpenOrClose();
     }
 
@@ -132,7 +132,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     public void onInvClose(PlayerEntity player)
     {
         if (player.isSpectator()) { return; }
-        --viewerCount;
+        viewerCount--;
         onInvOpenOrClose();
     }
 
