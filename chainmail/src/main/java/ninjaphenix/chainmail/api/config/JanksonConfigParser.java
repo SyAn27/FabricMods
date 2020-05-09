@@ -113,7 +113,7 @@ public final class JanksonConfigParser
 
         public Builder() { _builder = new Jankson.Builder(); }
 
-        public <A, B> Builder registerDeSerializer(final Class<A> from, final Class<B> to, final DeserializerFunction<A, B> deserializer,
+        public <A, B> Builder deSerializer(final Class<A> from, final Class<B> to, final DeserializerFunction<A, B> deserializer,
                 final BiFunction<B, Marshaller, JsonElement> serializer)
         {
             _builder.registerSerializer(to, serializer);
