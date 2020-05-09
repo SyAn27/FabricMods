@@ -54,7 +54,10 @@ public final class JanksonConfigParser
         if (!Files.exists(configPath))
         {
             final F config = makeDefault(configClass, marker);
-            save(config, configPath, marker);
+            if (save(config, configPath, marker))
+            {
+                throw new RuntimeException(MessageFormat.format("[{0}] Failed to save initial config, look at logs for more info.", marker.getName()));
+            }
             return config;
         }
         try (final InputStream configStream = Files.newInputStream(configPath))
