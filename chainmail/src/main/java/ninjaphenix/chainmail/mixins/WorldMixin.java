@@ -19,25 +19,4 @@ public abstract class WorldMixin
             ((ExpandedBlockEntity) be).onLoad();
         }
     }
-    //@Shadow @Final private Map<BlockPos, BlockEntity> blockEntities;
-//
-    //@Inject(method = "setLoadedToWorld", at = @At("HEAD"))
-    //private void chainmail_setBlockEntity(boolean bl, CallbackInfo ci)
-    //{
-    //    if (bl)
-    //    {
-    //        blockEntities.values().forEach(be -> {
-    //            if (be instanceof ExpandedBlockEntity)
-    //            {
-    //                ((ExpandedBlockEntity) be).onLoad();
-    //            }
-    //        });
-    //    }
-    //}
-//
-    ////@Inject(method = "tickBlockEntities", at = @At(value = "INVOKE", target = "Ljava/util/List;removeAll(Ljava/util/Collection;)Z", ordinal = 0))
-    ////private void chainmail_tickBlockEntities(CallbackInfo ci)
-    ////{
-    ////    unloadedBlockEntities.forEach(be -> ((ExpandedBlockEntity) be).onUnload());
-    ////}
 }
