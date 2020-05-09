@@ -14,11 +14,12 @@ import ninjaphenix.expandedstorage.api.Registries;
 @SuppressWarnings("WeakerAccess")
 public final class ModBlocks
 {
+    public static final CursedChestBlock wood_chest;
     public static final CursedChestBlock diamond_chest;
 
     static
     {
-        chest(Blocks.OAK_PLANKS, "wood_chest", 3);
+        wood_chest = chest(Blocks.OAK_PLANKS, "wood_chest", 3);
         chest(Blocks.PUMPKIN, "pumpkin_chest", 3);
         chest(Blocks.OAK_PLANKS, "christmas_chest", 3);
         chest(Blocks.IRON_BLOCK, "iron_chest", 6);

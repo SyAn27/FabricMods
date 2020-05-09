@@ -2,7 +2,6 @@ package ninjaphenix.expandedstorage.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -12,9 +11,9 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.registry.Registry;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.block.ModBlocks;
 import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.client.models.LongChestModel;
@@ -29,15 +28,7 @@ public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<Cu
     private static final SingleChestModel tallChestModel = new TallChestModel();
     private static final SingleChestModel vanillaChestModel = new VanillaChestModel();
     private static final SingleChestModel longChestModel = new LongChestModel();
-    private static final BlockState defaultState;
-
-    static
-    {
-        Registries.ChestTierData entry = Registries.CHEST.get(0);
-        @SuppressWarnings("ConstantConditions")
-        Block block = Registry.BLOCK.get(entry.getBlockId());
-        defaultState = block.getDefaultState();
-    }
+    private static final BlockState defaultState = ModBlocks.wood_chest.getDefaultState();
 
     public CursedChestBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) { super(dispatcher); }
 

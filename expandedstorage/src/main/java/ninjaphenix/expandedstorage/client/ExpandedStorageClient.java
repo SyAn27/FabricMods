@@ -19,7 +19,6 @@ import ninjaphenix.expandedstorage.block.misc.CursedChestType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class ExpandedStorageClient implements ClientModInitializer
@@ -28,18 +27,7 @@ public class ExpandedStorageClient implements ClientModInitializer
     public static final Identifier CHEST_TEXTURE_ATLAS = new Identifier("expandedstorage", "chest_textures");
     private static final CursedChestBlockEntity CURSED_CHEST_RENDER_ENTITY = new CursedChestBlockEntity(null);
 
-    public void makeAtlas(@NonNull Consumer<SpriteIdentifier> consumer)
-    {
-        final Function<Identifier, SpriteIdentifier> asSprite = (identifier) -> new SpriteIdentifier(CHEST_TEXTURE_ATLAS, identifier);
-        iterateOurTiers(Registries.CHEST, (data) ->
-        {
-            consumer.accept(asSprite.apply(data.getChestTexture(CursedChestType.SINGLE)));
-            consumer.accept(asSprite.apply(data.getChestTexture(CursedChestType.BOTTOM)));
-            consumer.accept(asSprite.apply(data.getChestTexture(CursedChestType.LEFT)));
-            consumer.accept(asSprite.apply(data.getChestTexture(CursedChestType.FRONT)));
-        });
-    }
-
+    @SuppressWarnings("SameParameterValue")
     private static <T extends Registries.TierData> void iterateOurTiers(SimpleRegistry<T> registry, Consumer<T> consumer)
     {
         for (Identifier id : registry.getIds())
@@ -47,6 +35,17 @@ public class ExpandedStorageClient implements ClientModInitializer
             if (id.getNamespace().equals(ExpandedStorage.MOD_ID) && !id.getPath().equals("null"))
             { registry.getOrEmpty(id).ifPresent(consumer); }
         }
+    }
+
+    public void makeAtlas(@NonNull Consumer<SpriteIdentifier> consumer)
+    {
+        iterateOurTiers(Registries.CHEST, (data) ->
+        {
+            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.SINGLE)));
+            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.BOTTOM)));
+            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.LEFT)));
+            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.FRONT)));
+        });
     }
 
     @Override
@@ -61,7 +60,6 @@ public class ExpandedStorageClient implements ClientModInitializer
                     registry.register(data.getChestTexture(CursedChestType.FRONT));
                 })
         );
-
         BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorage.CHEST, CursedChestBlockEntityRenderer::new);
         ChainmailRendering.INSTANCE.registerBlockEntityItemStackRenderer(ExpandedStorage.CHEST, (itemStack, matrixStack, consumerProvider, light, overlay) ->
         {
