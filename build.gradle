@@ -21,6 +21,7 @@ allprojects {
 
     minecraft {
         refmapName = "${mod_id}-refmap.json"
+        runDir = "${project.projectDir.getName()}/run/"
     }
 
     ext {
