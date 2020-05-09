@@ -2,6 +2,7 @@ package ninjaphenix.chainmail.api.config;
 
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.JsonGrammar;
 import blue.endless.jankson.api.DeserializerFunction;
 import blue.endless.jankson.api.Marshaller;
 import blue.endless.jankson.api.SyntaxError;
@@ -9,10 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.text.MessageFormat;
 import java.util.function.BiFunction;
 
@@ -28,7 +32,15 @@ public final class JanksonConfigParser
 
     public JanksonConfigParser(Jankson jankson) { _jankson = jankson; }
 
-    public <F> F load(Class<F> configClass, Path configPath, Marker loggerMarker)
+    /**
+     * Attempts to load the config from the specified path.
+     *
+     * @param configClass Config class
+     * @param configPath Path to load config from.
+     * @param marker Marker for logging with log4j.
+     * @return The loaded config.
+     */
+    public <F> F load(Class<F> configClass, Path configPath, Marker marker)
     {
         final Path folder = configPath.getParent();
         if (Files.notExists(folder))
@@ -36,14 +48,13 @@ public final class JanksonConfigParser
             try { Files.createDirectories(folder); }
             catch (IOException e)
             {
-                LOGGER.error(loggerMarker, "Cannot create directories needed for config. Using default.");
-                return makeDefault(configClass, loggerMarker);
+                throw new RuntimeException(MessageFormat.format("[{0}] Cannot create directories required for config.", marker.getName()), e);
             }
         }
         if (!Files.exists(configPath))
         {
-            final F config = makeDefault(configClass, loggerMarker);
-            save(config, configPath, loggerMarker);
+            final F config = makeDefault(configClass, marker);
+            save(config, configPath, marker);
             return config;
         }
         try (final InputStream configStream = Files.newInputStream(configPath))
@@ -52,24 +63,46 @@ public final class JanksonConfigParser
         }
         catch (IOException e)
         {
-            throw new RuntimeException(MessageFormat.format("[{0}] IO error occurred when loading config.", loggerMarker.getName()), e);
+            throw new RuntimeException(MessageFormat.format("[{0}] IO error occurred when loading config.", marker.getName()), e);
         }
         catch (SyntaxError e)
         {
-            throw new RuntimeException(MessageFormat.format("[{0}] Syntax error occurred when loading config.", loggerMarker.getName()), e);
+            throw new RuntimeException(MessageFormat.format("[{0}] Syntax error occurred when loading config.", marker.getName()), e);
         }
     }
 
-    public <F> void save(F config, Path configPath, Marker loggerMarker)
+    /**
+     * @param config Config to save.
+     * @param configPath Path to save config to.
+     * @param marker Marker for log4j logging in case error occurs.
+     * @return TRUE when config failed to save.
+     * @since 0.0.5
+     */
+    public <F> boolean save(F config, Path configPath, Marker marker)
     {
-
+        try (final BufferedWriter configStream = Files.newBufferedWriter(configPath, StandardCharsets.UTF_8,
+                StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE))
+        {
+            configStream.write(_jankson.toJson(config).toJson(JsonGrammar.JSON5));
+        }
+        catch (IOException e)
+        {
+            LOGGER.warn(marker, MessageFormat.format("[{0}] IO error occurred whilst saving config.", marker.getName()), e);
+            return true;
+        }
+        return false;
     }
 
-    private <F> F makeDefault(Class<F> configClass, Marker loggerMarker)
+    /* Makes default instance of a config. */
+    private <F> F makeDefault(Class<F> configClass, Marker marker)
     {
         try { return configClass.newInstance(); }
-        catch (InstantiationException | IllegalAccessException e) { throw new RuntimeException("Unable to create new config instance.", e); }
+        catch (InstantiationException | IllegalAccessException e)
+        {
+            throw new RuntimeException(MessageFormat.format("[{0}] Unable to create new config instance.", marker.getName()), e);
+        }
     }
+
 
     public final static class Builder
     {

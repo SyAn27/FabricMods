@@ -14,7 +14,4 @@ public class TestBlockEntity extends BlockEntity implements ExpandedBlockEntity
 
     @Override
     public void onLoad() { System.out.println("Test block entity instance loaded."); }
-
-    @Override
-    public void onUnload() { System.out.println("Test block entity instance unloaded."); }
 }
