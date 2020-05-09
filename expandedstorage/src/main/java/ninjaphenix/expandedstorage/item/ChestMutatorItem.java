@@ -28,10 +28,9 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
-import ninjaphenix.expandedstorage.api.block.AbstractChestBlock;
-import ninjaphenix.expandedstorage.api.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.api.block.misc.CursedChestType;
-import ninjaphenix.expandedstorage.api.item.ChestModifierItem;
+import ninjaphenix.expandedstorage.block.AbstractChestBlock;
+import ninjaphenix.expandedstorage.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.block.misc.CursedChestType;
 
 import java.util.List;
 

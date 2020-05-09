@@ -5,34 +5,37 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.expandedstorage.ExpandedStorage;
-import ninjaphenix.expandedstorage.api.item.ChestConversionItem;
 
 public final class ModItems
 {
+    // todo: rework this to not try and register duplicate conversion kits
     public static void init()
     {
-        Pair<Identifier, String> wood = new Pair<>(ExpandedStorage.getId("wood_chest"), "wood");
-        Pair<Identifier, String> iron = new Pair<>(ExpandedStorage.getId("iron_chest"), "iron");
-        Pair<Identifier, String> gold = new Pair<>(ExpandedStorage.getId("gold_chest"), "gold");
-        Pair<Identifier, String> diamond = new Pair<>(ExpandedStorage.getId("diamond_chest"), "diamond");
-        Pair<Identifier, String> obsidian = new Pair<>(ExpandedStorage.getId("obsidian_chest"), "obsidian");
-        registerConversionItem(wood, iron);
-        registerConversionItem(wood, gold);
-        registerConversionItem(wood, diamond);
-        registerConversionItem(wood, obsidian);
-        registerConversionItem(iron, gold);
-        registerConversionItem(iron, diamond);
-        registerConversionItem(iron, obsidian);
-        registerConversionItem(gold, diamond);
-        registerConversionItem(gold, obsidian);
-        registerConversionItem(diamond, obsidian);
+        final Pair<Identifier, String> wood = new Pair<>(ExpandedStorage.getId("wood_chest"), "wood");
+        final Pair<Identifier, String> iron = new Pair<>(ExpandedStorage.getId("iron_chest"), "iron");
+        final Pair<Identifier, String> gold = new Pair<>(ExpandedStorage.getId("gold_chest"), "gold");
+        final Pair<Identifier, String> diamond = new Pair<>(ExpandedStorage.getId("diamond_chest"), "diamond");
+        final Pair<Identifier, String> obsidian = new Pair<>(ExpandedStorage.getId("obsidian_chest"), "obsidian");
+        registerConversionPath(wood, iron, gold, diamond, obsidian);
         ChestMutatorItem chestMutator = new ChestMutatorItem();
         Registry.register(Registry.ITEM, ExpandedStorage.getId("chest_mutator"), chestMutator);
     }
 
-    private static void registerConversionItem(Pair<Identifier, String> from, Pair<Identifier, String> to)
+    @SafeVarargs
+    private static void registerConversionPath(Pair<Identifier, String>... values)
     {
-        Item conversionKit = new ChestConversionItem(new Item.Settings().group(ExpandedStorage.group).maxCount(16), from.getLeft(), to.getLeft());
-        Registry.register(Registry.ITEM, ExpandedStorage.getId(from.getRight() + "_to_" + to.getRight() + "_conversion_kit"), conversionKit);
+        final int length = values.length;
+        for (int i = 0; i < length - 1; i++)
+        {
+            for (int x = i + 1; x < length; x++)
+            {
+                final Pair<Identifier, String> from = values[i];
+                final Pair<Identifier, String> to = values[x];
+                Registry.register(Registry.ITEM, ExpandedStorage.getId(from.getRight() + "_to_" + to.getRight() + "_conversion_kit"),
+                        new ChestConversionItem(new Item.Settings().group(ExpandedStorage.group).maxCount(16), from.getLeft(), to.getLeft()));
+            }
+
+        }
+
     }
 }

@@ -1,9 +1,13 @@
 {
   "required": true,
   "package": "ninjaphenix.expandedstorage.mixins",
+  "plugin": "ninjaphenix.expandedstorage.ExpandedStorageMixinPlugin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "IdentifierMixin"
+    "ToweletteSupportMixin"
+  ],
+  "client": [
+    "TexturedRenderLayersMixin"
   ],
   "injectors": {
     "defaultRequire": 1
