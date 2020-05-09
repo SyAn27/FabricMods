@@ -88,7 +88,7 @@ public final class JanksonConfigParser
         {
             configStream.write(_jankson.toJson(config).toJson(JsonGrammar.JSON5));
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             LOGGER.warn(marker, MessageFormat.format("[{0}] IO error occurred whilst saving config.", marker.getName()), e);
             return true;
@@ -100,7 +100,7 @@ public final class JanksonConfigParser
     private <F> F makeDefault(Class<F> configClass, Marker marker)
     {
         try { return configClass.newInstance(); }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (final InstantiationException | IllegalAccessException e)
         {
             throw new RuntimeException(MessageFormat.format("[{0}] Unable to create new config instance.", marker.getName()), e);
         }
