@@ -29,7 +29,6 @@ import ninjaphenix.expandedstorage.block.misc.CursedChestType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
 
 @EnvironmentInterfaces({ @EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class) })
@@ -51,23 +50,16 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     private static int countViewers(World world, CursedChestBlockEntity instance, int x, int y, int z)
     {
         int viewers = 0;
-        List<PlayerEntity> playersInRange = world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6));
-        Iterator<PlayerEntity> playerIterator = playersInRange.iterator();
-        while (true)
+        final List<PlayerEntity> playersInRange = world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6));
+        for (PlayerEntity player : playersInRange)
         {
-            Inventory inventory;
-            do
+            if (player.container instanceof ScrollableContainer)
             {
-                PlayerEntity player;
-                do
-                {
-                    if (!playerIterator.hasNext()) { return viewers; }
-                    player = playerIterator.next();
-                } while (!(player.container instanceof ScrollableContainer));
-                inventory = ((ScrollableContainer) player.container).getInventory();
-            } while (inventory != instance && (!(inventory instanceof DoubleSidedInventory) || !((DoubleSidedInventory) inventory).isPart(instance)));
-            viewers++;
+                final Inventory inventory = ((ScrollableContainer) player.container).getInventory();
+                if (inventory == instance || inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance)) {viewers++;}
+            }
         }
+        return viewers;
     }
 
     @Override
