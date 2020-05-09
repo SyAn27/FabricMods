@@ -93,7 +93,7 @@ allprojects {
     tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
 
     task tagRelease(type:Exec) {
-        commandLine "git", "tag", "${mod_id}-${mod_version}+${minecraft_version}"
+        commandLine "git", "tag", "-a", "${mod_id}-${mod_version}+${minecraft_version}", "-m", "${mod_id}-${mod_version}+${minecraft_version}"
     }
 
     publishing {
