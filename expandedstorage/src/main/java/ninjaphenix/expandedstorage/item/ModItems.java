@@ -8,7 +8,6 @@ import ninjaphenix.expandedstorage.ExpandedStorage;
 
 public final class ModItems
 {
-    // todo: rework this to not try and register duplicate conversion kits
     public static void init()
     {
         final Pair<Identifier, String> wood = new Pair<>(ExpandedStorage.getId("wood_chest"), "wood");
@@ -31,8 +30,12 @@ public final class ModItems
             {
                 final Pair<Identifier, String> from = values[i];
                 final Pair<Identifier, String> to = values[x];
-                Registry.register(Registry.ITEM, ExpandedStorage.getId(from.getRight() + "_to_" + to.getRight() + "_conversion_kit"),
-                        new ChestConversionItem(new Item.Settings().group(ExpandedStorage.group).maxCount(16), from.getLeft(), to.getLeft()));
+                final Identifier itemId = ExpandedStorage.getId(from.getRight() + "_to_" + to.getRight() + "_conversion_kit");
+                if (!Registry.ITEM.getOrEmpty(itemId).isPresent()) // containsKey is sadly client only
+                {
+                    Registry.register(Registry.ITEM, itemId,
+                            new ChestConversionItem(new Item.Settings().group(ExpandedStorage.group).maxCount(16), from.getLeft(), to.getLeft()));
+                }
             }
 
         }
