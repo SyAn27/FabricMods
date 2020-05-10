@@ -92,7 +92,6 @@ allprojects {
 
     tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
 
-    // todo: look for git gradle plugin
     task tagRelease(type:Exec) {
         def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
         commandLine "git", "tag", "-a", tagName, "-m", tagName
@@ -100,7 +99,7 @@ allprojects {
             println "Creating tag: " + tagName
         }
     }
-    // todo: replace with https://developer.github.com/v3/repos/releases/#create-a-release, look for gradle plugin??
+
     task tagReleaseAndPush(type:Exec) {
         dependsOn tagRelease
         def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
