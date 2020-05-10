@@ -16,11 +16,11 @@
   "icon": "assets/expandedstorage/icon.png",
   "environment": "*",
   "entrypoints": {
-    "expandedstorage_plugins_v0": [
-      "ninjaphenix.expandedstorage.ExpandedStorage"
+    "main": [
+      "ninjaphenix.expandedstorage.ExpandedStorage::INSTANCE"
     ],
     "client": [
-      "ninjaphenix.expandedstorage.client.ExpandedStorageClient"
+      "ninjaphenix.expandedstorage.client.ExpandedStorageClient::INSTANCE"
     ]
   },
   "mixins": [
@@ -33,7 +33,6 @@
     "fabricloader": ">=${dep_loader_version}",
     "fabric": ">=${dep_fabric_version}",
     "minecraft": ">=${dep_minecraft_version}",
-    "expandedstorageapi": ">=${dep_expandedstorageapi_version}",
     "ninjaphenix-container-lib": ">=${dep_container_lib_version}"
   }
 }
