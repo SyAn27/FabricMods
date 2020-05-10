@@ -95,26 +95,26 @@ allprojects {
 
     tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
 
-    task tagRelease(type:Exec) {
-        doFirst {
-            ext.tagName = "${mod_id}-${mod_version}+${minecraft_version}"
-            ext.message = ext.tagName
-        }
+    //task tagRelease(type:Exec) {
+    //    doFirst {
+    //        ext.tagName = "${mod_id}-${mod_version}+${minecraft_version}"
+    //        ext.message = ext.tagName
+    //    }
 
-        commandLine "git", "tag", "-a", ext.tagName, "-m", ext.message
-        doLast {
-            println "Creating tag: " + ext.tagName + ", message: " + ext.message
-        }
-    }
+    //    commandLine "git", "tag", "-a", ext.tagName, "-m", ext.message
+    //    doLast {
+    //        println "Creating tag: " + ext.tagName + ", message: " + ext.message
+    //    }
+    //}
 
-    task tagReleaseAndPush(type:Exec) {
-        dependsOn tagRelease
-        def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
-        commandLine "git", "push", "origin", tagName
-        doLast {
-            println "Pushed tag " + tagName + " to origin"
-        }
-    }
+    //task tagReleaseAndPush(type:Exec) {
+    //    dependsOn tagRelease
+    //    def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
+    //    commandLine "git", "push", "origin", tagName
+    //    doLast {
+    //        println "Pushed tag " + tagName + " to origin"
+    //    }
+    //}
 
     publishing {
         publications {
