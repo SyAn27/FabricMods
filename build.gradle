@@ -96,12 +96,10 @@ allprojects {
     tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
 
     task tagRelease(type:Exec) {
-        ext.tagName = "${mod_id}-${mod_version}+${minecraft_version}"
-        ext.message = ext.tagName
-
-        commandLine "git", "tag", "-a", ext.tagName, "-m", ext.message
+        def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
+        commandLine "git", "tag", "-a", tagName
         doLast {
-            println "Creating tag: " + ext.tagName + ", message: " + ext.message
+            println "Creating tag: " + tagName
         }
     }
 
