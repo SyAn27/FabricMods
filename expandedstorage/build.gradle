@@ -27,7 +27,7 @@ if (project.hasProperty("api_key")) {
         project {
             id = "317856"
             changelogType = "markdown"
-            changelog = "test"
+            changelog = file(project.projectDir+"/changelog.md")
             releaseType = "${project.cf_release_type}"
             addGameVersion "${project.cf_game_version}"
             addGameVersion "Fabric"
@@ -54,5 +54,12 @@ if (project.hasProperty("api_key")) {
 
     tagRelease {
         dependsOn "curseforge"
+        doFirst {
+            def curseProj = curseforge.getCurseProjects().first()
+            def artifactId = curseProj.mainArtifact.fileID
+            println("Curse Project: " + curseProj)
+            println("ArtifactId: " + artifactId)
+            message = "https://www.curseforge.com/minecraft/mc-mods/expanded-storage-fabric/files/" + artifactId.toString()
+        }
     }
 }

@@ -94,9 +94,10 @@ allprojects {
 
     task tagRelease(type:Exec) {
         def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
-        commandLine "git", "tag", "-a", tagName, "-m", tagName
+        ext.message = tagName
+        commandLine "git", "tag", "-a", tagName, "-m", ext.message
         doLast {
-            println "Creating tag: " + tagName
+            println "Creating tag: " + tagName + ", message: " + ext.message
         }
     }
 

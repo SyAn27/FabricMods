@@ -1,0 +1,2 @@
+- Added a config to container library allowing auto-focus to be turned on, defaults to off now. An in-game gui will be added in the future.
+- Removed Expanded Storage API, will introduce a new api which is much more closely linked with expanded storage.
