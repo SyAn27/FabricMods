@@ -2,10 +2,6 @@ plugins {
     id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
-repositories {
-    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
-}
-
 dependencies {
     compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
     compile project(path: ":chainmail"), withoutUnwanted
@@ -21,6 +17,7 @@ dependencies {
     }
     modCompileOnly("virtuoel:Statement:${statement_version}")
 }
+
 if (project.hasProperty("api_key")) {
     curseforge {
         apiKey = project.api_key
