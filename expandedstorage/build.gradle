@@ -1,3 +1,7 @@
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+}
+
 repositories {
     maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
 }
@@ -15,4 +19,40 @@ dependencies {
         exclude(group: "com.github.Virtuoel", module: "Statement")
     }
     modCompileOnly("virtuoel:Statement:${statement_version}")
+}
+if (project.hasProperty("api_key")) {
+    curseforge {
+        apiKey = project.api_key
+        //noinspection GroovyAssignabilityCheck
+        project {
+            id = "317856"
+            changelogType = "markdown"
+            changelog = "test"
+            releaseType = "${project.cf_release_type}"
+            addGameVersion "${project.cf_game_version}"
+            addGameVersion "Fabric"
+            addGameVersion "Java 8"
+            relations {
+                requiredDependency "fabric-api"
+                embeddedLibrary "jankson"
+                optionalDependency "modmenu"
+                optionalDependency "roughly-enough-items"
+                optionalDependency "towelette"
+            }
+            mainArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}.jar")) {
+                displayName = "Expanded Storage ${mod_version}+${minecraft_version}"
+            }
+            addArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}-sources.jar"))
+            afterEvaluate {
+                uploadTask.dependsOn("remapSourcesJar")
+            }
+        }
+        options {
+            forgeGradleIntegration = false
+        }
+    }
+
+    tagRelease {
+        dependsOn "curseforge"
+    }
 }
