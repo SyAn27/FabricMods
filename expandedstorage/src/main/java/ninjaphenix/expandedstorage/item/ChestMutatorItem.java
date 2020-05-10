@@ -44,7 +44,7 @@ public class ChestMutatorItem extends ChestModifierItem
     private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     private static final EnumProperty<CursedChestType> TYPE = AbstractChestBlock.TYPE;
 
-    ChestMutatorItem() { super(new Item.Settings().maxCount(1).group(ExpandedStorage.group)); }
+    public ChestMutatorItem() { super(new Item.Settings().maxCount(1).group(ExpandedStorage.group)); }
 
     @Override
     protected ActionResult useModifierOnChestBlock(ItemUsageContext context, BlockState mainState, BlockPos mainBlockPos, BlockState otherState,

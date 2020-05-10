@@ -1,2 +1,3 @@
-- Added a config to container library allowing auto-focus to be turned on, defaults to off now. An in-game gui will be added in the future.
-- Removed Expanded Storage API.
+- Fix container lib printing out auto focus state on start up.
+- Change item group translation key to have lowercase itemgroup instead of itemGroup
+- Added upside down translation for item group.

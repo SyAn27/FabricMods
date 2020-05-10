@@ -50,14 +50,15 @@ if (project.hasProperty("api_key")) {
         }
     }
 
-    //tagRelease {
-    //    dependsOn "curseforge"
-    //    doFirst {
-    //        def curseProj = curseforge.getCurseProjects().first()
-    //        def artifactId = curseProj.mainArtifact.fileID
-    //        println("Curse Project: " + curseProj)
-    //        println("ArtifactId: " + artifactId)
-    //        message = "https://www.curseforge.com/minecraft/mc-mods/expanded-storage-fabric/files/" + artifactId.toString()
-    //    }
-    //}
+    tagRelease {
+        dependsOn "curseforge"
+        def artifactId
+        doFirst {
+            def curseProj = curseforge.getCurseProjects().first()
+            artifactId = curseProj.mainArtifact.fileID
+            println("Curse Project: " + curseProj)
+            println("ArtifactId: " + artifactId)
+        }
+        message = "https://www.curseforge.com/minecraft/mc-mods/expanded-storage-fabric/files/" + artifactId.toString()
+    }
 }

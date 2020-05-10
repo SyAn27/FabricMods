@@ -1,10 +1,12 @@
-package ninjaphenix.expandedstorage.item;
+package ninjaphenix.expandedstorage.content;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.item.ChestConversionItem;
+import ninjaphenix.expandedstorage.item.ChestMutatorItem;
 
 public final class ModItems
 {

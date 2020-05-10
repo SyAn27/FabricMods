@@ -23,6 +23,5 @@ public final class ContainerLibraryClient implements ClientModInitializer
     public void onInitializeClient()
     {
         ScreenProviderRegistry.INSTANCE.registerFactory(ContainerLibrary.CONTAINER_ID, ScrollableScreen::createScreen);
-        System.out.println("AUTOFOCUS = " + CONFIG.auto_focus_searchbar);
     }
 }

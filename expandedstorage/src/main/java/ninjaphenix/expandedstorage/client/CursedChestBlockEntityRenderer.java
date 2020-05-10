@@ -13,13 +13,13 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.block.ModBlocks;
 import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.client.models.LongChestModel;
 import ninjaphenix.expandedstorage.client.models.SingleChestModel;
 import ninjaphenix.expandedstorage.client.models.TallChestModel;
 import ninjaphenix.expandedstorage.client.models.VanillaChestModel;
+import ninjaphenix.expandedstorage.content.ModBlocks;
 
 @Environment(EnvType.CLIENT)
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>

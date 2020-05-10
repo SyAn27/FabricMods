@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.block;
+package ninjaphenix.expandedstorage.content;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -10,6 +10,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.block.OldChestBlock;
 
 @SuppressWarnings("WeakerAccess")
 public final class ModBlocks
