@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import ninjaphenix.containerlib.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.client.gui.widget.SearchTextFieldWidget;
 import ninjaphenix.containerlib.inventory.ScrollableContainer;
 
@@ -68,8 +69,11 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
                 topRow = 0;
                 searchBoxOldText = str;
             });
-            setFocused(box);
-            box.changeFocus(true);
+            if (ContainerLibraryClient.CONFIG.auto_focus_searchbar)
+            {
+                setFocused(box);
+                box.changeFocus(true);
+            }
         }
         else { searchBox = Optional.empty(); }
     }

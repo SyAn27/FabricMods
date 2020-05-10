@@ -1,7 +1,6 @@
 package ninjaphenix.containerlib;
 
-import net.fabricmc.api.*;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,11 +10,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ninjaphenix.containerlib.client.gui.screen.ingame.ScrollableScreen;
 import ninjaphenix.containerlib.inventory.ScrollableContainer;
 
-@EnvironmentInterface(value = EnvType.CLIENT, itf = ClientModInitializer.class)
-public final class ContainerLibrary implements ModInitializer, ClientModInitializer
+public final class ContainerLibrary implements ModInitializer
 {
     public static final Identifier CONTAINER_ID = new Identifier("ninjaphenix-container-lib", "container");
     public static final ContainerLibrary INSTANCE = new ContainerLibrary();
@@ -56,8 +53,4 @@ public final class ContainerLibrary implements ModInitializer, ClientModInitiali
             return null;
         });
     }
-
-    @Override
-    @Environment(EnvType.CLIENT)
-    public void onInitializeClient() { ScreenProviderRegistry.INSTANCE.registerFactory(CONTAINER_ID, ScrollableScreen::createScreen); }
 }

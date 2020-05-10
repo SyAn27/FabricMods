@@ -2,7 +2,6 @@ package ninjaphenix.chainmail.api.config;
 
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonGrammar;
 import blue.endless.jankson.api.DeserializerFunction;
 import blue.endless.jankson.api.Marshaller;
 import blue.endless.jankson.api.SyntaxError;
@@ -63,6 +62,7 @@ public final class JanksonConfigParser
         try (final InputStream configStream = Files.newInputStream(configPath))
         {
             return _jankson.fromJson(_jankson.load(configStream), configClass);
+            // todo: save if new values found.
         }
         catch (final IOException e)
         {
@@ -86,7 +86,7 @@ public final class JanksonConfigParser
         try (final BufferedWriter configStream = Files.newBufferedWriter(configPath, StandardCharsets.UTF_8,
                 StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE))
         {
-            configStream.write(_jankson.toJson(config).toJson(JsonGrammar.JSON5));
+            configStream.write(_jankson.toJson(config).toJson(true, true));
         }
         catch (final IOException e)
         {
