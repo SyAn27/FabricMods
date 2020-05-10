@@ -14,6 +14,7 @@ dependencies {
     include project(path: ":ninjaphenix-container-library")
     include project(path: ":chainmail")
     include project(path: ":creativebuttonmover")
+    include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 
     modCompileOnly("virtuoel:Towelette:${towelette_version}") {
         exclude(group: "com.github.Virtuoel", module: "Statement")
