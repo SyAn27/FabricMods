@@ -2,7 +2,7 @@ package ninjaphenix.chainmail.api.config;
 
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonGrammar;
+import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.api.DeserializerFunction;
 import blue.endless.jankson.api.Marshaller;
 import blue.endless.jankson.api.SyntaxError;
@@ -62,7 +62,27 @@ public final class JanksonConfigParser
         }
         try (final InputStream configStream = Files.newInputStream(configPath))
         {
-            return _jankson.fromJson(_jankson.load(configStream), configClass);
+            JsonObject uConfig = _jankson.load(configStream);
+            try
+            {
+                JsonElement dConfig = _jankson.toJson(configClass.newInstance());
+                if (dConfig instanceof JsonObject)
+                {
+                    JsonObject delta = uConfig.getDelta((JsonObject) dConfig); // returns keys overridden from default
+                    if (delta.size() > 0)
+                    {
+                        save(mergeConfig(delta, (JsonObject) dConfig), configPath, marker);
+                        LOGGER.info(MessageFormat.format("[{0}] New config keys found, saved merged config.", marker.getName()));
+                    }
+                }
+            }
+            catch (InstantiationException | IllegalAccessException e)
+            {
+                LOGGER.warn(MessageFormat.format("[{0}] Unable to check config for missing values, saved config may be missing new keys.", marker.getName()),
+                        e);
+            }
+            return _jankson.fromJson(uConfig, configClass);
+            // todo: save if new values found.
         }
         catch (final IOException e)
         {
@@ -83,10 +103,15 @@ public final class JanksonConfigParser
      */
     public <F> boolean save(final F config, final Path configPath, final Marker marker)
     {
+        return save(_jankson.toJson(config), configPath, marker);
+    }
+
+    private boolean save(final JsonElement config, final Path configPath, final Marker marker)
+    {
         try (final BufferedWriter configStream = Files.newBufferedWriter(configPath, StandardCharsets.UTF_8,
                 StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE))
         {
-            configStream.write(_jankson.toJson(config).toJson(JsonGrammar.JSON5));
+            configStream.write(config.toJson(true, true));
         }
         catch (final IOException e)
         {
@@ -106,6 +131,29 @@ public final class JanksonConfigParser
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
+    private JsonObject mergeConfig(JsonObject delta, JsonObject defaultConfig)
+    {
+        final JsonObject merged = defaultConfig.clone();
+        for (String key : delta.keySet())
+        {
+            String comment = delta.getComment(key);
+            if (defaultConfig.containsKey(key))
+            {
+                comment = defaultConfig.getComment(key);
+                merged.remove(key);
+            }
+            if (comment != null)
+            {
+                merged.put(key, delta.get(key), comment);
+            }
+            else
+            {
+                merged.put(key, delta.get(key));
+            }
+        }
+        return merged;
+    }
 
     public final static class Builder
     {

@@ -37,6 +37,7 @@ allprojects {
 
     repositories {
         mavenLocal()
+        maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
     }
 
     dependencies {
@@ -48,6 +49,8 @@ allprojects {
         modImplementation "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
 
         modImplementation "io.github.prospector:modmenu:${modmenu_version}", withoutUnwanted
+
+        modImplementation "io.github.cottonmc:Jankson-Fabric:${jankson_version}", withoutUnwanted
 
         compileOnly("org.checkerframework:checker-qual:3.0.1")
     }

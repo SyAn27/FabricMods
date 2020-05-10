@@ -19,7 +19,7 @@
       "ninjaphenix.containerlib.ContainerLibrary::INSTANCE"
     ],
     "client": [
-      "ninjaphenix.containerlib.ContainerLibrary::INSTANCE"
+      "ninjaphenix.containerlib.client.ContainerLibraryClient::INSTANCE"
     ],
     "rei_plugins_v0": [
       "ninjaphenix.containerlib.client.ContainerLibREIPlugin"
