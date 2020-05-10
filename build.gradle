@@ -100,7 +100,7 @@ allprojects {
             println "Creating tag: " + tagName
         }
     }
-    // todo: replace with https://developer.github.com/v3/repos/releases/#create-a-release, look for gradle plugin?
+    // todo: replace with https://developer.github.com/v3/repos/releases/#create-a-release, look for gradle plugin??
     task tagReleaseAndPush(type:Exec) {
         dependsOn tagRelease
         def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
