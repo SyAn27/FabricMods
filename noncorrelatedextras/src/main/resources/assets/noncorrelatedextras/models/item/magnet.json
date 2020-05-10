@@ -37,6 +37,40 @@
         0.68,
         0.68
       ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        90,
+        180
+      ],
+      "translation": [
+        0,
+        2.5,
+        -2
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        -2
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
     }
   }
 }

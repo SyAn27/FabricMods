@@ -82,7 +82,6 @@ public final class JanksonConfigParser
                         e);
             }
             return _jankson.fromJson(uConfig, configClass);
-            // todo: save if new values found.
         }
         catch (final IOException e)
         {

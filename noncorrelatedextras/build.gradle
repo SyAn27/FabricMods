@@ -1,5 +1,4 @@
 repositories {
-    maven { url "http://server.bbkr.space:8081/artifactory/libs-release/"}
 	maven { url = "https://jitpack.io" }
 }
 
@@ -9,7 +8,7 @@ minecraft {
 
 dependencies {
     modCompile "com.github.emilyploszaj:trinkets:v2.4.2"
-
-    modImplementation "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
-    include "io.github.cottonmc:Jankson-Fabric:2.0.1+j1.2.0"
+    compile project(":chainmail"), withoutUnwanted
+    include project(":chainmail")
+    include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 }

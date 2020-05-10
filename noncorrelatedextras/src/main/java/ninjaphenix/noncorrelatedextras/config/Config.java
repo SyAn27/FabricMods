@@ -3,6 +3,8 @@ package ninjaphenix.noncorrelatedextras.config;
 import blue.endless.jankson.Comment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.EquipmentSlot;
+import ninjaphenix.chainmail.api.config.JanksonConfigParser;
+import org.apache.logging.log4j.MarkerManager;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -12,11 +14,11 @@ public class Config
     public static Config INSTANCE;
 
     @Comment("\nThe max range of the magnet.")
-    private final int magnet_range = 6;
+    private final Integer magnet_range = 6;
     @Comment("\nWhat fraction of the distance between the item and player the item moves per tick.")
-    private final double magnet_speed = 0.1;
+    private final Double magnet_speed = 0.1D;
     @Comment("\nThe chance a projectile is reflected by polarized iron armor. (set bonus)")
-    private final double polarized_iron_armor_reflection_chance = 0.15D;
+    private final Double polarized_iron_armor_reflection_chance = 0.15D;
     @Comment("\nEnabled features.")
     private final HashMap<String, Boolean> enabled_features = getDefaultEnabledFeatures();
     @Comment("\nMax magnet range increases for each polarized iron armor piece.")
@@ -25,7 +27,8 @@ public class Config
     public static void initialize()
     {
         Path configDirectory = FabricLoader.getInstance().getConfigDirectory().toPath();
-        INSTANCE = ConfigManager.loadConfig(Config.class, configDirectory.resolve("NonCorrelatedExtras.json").toFile(), Config::new);
+        INSTANCE = new JanksonConfigParser.Builder().build().load(Config.class, configDirectory.resolve("NonCorrelatedExtras.json"),
+                new MarkerManager.Log4jMarker("noncorrelatedextras"));
     }
 
     private HashMap<EquipmentSlot, Integer> getDefaultMagnetRangeAdditions()
