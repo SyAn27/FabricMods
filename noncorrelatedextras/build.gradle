@@ -12,3 +12,37 @@ dependencies {
     include project(":chainmail")
     include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 }
+
+if (project.hasProperty("api_key")) {
+    curseforge {
+        apiKey = project.api_key
+        //noinspection GroovyAssignabilityCheck
+        project {
+            id = "362421"
+            changelogType = "markdown"
+            changelog = file("${project.projectDir}/changelog.md")
+            releaseType = "${project.cf_release_type}"
+            addGameVersion "${project.cf_game_version}"
+            addGameVersion "Fabric"
+            addGameVersion "Java 8"
+            relations {
+                requiredDependency "fabric-api"
+                embeddedLibrary "jankson"
+                optionalDependency "trinkets-fabric"
+            }
+            mainArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}.jar")) {
+                displayName = "NonCorrelatedExtras ${mod_version}+${minecraft_version}"
+            }
+            addArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}-sources.jar"))
+            afterEvaluate {
+                uploadTask.dependsOn("remapSourcesJar")
+            }
+        }
+        options {
+            forgeGradleIntegration = false
+        }
+    }
+    tagRelease {
+        dependsOn "curseforge"
+    }
+}

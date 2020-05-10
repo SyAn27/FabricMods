@@ -1,0 +1,1 @@
+- Altered the magnet item model so it looks nicer in off hand and in third person.
