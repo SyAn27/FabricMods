@@ -1,24 +1,23 @@
 package torcherino.config;
 
 import blue.endless.jankson.Comment;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.JsonPrimitive;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
-import torcherino.Torcherino;
+import ninjaphenix.chainmail.api.config.JanksonConfigParser;
+import org.apache.logging.log4j.MarkerManager;
 import torcherino.api.TorcherinoAPI;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class Config
 {
     public static Config INSTANCE;
 
     @Comment("\nDefines how much faster randoms ticks are applied compared to what they should be.\nValid Range: 1 to 4096")
-    public final int random_tick_rate = 4;
+    public final Integer random_tick_rate = 4;
 
-    @Comment("Log torcherino placement (Intended for server use)") public final boolean log_placement = FabricLoader.getInstance().getEnvironmentType() ==
+    @Comment("Log torcherino placement (Intended for server use)") public final Boolean log_placement = FabricLoader.getInstance().getEnvironmentType() ==
             EnvType.SERVER;
 
     @Comment("\nAdd a block by identifier to the blacklist.\nExamples: \"minecraft:dirt\", \"minecraft:furnace\"")
@@ -36,24 +35,25 @@ public class Config
 
     public static void initialize()
     {
-        Path sci4meDirectory = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("sci4me");
-        if (!sci4meDirectory.toFile().exists())
-        {
-            try
-            {
-                Files.createDirectory(sci4meDirectory);
-                INSTANCE = ConfigManager.loadConfig(Config.class, sci4meDirectory.resolve("Torcherino.cfg").toFile());
-            }
-            catch (IOException e)
-            {
-                Torcherino.LOGGER.error("Failed to create sci4me folder, config won't be saved.");
-                INSTANCE = new Config();
-            }
-        }
-        else
-        {
-            INSTANCE = ConfigManager.loadConfig(Config.class, sci4meDirectory.resolve("Torcherino.cfg").toFile());
-        }
+        JanksonConfigParser parser = new JanksonConfigParser.Builder()
+                .deSerializer(JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
+                        ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
+                .deSerializer(JsonObject.class, Tier.class, (it, marshaller) -> {
+                    String name = it.get(String.class, "name");
+                    Integer max_speed = it.get(Integer.class, "max_speed");
+                    Integer xz_range = it.get(Integer.class, "xz_range");
+                    Integer y_range = it.get(Integer.class, "y_range");
+                    return new Tier(name, max_speed < 1 ? 1 : max_speed, xz_range < 0 ? 0 : xz_range, y_range < 0 ? 0 : y_range);
+                }, (tier, marshaller) -> {
+                    final JsonObject rv = new JsonObject();
+                    rv.put("name", new JsonPrimitive(tier.name));
+                    rv.put("max_speed", new JsonPrimitive(tier.max_speed));
+                    rv.put("xz_range", new JsonPrimitive(tier.xz_range));
+                    rv.put("y_range", new JsonPrimitive(tier.y_range));
+                    return rv;
+                }).build();
+        INSTANCE = parser.load(Config.class, FabricLoader.getInstance().getConfigDirectory().toPath().resolve("sci4me/Torcherino.cfg"),
+                new MarkerManager.Log4jMarker("torcherino"));
         INSTANCE.onConfigLoaded();
     }
 
