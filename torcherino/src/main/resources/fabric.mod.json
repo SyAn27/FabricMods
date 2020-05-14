@@ -26,6 +26,13 @@
       "torcherino.Torcherino"
     ]
   },
+  "mixins": [
+    {
+      "config": "torcherino.mixins.json",
+      "environment": "*"
+    }
+  ],
+  "accessWidener": "torcherino.accesswidener",
   "depends": {
     "fabricloader": ">=${dep_loader_version}",
     "fabric": ">=${dep_fabric_version}",

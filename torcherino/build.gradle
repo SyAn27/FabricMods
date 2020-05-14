@@ -1,3 +1,7 @@
+minecraft {
+    accessWidener = file('src/main/resources/torcherino.accesswidener')
+}
+
 dependencies {
     compile project(path: ":chainmail"), withoutUnwanted
     include project(path: ":chainmail")

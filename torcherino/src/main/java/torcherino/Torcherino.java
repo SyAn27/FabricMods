@@ -5,11 +5,9 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +23,7 @@ import torcherino.api.blocks.entity.TorcherinoBlockEntity;
 import torcherino.api.entrypoints.TorcherinoInitializer;
 import torcherino.blocks.ModBlocks;
 import torcherino.config.Config;
+import torcherino.particle.DefaultParticleType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,7 +48,7 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
             if (!id.getNamespace().equals(MOD_ID)) { return; }
             String path = id.getPath() + "_flame";
             if (path.equals("normal_flame")) { path = "flame"; }
-            particles.add(Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, path), FabricParticleTypes.simple()));
+            particles.add(Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, path), new DefaultParticleType(false)));
         });
         ModBlocks.INSTANCE.initialize();
         ServerSidePacketRegistry.INSTANCE.register(new Identifier(Torcherino.MOD_ID, "utv"), (PacketContext context, PacketByteBuf buffer) ->
