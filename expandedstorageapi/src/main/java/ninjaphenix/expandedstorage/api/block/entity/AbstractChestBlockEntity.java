@@ -49,7 +49,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     public void setInvStackList(DefaultedList<ItemStack> inventory) { this.inventory = inventory; }
 
     @Override
-    protected ScreenHandler createContainer(int i, PlayerInventory playerInventory) { return null; }
+    protected ScreenHandler createScreenHandler(int i, PlayerInventory playerInventory) { return null; }
 
     @Override
     public int[] getAvailableSlots(Direction side) { return SLOTS; }
