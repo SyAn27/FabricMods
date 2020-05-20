@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     //id 'fabric-loom' version '0.2.7-SNAPSHOT' apply false
-    id 'fabric-loom' version '0.4.3' apply false
+    id 'fabric-loom' version '0.4-SNAPSHOT' apply false
 }
 
 allprojects {
@@ -44,11 +44,22 @@ allprojects {
         minecraft("com.mojang:minecraft:${minecraft_version}")
         mappings("net.fabricmc:yarn:${minecraft_version}+build.${yarn_version}:v2")
         modImplementation("net.fabricmc:fabric-loader:${loader_version}")
-        modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+        modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}") {
+            if(old_fabric_api == "true") {
+                exclude(module: "fabric-dimensions-v1")
+                exclude(module: "fabric-registry-sync-v0")
+                exclude(module: "fabric-biomes-v1")
+                exclude(module: "fabric-renderer-indigo")
+                exclude(module: "fabric-renderer-api-v1")
+                exclude(module: "fabric-rendering-v1")
+                exclude(module: "fabric-rendering-v0")
+                exclude(module: "fabric-rendering-fluids-v1")
+            }
+        }
 
-        modImplementation "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
+        /*modImplementation*/ modCompileOnly "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
 
-        modImplementation "io.github.prospector:modmenu:${modmenu_version}", withoutUnwanted
+        /*modImplementation*/ modCompileOnly "io.github.prospector:modmenu:${modmenu_version}", withoutUnwanted
 
         compileOnly("org.checkerframework:checker-qual:3.0.1")
     }

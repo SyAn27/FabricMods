@@ -19,6 +19,7 @@
       "ninjaphenix.expandedstorage.api.ExpandedStorageAPI::INSTANCE"
     ]
   },
+  "accessWidener": "expandedstorageapi.accesswidener",
   "mixins": [
     {
       "config": "expandedstorageapi.mixins.common.json",

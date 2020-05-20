@@ -261,7 +261,8 @@ public abstract class AbstractChestBlock extends BasicStorageBlock
         if (type == CursedChestType.SINGLE)
         {
             BlockState realOtherState = world.getBlockState(pos.offset(direction));
-            if (!realOtherState.contains(TYPE)) { return state.with(TYPE, CursedChestType.SINGLE); }
+            //if (!realOtherState.contains(TYPE)) { return state.with(TYPE, CursedChestType.SINGLE); }
+            if (!realOtherState.isOf(this)) { return state.with(TYPE, CursedChestType.SINGLE); } // todo: verify this.
             CursedChestType newType = getChestType(facing, direction);
             if (realOtherState.get(TYPE) == newType.getOpposite() && facing == realOtherState.get(FACING))
             {

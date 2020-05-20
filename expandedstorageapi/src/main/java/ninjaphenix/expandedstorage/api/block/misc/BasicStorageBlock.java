@@ -27,7 +27,7 @@ public abstract class BasicStorageBlock extends Block implements BlockEntityProv
     }
 
     @Override
-    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved)
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved)
     {
         if (state.getBlock() != newState.getBlock())
         {
@@ -35,9 +35,9 @@ public abstract class BasicStorageBlock extends Block implements BlockEntityProv
             if (blockEntity instanceof Inventory)
             {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
-                world.updateNeighbors(pos, this);
+                world.updateComparators(pos, this);
             }
-            super.onBlockRemoved(state, world, pos, newState, moved);
+            super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
 

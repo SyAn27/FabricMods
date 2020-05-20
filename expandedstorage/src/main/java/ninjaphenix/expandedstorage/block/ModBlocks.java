@@ -46,7 +46,7 @@ public final class ModBlocks
         final Identifier id = ExpandedStorage.getId("old_" + name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ExpandedStorage.group)));
-        Registries.OLD_CHEST.add(ExpandedStorage.getId(name), new Registries.TierData(rows * 9, containerName, id));
+        Registry.register(Registries.OLD_CHEST, ExpandedStorage.getId(name), new Registries.TierData(rows * 9, containerName, id));
         return block;
     }
 
@@ -61,7 +61,8 @@ public final class ModBlocks
         final Identifier id = ExpandedStorage.getId(name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ExpandedStorage.group)));
-        Registries.CHEST.add(id, new Registries.ChestTierData(rows * 9, containerName, id, singleTexture, vanillaTexture, tallTexture, longTexture));
+        Registry.register(Registries.CHEST, id,
+                new Registries.ChestTierData(rows * 9, containerName, id, singleTexture, vanillaTexture, tallTexture, longTexture));
         return block;
     }
 

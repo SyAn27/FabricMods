@@ -14,6 +14,7 @@ import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.api.block.entity.CursedChestBlockEntity;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Random;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
@@ -31,7 +32,10 @@ public final class ExpandedStorageAPIClient
 
     public static void onInitializeClient()
     {
-        if (!Registries.CHEST.isEmpty()) { BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorageAPI.CHEST, CursedChestBlockEntityRenderer::new); }
+        if (Registries.CHEST.getRandom(new Random()) != null)
+        {
+            BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorageAPI.CHEST, CursedChestBlockEntityRenderer::new);
+        }
         ChainmailRendering.INSTANCE.registerBlockEntityItemStackRenderer(ExpandedStorageAPI.CHEST, (itemStack, matrixStack, consumerProvider, light, overlay) ->
         {
             CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.BLOCK.getId(((BlockItem) itemStack.getItem()).getBlock())); // maybe supply the block
