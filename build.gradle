@@ -56,7 +56,6 @@ allprojects {
                 exclude(module: "fabric-rendering-fluids-v1")
             }
         }
-
         /*modImplementation*/ modCompileOnly "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
 
         /*modImplementation*/ modCompileOnly "io.github.prospector:modmenu:${modmenu_version}", withoutUnwanted
