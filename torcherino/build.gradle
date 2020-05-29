@@ -2,6 +2,10 @@ repositories {
     maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
 }
 
+minecraft {
+    accessWidener = file('src/main/resources/torcherino.accesswidener')
+}
+
 dependencies {
     compile project(path: ":chainmail"), withoutUnwanted
     include project(path: ":chainmail")

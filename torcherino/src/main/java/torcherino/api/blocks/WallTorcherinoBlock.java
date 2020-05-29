@@ -1,6 +1,5 @@
 package torcherino.api.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -28,9 +27,9 @@ public class WallTorcherinoBlock extends WallTorchBlock implements BlockEntityPr
 {
     private final Identifier tierID;
 
-    public WallTorcherinoBlock(Identifier tier, Identifier dropID, ParticleEffect particleEffect)
+    public WallTorcherinoBlock(Identifier tier, TorcherinoBlock torcherinoBlock, ParticleEffect particleEffect)
     {
-        super(FabricBlockSettings.copy(Blocks.WALL_TORCH).drops(dropID).build(), particleEffect);
+        super(Block.Settings.copy(Blocks.WALL_TORCH).dropsLike(torcherinoBlock), particleEffect);
         this.tierID = tier;
     }
 

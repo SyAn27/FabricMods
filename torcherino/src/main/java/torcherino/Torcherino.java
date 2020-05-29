@@ -5,7 +5,6 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -43,6 +42,13 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
     public void onInitialize()
     {
         Config.initialize();
+        TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) ->
+        {
+            if (!id.getNamespace().equals(MOD_ID)) { return; }
+            String path = id.getPath() + "_flame";
+            if (path.equals("normal_flame")) { path = "flame"; }
+            particles.add(Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, path), new torcherino.particle.DefaultParticleType(false)));
+        });
         PlayerConnectCallback.EVENT.register(player ->
         {
             allowedUuids.add(player.getUuidAsString());
@@ -62,13 +68,6 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
         {
             System.out.println("Played disconnected: " + player.getName().asString());
             if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(player.getUuidAsString()); }
-        });
-        TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) ->
-        {
-            if (!id.getNamespace().equals(MOD_ID)) { return; }
-            String path = id.getPath() + "_flame";
-            if (path.equals("normal_flame")) { path = "flame"; }
-            particles.add(Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, path), FabricParticleTypes.simple()));
         });
         ModBlocks.INSTANCE.initialize();
         ServerSidePacketRegistry.INSTANCE.register(new Identifier(Torcherino.MOD_ID, "utv"), (PacketContext context, PacketByteBuf buffer) ->
