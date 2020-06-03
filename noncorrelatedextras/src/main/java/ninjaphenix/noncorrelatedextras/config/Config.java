@@ -38,7 +38,7 @@ public class Config
         map.put(EquipmentSlot.LEGS, 3);
         map.put(EquipmentSlot.FEET, 1);
     });
-    @Comment("\nEnabled stucture compasses.")
+    @Comment("\nEnabled structure compasses.")
     private final HashMap<String, Boolean> enabled_structure_compasses = initializedMap(map -> {
         map.put("Pillager_Outpost", false);
         map.put("Mineshaft", false);
@@ -71,7 +71,7 @@ public class Config
         return map;
     }
 
-    public Boolean isFeatureEnabled(String feature) { return feature != null && enabled_features.getOrDefault(feature, Boolean.FALSE); }
+    public Boolean isFeatureEnabled(String feature) { return enabled_features.getOrDefault(feature, Boolean.FALSE); }
 
     public double getMagnetSpeed() { return magnet_speed; }
 
