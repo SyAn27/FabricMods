@@ -21,6 +21,7 @@ public class FeatureManager
         configs.add(new EnchantableShearsFeatureConfig(Config.INSTANCE.isFeatureEnabled("enchantable_shears")));
         configs.add(new CreeperBreakBlocksFeatureConfig(Config.INSTANCE.isFeatureEnabled("creepers_break_blocks")));
         configs.add(new PeacefulOnlyRecipeFeatureConfig(Config.INSTANCE.isFeatureEnabled("peaceful_only_recipes")));
+        configs.add(new StructureCompassFeatureConfig(Config.INSTANCE.isFeatureEnabled("structure_compasses")));
     }
 
     private FeatureManager() {}

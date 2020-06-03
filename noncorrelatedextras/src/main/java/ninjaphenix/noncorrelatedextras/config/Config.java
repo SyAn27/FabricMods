@@ -8,6 +8,9 @@ import org.apache.logging.log4j.MarkerManager;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class Config
@@ -47,7 +50,7 @@ public class Config
         map.put("Desert_Pyramid", false);
         map.put("Jungle_Pyramid", false);
         map.put("Swamp_Hut", false);
-        map.put("Stronghold", false);
+        map.put("Stronghold", true);
         map.put("Monument", false);
         map.put("Fortress", false);
         map.put("EndCity", false);
@@ -81,5 +84,13 @@ public class Config
 
     public double getProjectileReflectionChance() { return polarized_iron_armor_reflection_chance; }
 
-    public Boolean isStructureCompassEnabled(String structure) { return enabled_structure_compasses.getOrDefault(structure, Boolean.FALSE); }
+    public Set<String> getEnabledStructureCompasses()
+    {
+        HashSet<String> set = new HashSet<>();
+        for (Map.Entry<String, Boolean> entry : enabled_structure_compasses.entrySet())
+        {
+            if (Boolean.TRUE.equals(entry.getValue())) { set.add(entry.getKey());}
+        }
+        return set;
+    }
 }
