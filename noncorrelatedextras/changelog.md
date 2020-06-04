@@ -1,1 +1,1 @@
-- Altered the magnet item model so it looks nicer in off hand and in third person.
+- Add structure compasses, Only stronghold one is enabled by default, ( has custom textures unlike others too )
