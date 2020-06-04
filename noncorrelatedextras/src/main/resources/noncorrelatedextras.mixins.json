@@ -6,6 +6,7 @@
   "mixins": [
     "CreeperBreakBlocks",
     "EnchantableShear",
+    "ItemStackEqualMixin",
     "MagnetTrinketCompat",
     "PolarizedArmorProjectileReflection"
   ],
