@@ -1,6 +1,7 @@
 package ninjaphenix.noncorrelatedextras.features;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.noncorrelatedextras.Main;
 import ninjaphenix.noncorrelatedextras.config.Config;
@@ -17,7 +18,7 @@ public class StructureCompassFeature extends Feature implements ItemAdder
     public void registerItems()
     {
         final Set<String> structures = Config.INSTANCE.getEnabledStructureCompasses();
-        final Item.Settings settings = new Item.Settings().maxCount(1);
+        final Item.Settings settings = new Item.Settings().maxCount(1).group(ItemGroup.TOOLS);
         for (String structure : structures)
         {
             structure = structure.toLowerCase(Locale.ROOT);

@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 import java.util.Objects;
 
@@ -72,10 +73,14 @@ public class StructureCompassItem extends Item
             private double getAngleToFeature(final ItemStack stack, final Entity entity)
             {
                 final CompoundTag tag = stack.getOrCreateTag();
-                if (tag.contains("pos"))
+                if (tag.contains("pos") && tag.contains("dimension", 8))
                 {
                     final BlockPos pos = NbtHelper.toBlockPos(tag.getCompound("pos"));
-                    return Math.atan2(pos.getZ() - entity.getZ(), pos.getX() - entity.getX());
+                    final Identifier dimensionTypeId = new Identifier(tag.getString("dimension"));
+                    if (dimensionTypeId.equals(DimensionType.getId(entity.world.dimension.getType())))
+                    {
+                        return Math.atan2(pos.getZ() - entity.getZ(), pos.getX() - entity.getX());
+                    }
                 }
                 return Double.MIN_VALUE;
             }
@@ -95,7 +100,12 @@ public class StructureCompassItem extends Item
             {
                 tag.putLong("lastSearch", curTime);
                 final BlockPos structurePos = ((ServerWorld) world).locateStructure(STRUCTURE, entity.getBlockPos(), 64, false);
-                if (structurePos != null) { tag.put("pos", NbtHelper.fromBlockPos(structurePos)); }
+                if (structurePos != null)
+                {
+                    tag.put("pos", NbtHelper.fromBlockPos(structurePos));
+                    Identifier dimensionType = DimensionType.getId(world.getDimension().getType());
+                    tag.putString("dimension", dimensionType != null ? dimensionType.toString() : "error");
+                }
             }
 
         }
