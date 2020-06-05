@@ -3,12 +3,14 @@ plugins {
     id 'maven-publish'
     //id 'fabric-loom' version '0.2.7-SNAPSHOT' apply false
     id 'fabric-loom' version '0.4.3' apply false
+    id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
 }
 
 allprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'fabric-loom'
+    apply plugin: 'com.matthewprenger.cursegradle'
 
     group = maven_group
     archivesBaseName = mod_id
@@ -109,6 +111,53 @@ allprojects {
         commandLine "git", "push", "origin", tagName
         doLast {
             println "Pushed tag " + tagName + " to origin"
+        }
+    }
+
+    if (project.hasProperty("api_key") && project.hasProperty("curseforge_project_id")) {
+        curseforge {
+            apiKey = project.api_key
+            //noinspection GroovyAssignabilityCheck
+            project {
+                id = "${curseforge_project_id}"
+                changelogType = "markdown"
+                changelog = file("${project.projectDir}/changelog.md")
+                releaseType = "${project.curseforge_release_type}"
+                addGameVersion "${project.curseforge_game_version}"
+                addGameVersion "Fabric"
+                addGameVersion "Java 8" // lets be honest, we're going to be stuck on java 8 for the next 5 years.
+                relations {
+                    if(project.hasProperty("curseforge_required_dependencies")) {
+                        for(String dep : project.curseforge_required_dependencies.split(":")) {
+                            requiredDependency dep
+                        }
+                    }
+                    if(project.hasProperty("curseforge_embedded_dependencies")) {
+                        for(String dep : project.curseforge_required_dependencies.split(":")) {
+                            embeddedLibrary dep
+                        }
+                    }
+                    if(project.hasProperty("curseforge_optional_dependencies")) {
+                        for(String dep : project.curseforge_required_dependencies.split(":")) {
+                            optionalDependency dep
+                        }
+                    }
+                }
+                mainArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}.jar")) {
+                    displayName = "${mod_name} ${mod_version}+${minecraft_version}"
+                }
+                addArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}-sources.jar"))
+                afterEvaluate {
+                    uploadTask.dependsOn("remapSourcesJar")
+                }
+            }
+            options {
+                forgeGradleIntegration = false
+            }
+        }
+
+        tagRelease {
+            dependsOn "curseforge"
         }
     }
 
