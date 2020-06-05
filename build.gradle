@@ -133,12 +133,12 @@ allprojects {
                         }
                     }
                     if(project.hasProperty("curseforge_embedded_dependencies")) {
-                        for(String dep : project.curseforge_required_dependencies.split(":")) {
+                        for(String dep : project.curseforge_embedded_dependencies.split(":")) {
                             embeddedLibrary dep
                         }
                     }
                     if(project.hasProperty("curseforge_optional_dependencies")) {
-                        for(String dep : project.curseforge_required_dependencies.split(":")) {
+                        for(String dep : project.curseforge_optional_dependencies.split(":")) {
                             optionalDependency dep
                         }
                     }
@@ -153,6 +153,7 @@ allprojects {
             }
             options {
                 forgeGradleIntegration = false
+                debug = curseforge_debug == "true"
             }
         }
 
