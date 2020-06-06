@@ -1,16 +1,11 @@
 package ninjaphenix.containerlib;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import ninjaphenix.containerlib.inventory.ScrollableContainer;
+import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 
 public final class ContainerLibrary implements ModInitializer
 {
@@ -26,31 +21,16 @@ public final class ContainerLibrary implements ModInitializer
      * @param pos The block pos of the container.
      * @param containerName The text that should be displayed as the container name.
      * @since 0.0.1
+     * @deprecated {@link ContainerLibraryAPI#openContainer}
      */
+    @Deprecated
     public static void openContainer(PlayerEntity player, BlockPos pos, Text containerName)
     {
-        ContainerProviderRegistry.INSTANCE.openContainer(CONTAINER_ID, player, (buffer) ->
-        {
-            buffer.writeBlockPos(pos);
-            buffer.writeText(containerName);
-        });
+        ContainerLibraryAPI.INSTANCE.openContainer(player, pos, containerName);
     }
 
     @Override
     public void onInitialize()
     {
-        ContainerProviderRegistry.INSTANCE.registerFactory(CONTAINER_ID, (syncId, identifier, player, buffer) ->
-        {
-            final BlockPos pos = buffer.readBlockPos();
-            final Text name = buffer.readText();
-            final World world = player.getEntityWorld();
-            final BlockState state = world.getBlockState(pos);
-            final Block block = state.getBlock();
-            if (block instanceof InventoryProvider)
-            {
-                return new ScrollableContainer(syncId, player.inventory, ((InventoryProvider) block).getInventory(state, world, pos), name);
-            }
-            return null;
-        });
     }
 }
