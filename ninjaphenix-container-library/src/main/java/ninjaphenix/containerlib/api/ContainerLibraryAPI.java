@@ -26,6 +26,7 @@ public interface ContainerLibraryAPI
      *
      * @param containerTypeId The container factory id registered with fabric-api.
      * @return False if the container factory id has already been registered.
+     * @since 1.0.0
      */
     boolean declareContainerType(final Identifier containerTypeId);
 }

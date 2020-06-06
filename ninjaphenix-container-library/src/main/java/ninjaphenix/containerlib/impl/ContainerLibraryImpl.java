@@ -1,9 +1,12 @@
 package ninjaphenix.containerlib.impl;
 
+import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 
@@ -11,6 +14,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.function.Consumer;
+
+import static ninjaphenix.containerlib.api.Constants.OPEN_SCREEN_SELECT;
 
 public class ContainerLibraryImpl implements ContainerLibraryAPI
 {
@@ -32,6 +37,10 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
                 preferenceCallbacks.remove(uuid);
             }
         }
+        else
+        {
+            playerPreferences.remove(uuid);
+        }
     }
 
     @Override
@@ -48,7 +57,10 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         else
         {
             preferenceCallbacks.put(player.getUuid(), (type) -> openContainer(player, type, pos, containerName));
-            // Send packet to client to open container type picker.
+            final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+            buffer.writeInt(declaredContainerTypes.size());
+            declaredContainerTypes.forEach(buffer::writeIdentifier);
+            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, OPEN_SCREEN_SELECT, buffer);
         }
     }
 
