@@ -2,7 +2,6 @@ package ninjaphenix.expandedstorage.block.misc;
 
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.util.StringIdentifiable;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum CursedChestType implements StringIdentifiable
 {
@@ -12,7 +11,6 @@ public enum CursedChestType implements StringIdentifiable
 
     CursedChestType(String string) { name = string; }
 
-    @NonNull
     public static CursedChestType valueOf(ChestType type)
     {
         if (type == ChestType.SINGLE) { return SINGLE; }
@@ -21,7 +19,6 @@ public enum CursedChestType implements StringIdentifiable
         throw new IllegalArgumentException("Unexpected chest type passed.");
     }
 
-    @NonNull
     public CursedChestType getOpposite()
     {
         if (this == FRONT) { return BACK; }
@@ -35,6 +32,5 @@ public enum CursedChestType implements StringIdentifiable
 
     public boolean isRenderedType() { return this == FRONT || this == BOTTOM || this == LEFT || this == SINGLE; }
 
-    @NonNull
     public String asString() { return name; }
 }

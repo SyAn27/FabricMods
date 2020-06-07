@@ -1,9 +1,12 @@
 package ninjaphenix.containerlib;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 
 public final class ContainerLibrary implements ModInitializer
@@ -28,5 +31,8 @@ public final class ContainerLibrary implements ModInitializer
     @Override
     public void onInitialize()
     {
+        ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.idOf("fixed"), Constants.idOf("fixed"), new LiteralText("Fixed"));
+        ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, (context, buffer) ->
+                ContainerLibraryAPI.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
     }
 }

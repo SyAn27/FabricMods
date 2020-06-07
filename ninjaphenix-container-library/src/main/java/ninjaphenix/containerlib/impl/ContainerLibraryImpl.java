@@ -1,21 +1,25 @@
 package ninjaphenix.containerlib.impl;
 
 import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
+import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static ninjaphenix.containerlib.api.Constants.OPEN_SCREEN_SELECT;
+import static ninjaphenix.containerlib.api.Constants.SCREEN_SELECT;
 
 public class ContainerLibraryImpl implements ContainerLibraryAPI
 {
@@ -24,8 +28,11 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
     private final HashMap<UUID, Identifier> playerPreferences = new HashMap<>();
     private final HashSet<Identifier> declaredContainerTypes = new HashSet<>();
 
+    @Environment(EnvType.CLIENT)
+    private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
+
     @Override
-    public void setPlayerPreference(PlayerEntity player, Identifier type)
+    public void setPlayerPreference(final PlayerEntity player, final Identifier type)
     {
         final UUID uuid = player.getUuid();
         if (declaredContainerTypes.contains(type))
@@ -44,7 +51,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
     }
 
     @Override
-    public void openContainer(PlayerEntity player, BlockPos pos, Text containerName)
+    public void openContainer(final PlayerEntity player, final BlockPos pos, final Text containerName)
     {
         final UUID uuid = player.getUuid();
         Identifier playerPreference;
@@ -60,14 +67,26 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
             final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
             buffer.writeInt(declaredContainerTypes.size());
             declaredContainerTypes.forEach(buffer::writeIdentifier);
-            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, OPEN_SCREEN_SELECT, buffer);
+            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SCREEN_SELECT, buffer);
         }
     }
 
     @Override
-    public boolean declareContainerType(Identifier containerTypeId) { return declaredContainerTypes.add(containerTypeId); }
+    public boolean declareContainerType(final Identifier containerTypeId, final Identifier selectTextureId, final Text narrationMessage)
+    {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+        { screenMiscSettings.put(containerTypeId, new ScreenMiscSettings(selectTextureId, narrationMessage)); }
+        return declaredContainerTypes.add(containerTypeId);
+    }
 
-    private void openContainer(PlayerEntity player, Identifier type, BlockPos pos, Text containerName)
+    @Environment(EnvType.CLIENT)
+    @Override
+    public ScreenMiscSettings getScreenSettings(final Identifier containerTypeId)
+    {
+        return screenMiscSettings.get(containerTypeId);
+    }
+
+    private void openContainer(final PlayerEntity player, final Identifier type, final BlockPos pos, final Text containerName)
     {
         ContainerProviderRegistry.INSTANCE.openContainer(type, player, buf ->
         {

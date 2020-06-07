@@ -26,8 +26,6 @@ import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     private int viewerCount;
     private int ticksOpen;
 
-    public CursedChestBlockEntity(@Nullable Identifier block) { super(ExpandedStorage.CHEST, block); }
+    public CursedChestBlockEntity(Identifier block) { super(ExpandedStorage.CHEST, block); }
 
     private static int tickViewerCount(World world, CursedChestBlockEntity instance, int ticksOpen, int x, int y, int z, int viewCount)
     {
@@ -64,7 +62,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    protected void initialize(@NonNull Identifier block)
+    protected void initialize(Identifier block)
     {
         this.block = block;
         defaultContainerName = Registries.CHEST.get(block).getContainerName();

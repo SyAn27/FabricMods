@@ -5,16 +5,14 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class OldChestBlockEntity extends AbstractChestBlockEntity
 {
-    public OldChestBlockEntity(@Nullable Identifier block) { super(ExpandedStorage.OLD_CHEST, block); }
+    public OldChestBlockEntity(Identifier block) { super(ExpandedStorage.OLD_CHEST, block); }
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    protected void initialize(@NonNull Identifier block)
+    protected void initialize(Identifier block)
     {
         this.block = block;
         defaultContainerName = Registries.OLD_CHEST.get(block).getContainerName();

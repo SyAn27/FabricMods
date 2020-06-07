@@ -3,15 +3,19 @@ package ninjaphenix.containerlib.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
+import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 import ninjaphenix.containerlib.client.config.Config;
+import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
+import ninjaphenix.containerlib.impl.client.screen.SelectContainerScreen;
 import org.apache.logging.log4j.MarkerManager;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 import static ninjaphenix.containerlib.api.Constants.LIBRARY_ID;
-import static ninjaphenix.containerlib.api.Constants.OPEN_SCREEN_SELECT;
+import static ninjaphenix.containerlib.api.Constants.SCREEN_SELECT;
 
 public final class ContainerLibraryClient implements ClientModInitializer
 {
@@ -25,15 +29,19 @@ public final class ContainerLibraryClient implements ClientModInitializer
     @Override
     public void onInitializeClient()
     {
-        ClientSidePacketRegistry.INSTANCE.register(OPEN_SCREEN_SELECT, (context, buffer) ->
+        ClientSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, (context, buffer) ->
         {
             final int count = buffer.readInt();
-            final HashSet<Identifier> allowed = new HashSet<>();
+            final HashMap<Identifier, ScreenMiscSettings> allowed = new HashMap<>();
             for (int i = 0; i < count; i++)
             {
-                allowed.add(buffer.readIdentifier());
+                final Identifier containerFactoryId = buffer.readIdentifier();
+                //if(ContainerProviderRegistry.INSTANCE.factoryExists(containerFactoryId))
+                //{
+                allowed.put(containerFactoryId, ContainerLibraryAPI.INSTANCE.getScreenSettings(containerFactoryId));
+                //}
             }
-            // open new screen here.
+            MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed));
         });
     }
 }
