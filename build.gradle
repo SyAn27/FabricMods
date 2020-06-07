@@ -183,3 +183,7 @@ allprojects {
         }
     }
 }
+
+afterEvaluate {
+    file("${project.projectDir}/${project.projectDir.getName()}").deleteDir()
+}
