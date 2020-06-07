@@ -55,6 +55,7 @@ allprojects {
         modImplementation "io.github.cottonmc:Jankson-Fabric:${jankson_version}", withoutUnwanted
 
         compileOnly("org.jetbrains:annotations:19.0.0")
+        compileOnly("com.google.code.findbugs:jsr305:3.0.2")
     }
 
     processResources {

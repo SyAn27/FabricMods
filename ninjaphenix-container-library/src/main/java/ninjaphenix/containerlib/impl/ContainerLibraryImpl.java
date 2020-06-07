@@ -47,6 +47,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         else
         {
             playerPreferences.remove(uuid);
+            preferenceCallbacks.remove(uuid);
         }
     }
 
@@ -81,10 +82,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
 
     @Environment(EnvType.CLIENT)
     @Override
-    public ScreenMiscSettings getScreenSettings(final Identifier containerTypeId)
-    {
-        return screenMiscSettings.get(containerTypeId);
-    }
+    public ScreenMiscSettings getScreenSettings(final Identifier containerTypeId) { return screenMiscSettings.get(containerTypeId); }
 
     private void openContainer(final PlayerEntity player, final Identifier type, final BlockPos pos, final Text containerName)
     {

@@ -25,6 +25,12 @@
       "ninjaphenix.containerlib.client.ContainerLibREIPlugin"
     ]
   },
+  "mixins": [
+    {
+      "config": "ninjaphenix-container-lib.mixins.json",
+      "environment": "*"
+    }
+  ],
   "accessWidener": "ninjaphenix-container-lib.accesswidener",
   "depends": {
     "fabricloader": ">=${dep_loader_version}",
