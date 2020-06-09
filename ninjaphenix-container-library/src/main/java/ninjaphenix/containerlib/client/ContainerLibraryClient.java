@@ -1,5 +1,6 @@
 package ninjaphenix.containerlib.client;
 
+import blue.endless.jankson.JsonPrimitive;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -26,7 +27,13 @@ public final class ContainerLibraryClient implements ClientModInitializer
     public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
     public static final Config CONFIG = getConfigParser().load(Config.class, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
 
-    private static JanksonConfigParser getConfigParser() { return new JanksonConfigParser.Builder().build(); }
+    private static JanksonConfigParser getConfigParser()
+    {
+        return new JanksonConfigParser.Builder()
+                .deSerializer(JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
+                        ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
+                .build();
+    }
 
     private static Path getConfigPath() { return FabricLoader.getInstance().getConfigDirectory().toPath().resolve("ninjaphenix-container-library.json"); }
 

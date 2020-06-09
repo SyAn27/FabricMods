@@ -29,7 +29,7 @@ public class SelectContainerScreen extends Screen
         {
             final Identifier id = entry.getKey();
             final ScreenMiscSettings settings = entry.getValue();
-            SelectContainerScreen.this.addButton(new ScreenTypeButton(x * 50 + (x - 1) * 5, 0, 50, 50,
+            addButton(new ScreenTypeButton(x * 96 + (x - 1) * 5, 0, 96, 96,
                     settings.SELECT_TEXTURE_ID, settings.NARRATION_MESSAGE.asString(), button -> updatePlayerPreference(id)));
             x++;
         }

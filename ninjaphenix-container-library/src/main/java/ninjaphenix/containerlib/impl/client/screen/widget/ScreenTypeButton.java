@@ -24,6 +24,6 @@ public class ScreenTypeButton extends ButtonWidget
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-        blit(x, y, 0, getYImage(isHovered()) * height, width, height);
+        blit(x, y, 0, isHovered() ? height : 0, width, height, width, height * 2);
     }
 }

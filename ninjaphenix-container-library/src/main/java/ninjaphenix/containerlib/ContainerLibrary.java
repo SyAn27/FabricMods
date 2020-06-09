@@ -31,7 +31,12 @@ public final class ContainerLibrary implements ModInitializer
     @Override
     public void onInitialize()
     {
-        ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.idOf("fixed"), Constants.idOf("fixed"), new LiteralText("Fixed"));
+        ContainerLibraryAPI.INSTANCE
+                .declareContainerType(Constants.idOf("single"), Constants.idOf("textures/gui/single_button.png"), new LiteralText("Single Page Screen"));
+        ContainerLibraryAPI.INSTANCE
+                .declareContainerType(Constants.idOf("scrollable"), Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
+        ContainerLibraryAPI.INSTANCE
+                .declareContainerType(Constants.idOf("paged"), Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, (context, buffer) ->
                 ContainerLibraryAPI.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
     }
