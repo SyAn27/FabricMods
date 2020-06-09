@@ -104,7 +104,7 @@ public class SimulatedCreativeScreen extends Screen
             y += 8 + (itemGroup_1.isTopRow() ? 1 : -1);
             RenderSystem.enableRescaleNormal();
             ItemStack itemStack_1 = itemGroup_1.getIcon();
-            this.itemRenderer.renderGuiItem(itemStack_1, x, y);
+            this.itemRenderer.renderInGuiWithOverrides(itemStack_1, x, y);
             this.itemRenderer.renderGuiItemOverlay(textRenderer, itemStack_1, x, y);
         }
     }

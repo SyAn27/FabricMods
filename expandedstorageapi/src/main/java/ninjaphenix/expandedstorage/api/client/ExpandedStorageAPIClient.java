@@ -36,10 +36,11 @@ public final class ExpandedStorageAPIClient
         {
             BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorageAPI.CHEST, CursedChestBlockEntityRenderer::new);
         }
-        ChainmailRendering.INSTANCE.registerBlockEntityItemStackRenderer(ExpandedStorageAPI.CHEST, (itemStack, matrixStack, consumerProvider, light, overlay) ->
-        {
-            CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.BLOCK.getId(((BlockItem) itemStack.getItem()).getBlock())); // maybe supply the block
-            BlockEntityRenderDispatcher.INSTANCE.renderEntity(CURSED_CHEST_RENDER_ENTITY, matrixStack, consumerProvider, light, overlay);
-        });
+        ChainmailRendering.INSTANCE
+                .registerBlockEntityItemStackRenderer(ExpandedStorageAPI.CHEST, (itemStack, mode, matrixStack, consumerProvider, light, overlay) ->
+                {
+                    CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.BLOCK.getId(((BlockItem) itemStack.getItem()).getBlock())); // maybe supply the block
+                    BlockEntityRenderDispatcher.INSTANCE.renderEntity(CURSED_CHEST_RENDER_ENTITY, matrixStack, consumerProvider, light, overlay);
+                });
     }
 }
