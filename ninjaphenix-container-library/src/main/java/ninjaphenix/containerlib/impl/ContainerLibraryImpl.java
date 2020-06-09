@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -33,6 +34,12 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
 
     @Environment(EnvType.CLIENT)
     private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
+
+    public boolean isContainerTypeDeclared(Identifier type)
+    {
+        Objects.requireNonNull(type);
+        return declaredContainerTypes.contains(type);
+    }
 
     public void setPlayerPreference(final PlayerEntity player, final Identifier type)
     {

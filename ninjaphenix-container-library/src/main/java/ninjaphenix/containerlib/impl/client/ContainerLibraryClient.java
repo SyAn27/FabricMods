@@ -61,10 +61,11 @@ public final class ContainerLibraryClient implements ClientModInitializer
             for (int i = 0; i < count; i++)
             {
                 final Identifier containerFactoryId = buffer.readIdentifier();
-                //if(ContainerProviderRegistry.INSTANCE.factoryExists(containerFactoryId))
-                //{
-                allowed.put(containerFactoryId, ContainerLibraryImpl.INSTANCE.getScreenSettings(containerFactoryId));
-                //}
+                if (ContainerLibraryImpl.INSTANCE.isContainerTypeDeclared(containerFactoryId) /*&&
+                        ContainerProviderRegistry.INSTANCE.factoryExists(containerFactoryId)*/)
+                {
+                    allowed.put(containerFactoryId, ContainerLibraryImpl.INSTANCE.getScreenSettings(containerFactoryId));
+                }
             }
             MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed));
         });
