@@ -1,5 +1,7 @@
 package ninjaphenix.containerlib.inventory;
 
+import org.jetbrains.annotations.ApiStatus;
+
 /**
  * Represents a method which creates (custom) Slot objects.
  *
@@ -9,4 +11,5 @@ package ninjaphenix.containerlib.inventory;
  */
 @Deprecated
 @FunctionalInterface
+@ApiStatus.ScheduledForRemoval(inVersion = "1.16")
 public interface AreaAwareSlotFactory extends ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory {}

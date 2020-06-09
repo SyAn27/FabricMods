@@ -1,4 +1,4 @@
-package ninjaphenix.containerlib.client;
+package ninjaphenix.containerlib.impl.client;
 
 import blue.endless.jankson.JsonPrimitive;
 import io.netty.buffer.Unpooled;
@@ -10,8 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.containerlib.api.Constants;
-import ninjaphenix.containerlib.api.ContainerLibraryAPI;
-import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
+import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 import ninjaphenix.containerlib.impl.client.config.Config;
 import ninjaphenix.containerlib.impl.client.screen.SelectContainerScreen;
 import org.apache.logging.log4j.MarkerManager;
@@ -64,7 +63,7 @@ public final class ContainerLibraryClient implements ClientModInitializer
                 final Identifier containerFactoryId = buffer.readIdentifier();
                 //if(ContainerProviderRegistry.INSTANCE.factoryExists(containerFactoryId))
                 //{
-                allowed.put(containerFactoryId, ContainerLibraryAPI.INSTANCE.getScreenSettings(containerFactoryId));
+                allowed.put(containerFactoryId, ContainerLibraryImpl.INSTANCE.getScreenSettings(containerFactoryId));
                 //}
             }
             MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed));

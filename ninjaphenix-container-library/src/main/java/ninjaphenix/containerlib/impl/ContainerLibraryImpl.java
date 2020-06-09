@@ -13,6 +13,8 @@ import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,9 +23,10 @@ import java.util.function.Consumer;
 
 import static ninjaphenix.containerlib.api.Constants.SCREEN_SELECT;
 
+@ApiStatus.Internal
 public class ContainerLibraryImpl implements ContainerLibraryAPI
 {
-    public static final ContainerLibraryAPI INSTANCE = new ContainerLibraryImpl();
+    public static final ContainerLibraryImpl INSTANCE = new ContainerLibraryImpl();
     private final HashMap<UUID, Consumer<Identifier>> preferenceCallbacks = new HashMap<>();
     private final HashMap<UUID, Identifier> playerPreferences = new HashMap<>();
     private final HashSet<Identifier> declaredContainerTypes = new HashSet<>();
@@ -31,7 +34,6 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
     @Environment(EnvType.CLIENT)
     private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
 
-    @Override
     public void setPlayerPreference(final PlayerEntity player, final Identifier type)
     {
         final UUID uuid = player.getUuid();
@@ -64,12 +66,20 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         }
         else
         {
-            preferenceCallbacks.put(player.getUuid(), (type) -> openContainer(player, type, pos, containerName));
-            final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-            buffer.writeInt(declaredContainerTypes.size());
-            declaredContainerTypes.forEach(buffer::writeIdentifier);
-            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SCREEN_SELECT, buffer);
+            openSelectScreen(player, (type) -> openContainer(player, type, pos, containerName));
         }
+    }
+
+    public void openSelectScreen(final PlayerEntity player, @Nullable Consumer<Identifier> playerPreferenceCallback)
+    {
+        if (playerPreferenceCallback != null)
+        {
+            preferenceCallbacks.put(player.getUuid(), playerPreferenceCallback);
+        }
+        final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+        buffer.writeInt(declaredContainerTypes.size());
+        declaredContainerTypes.forEach(buffer::writeIdentifier);
+        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SCREEN_SELECT, buffer);
     }
 
     @Override
@@ -81,7 +91,6 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
     }
 
     @Environment(EnvType.CLIENT)
-    @Override
     public ScreenMiscSettings getScreenSettings(final Identifier containerTypeId) { return screenMiscSettings.get(containerTypeId); }
 
     private void openContainer(final PlayerEntity player, final Identifier type, final BlockPos pos, final Text containerName)

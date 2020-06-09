@@ -1,7 +1,7 @@
 package ninjaphenix.containerlib.mixin;
 
 import net.minecraft.client.MinecraftClientGame;
-import ninjaphenix.containerlib.client.ContainerLibraryClient;
+import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,8 +12,5 @@ public class ClientGameStart
 {
 
     @Inject(method = "onStartGameSession", at = @At("TAIL"))
-    private void ninjaphenix_container_lib_onStartGameSession(CallbackInfo ci)
-    {
-        ContainerLibraryClient.sendPreferencesToServer();
-    }
+    private void ninjaphenix_container_lib_onStartGameSession(CallbackInfo ci) { ContainerLibraryClient.sendPreferencesToServer(); }
 }

@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.containerlib.client.ContainerLibraryClient;
+import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
 import ninjaphenix.containerlib.impl.client.screen.widget.ScreenTypeButton;
 

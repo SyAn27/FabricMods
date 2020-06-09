@@ -1,14 +1,10 @@
 package ninjaphenix.containerlib.api;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
-import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
-import org.jetbrains.annotations.ApiStatus;
 
 public interface ContainerLibraryAPI
 {
@@ -31,11 +27,4 @@ public interface ContainerLibraryAPI
      * @since 1.0.0
      */
     boolean declareContainerType(final Identifier containerTypeId, final Identifier selectTextureId, final Text narrationMessage);
-
-    @ApiStatus.Internal
-    void setPlayerPreference(final PlayerEntity player, final Identifier type);
-
-    @ApiStatus.Internal
-    @Environment(EnvType.CLIENT)
-    ScreenMiscSettings getScreenSettings(final Identifier containerTypeId);
 }

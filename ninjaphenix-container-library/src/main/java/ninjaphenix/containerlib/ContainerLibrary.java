@@ -8,6 +8,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
+import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 
 public final class ContainerLibrary implements ModInitializer
 {
@@ -31,13 +32,15 @@ public final class ContainerLibrary implements ModInitializer
     @Override
     public void onInitialize()
     {
-        ContainerLibraryAPI.INSTANCE
-                .declareContainerType(Constants.idOf("single"), Constants.idOf("textures/gui/single_button.png"), new LiteralText("Single Page Screen"));
-        ContainerLibraryAPI.INSTANCE
-                .declareContainerType(Constants.idOf("scrollable"), Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
-        ContainerLibraryAPI.INSTANCE
-                .declareContainerType(Constants.idOf("paged"), Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
+        ContainerLibraryAPI.INSTANCE.declareContainerType(
+                Constants.idOf("single"), Constants.idOf("textures/gui/single_button.png"), new LiteralText("Single Page Screen"));
+        ContainerLibraryAPI.INSTANCE.declareContainerType(
+                Constants.idOf("scrollable"), Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
+        ContainerLibraryAPI.INSTANCE.declareContainerType(
+                Constants.idOf("paged"), Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
+        ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, (context, buffer) ->
+                ContainerLibraryImpl.INSTANCE.openSelectScreen(context.getPlayer(), null));
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, (context, buffer) ->
-                ContainerLibraryAPI.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
+                ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
     }
 }
