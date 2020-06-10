@@ -3,6 +3,8 @@ package ninjaphenix.containerlib.impl.client;
 import blue.endless.jankson.JsonPrimitive;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.screen.ContainerScreenFactory;
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -10,9 +12,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.containerlib.api.Constants;
+import ninjaphenix.containerlib.client.screen.SingleScreen;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 import ninjaphenix.containerlib.impl.client.config.Config;
 import ninjaphenix.containerlib.impl.client.screen.SelectContainerScreen;
+import ninjaphenix.containerlib.inventory.SingleContainer;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.nio.file.Path;
@@ -54,6 +58,9 @@ public final class ContainerLibraryClient implements ClientModInitializer
     @Override
     public void onInitializeClient()
     {
+        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER,
+                (ContainerScreenFactory<SingleContainer>) container -> new SingleScreen(container));
+
         ClientSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, (context, buffer) ->
         {
             final int count = buffer.readInt();
