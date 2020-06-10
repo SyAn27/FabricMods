@@ -20,7 +20,7 @@ public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T>
     protected void init()
     {
         super.init();
-        addButton(new ScreenTypeSelectionScreenButton(0, 0, 20, 20, BACKGROUND_LOCATION, "bad"));
+        addButton(new ScreenTypeSelectionScreenButton(0, 0));
         final int totalSlots = container.slots.size() - 36;
         final int diff = SCREEN_META.TOTAL_SLOTS - totalSlots;
         if (diff > 0)

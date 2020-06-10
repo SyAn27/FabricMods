@@ -1,3 +1,7 @@
 {
-  "screen.ninjaphenix-container-lib.screen_picker_title": "Screen Type Picker"
+  "screen.ninjaphenix-container-lib.screen_picker_title": "Select Screen Type",
+  "screen.ninjaphenix-container-lib.change_screen_button": "Change Screen Type",
+  "screen.ninjaphenix-container-lib.single_screen_type": "Single Page Screen",
+  "screen.ninjaphenix-container-lib.paged_screen_type": "Paginated Screen",
+  "screen.ninjaphenix-container-lib.scrollable_screen_type": "Scrollable Screen"
 }

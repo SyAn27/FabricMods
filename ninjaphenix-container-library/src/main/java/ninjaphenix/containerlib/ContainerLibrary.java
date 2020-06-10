@@ -13,8 +13,8 @@ import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.containerlib.api.Constants;
@@ -68,11 +68,11 @@ public final class ContainerLibrary implements ModInitializer
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedContainer::new));
 
         ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.SINGLE_CONTAINER,
-                Constants.idOf("textures/gui/single_button.png"), new LiteralText("Single Page Screen"));
+                Constants.idOf("textures/gui/single_button.png"), new TranslatableText("screen.ninjaphenix-container-lib.single_screen_type"));
         ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.SCROLLABLE_CONTAINER,
-                Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
+                Constants.idOf("textures/gui/scrollable_button.png"), new TranslatableText("screen.ninjaphenix-container-lib.scrollable_screen_type"));
         ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.PAGED_CONTAINER,
-                Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
+                Constants.idOf("textures/gui/paged_button.png"), new TranslatableText("screen.ninjaphenix-container-lib.paged_screen_type"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, (context, buffer) -> {
             final ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
             final Container container = player.container;
