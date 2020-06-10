@@ -12,12 +12,14 @@ import net.minecraft.container.ContainerType;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
+import ninjaphenix.containerlib.api.container.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 import ninjaphenix.containerlib.inventory.SingleContainer;
@@ -51,7 +53,7 @@ public final class ContainerLibrary implements ModInitializer
             final Block block = state.getBlock();
             if (block instanceof InventoryProvider)
             {
-                return newMethod.create(null, syncId, ((InventoryProvider) block).getInventory(state, world, pos), player, name,
+                return newMethod.create(null, syncId, pos, ((InventoryProvider) block).getInventory(state, world, pos), player, name,
                         (inventory, area, index, x, y) -> new Slot(inventory, index, x, y));
             }
             return null;
@@ -69,14 +71,29 @@ public final class ContainerLibrary implements ModInitializer
                 Constants.SCROLLABLE_CONTAINER, Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
         ContainerLibraryAPI.INSTANCE.declareContainerType(
                 Constants.PAGED_CONTAINER, Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
-        ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, (context, buffer) ->
-                ContainerLibraryImpl.INSTANCE.openSelectScreen(context.getPlayer(), null));
+        ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, (context, buffer) -> {
+            final ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
+            final Container container = player.container;
+            if (container instanceof ninjaphenix.containerlib.api.container.AbstractContainer)
+            {
+                ContainerLibraryImpl.INSTANCE.openSelectScreen(player, (type) -> ContainerLibraryAPI.INSTANCE.openContainer(
+                        player, ((AbstractContainer) container).ORIGIN, ((AbstractContainer) container).getDisplayName())
+                );
+            }
+            else
+            {
+                ContainerLibraryImpl.INSTANCE.openSelectScreen(player, null);
+            }
+        });
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, (context, buffer) ->
-                ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
+                context.getTaskQueue().submitAndJoin(() -> {
+                    ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier());
+                }));
     }
 
     private interface containerConstructor<T extends Container>
     {
-        T create(ContainerType<T> type, int syncId, Inventory inventory, PlayerEntity player, Text containerName, AreaAwareSlotFactory slotFactory);
+        T create(ContainerType<T> type, int syncId, BlockPos pos, Inventory inventory,
+                PlayerEntity player, Text containerName, AreaAwareSlotFactory slotFactory);
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.ScreenMeta;
 import ninjaphenix.containerlib.api.container.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
@@ -30,9 +31,10 @@ public class SingleContainer extends AbstractContainer
         SIZES.put(216, ScreenMeta.of(18, 12, 216, id.apply(18, 12), 368, 352)); // Large Diamond
     }
 
-    public SingleContainer(ContainerType<?> type, int syncId, Inventory inventory, PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
+    public SingleContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory,
+            PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
     {
-        super(type, syncId, inventory, player, displayName, getNearestSize(inventory.getInvSize()));
+        super(type, syncId, pos, inventory, player, displayName, getNearestSize(inventory.getInvSize()));
         for (int i = 0; i < inventory.getInvSize(); i++)
         {
             final int x = i % SCREEN_META.WIDTH;

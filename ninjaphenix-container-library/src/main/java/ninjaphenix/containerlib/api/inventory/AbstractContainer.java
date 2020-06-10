@@ -8,18 +8,21 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.ScreenMeta;
 
 public abstract class AbstractContainer extends Container
 {
-    public final PlayerInventory PLAYER_INVENTORY;
-    public final ScreenMeta SCREEN_META;
+    public final BlockPos ORIGIN;
     protected final Inventory INVENTORY;
+    public final PlayerInventory PLAYER_INVENTORY;
     private final Text DISPLAY_NAME;
+    public final ScreenMeta SCREEN_META;
 
-    public AbstractContainer(ContainerType<?> type, int syncId, Inventory inventory, PlayerEntity player, Text displayName, ScreenMeta meta)
+    public AbstractContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory, PlayerEntity player, Text displayName, ScreenMeta meta)
     {
         super(type, syncId);
+        ORIGIN = pos;
         INVENTORY = inventory;
         PLAYER_INVENTORY = player.inventory;
         DISPLAY_NAME = displayName;
