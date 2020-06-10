@@ -12,11 +12,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.containerlib.api.Constants;
-import ninjaphenix.containerlib.client.screen.SingleScreen;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 import ninjaphenix.containerlib.impl.client.config.Config;
+import ninjaphenix.containerlib.impl.client.screen.PagedScreen;
 import ninjaphenix.containerlib.impl.client.screen.SelectContainerScreen;
-import ninjaphenix.containerlib.inventory.SingleContainer;
+import ninjaphenix.containerlib.impl.client.screen.SingleScreen;
+import ninjaphenix.containerlib.impl.inventory.PagedContainer;
+import ninjaphenix.containerlib.impl.inventory.SingleContainer;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.nio.file.Path;
@@ -58,8 +60,8 @@ public final class ContainerLibraryClient implements ClientModInitializer
     @Override
     public void onInitializeClient()
     {
-        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER,
-                (ContainerScreenFactory<SingleContainer>) container -> new SingleScreen(container));
+        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER, (ContainerScreenFactory<SingleContainer>) SingleScreen::new);
+        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, (ContainerScreenFactory<PagedContainer>) PagedScreen::new);
 
         ClientSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, (context, buffer) ->
         {

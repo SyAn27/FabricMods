@@ -7,14 +7,13 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.api.ScreenMeta;
-import ninjaphenix.containerlib.api.container.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 
-public class SingleContainer extends AbstractContainer
+public class PagedContainer extends ninjaphenix.containerlib.api.container.AbstractContainer
 {
     private static final HashMap<Integer, ScreenMeta> SIZES;
 
@@ -31,7 +30,7 @@ public class SingleContainer extends AbstractContainer
         SIZES.put(216, ScreenMeta.of(18, 12, 216, id.apply(18, 12), 368, 352)); // Large Diamond
     }
 
-    public SingleContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory,
+    public PagedContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory,
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
     {
         super(type, syncId, pos, inventory, player, displayName, getNearestSize(inventory.getInvSize()));
@@ -64,6 +63,4 @@ public class SingleContainer extends AbstractContainer
         if (largestKey > invSize && largestKey - invSize <= val.WIDTH) { return SIZES.get(largestKey); }
         throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
     }
-
-
 }

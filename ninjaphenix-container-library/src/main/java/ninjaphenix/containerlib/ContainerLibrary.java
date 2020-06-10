@@ -22,7 +22,8 @@ import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 import ninjaphenix.containerlib.api.container.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
-import ninjaphenix.containerlib.inventory.SingleContainer;
+import ninjaphenix.containerlib.impl.inventory.PagedContainer;
+import ninjaphenix.containerlib.impl.inventory.SingleContainer;
 
 public final class ContainerLibrary implements ModInitializer
 {
@@ -64,13 +65,14 @@ public final class ContainerLibrary implements ModInitializer
     public void onInitialize()
     {
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER, getContainerFactory(SingleContainer::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedContainer::new));
 
         ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.SINGLE_CONTAINER,
                 Constants.idOf("textures/gui/single_button.png"), new LiteralText("Single Page Screen"));
-        ContainerLibraryAPI.INSTANCE.declareContainerType(
-                Constants.SCROLLABLE_CONTAINER, Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
-        ContainerLibraryAPI.INSTANCE.declareContainerType(
-                Constants.PAGED_CONTAINER, Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
+        ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.SCROLLABLE_CONTAINER,
+                Constants.idOf("textures/gui/scrollable_button.png"), new LiteralText("Scrollable Screen"));
+        ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.PAGED_CONTAINER,
+                Constants.idOf("textures/gui/paged_button.png"), new LiteralText("Paginated Screen"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, (context, buffer) -> {
             final ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
             final Container container = player.container;
@@ -85,10 +87,9 @@ public final class ContainerLibrary implements ModInitializer
                 ContainerLibraryImpl.INSTANCE.openSelectScreen(player, null);
             }
         });
-        ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, (context, buffer) ->
-                context.getTaskQueue().submitAndJoin(() -> {
-                    ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier());
-                }));
+        ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, (context, buffer) -> context.getTaskQueue().submitAndJoin(() -> {
+            ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier());
+        }));
     }
 
     private interface containerConstructor<T extends Container>

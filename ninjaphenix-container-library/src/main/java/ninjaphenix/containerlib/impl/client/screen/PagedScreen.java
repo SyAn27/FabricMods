@@ -3,13 +3,13 @@ package ninjaphenix.containerlib.impl.client.screen;
 
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.containerlib.impl.inventory.SingleContainer;
+import ninjaphenix.containerlib.impl.inventory.PagedContainer;
 
-public class SingleScreen<T extends SingleContainer> extends AbstractScreen<T>
+public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T>
 {
     private Rectangle blankArea = null;
 
-    public SingleScreen(T container)
+    public PagedScreen(T container)
     {
         super(container, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
         containerWidth = 14 + 18 * SCREEN_META.WIDTH;
