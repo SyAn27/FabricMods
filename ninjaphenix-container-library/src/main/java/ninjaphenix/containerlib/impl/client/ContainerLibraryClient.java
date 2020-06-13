@@ -15,9 +15,11 @@ import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 import ninjaphenix.containerlib.impl.client.config.Config;
 import ninjaphenix.containerlib.impl.client.screen.PagedScreen;
+import ninjaphenix.containerlib.impl.client.screen.ScrollableScreen;
 import ninjaphenix.containerlib.impl.client.screen.SelectContainerScreen;
 import ninjaphenix.containerlib.impl.client.screen.SingleScreen;
 import ninjaphenix.containerlib.impl.inventory.PagedContainer;
+import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
 import ninjaphenix.containerlib.impl.inventory.SingleContainer;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -62,6 +64,7 @@ public final class ContainerLibraryClient implements ClientModInitializer
     {
         ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER, (ContainerScreenFactory<SingleContainer>) SingleScreen::new);
         ScreenProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, (ContainerScreenFactory<PagedContainer>) PagedScreen::new);
+        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, (ContainerScreenFactory<ScrollableContainer>) ScrollableScreen::new);
 
         ClientSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, (context, buffer) ->
         {

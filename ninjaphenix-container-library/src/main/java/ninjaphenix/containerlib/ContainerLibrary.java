@@ -23,6 +23,7 @@ import ninjaphenix.containerlib.api.container.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 import ninjaphenix.containerlib.impl.inventory.PagedContainer;
+import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
 import ninjaphenix.containerlib.impl.inventory.SingleContainer;
 
 public final class ContainerLibrary implements ModInitializer
@@ -66,6 +67,7 @@ public final class ContainerLibrary implements ModInitializer
     {
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER, getContainerFactory(SingleContainer::new));
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedContainer::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableContainer::new));
 
         ContainerLibraryAPI.INSTANCE.declareContainerType(Constants.SINGLE_CONTAINER,
                 Constants.idOf("textures/gui/single_button.png"), new TranslatableText("screen.ninjaphenix-container-lib.single_screen_type"));
