@@ -29,7 +29,6 @@ public class SingleScreen<T extends SingleContainer> extends AbstractScreen<T, S
             blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, blanked * 18, 18,
                     xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         }
-
     }
 
     @Override
