@@ -6,6 +6,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
 
+import java.util.function.Consumer;
+
 public interface ContainerLibraryAPI
 {
     ContainerLibraryAPI INSTANCE = ContainerLibraryImpl.INSTANCE;
@@ -27,4 +29,8 @@ public interface ContainerLibraryAPI
      * @since 1.0.0
      */
     boolean declareContainerType(final Identifier containerTypeId, final Identifier selectTextureId, final Text narrationMessage);
+
+    <T> void declareScreenSizeRegisterCallback(final Identifier containerTypeId, final Consumer<T> sizeConsumer);
+
+    <T> void declareScreenSize(final Identifier containerTypeId, final T screenSize);
 }

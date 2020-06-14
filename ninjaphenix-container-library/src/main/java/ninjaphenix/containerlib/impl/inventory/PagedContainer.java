@@ -4,31 +4,19 @@ import net.minecraft.container.ContainerType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.containerlib.api.ScreenMeta;
+import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
+import ninjaphenix.containerlib.api.inventory.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.function.BiFunction;
 
-public class PagedContainer extends ninjaphenix.containerlib.api.container.AbstractContainer
+public final class PagedContainer extends AbstractContainer<PagedScreenMeta>
 {
-    private static final HashMap<Integer, ScreenMeta> SIZES;
+    private static final HashMap<Integer, PagedScreenMeta> SIZES = new HashMap<>();
 
-    static
-    {
-        BiFunction<Integer, Integer, Identifier> id = (w, h) -> new Identifier("ninjaphenix-container-lib",
-                "textures/gui/container/fixed_" + w + "_" + h + ".png");
-        SIZES = new HashMap<>();
-        SIZES.put(27, ScreenMeta.of(9, 3, 27, id.apply(9, 3), 208, 192)); // Wood
-        SIZES.put(54, ScreenMeta.of(9, 6, 54, id.apply(9, 6), 208, 240)); // Iron / Large Wood
-        SIZES.put(81, ScreenMeta.of(9, 9, 81, id.apply(9, 9), 208, 304)); // Gold
-        SIZES.put(108, ScreenMeta.of(12, 9, 108, id.apply(12, 9), 256, 304)); // Diamond / Large Iron
-        SIZES.put(162, ScreenMeta.of(18, 9, 162, id.apply(18, 9), 368, 304)); // Large Gold
-        SIZES.put(216, ScreenMeta.of(18, 12, 216, id.apply(18, 12), 368, 352)); // Large Diamond
-    }
+    public static void onScreenSizeRegistered(PagedScreenMeta meta) { SIZES.put(meta.TOTAL_SLOTS, meta); }
 
     public PagedContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory,
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
@@ -52,9 +40,9 @@ public class PagedContainer extends ninjaphenix.containerlib.api.container.Abstr
         for (int i = 0; i < 9; i++) { this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_hotbar", i, left + 18 * i, top + 58)); }
     }
 
-    private static ScreenMeta getNearestSize(int invSize)
+    private static PagedScreenMeta getNearestSize(int invSize)
     {
-        ScreenMeta val = SIZES.get(invSize);
+        PagedScreenMeta val = SIZES.get(invSize);
         if (val != null) { return val; }
         final Integer[] keys = SIZES.keySet().toArray(new Integer[]{});
         Arrays.sort(keys);

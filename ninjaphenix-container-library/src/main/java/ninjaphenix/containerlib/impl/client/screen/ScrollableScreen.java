@@ -1,11 +1,12 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
 
+import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
 
-public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScreen<T>
+public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScreen<T, ScrollableScreenMeta>
 {
     private Rectangle blankArea = null;
 

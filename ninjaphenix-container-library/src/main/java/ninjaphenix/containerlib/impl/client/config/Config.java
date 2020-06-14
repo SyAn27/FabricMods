@@ -10,5 +10,5 @@ public class Config
     public final Boolean auto_focus_searchbar = Boolean.FALSE;
 
     @Comment("\nPrefered container type, set to ninjaphenix-container-lib:auto to reuse selection screen.")
-    public Identifier preferred_container_type = Constants.idOf("auto");
+    public Identifier preferred_container_type = Constants.id("auto");
 }

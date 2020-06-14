@@ -1,11 +1,12 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
 
+import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.containerlib.impl.inventory.PagedContainer;
 
-public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T>
+public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T, PagedScreenMeta>
 {
     private Rectangle blankArea = null;
 

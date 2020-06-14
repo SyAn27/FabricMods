@@ -19,7 +19,7 @@ public class ScreenTypeSelectionScreenButton extends ButtonWidget
     {
         super(x, y, 12, 12, new TranslatableText("screen.ninjaphenix-container-lib.change_screen_button").asString(), button ->
                 ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer())));
-        TEXTURE = Constants.idOf("textures/gui/select_screen_button.png");
+        TEXTURE = Constants.id("textures/gui/select_screen_button.png");
     }
 
     @Override

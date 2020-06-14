@@ -1,4 +1,4 @@
-package ninjaphenix.containerlib.api.container;
+package ninjaphenix.containerlib.api.inventory;
 
 import net.minecraft.container.Container;
 import net.minecraft.container.ContainerType;
@@ -9,17 +9,17 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.containerlib.api.ScreenMeta;
+import ninjaphenix.containerlib.api.screen.ScreenMeta;
 
-public abstract class AbstractContainer extends Container
+public abstract class AbstractContainer<T extends ScreenMeta> extends Container
 {
     public final BlockPos ORIGIN;
     protected final Inventory INVENTORY;
     public final PlayerInventory PLAYER_INVENTORY;
     private final Text DISPLAY_NAME;
-    public final ScreenMeta SCREEN_META;
+    public final T SCREEN_META;
 
-    public AbstractContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory, PlayerEntity player, Text displayName, ScreenMeta meta)
+    public AbstractContainer(ContainerType<?> type, int syncId, BlockPos pos, Inventory inventory, PlayerEntity player, Text displayName, T meta)
     {
         super(type, syncId);
         ORIGIN = pos;

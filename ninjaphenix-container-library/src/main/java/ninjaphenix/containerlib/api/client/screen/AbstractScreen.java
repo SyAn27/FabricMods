@@ -2,17 +2,17 @@ package ninjaphenix.containerlib.api.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.ContainerScreen;
-import ninjaphenix.containerlib.api.ScreenMeta;
-import ninjaphenix.containerlib.api.container.AbstractContainer;
+import ninjaphenix.containerlib.api.screen.ScreenMeta;
+import ninjaphenix.containerlib.api.inventory.AbstractContainer;
 
 import java.util.function.Function;
 
-public abstract class AbstractScreen<T extends AbstractContainer> extends ContainerScreen<T>
+public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends ScreenMeta> extends ContainerScreen<T>
 {
-    protected final ScreenMeta SCREEN_META;
+    protected final R SCREEN_META;
     private final Integer INVENTORY_LABEL_LEFT;
 
-    protected AbstractScreen(T container, Function<ScreenMeta, Integer> inventoryLabelLeftFunction)
+    protected AbstractScreen(T container, Function<R, Integer> inventoryLabelLeftFunction)
     {
         super(container, container.PLAYER_INVENTORY, container.getDisplayName());
         SCREEN_META = container.SCREEN_META;
