@@ -22,14 +22,21 @@ public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T, Pag
     {
         super.init();
         addButton(new ScreenTypeSelectionScreenButton(0, 0));
-        final int totalSlots = container.slots.size() - 36;
-        final int diff = SCREEN_META.TOTAL_SLOTS - totalSlots;
-        if (diff > 0)
-        {
-            final int xOffset = 7 + (SCREEN_META.WIDTH - diff) * 18;
-            blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, diff * 18, 18,
-                    xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
-        }
+        //final int totalSlots = container.slots.size() - 36;
+        //final int diff = SCREEN_META.TOTAL_SLOTS - totalSlots;
+        //if (diff > 0)
+        //{
+        //    final int xOffset = 7 + (SCREEN_META.WIDTH - diff) * 18;
+        //    blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, diff * 18, 18,
+        //            xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+        //}
+        /*
+         * TODO:
+         *  Create PageButton Widget.
+         *   Should take a consumer for onPageChangeCallback
+         *  On Page change, move slots up/down and if on last page, check if the blank area needs to be set
+         *  (also needs to be set in init in case of resize / only 1 page).
+         */
 
     }
 

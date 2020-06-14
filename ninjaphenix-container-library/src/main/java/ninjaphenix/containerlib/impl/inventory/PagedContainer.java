@@ -25,7 +25,8 @@ public final class PagedContainer extends AbstractContainer<PagedScreenMeta>
         for (int i = 0; i < inventory.getInvSize(); i++)
         {
             final int x = i % SCREEN_META.WIDTH;
-            final int y = (i - x) / SCREEN_META.WIDTH;
+            int y = ((i - x) / SCREEN_META.WIDTH);
+            if(y >= SCREEN_META.HEIGHT) { y = (y % SCREEN_META.HEIGHT) - 2000; }
             this.addSlot(slotFactory.create(inventory, "inventory", i, x * 18 + 8, y * 18 + 18));
         }
         final int left = (SCREEN_META.WIDTH * 18 + 14) / 2 - 80;
