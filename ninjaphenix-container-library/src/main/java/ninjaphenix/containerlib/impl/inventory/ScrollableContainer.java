@@ -5,9 +5,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.inventory.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,12 +24,7 @@ public final class ScrollableContainer extends AbstractContainer<ScrollableScree
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
     {
         super(type, syncId, pos, inventory, player, displayName, getNearestSize(inventory.getInvSize()));
-        for (int i = 0; i < inventory.getInvSize(); i++)
-        {
-            final int x = i % SCREEN_META.WIDTH;
-            final int y = (i - x) / SCREEN_META.WIDTH;
-            this.addSlot(slotFactory.create(inventory, "inventory", i, x * 18 + 8, y * 18 + 18));
-        }
+        resetSlotPositions(slotFactory);
         final int left = (SCREEN_META.WIDTH * 18 + 14) / 2 - 80;
         final int top = 18 + 14 + (SCREEN_META.HEIGHT * 18);
         for (int x = 0; x < 9; x++)
@@ -38,6 +35,18 @@ public final class ScrollableContainer extends AbstractContainer<ScrollableScree
             }
         }
         for (int i = 0; i < 9; i++) { this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_hotbar", i, left + 18 * i, top + 58)); }
+    }
+
+    private void resetSlotPositions(@Nullable AreaAwareSlotFactory slotFactory)
+    {
+        for (int i = 0; i < INVENTORY.getInvSize(); i++)
+        {
+            final int x = i % SCREEN_META.WIDTH;
+            int y = MathHelper.ceil((((double) (i - x)) / SCREEN_META.WIDTH));
+            if(y >= SCREEN_META.HEIGHT) { y = - 2000; }else {y = y * 18 + 18;}
+            if(slotFactory != null) { this.addSlot(slotFactory.create(INVENTORY, "inventory", i, x * 18 + 8, y)); }
+            else { slots.get(i).yPosition = y; }
+        }
     }
 
     private static ScrollableScreenMeta getNearestSize(int invSize)
@@ -52,5 +61,6 @@ public final class ScrollableContainer extends AbstractContainer<ScrollableScree
         throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
     }
 
-
+    public void moveSlotRange(int min, int max, int yChange) { for (int i = min; i < max; i++) { slots.get(i).yPosition += yChange; } }
+    public void setSlotRange(int min, int max, int y) { for (int i = min; i < max; i++) { slots.get(i).yPosition = y; } }
 }

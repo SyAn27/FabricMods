@@ -1,6 +1,5 @@
 package ninjaphenix.containerlib.impl.inventory;
 
-import blue.endless.jankson.annotation.Nullable;
 import net.minecraft.container.ContainerType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -10,6 +9,7 @@ import net.minecraft.util.math.MathHelper;
 import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
 import ninjaphenix.containerlib.api.inventory.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
