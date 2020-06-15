@@ -116,13 +116,19 @@ public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T, Pag
     {
         if (keyCode == 262 || keyCode == 267) // Right Arrow, Page Down
         {
-            if (hasShiftDown()) { setPage(page, SCREEN_META.PAGES); }
-            else { if (page != SCREEN_META.PAGES) { setPage(page, page + 1); } }
+            if (SCREEN_META.PAGES != 1)
+            {
+                if (hasShiftDown()) { setPage(page, SCREEN_META.PAGES); }
+                else { if (page != SCREEN_META.PAGES) { setPage(page, page + 1); } }
+            }
         }
         else if (keyCode == 263 || keyCode == 266) // Left Arrow, Page Up
         {
-            if (hasShiftDown()) { setPage(page, 1); }
-            else { if (page != 1) { setPage(page, page - 1); } }
+            if (SCREEN_META.PAGES != 1)
+            {
+                if (hasShiftDown()) { setPage(page, 1); }
+                else { if (page != 1) { setPage(page, page - 1); } }
+            }
         }
         else { super.keyPressed(keyCode, scanCode, modifiers); }
         return true;
