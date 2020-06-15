@@ -11,4 +11,7 @@ public class Config
 
     @Comment("\nPrefered container type, set to ninjaphenix-container-lib:auto to reuse selection screen.")
     public Identifier preferred_container_type = Constants.id("auto");
+
+    @Comment("\nOnly allows scrolling in scrollable screen whilst hovering over the scrollbar region.")
+    public Boolean restrictive_scrolling = Boolean.FALSE;
 }

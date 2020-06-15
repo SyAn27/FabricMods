@@ -3,6 +3,7 @@ package ninjaphenix.containerlib.impl;
 import net.minecraft.util.Identifier;
 import ninjaphenix.containerlib.api.*;
 import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
+import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.screen.SingleScreenMeta;
 import ninjaphenix.containerlib.impl.inventory.PagedContainer;
 import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
@@ -38,6 +39,13 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
         API.declareScreenSize(PAGED_CONTAINER, new PagedScreenMeta(9, 6, 2, 108, getTexture("shared", 9, 6), 208, 240)); // Diamond / Large Iron
         API.declareScreenSize(PAGED_CONTAINER, new PagedScreenMeta(9, 6, 3, 162, getTexture("shared", 9, 6), 208, 240)); // Large Gold
         API.declareScreenSize(PAGED_CONTAINER, new PagedScreenMeta(9, 8, 3, 216, getTexture("shared", 9, 8), 208, 288)); // Large Diamond
+
+        API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 3, 27, getTexture("shared", 9, 3), 208, 192)); // Wood
+        API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 6, 54, getTexture("shared", 9, 6), 208, 240)); // Iron / Large Wood
+        API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 81, getTexture("shared", 9, 9), 208, 304)); // Gold
+        API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 108, getTexture("shared", 9, 9), 208, 304)); // Diamond / Large Iron
+        API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 162, getTexture("shared", 9, 9), 208, 304)); // Large Gold
+        API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 216, getTexture("shared", 9, 9), 208, 304)); // Large Diamond
     }
 
     private Identifier getTexture(String type, int width, int height)
