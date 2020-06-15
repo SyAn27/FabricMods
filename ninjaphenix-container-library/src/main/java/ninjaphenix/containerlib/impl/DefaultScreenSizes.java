@@ -32,7 +32,7 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(18, 9, 162, getTexture("shared", 18, 9), 368, 304)); // Large Gold
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(18, 12, 216, getTexture("shared", 18, 12), 368, 352)); // Large Diamond
 
-        API.declareScreenSize(PAGED_CONTAINER, new PagedScreenMeta(9, 8, 3, 216, getTexture("shared", 9, 8), 0, 0)); // Large Diamond
+        API.declareScreenSize(PAGED_CONTAINER, new PagedScreenMeta(9, 8, 3, 216, getTexture("shared", 9, 8), 208, 288)); // Large Diamond
     }
 
     private Identifier getTexture(String type, int width, int height)
