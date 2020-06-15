@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
 
 public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScreen<T, ScrollableScreenMeta>
@@ -79,6 +80,37 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
     private void updateTopRow(double mouseY)
     {
         MinecraftClient.getInstance().player.sendChatMessage(Double.toString(mouseY));
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double amount)
+    {
+        if(hasScrollbar) {
+            if(ContainerLibraryClient.CONFIG.restrictive_scrolling) {
+                if(isMouseOverScrollbar(mouseX, mouseY)) {
+                    if(hasShiftDown()) {
+                        // scroll by SCREEN_META.HEIGHT
+                    } else {
+                        // scroll by 1
+                    }
+                    return true;
+                }
+                else {
+                    return super.mouseScrolled(mouseX, mouseY, amount);
+                }
+            }
+            else {
+                if(hasShiftDown()) {
+                    // scroll by SCREEN_META.HEIGHT
+                } else {
+                    // scroll by 1
+                }
+                return true;
+            }
+        }
+        else {
+            return super.mouseScrolled(mouseX, mouseY, amount);
+        }
     }
 
     @Override
