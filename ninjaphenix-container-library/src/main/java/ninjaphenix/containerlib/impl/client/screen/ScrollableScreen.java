@@ -27,7 +27,8 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
     protected void init()
     {
         super.init();
-        addButton(new ScreenTypeSelectionScreenButton(x + containerWidth - (hasScrollbar ? 1 : 19), y + 4));
+        addButton(new ScreenTypeSelectionScreenButton(x + containerWidth -
+                (hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19), y + 4));
         if (hasScrollbar)
         {
             isDragging = false;
