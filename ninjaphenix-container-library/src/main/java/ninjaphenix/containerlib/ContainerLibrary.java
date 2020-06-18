@@ -1,21 +1,45 @@
 package ninjaphenix.containerlib;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.container.ContainerFactory;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.network.PacketContext;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
+import net.minecraft.container.Container;
+import net.minecraft.container.ContainerType;
+import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ninjaphenix.containerlib.inventory.ScrollableContainer;
+import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
+import ninjaphenix.containerlib.api.Constants;
+import ninjaphenix.containerlib.api.ContainerLibraryAPI;
+import ninjaphenix.containerlib.api.ContainerLibraryExtension;
+import ninjaphenix.containerlib.api.inventory.AbstractContainer;
+import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
+import ninjaphenix.containerlib.impl.ContainerLibraryImpl;
+import ninjaphenix.containerlib.impl.inventory.PagedContainer;
+import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
+import ninjaphenix.containerlib.impl.inventory.SingleContainer;
+
+import java.util.List;
+import java.util.function.Function;
+
+import static ninjaphenix.containerlib.api.Constants.*;
 
 public final class ContainerLibrary implements ModInitializer
 {
-    public static final Identifier CONTAINER_ID = new Identifier("ninjaphenix-container-lib", "container");
     public static final ContainerLibrary INSTANCE = new ContainerLibrary();
+    private static final ContainerLibraryImpl IMPL = ContainerLibraryImpl.INSTANCE;
 
     private ContainerLibrary() {}
 
@@ -26,21 +50,60 @@ public final class ContainerLibrary implements ModInitializer
      * @param pos The block pos of the container.
      * @param containerName The text that should be displayed as the container name.
      * @since 0.0.1
+     * @deprecated {@link ContainerLibraryAPI#openContainer}
      */
-    public static void openContainer(PlayerEntity player, BlockPos pos, Text containerName)
-    {
-        ContainerProviderRegistry.INSTANCE.openContainer(CONTAINER_ID, player, (buffer) ->
-        {
-            buffer.writeBlockPos(pos);
-            buffer.writeText(containerName);
-        });
-    }
+    @Deprecated
+    public static void openContainer(PlayerEntity player, BlockPos pos, Text containerName) { IMPL.openContainer(player, pos, containerName); }
 
     @Override
     public void onInitialize()
     {
-        ContainerProviderRegistry.INSTANCE.registerFactory(CONTAINER_ID, (syncId, identifier, player, buffer) ->
+        List<ContainerLibraryExtension> extensions = FabricLoader.getInstance().getEntrypoints(Constants.ENTRY_POINT_ID, ContainerLibraryExtension.class);
+        extensions.forEach(ContainerLibraryExtension::declareScreenSizeCallbacks);
+        extensions.forEach(ContainerLibraryExtension::declareScreenSizes);
+        ContainerProviderRegistry.INSTANCE.registerFactory(SINGLE_CONTAINER, getContainerFactory(SingleContainer::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedContainer::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableContainer::new));
+        final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", LIBRARY_ID, name));
+        IMPL.declareContainerType(SINGLE_CONTAINER, Constants.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
+        IMPL.declareContainerType(Constants.SCROLLABLE_CONTAINER, Constants.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
+        IMPL.declareContainerType(Constants.PAGED_CONTAINER, Constants.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
+        ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
+        ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, this::onReceivePlayerPreference);
+
+        PlayerDisconnectCallback.EVENT.register(player -> IMPL.setPlayerPreference(player, null));
+    }
+
+    private void onReceivePlayerPreference(PacketContext context, PacketByteBuf buffer)
+    {
+        context.getTaskQueue().submitAndJoin(() -> ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
+    }
+
+    private void onReceiveOpenSelectScreenPacket(final PacketContext context, final PacketByteBuf buffer)
+    {
+        final ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
+        final Container container = player.container;
+        if (container instanceof AbstractContainer)
         {
+            final AbstractContainer<?> abstractContainer = (AbstractContainer<?>) container;
+            IMPL.openSelectScreen(player, (type) -> IMPL.openContainer(player, abstractContainer.ORIGIN, abstractContainer.getDisplayName())
+            );
+        }
+        else
+        {
+            ContainerLibraryImpl.INSTANCE.openSelectScreen(player, null);
+        }
+    }
+
+    private interface containerConstructor<T extends Container>
+    {
+        T create(ContainerType<T> type, int syncId, BlockPos pos, Inventory inventory,
+                PlayerEntity player, Text containerName, AreaAwareSlotFactory slotFactory);
+    }
+
+    private <T extends Container> ContainerFactory<T> getContainerFactory(containerConstructor<T> newMethod)
+    {
+        return (syncId, identifier, player, buffer) -> {
             final BlockPos pos = buffer.readBlockPos();
             final Text name = buffer.readText();
             final World world = player.getEntityWorld();
@@ -48,9 +111,10 @@ public final class ContainerLibrary implements ModInitializer
             final Block block = state.getBlock();
             if (block instanceof InventoryProvider)
             {
-                return new ScrollableContainer(syncId, player.inventory, ((InventoryProvider) block).getInventory(state, world, pos), name);
+                return newMethod.create(null, syncId, pos, ((InventoryProvider) block).getInventory(state, world, pos), player, name,
+                        (inventory, area, index, x, y) -> new Slot(inventory, index, x, y));
             }
             return null;
-        });
+        };
     }
 }

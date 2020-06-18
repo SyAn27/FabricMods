@@ -15,8 +15,6 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import ninjaphenix.expandedstorage.block.misc.Nameable;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public abstract class AbstractChestBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Nameable
 {
@@ -27,19 +25,19 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
 
     protected Identifier block;
 
-    protected AbstractChestBlockEntity(@NonNull BlockEntityType type, @Nullable Identifier block)
+    protected AbstractChestBlockEntity(BlockEntityType type, Identifier block)
     {
         super(type);
         if (block != null) { this.initialize(block); }
     }
 
-    protected void initialize(@NonNull Identifier block) { }
+    protected void initialize(Identifier block) { }
 
-    @Nullable
+
     public Identifier getBlock() { return block; }
 
     @Environment(EnvType.CLIENT)
-    public void setBlock(@NonNull Identifier block) { this.block = block; }
+    public void setBlock(Identifier block) { this.block = block; }
 
     @Override
     protected DefaultedList<ItemStack> getInvStackList() { return inventory; }

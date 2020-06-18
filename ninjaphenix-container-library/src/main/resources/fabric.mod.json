@@ -19,12 +19,21 @@
       "ninjaphenix.containerlib.ContainerLibrary::INSTANCE"
     ],
     "client": [
-      "ninjaphenix.containerlib.client.ContainerLibraryClient::INSTANCE"
+      "ninjaphenix.containerlib.impl.client.ContainerLibraryClient::INSTANCE"
     ],
     "rei_plugins_v0": [
-      "ninjaphenix.containerlib.client.ContainerLibREIPlugin"
+      "ninjaphenix.containerlib.impl.client.ContainerLibREIPlugin"
+    ],
+    "ninjaphenix-container-library-screens": [
+      "ninjaphenix.containerlib.impl.DefaultScreenSizes"
     ]
   },
+  "mixins": [
+    {
+      "config": "ninjaphenix-container-lib.mixins.json",
+      "environment": "*"
+    }
+  ],
   "accessWidener": "ninjaphenix-container-lib.accesswidener",
   "depends": {
     "fabricloader": ">=${dep_loader_version}",

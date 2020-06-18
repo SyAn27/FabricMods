@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "ninjaphenix.containerlib.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "ClientGameStart"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.7.11"
+}

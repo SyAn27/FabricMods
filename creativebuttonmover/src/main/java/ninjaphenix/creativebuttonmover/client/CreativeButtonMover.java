@@ -35,14 +35,14 @@ public class CreativeButtonMover
         {
             Properties props = new Properties();
             props.load(inputStream);
-            x = Integer.valueOf((String) props.computeIfAbsent("x", (v) -> "170"));
-            y = Integer.valueOf((String) props.computeIfAbsent("y", (v) -> "4"));
+            x = Integer.valueOf((String) props.computeIfAbsent("x", (v) -> "116"));
+            y = Integer.valueOf((String) props.computeIfAbsent("y", (v) -> "-10"));
         }
         catch (IOException e)
         {
             LOGGER.info("[creativebuttonmover] Failed to read values from config.");
-            x = 170;
-            y = 4;
+            x = 116;
+            y = -10;
         }
         saveValues();
     }

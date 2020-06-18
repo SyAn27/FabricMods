@@ -97,8 +97,7 @@ public class SimulatedCreativeScreen extends Screen
         RenderSystem.disableAlphaTest();
         textureManager.bindTexture(BUTTON_TEXTURE);
         setBlitOffset(200);
-        blit(left + xpos, top + ypos, 0, 0, 12, 12);
-        blit(left + xpos + 10, top + ypos, 12, 0, 12, 12);
+        blit(left + xpos, top + ypos, 0, 0, 22, 10);
         setBlitOffset(0);
         font.drawWithShadow("Page Button Mover", width / 2f - font.getStringWidth("Page Button Mover") / 2f, top - 40, 5636095);
     }

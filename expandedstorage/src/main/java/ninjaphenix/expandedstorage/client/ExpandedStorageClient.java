@@ -16,7 +16,6 @@ import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.Consumer;
 
@@ -37,7 +36,7 @@ public class ExpandedStorageClient implements ClientModInitializer
         }
     }
 
-    public void makeAtlas(@NonNull Consumer<SpriteIdentifier> consumer)
+    public void makeAtlas(Consumer<SpriteIdentifier> consumer)
     {
         iterateOurTiers(Registries.CHEST, (data) ->
         {

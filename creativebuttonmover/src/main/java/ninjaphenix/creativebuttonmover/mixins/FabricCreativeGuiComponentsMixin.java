@@ -15,7 +15,7 @@ public class FabricCreativeGuiComponentsMixin
     public void init(int x, int y, FabricCreativeGuiComponents.Type type, CreativeGuiExtensions extensions, CallbackInfo ci)
     {
         FabricCreativeGuiComponents.ItemGroupButtonWidget widget = (FabricCreativeGuiComponents.ItemGroupButtonWidget) (Object) this;
-        widget.x = x - 170 + CreativeButtonMover.x;
-        widget.y = y - 4 + CreativeButtonMover.y;
+        widget.x = x - 116 + CreativeButtonMover.x;
+        widget.y = y + 10 + CreativeButtonMover.y;
     }
 }

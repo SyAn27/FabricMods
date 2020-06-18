@@ -20,14 +20,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import ninjaphenix.containerlib.inventory.DoubleSidedInventory;
-import ninjaphenix.containerlib.inventory.ScrollableContainer;
+import ninjaphenix.containerlib.api.inventory.AbstractContainer;
+import ninjaphenix.containerlib.api.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     private int viewerCount;
     private int ticksOpen;
 
-    public CursedChestBlockEntity(@Nullable Identifier block) { super(ExpandedStorage.CHEST, block); }
+    public CursedChestBlockEntity(Identifier block) { super(ExpandedStorage.CHEST, block); }
 
     private static int tickViewerCount(World world, CursedChestBlockEntity instance, int ticksOpen, int x, int y, int z, int viewCount)
     {
@@ -53,9 +51,9 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
         final List<PlayerEntity> playersInRange = world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6));
         for (PlayerEntity player : playersInRange)
         {
-            if (player.container instanceof ScrollableContainer)
+            if (player.container instanceof AbstractContainer)
             {
-                final Inventory inventory = ((ScrollableContainer) player.container).getInventory();
+                final Inventory inventory = ((AbstractContainer<?>) player.container).getInventory();
                 if (inventory == instance || inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance)) {viewers++;}
             }
         }
@@ -64,7 +62,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    protected void initialize(@NonNull Identifier block)
+    protected void initialize(Identifier block)
     {
         this.block = block;
         defaultContainerName = Registries.CHEST.get(block).getContainerName();
