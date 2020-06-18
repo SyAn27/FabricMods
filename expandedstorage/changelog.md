@@ -1,3 +1,2 @@
-- Fix container lib printing out auto focus state on start up.
-- Change item group translation key to have lowercase itemgroup instead of itemGroup
-- Added upside down translation for item group.
+- Added new screen types
+- Fixed bug when REI is not present.
