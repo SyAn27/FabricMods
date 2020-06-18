@@ -53,6 +53,12 @@ public final class ContainerLibraryClient implements ClientModInitializer
         ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
     }
 
+    public static void sendCallbackRemoveToServer() {
+        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+        buffer.writeIdentifier(Constants.id("auto"));
+        ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
+    }
+
     public static void setPreference(Identifier container_type)
     {
         CONFIG.preferred_container_type = container_type;

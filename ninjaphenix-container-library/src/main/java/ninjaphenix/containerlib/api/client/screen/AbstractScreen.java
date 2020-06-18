@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import ninjaphenix.containerlib.api.screen.ScreenMeta;
 import ninjaphenix.containerlib.api.inventory.AbstractContainer;
+import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 
 import java.util.function.Function;
 
@@ -65,4 +66,16 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
 
         public void render() { blit(X, Y, TEXTURE_X, TEXTURE_Y, WIDTH, HEIGHT, TEXTURE_WIDTH, TEXTURE_HEIGHT); }
     }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    {
+        if (keyCode == 256 || this.minecraft.options.keyInventory.matchesKey(keyCode, scanCode)) {
+            ContainerLibraryClient.sendCallbackRemoveToServer();
+            this.minecraft.player.closeContainer();
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
 }

@@ -18,7 +18,10 @@ public class ScreenTypeSelectionScreenButton extends ButtonWidget
     public ScreenTypeSelectionScreenButton(int x, int y)
     {
         super(x, y, 12, 12, new TranslatableText("screen.ninjaphenix-container-lib.change_screen_button").asString(), button ->
-                ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer())));
+        {
+            MinecraftClient.getInstance().player.closeContainer();
+            ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
+        });
         TEXTURE = Constants.id("textures/gui/select_screen_button.png");
     }
 

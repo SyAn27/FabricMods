@@ -27,6 +27,7 @@ public abstract class AbstractContainer<T extends ScreenMeta> extends Container
         PLAYER_INVENTORY = player.inventory;
         DISPLAY_NAME = displayName;
         SCREEN_META = meta;
+        inventory.onInvOpen(player);
     }
 
     @Override
@@ -50,4 +51,13 @@ public abstract class AbstractContainer<T extends ScreenMeta> extends Container
         }
         return stack;
     }
+
+    @Override
+    public void close(PlayerEntity player)
+    {
+        super.close(player);
+        INVENTORY.onInvClose(player);
+    }
+
+    public Inventory getInventory() { return INVENTORY; }
 }

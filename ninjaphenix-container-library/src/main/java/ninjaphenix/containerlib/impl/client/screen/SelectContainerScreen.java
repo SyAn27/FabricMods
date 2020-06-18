@@ -6,7 +6,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
 
@@ -60,7 +59,11 @@ public class SelectContainerScreen extends Screen
     }
 
     @Override
-    public void onClose() { updatePlayerPreference(Constants.id("auto")); }
+    public void onClose()
+    {
+        ContainerLibraryClient.sendCallbackRemoveToServer();
+        super.onClose();
+    }
 
     private void updatePlayerPreference(Identifier selection)
     {

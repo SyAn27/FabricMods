@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
+import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
 import org.apache.logging.log4j.LogManager;
@@ -53,13 +54,18 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
             if (preferenceCallbacks.containsKey(uuid))
             {
                 preferenceCallbacks.get(uuid).accept(containerTypeId);
-                preferenceCallbacks.remove(uuid);
             }
         }
         else
         {
-            playerPreferences.remove(uuid);
-            preferenceCallbacks.remove(uuid);
+            if(containerTypeId != null && containerTypeId.equals(Constants.id("auto")))
+            {
+                preferenceCallbacks.remove(uuid);
+            }
+            else {
+                playerPreferences.remove(uuid);
+                preferenceCallbacks.remove(uuid);
+            }
         }
     }
 
@@ -76,6 +82,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
                 ContainerProviderRegistry.INSTANCE.factoryExists(playerPreference)*/)
         {
             openContainer(player, playerPreference, pos, containerName);
+            preferenceCallbacks.put(player.getUuid(), (type) -> openContainer(player, type, pos, containerName));
         }
         else
         {

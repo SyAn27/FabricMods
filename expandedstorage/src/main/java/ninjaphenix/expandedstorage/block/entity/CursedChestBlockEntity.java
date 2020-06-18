@@ -20,8 +20,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import ninjaphenix.containerlib.inventory.DoubleSidedInventory;
-import ninjaphenix.containerlib.inventory.ScrollableContainer;
+import ninjaphenix.containerlib.api.inventory.AbstractContainer;
+import ninjaphenix.containerlib.api.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.CursedChestBlock;
@@ -51,9 +51,9 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
         final List<PlayerEntity> playersInRange = world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6));
         for (PlayerEntity player : playersInRange)
         {
-            if (player.container instanceof ScrollableContainer)
+            if (player.container instanceof AbstractContainer)
             {
-                final Inventory inventory = ((ScrollableContainer) player.container).getInventory();
+                final Inventory inventory = ((AbstractContainer<?>) player.container).getInventory();
                 if (inventory == instance || inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance)) {viewers++;}
             }
         }

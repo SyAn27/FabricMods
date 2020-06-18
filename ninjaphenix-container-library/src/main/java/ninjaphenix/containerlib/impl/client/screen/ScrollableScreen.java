@@ -34,6 +34,14 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
             isDragging = false;
             topRow = 0;
         }
+        else {
+            final int blanked = SCREEN_META.BLANK_SLOTS;
+            if(blanked > 0) {
+                final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
+                blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, blanked * 18, 18,
+                        xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            }
+        }
     }
 
     @Override

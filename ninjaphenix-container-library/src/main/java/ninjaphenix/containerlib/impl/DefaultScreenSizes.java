@@ -52,8 +52,6 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
         API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 108, getTexture("shared", 9, 9), 208, 304)); // Diamond / Large Iron
         API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 162, getTexture("shared", 9, 9), 208, 304)); // Large Gold
         API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 216, getTexture("shared", 9, 9), 208, 304)); // Large Diamond
-
-        //API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(10, 5, 216, getTexture("test", 10, 5), 224, 224)); // Large Diamond
     }
 
     private Identifier getTexture(String type, int width, int height)
