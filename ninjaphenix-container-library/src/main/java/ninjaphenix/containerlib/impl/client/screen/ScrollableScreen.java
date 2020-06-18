@@ -59,6 +59,33 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    {
+        if (hasScrollbar)
+        {
+            if (keyCode == 264 || keyCode == 267) // Down Arrow, Page Down
+            {
+                if (topRow != SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)
+                {
+                    if (hasShiftDown()) { setTopRow(topRow, Math.min(topRow + SCREEN_META.HEIGHT, SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)); }
+                    else {setTopRow(topRow, topRow + 1);}
+                }
+                return true;
+            }
+            else if (keyCode == 265 || keyCode == 266) // Up Arrow, Page Up
+            {
+                if (topRow != 0)
+                {
+                    if (hasShiftDown()) { setTopRow(topRow, Math.max(topRow - SCREEN_META.HEIGHT, 0)); }
+                    else {setTopRow(topRow, topRow - 1);}
+                }
+                return true;
+            }
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button)
     {
         if (hasScrollbar && isMouseOverScrollbar(mouseX, mouseY) && button == 0)
@@ -113,35 +140,53 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         topRow = newTopRow;
         final int delta = newTopRow - oldTopRow;
         final int rows = Math.abs(delta);
-        MinecraftClient.getInstance().player.sendChatMessage("Delta: " + delta);
         if (rows < SCREEN_META.HEIGHT)
         {
+            final int setAmount = rows * SCREEN_META.WIDTH;
+            final int movableAmount = (SCREEN_META.HEIGHT - rows) * SCREEN_META.WIDTH;
             if (delta > 0)
             {
                 final int setOutBegin = oldTopRow * SCREEN_META.WIDTH;
-                final int setAmount = rows * SCREEN_META.WIDTH;
                 final int movableBegin = newTopRow * SCREEN_META.WIDTH;
-                final int movableAmount = (SCREEN_META.HEIGHT - rows) * SCREEN_META.WIDTH;
                 final int setInBegin = movableBegin + movableAmount;
                 container.setSlotRange(setOutBegin, setOutBegin + setAmount, index -> -2000);
-                container.moveSlotRange(movableBegin, movableBegin + movableAmount, -18 * rows);
-                container.setSlotRange(setInBegin, setInBegin + setAmount,
+                container.moveSlotRange(movableBegin, setInBegin, -18 * rows);
+                container.setSlotRange(setInBegin, Math.min(setInBegin + setAmount, SCREEN_META.TOTAL_SLOTS),
                         index -> 18 * MathHelper.floorDiv(index - movableBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
             }
-            else {
-                // todo: code upwards scrolling
+            else
+            {
+                final int setInBegin = newTopRow * SCREEN_META.WIDTH;
+                final int movableBegin = oldTopRow * SCREEN_META.WIDTH;
+                final int setOutBegin = movableBegin + movableAmount;
+                container.setSlotRange(setInBegin, setInBegin + setAmount,
+                        index -> 18 * MathHelper.floorDiv(index - setInBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
+                container.moveSlotRange(movableBegin, setOutBegin, 18 * rows);
+                container.setSlotRange(setOutBegin, Math.min(setOutBegin + setAmount, SCREEN_META.TOTAL_SLOTS), index -> -2000);
             }
         }
         else
         {
             final int oldMin = oldTopRow * SCREEN_META.WIDTH;
-            container.setSlotRange(oldMin, oldMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT, index -> -2000);
+            container.setSlotRange(oldMin, Math.min(oldMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT, SCREEN_META.TOTAL_SLOTS), index -> -2000);
             final int newMin = newTopRow * SCREEN_META.WIDTH;
             container.setSlotRange(newMin, newMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT,
                     index -> 18 + 18 * MathHelper.floorDiv(index - newMin, SCREEN_META.WIDTH));
         }
-        // if no slots are still visible, move all off screen, move new on screen
-        // if scrolled up/down by 1, move SCREEN_META.HEIGHT - 1, up/down and move remaining 1 off screen, move 1 row on screen.
+
+        if (newTopRow == SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)
+        {
+            int blanked = SCREEN_META.BLANK_SLOTS;
+            if(blanked > 0) {
+                final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
+                blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, blanked * 18, 18,
+                        xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            }
+        }
+        else
+        {
+            blankArea = null;
+        }
     }
 
     @Override

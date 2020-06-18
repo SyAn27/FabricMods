@@ -120,6 +120,7 @@ public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T, Pag
             {
                 if (hasShiftDown()) { setPage(page, SCREEN_META.PAGES); }
                 else { if (page != SCREEN_META.PAGES) { setPage(page, page + 1); } }
+                return true;
             }
         }
         else if (keyCode == 263 || keyCode == 266) // Left Arrow, Page Up
@@ -128,10 +129,10 @@ public class PagedScreen<T extends PagedContainer> extends AbstractScreen<T, Pag
             {
                 if (hasShiftDown()) { setPage(page, 1); }
                 else { if (page != 1) { setPage(page, page - 1); } }
+                return true;
             }
         }
-        else { super.keyPressed(keyCode, scanCode, modifiers); }
-        return true;
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     private static class PageButtonWidget extends ButtonWidget
