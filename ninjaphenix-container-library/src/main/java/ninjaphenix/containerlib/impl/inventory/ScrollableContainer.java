@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.function.IntUnaryOperator;
 
 public final class ScrollableContainer extends AbstractContainer<ScrollableScreenMeta>
 {
@@ -62,5 +63,5 @@ public final class ScrollableContainer extends AbstractContainer<ScrollableScree
     }
 
     public void moveSlotRange(int min, int max, int yChange) { for (int i = min; i < max; i++) { slots.get(i).yPosition += yChange; } }
-    public void setSlotRange(int min, int max, int y) { for (int i = min; i < max; i++) { slots.get(i).yPosition = y; } }
+    public void setSlotRange(int min, int max, IntUnaryOperator yPos) { for (int i = min; i < max; i++) { slots.get(i).yPosition = yPos.applyAsInt(i); } }
 }

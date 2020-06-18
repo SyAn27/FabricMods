@@ -26,6 +26,12 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
     @Override
     public void declareScreenSizes()
     {
+        /* todo: make these user configurable in the future
+            Requires asset generation as well as creation of custom resource packs.
+            \
+            Plan: once a screen is first opened, generate the texture and add it to a generated pack
+            Then use that cached texture to render the gui. Will need a way to store texture width and height
+         */
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(9, 3, 27, getTexture("shared", 9, 3), 208, 192)); // Wood
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(9, 6, 54, getTexture("shared", 9, 6), 208, 240)); // Iron / Large Wood
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(9, 9, 81, getTexture("shared", 9, 9), 208, 304)); // Gold
@@ -46,6 +52,8 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
         API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 108, getTexture("shared", 9, 9), 208, 304)); // Diamond / Large Iron
         API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 162, getTexture("shared", 9, 9), 208, 304)); // Large Gold
         API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(9, 9, 216, getTexture("shared", 9, 9), 208, 304)); // Large Diamond
+
+        //API.declareScreenSize(SCROLLABLE_CONTAINER, new ScrollableScreenMeta(10, 5, 216, getTexture("test", 10, 5), 224, 224)); // Large Diamond
     }
 
     private Identifier getTexture(String type, int width, int height)

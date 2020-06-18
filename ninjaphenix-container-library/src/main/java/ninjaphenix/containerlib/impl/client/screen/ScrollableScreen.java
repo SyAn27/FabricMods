@@ -1,7 +1,7 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
-
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.math.MathHelper;
 import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
@@ -42,9 +42,10 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         super.drawBackground(delta, mouseX, mouseY);
         if (hasScrollbar)
         {
-            final int scrollbarHeight = SCREEN_META.HEIGHT * 18 + 24;
+            final int slotsHeight = SCREEN_META.HEIGHT * 18;
+            final int scrollbarHeight = slotsHeight + (SCREEN_META.WIDTH > 9 ? 34 : 24);
             blit(x + containerWidth - 4, y, containerWidth, 0, 22, scrollbarHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
-            int yOffset = (int) (((scrollbarHeight - 34) * (double) topRow) / (SCREEN_META.TOTAL_ROWS));
+            int yOffset = MathHelper.floor((slotsHeight - 17) * (((double) topRow) / (SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)));
             blit(x + containerWidth - 2, y + yOffset + 18, containerWidth, scrollbarHeight, 12, 15, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         }
         if (blankArea != null) { blankArea.render(); }
@@ -80,37 +81,81 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
 
     private void updateTopRow(double mouseY)
     {
-        MinecraftClient.getInstance().player.sendChatMessage(Double.toString(mouseY));
+        int top = y + 18;
+        int height = SCREEN_META.HEIGHT * 18;
+        int newTopRow = MathHelper.floor(MathHelper.clampedLerp(0, SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT, (mouseY - top) / height));
+        setTopRow(topRow, newTopRow);
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount)
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta)
     {
-        if(hasScrollbar) {
-            if(ContainerLibraryClient.CONFIG.restrictive_scrolling) {
-                if(isMouseOverScrollbar(mouseX, mouseY)) {
-                    if(hasShiftDown()) {
-                        // scroll by SCREEN_META.HEIGHT
-                    } else {
-                        // scroll by 1
-                    }
-                    return true;
-                }
-                else {
-                    return super.mouseScrolled(mouseX, mouseY, amount);
-                }
+        if (hasScrollbar && (!ContainerLibraryClient.CONFIG.restrictive_scrolling || isMouseOverScrollbar(mouseX, mouseY)))
+        {
+            int newTop;
+            if (delta < 0)
+            {
+                newTop = Math.min(topRow + (hasShiftDown() ? SCREEN_META.HEIGHT : 1), SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT);
+            }
+            else
+            {
+                newTop = Math.max(topRow - (hasShiftDown() ? SCREEN_META.HEIGHT : 1), 0);
+            }
+            setTopRow(topRow, newTop);
+            return true;
+        }
+        return super.mouseScrolled(mouseX, mouseY, delta);
+    }
+
+    private void setTopRow(final int oldTopRow, final int newTopRow)
+    {
+        if (oldTopRow == newTopRow) { return; }
+        topRow = newTopRow;
+        final int delta = newTopRow - oldTopRow;
+        final int rows = Math.abs(delta);
+        MinecraftClient.getInstance().player.sendChatMessage("Delta: " + delta);
+        if (rows < SCREEN_META.HEIGHT)
+        {
+            if (delta > 0)
+            {
+                final int setOutBegin = oldTopRow * SCREEN_META.WIDTH;
+                final int setAmount = rows * SCREEN_META.WIDTH;
+                final int movableBegin = newTopRow * SCREEN_META.WIDTH;
+                final int movableAmount = (SCREEN_META.HEIGHT - rows) * SCREEN_META.WIDTH;
+                final int setInBegin = movableBegin + movableAmount;
+                container.setSlotRange(setOutBegin, setOutBegin + setAmount, index -> -2000);
+                container.moveSlotRange(movableBegin, movableBegin + movableAmount, -18 * rows);
+                container.setSlotRange(setInBegin, setInBegin + setAmount,
+                        index -> 18 * MathHelper.floorDiv(index - movableBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
             }
             else {
-                if(hasShiftDown()) {
-                    // scroll by SCREEN_META.HEIGHT
-                } else {
-                    // scroll by 1
-                }
-                return true;
+                // todo: code upwards scrolling
             }
         }
-        else {
-            return super.mouseScrolled(mouseX, mouseY, amount);
+        else
+        {
+            final int oldMin = oldTopRow * SCREEN_META.WIDTH;
+            container.setSlotRange(oldMin, oldMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT, index -> -2000);
+            final int newMin = newTopRow * SCREEN_META.WIDTH;
+            container.setSlotRange(newMin, newMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT,
+                    index -> 18 + 18 * MathHelper.floorDiv(index - newMin, SCREEN_META.WIDTH));
+        }
+        // if no slots are still visible, move all off screen, move new on screen
+        // if scrolled up/down by 1, move SCREEN_META.HEIGHT - 1, up/down and move remaining 1 off screen, move 1 row on screen.
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height)
+    {
+        if (hasScrollbar)
+        {
+            int row = topRow;
+            super.resize(client, width, height);
+            setTopRow(topRow, row);
+        }
+        else
+        {
+            super.resize(client, width, height);
         }
     }
 

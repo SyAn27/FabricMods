@@ -20,6 +20,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
 import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 import ninjaphenix.containerlib.api.ContainerLibraryExtension;
@@ -69,6 +70,8 @@ public final class ContainerLibrary implements ModInitializer
         IMPL.declareContainerType(Constants.PAGED_CONTAINER, Constants.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, this::onReceivePlayerPreference);
+
+        PlayerDisconnectCallback.EVENT.register(player -> IMPL.setPlayerPreference(player, null));
     }
 
     private void onReceivePlayerPreference(PacketContext context, PacketByteBuf buffer)

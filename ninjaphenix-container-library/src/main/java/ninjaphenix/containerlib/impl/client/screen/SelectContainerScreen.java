@@ -6,6 +6,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import ninjaphenix.containerlib.api.Constants;
 import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
 
@@ -35,8 +36,8 @@ public class SelectContainerScreen extends Screen
         final int totalRows = MathHelper.ceil((double) choices / maxColumns);
         int x = 0;
         int y = 0;
-        int leftPadding = MathHelper.ceil((width - 96 * maxColumns - PADDING * (maxColumns - 1)) / 2);
-        int topPadding = MathHelper.ceil((height - 96 * totalRows - PADDING * (totalRows - 1)) / 2);
+        int leftPadding = MathHelper.ceil((width - 96 * maxColumns - PADDING * (maxColumns - 1)) / 2D);
+        int topPadding = MathHelper.ceil((height - 96 * totalRows - PADDING * (totalRows - 1)) / 2D);
         TOP = topPadding;
         for (HashMap.Entry<Identifier, ScreenMiscSettings> entry : OPTIONS.entrySet())
         {
@@ -52,11 +53,14 @@ public class SelectContainerScreen extends Screen
                 if (y == totalRows - 1)
                 {
                     final int remaining = choices - (maxColumns * (totalRows - 1));
-                    leftPadding = MathHelper.ceil((width - 96 * remaining - PADDING * (remaining - 1)) / 2);
+                    leftPadding = MathHelper.ceil((width - 96 * remaining - PADDING * (remaining - 1)) / 2D);
                 }
             }
         }
     }
+
+    @Override
+    public void onClose() { updatePlayerPreference(Constants.id("auto")); }
 
     private void updatePlayerPreference(Identifier selection)
     {
@@ -94,10 +98,7 @@ public class SelectContainerScreen extends Screen
         }
 
         @Override
-        public void renderToolTip(int mouseX, int mouseY)
-        {
-            SelectContainerScreen.this.renderTooltip(this.getMessage(), mouseX, mouseY);
-        }
+        public void renderToolTip(int mouseX, int mouseY) { SelectContainerScreen.this.renderTooltip(this.getMessage(), mouseX, mouseY); }
     }
 
 }
