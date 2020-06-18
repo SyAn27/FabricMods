@@ -1,5 +1,6 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
@@ -23,6 +24,7 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         containerWidth = 14 + 18 * SCREEN_META.WIDTH;
         containerHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
         hasScrollbar = SCREEN_META.TOTAL_ROWS != SCREEN_META.HEIGHT;
+        if(!FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) { containerWidth += 18; }
     }
 
     public Optional<me.shedaniel.math.api.Rectangle> getReiRectangle() {
@@ -72,6 +74,12 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         final int top = y + 18;
         final int left = x + containerWidth - 2;
         return mouseX >= left && mouseY >= top && mouseX < left + 12 && mouseY < top + SCREEN_META.HEIGHT * 18;
+    }
+
+    @Override
+    protected boolean isClickOutsideBounds(double mouseX, double mouseY, int left, int top, int button)
+    {
+        return super.isClickOutsideBounds(mouseX, mouseY, left, top, button) && !isMouseOverScrollbar(mouseX, mouseY);
     }
 
     @Override
