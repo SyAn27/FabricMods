@@ -24,7 +24,6 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         containerWidth = 14 + 18 * SCREEN_META.WIDTH;
         containerHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
         hasScrollbar = SCREEN_META.TOTAL_ROWS != SCREEN_META.HEIGHT;
-        if(!FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) { containerWidth += 18; }
     }
 
     public Optional<me.shedaniel.math.api.Rectangle> getReiRectangle() {
