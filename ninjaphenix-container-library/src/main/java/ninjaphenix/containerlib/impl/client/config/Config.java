@@ -6,7 +6,7 @@ import ninjaphenix.containerlib.api.Constants;
 
 public class Config
 {
-    @Comment("\nEnables auto focus of the search bar as soon as screen is opened.")
+    @Comment("\nEnables auto focus of the search bar as soon as screen is opened.\nNo longer used.")
     public final Boolean auto_focus_searchbar = Boolean.FALSE;
 
     @Comment("\nPrefered container type, set to ninjaphenix-container-lib:auto to reuse selection screen.")
