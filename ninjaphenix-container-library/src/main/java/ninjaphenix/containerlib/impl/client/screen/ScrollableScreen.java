@@ -8,10 +8,12 @@ import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScre
 import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.inventory.ScrollableContainer;
 
+import java.util.Optional;
+
 public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScreen<T, ScrollableScreenMeta>
 {
     private Rectangle blankArea = null;
-    private final boolean hasScrollbar;
+    protected final boolean hasScrollbar;
     private boolean isDragging;
     private int topRow;
 
@@ -21,6 +23,12 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         containerWidth = 14 + 18 * SCREEN_META.WIDTH;
         containerHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
         hasScrollbar = SCREEN_META.TOTAL_ROWS != SCREEN_META.HEIGHT;
+    }
+
+    public Optional<me.shedaniel.math.api.Rectangle> getReiRectangle() {
+        if(!hasScrollbar) { return Optional.empty(); }
+        final int height = SCREEN_META.HEIGHT * 18 + (SCREEN_META.WIDTH > 9 ? 34 : 24);
+        return Optional.of(new me.shedaniel.math.api.Rectangle(x + containerWidth - 4, y, 22, height));
     }
 
     @Override
