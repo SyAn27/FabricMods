@@ -6,5 +6,5 @@
 - Release mods.
 # Other Todo
 - Look into forge data generators for generating both forge and fabric datapacks ( since there's no inbuilt way in fabric ecosystem yet )
- - Will wait untill advancement generator pr gets merged.
+  - Will wait untill advancement generator pr gets merged.
 - Stop neglecting forge versions of mod
