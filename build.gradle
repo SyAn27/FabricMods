@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 plugins {
     id 'java'
     id 'maven-publish'
@@ -112,10 +114,10 @@ allprojects {
             }
         }
     }
-
-    if (project.hasProperty("api_key") && project.hasProperty("curseforge_project_id")) {
+    def curseforge_api_key = Optional.ofNullable(System.getenv().get("CURSEFORGE_API_KEY"))
+    if (curseforge_api_key.isPresent() && project.hasProperty("curseforge_project_id")) {
         curseforge {
-            apiKey = project.api_key
+            apiKey = curseforge_api_key.get()
             //noinspection GroovyAssignabilityCheck
             project {
                 id = "${curseforge_project_id}"
