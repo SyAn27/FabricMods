@@ -125,20 +125,24 @@ allprojects {
                 addGameVersion "${project.curseforge_game_version}"
                 addGameVersion "Fabric"
                 addGameVersion "Java 8" // lets be honest, we're going to be stuck on java 8 for the next 5 years.
-                relations {
-                    if(project.hasProperty("curseforge_required_dependencies")) {
-                        for(String dep : project.curseforge_required_dependencies.split(":")) {
-                            requiredDependency dep
+                if(project.hasProperty("curseforge_required_dependencies") ||
+                        project.hasProperty("curseforge_embedded_dependencies") ||
+                        project.hasProperty("curseforge_optional_dependencies")) {
+                    relations {
+                        if(project.hasProperty("curseforge_required_dependencies")) {
+                            for(String dep : project.curseforge_required_dependencies.split(":")) {
+                                requiredDependency dep
+                            }
                         }
-                    }
-                    if(project.hasProperty("curseforge_embedded_dependencies")) {
-                        for(String dep : project.curseforge_embedded_dependencies.split(":")) {
-                            embeddedLibrary dep
+                        if(project.hasProperty("curseforge_embedded_dependencies")) {
+                            for(String dep : project.curseforge_embedded_dependencies.split(":")) {
+                                embeddedLibrary dep
+                            }
                         }
-                    }
-                    if(project.hasProperty("curseforge_optional_dependencies")) {
-                        for(String dep : project.curseforge_optional_dependencies.split(":")) {
-                            optionalDependency dep
+                        if(project.hasProperty("curseforge_optional_dependencies")) {
+                            for(String dep : project.curseforge_optional_dependencies.split(":")) {
+                                optionalDependency dep
+                            }
                         }
                     }
                 }
