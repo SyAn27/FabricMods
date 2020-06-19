@@ -1,1 +1,1 @@
-- Add structure compasses, Only stronghold one is enabled by default, ( has custom textures unlike others too )
+- No changes
