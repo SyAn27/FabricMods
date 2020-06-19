@@ -10,6 +10,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.WallStandingBlockItem;
+import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import torcherino.Torcherino;
@@ -48,10 +50,11 @@ public class ModBlocks
             Identifier torcherinoID = getIdentifier(tierID, "torcherino");
             Identifier jackoLanterinoID = getIdentifier(tierID, "lanterino");
             Identifier lanterinoID = getIdentifier(tierID, "lantern");
-            Block torcherinoBlock = new TorcherinoBlock(tierID);
-            Block torcherinoWallBlock = new WallTorcherinoBlock(tierID, new Identifier(Torcherino.MOD_ID, "blocks/" + torcherinoID.getPath()));
-            Block jackoLanterinoBlock = new JackoLanterinoBlock(tierID);
-            Block lanterinoBlock = new LanterinoBlock(tierID);
+            ParticleEffect particleEffect = (DefaultParticleType) Registry.PARTICLE_TYPE.get(getIdentifier(tierID, "flame"));
+            TorcherinoBlock torcherinoBlock = new TorcherinoBlock(tierID, particleEffect);
+            WallTorcherinoBlock torcherinoWallBlock = new WallTorcherinoBlock(tierID, torcherinoBlock, particleEffect);
+            JackoLanterinoBlock jackoLanterinoBlock = new JackoLanterinoBlock(tierID);
+            LanterinoBlock lanterinoBlock = new LanterinoBlock(tierID);
             blocks.put(torcherinoID, torcherinoBlock);
             if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
             {
@@ -62,9 +65,10 @@ public class ModBlocks
             blocks.put(new Identifier(Torcherino.MOD_ID, "wall_" + torcherinoID.getPath()), torcherinoWallBlock);
             blocks.put(jackoLanterinoID, jackoLanterinoBlock);
             blocks.put(lanterinoID, lanterinoBlock);
-            Item torcherinoItem = new WallStandingBlockItem(torcherinoBlock, torcherinoWallBlock, new Item.Settings().group(ItemGroup.DECORATIONS));
-            Item jackoLanterinoItem = new BlockItem(jackoLanterinoBlock, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-            Item lanterinoItem = new BlockItem(lanterinoBlock, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+            WallStandingBlockItem torcherinoItem = new WallStandingBlockItem(torcherinoBlock, torcherinoWallBlock,
+                    new Item.Settings().group(ItemGroup.DECORATIONS));
+            BlockItem jackoLanterinoItem = new BlockItem(jackoLanterinoBlock, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+            BlockItem lanterinoItem = new BlockItem(lanterinoBlock, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
             items.put(torcherinoID, torcherinoItem);
             items.put(jackoLanterinoID, jackoLanterinoItem);
             items.put(lanterinoID, lanterinoItem);
