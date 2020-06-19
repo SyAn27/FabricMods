@@ -31,7 +31,6 @@ public class TorcherinoBlock extends TorchBlock implements BlockEntityProvider, 
     {
         super(Block.Settings.copy(Blocks.TORCH), particleEffect);
         tierID = tier;
-        System.out.println(this.getLootTableId());
     }
 
     @Override
