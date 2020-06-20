@@ -8,4 +8,3 @@ For respective mod licenses look at the LICENSE file in their respective directo
 ```
 gradlew :genSources
 ```
-## [Todo List](todo.md)
