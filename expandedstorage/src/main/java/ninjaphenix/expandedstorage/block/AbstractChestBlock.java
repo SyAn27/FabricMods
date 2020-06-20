@@ -29,7 +29,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ninjaphenix.containerlib.ContainerLibrary;
-import ninjaphenix.containerlib.inventory.DoubleSidedInventory;
+import ninjaphenix.containerlib.api.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.block.misc.BasicStorageBlock;
