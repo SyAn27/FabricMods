@@ -1,1 +1,2 @@
-- No changes.
+- Adds all chests to the tag `minecraft:guarded_by_piglins`
+- Adds the gold chests to the tag `minecraft:piglin_loved`
