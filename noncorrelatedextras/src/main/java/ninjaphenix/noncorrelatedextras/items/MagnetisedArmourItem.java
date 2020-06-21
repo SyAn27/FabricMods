@@ -1,5 +1,6 @@
 package ninjaphenix.noncorrelatedextras.items;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
@@ -16,22 +17,21 @@ public class MagnetisedArmourItem extends ArmorItem
 {
     public static final EntityAttribute MAGNET_RANGE = new ClampedEntityAttribute("generic.max_magnet_range", 0, 0, Double.MAX_VALUE);
     private static final ArmorMaterial MATERIAL = new MagnetisedArmorMaterial();
-    private final int magnetModifier;
+    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
     public MagnetisedArmourItem(EquipmentSlot slot, Settings settings)
     {
         super(MATERIAL, slot, settings);
-        magnetModifier = Config.INSTANCE.getAdditionalMagnetRange(slot);
+        final int magnetModifier = Config.INSTANCE.getAdditionalMagnetRange(slot);
+        attributeModifiers = ImmutableMultimap.<EntityAttribute, EntityAttributeModifier> builder()
+                .putAll(super.getAttributeModifiers(slot))
+                .put(MAGNET_RANGE, new EntityAttributeModifier(UUID.randomUUID(), "Magnet modifier", magnetModifier, Operation.ADDITION))
+                .build();
     }
 
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot)
     {
-        Multimap<EntityAttribute, EntityAttributeModifier> multimap = super.getAttributeModifiers(slot);
-        if (slot == this.slot)
-        {
-            multimap.put(MAGNET_RANGE, new EntityAttributeModifier(UUID.randomUUID(), "Magnet modifier", magnetModifier, Operation.ADDITION));
-        }
-        return multimap;
+        return this.slot == slot ? attributeModifiers : super.getAttributeModifiers(slot);
     }
 }
