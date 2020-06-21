@@ -7,10 +7,11 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import ninjaphenix.noncorrelatedextras.Main;
 import ninjaphenix.noncorrelatedextras.features.MagnetFeature;
 
@@ -43,7 +44,7 @@ public class MagnetScreen extends Screen
         addButton(new CustomSliderWidget(x + 7, y + 17, 200, 20, (magnetRange + .0D) / (MAX_RANGE + 1))
         {
             @Override
-            protected void updateMessage() { setMessage(new TranslatableText("screen.noncorrelatedextras.magnet.range", magnetRange).asString()); }
+            protected void updateMessage() { setMessage(new TranslatableText("screen.noncorrelatedextras.magnet.range", magnetRange)); }
 
             @Override
             protected void applyValue() { magnetRange = (int) (1 + Math.round(MAX_RANGE * value)); }
@@ -71,7 +72,7 @@ public class MagnetScreen extends Screen
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers)
     {
-        if (keyCode == 256 || minecraft.options.keyInventory.matchesKey(keyCode, scanCode))
+        if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode))
         {
             onClose();
             return true;
@@ -80,15 +81,13 @@ public class MagnetScreen extends Screen
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float delta)
+    public void render(final MatrixStack matrices, int mouseX, int mouseY, float delta)
     {
-        renderBackground();
-
+        renderBackground(matrices);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(SCREEN_TEXTURE);
-        this.blit(x, y, 0, 0, WIDTH, HEIGHT);
-
-        super.render(mouseX, mouseY, delta);
-        this.font.draw(this.title.asFormattedString(), x + 8.0F, y + 6.0F, 4210752);
+        client.getTextureManager().bindTexture(SCREEN_TEXTURE);
+        drawTexture(matrices, x, y, 0, 0, WIDTH, HEIGHT);
+        super.render(matrices, mouseX, mouseY, delta);
+        textRenderer.draw(matrices, this.title, x + 8.0F, y + 6.0F, 4210752);
     }
 }

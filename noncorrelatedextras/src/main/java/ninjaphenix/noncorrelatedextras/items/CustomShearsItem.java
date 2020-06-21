@@ -16,7 +16,7 @@ public class CustomShearsItem extends MiningToolItem
     }
 
     @Override
-    public float getMiningSpeed(ItemStack stack, BlockState state)
+    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state)
     {
         Block block = state.getBlock();
         if (block == Blocks.COBWEB || BlockTags.LEAVES.contains(block)) { return 15.0f; }

@@ -2,28 +2,27 @@ package ninjaphenix.noncorrelatedextras.items;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ArmorMaterials;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.noncorrelatedextras.Main;
 
 public class MagnetisedArmorMaterial implements ArmorMaterial
 {
-    private static final int[] BASE_DURABILITY = new int[]{ 13, 15, 16, 11 };
-    private static final int[] PROTECTION_AMOUNTS = new int[]{ 1, 4, 5, 2 };
+    private static final ArmorMaterial BASE = ArmorMaterials.CHAIN;
 
     @Override
-    public int getDurability(EquipmentSlot slot) { return BASE_DURABILITY[slot.getEntitySlotId()] * 15; }
+    public int getDurability(EquipmentSlot slot) { return BASE.getDurability(slot); }
 
     @Override
-    public int getProtectionAmount(EquipmentSlot slot) { return PROTECTION_AMOUNTS[slot.getEntitySlotId()]; }
+    public int getProtectionAmount(EquipmentSlot slot) { return BASE.getProtectionAmount(slot); }
 
     @Override
-    public int getEnchantability() { return 12; }
+    public int getEnchantability() { return BASE.getEnchantability(); }
 
     @Override
-    public SoundEvent getEquipSound() { return SoundEvents.ITEM_ARMOR_EQUIP_CHAIN; }
+    public SoundEvent getEquipSound() { return BASE.getEquipSound(); }
 
     @Override
     public Ingredient getRepairIngredient() { return Ingredient.ofItems(Registry.ITEM.get(Main.getId("polarized_iron_ingot"))); }
@@ -32,5 +31,11 @@ public class MagnetisedArmorMaterial implements ArmorMaterial
     public String getName() { return "polarized_iron"; }
 
     @Override
-    public float getToughness() { return 0; }
+    public float getToughness() { return BASE.getToughness(); }
+
+    @Override
+    public float getKnockbackResistance()
+    {
+        return BASE.getKnockbackResistance();
+    }
 }
