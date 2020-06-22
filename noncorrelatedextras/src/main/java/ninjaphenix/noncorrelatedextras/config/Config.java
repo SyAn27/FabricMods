@@ -3,6 +3,7 @@ package ninjaphenix.noncorrelatedextras.config;
 import blue.endless.jankson.Comment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -42,22 +43,26 @@ public class Config
         map.put(EquipmentSlot.FEET, 1);
     });
     @Comment("\nEnabled structure compasses.")
-    private final HashMap<String, Boolean> enabled_structure_compasses = initializedMap(map -> {
-        map.put("Pillager_Outpost", false);
-        map.put("Mineshaft", false);
-        map.put("Mansion", false);
-        map.put("Igloo", false);
-        map.put("Desert_Pyramid", false);
-        map.put("Jungle_Pyramid", false);
-        map.put("Swamp_Hut", false);
-        map.put("Stronghold", true);
-        map.put("Monument", false);
-        map.put("Fortress", false);
-        map.put("EndCity", false);
-        map.put("Ocean_Ruin", false);
-        map.put("Buried_Treasure", false);
-        map.put("Shipwreck", false);
-        map.put("Village", false);
+    private final HashMap<Identifier, Boolean> enabled_structure_compasses = initializedMap(map -> {
+        map.put(new Identifier("minecraft:pillager_outpost"), false);
+        map.put(new Identifier("minecraft:mineshaft"), false);
+        map.put(new Identifier("minecraft:mansion"), false);
+        map.put(new Identifier("minecraft:jungle_pyramid"), false);
+        map.put(new Identifier("minecraft:desert_pyramid"), false);
+        map.put(new Identifier("minecraft:igloo"), false);
+        map.put(new Identifier("minecraft:ruined_portal"), false);
+        map.put(new Identifier("minecraft:shipwreck"), false);
+        map.put(new Identifier("minecraft:swamp_hut"), false);
+        map.put(new Identifier("minecraft:stronghold"), true);
+        map.put(new Identifier("minecraft:monument"), false);
+        map.put(new Identifier("minecraft:ocean_ruin"), false);
+        map.put(new Identifier("minecraft:fortress"), false);
+        map.put(new Identifier("minecraft:endcity"), false);
+        map.put(new Identifier("minecraft:buried_treasure"), false);
+        map.put(new Identifier("minecraft:village"), false);
+        map.put(new Identifier("minecraft:nether_fossil"), false);
+        map.put(new Identifier("minecraft:bastion_remnant"), false);
+
     });
 
     public static void initialize()
@@ -84,10 +89,10 @@ public class Config
 
     public double getProjectileReflectionChance() { return polarized_iron_armor_reflection_chance; }
 
-    public Set<String> getEnabledStructureCompasses()
+    public Set<Identifier> getEnabledStructureCompasses()
     {
-        HashSet<String> set = new HashSet<>();
-        for (Map.Entry<String, Boolean> entry : enabled_structure_compasses.entrySet())
+        HashSet<Identifier> set = new HashSet<>();
+        for (Map.Entry<Identifier, Boolean> entry : enabled_structure_compasses.entrySet())
         {
             if (Boolean.TRUE.equals(entry.getValue())) { set.add(entry.getKey());}
         }
