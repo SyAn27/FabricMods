@@ -1,1 +1,4 @@
+- Updated to 1.16-rc1
 - Config for structure compasses changed to require the identifier instead of internal name.
+- Structure compasses now only have a missing needle if there is no target.
+  - Otherwise, the needle spins randomly or points to the target.
