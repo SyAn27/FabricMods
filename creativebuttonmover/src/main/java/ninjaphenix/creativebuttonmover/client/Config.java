@@ -6,7 +6,7 @@ public class Config
 {
     public static Config INSTANCE;
 
-    public Boolean UseCustomButtons = Boolean.FALSE;
+    public Boolean UseCustomButtons = Boolean.TRUE;
 
     public Button PrevButton = new Button(167, 4, 12, 12, new Identifier("creativebuttonmover", "textures/gui/creativebuttons/prev/default.png"), 12, 12);
     public Button NextButton = new Button(179, 4, 12, 12, new Identifier("creativebuttonmover", "textures/gui/creativebuttons/next/default.png"), 12, 12);

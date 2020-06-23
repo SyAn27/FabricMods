@@ -51,14 +51,13 @@ public class SimulatedCreativeScreen extends Screen
         top = (this.height - containerHeight) / 2;
         prev = this.addButton(new DummyButtonWidget(Config.INSTANCE.PrevButton, left, top));
         next = this.addButton(new DummyButtonWidget(Config.INSTANCE.NextButton, left, top));
-        customButtonsEnabled = this.addButton(new ButtonWidget(2, height / 2 - 10, 110, 20,
-                new TranslatableText("screen.creativebuttonmover.isEnabled", useCustomButtons ? YES : NO), this::toggleUseCustomButtons));
         final int w = 90;
-        final int g = 5;
-        // todo: replace with localization
+        final int g = 60;
         this.addButton(new ButtonWidget(width / 2 + g, height / 2 + 96, w, 20, new TranslatableText("screen.creativebuttonmover.save"), (widget) -> onClose()));
         this.addButton(new ButtonWidget(width / 2 - w - g, height / 2 + 96, w, 20, new TranslatableText("screen.creativebuttonmover.reload"),
                 this::reloadValues));
+        customButtonsEnabled = this.addButton(new ButtonWidget(width / 2 - 55, height / 2 + 96, 110, 20,
+                new TranslatableText("screen.creativebuttonmover.isEnabled", useCustomButtons ? YES : NO), this::toggleUseCustomButtons));
     }
 
     private void toggleUseCustomButtons(ButtonWidget buttonWidget)
