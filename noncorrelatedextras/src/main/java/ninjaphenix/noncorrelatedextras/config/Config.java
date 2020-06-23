@@ -71,7 +71,7 @@ public class Config
         INSTANCE = new JanksonConfigParser.Builder()
                 .deSerializer(JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
                         ((identifier, marshaller) -> marshaller.serialize(identifier.toString()))).build()
-                .load(Config.class, configDirectory.resolve("NonCorrelatedExtras.json"), new MarkerManager.Log4jMarker("noncorrelatedextras"));
+                .load(Config.class, Config::new, configDirectory.resolve("NonCorrelatedExtras.json"), new MarkerManager.Log4jMarker("noncorrelatedextras"));
     }
 
     private <T, R> HashMap<T, R> initializedMap(Consumer<HashMap<T, R>> initializer)

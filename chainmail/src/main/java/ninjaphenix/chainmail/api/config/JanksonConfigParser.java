@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.MessageFormat;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 /**
  * Requires Jankson to be JiJ'd separately!
@@ -32,6 +33,49 @@ public final class JanksonConfigParser
 
     public JanksonConfigParser(final Jankson jankson) { _jankson = jankson; }
 
+    public <F> F load(final Class<F> configClass, final Supplier<F> defaultConfig, final Path configPath, final Marker marker)
+    {
+        final Path folder = configPath.getParent();
+        if (Files.notExists(folder))
+        {
+            try { Files.createDirectories(folder); }
+            catch (final IOException e)
+            {
+                throw new RuntimeException(MessageFormat.format("[{0}] Cannot create directories required for config.", marker.getName()), e);
+            }
+        }
+        if (!Files.exists(configPath))
+        {
+            final F config = defaultConfig.get();
+            if (save(config, configPath, marker))
+            {
+                throw new RuntimeException(MessageFormat.format("[{0}] Failed to save initial config, look at logs for more info.", marker.getName()));
+            }
+            return config;
+        }
+
+        try (final InputStream configStream = Files.newInputStream(configPath))
+        {
+            final JsonObject uConfig = _jankson.load(configStream);
+            final JsonObject dConfig = (JsonObject) _jankson.toJson(defaultConfig.get());
+            JsonObject delta = uConfig.getDelta(dConfig); // returns keys overridden from default
+            if (delta.size() > 0)
+            {
+                save(mergeConfig(delta, dConfig), configPath, marker);
+                LOGGER.info(MessageFormat.format("[{0}] New config keys found, saved merged config.", marker.getName()));
+            }
+            return _jankson.fromJson(uConfig, configClass);
+        }
+        catch (final IOException e)
+        {
+            throw new RuntimeException(MessageFormat.format("[{0}] IO error occurred when loading config.", marker.getName()), e);
+        }
+        catch (final SyntaxError e)
+        {
+            throw new RuntimeException(MessageFormat.format("[{0}] Syntax error occurred when loading config.", marker.getName()), e);
+        }
+    }
+
     /**
      * Attempts to load the config from the specified path.
      *
@@ -39,7 +83,9 @@ public final class JanksonConfigParser
      * @param configPath Path to load config from.
      * @param marker Marker for logging with log4j.
      * @return The loaded config.
+     * @deprecated Use new version which takes a @link{{@link java.util.function.Supplier<F>}}
      */
+    @Deprecated
     public <F> F load(final Class<F> configClass, final Path configPath, final Marker marker)
     {
         final Path folder = configPath.getParent();
@@ -131,7 +177,7 @@ public final class JanksonConfigParser
     }
 
     @SuppressWarnings("ConstantConditions")
-    private JsonObject mergeConfig(JsonObject delta, JsonObject defaultConfig)
+    private JsonObject mergeConfig(final JsonObject delta, final JsonObject defaultConfig)
     {
         final JsonObject merged = defaultConfig.clone();
         for (String key : delta.keySet())
