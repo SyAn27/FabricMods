@@ -28,6 +28,7 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
     @Inject(method = "init", at = @At("RETURN"))
     public void init(CallbackInfo ci)
     {
+        if (!Config.INSTANCE.UseCustomButtons) { return; }
         children.removeIf(el -> el instanceof FabricCreativeGuiComponents.ItemGroupButtonWidget);
         buttons.removeIf(el -> el instanceof FabricCreativeGuiComponents.ItemGroupButtonWidget);
         Config.Button prev = Config.INSTANCE.PrevButton;
@@ -45,6 +46,7 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci)
     {
+        if (!Config.INSTANCE.UseCustomButtons) { return; }
         final boolean prevButtonVisible = ext.fabric_isButtonVisible(FabricCreativeGuiComponents.Type.PREVIOUS);
         final boolean nextButtonVisible = ext.fabric_isButtonVisible(FabricCreativeGuiComponents.Type.NEXT);
         prevButton.visible = prevButtonVisible;

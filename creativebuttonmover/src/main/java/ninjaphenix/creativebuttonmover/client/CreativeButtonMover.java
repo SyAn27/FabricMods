@@ -37,7 +37,7 @@ public class CreativeButtonMover implements ClientModInitializer
 
     public static void loadConfig()
     {
-        Config.INSTANCE = CONFIG_PARSER.load(Config.class, CONFIG_PATH, new MarkerManager.Log4jMarker("creativebuttonmover"));
+        Config.INSTANCE = CONFIG_PARSER.load(Config.class, Config::new, CONFIG_PATH, new MarkerManager.Log4jMarker("creativebuttonmover"));
     }
 
     public static void saveConfig()
@@ -91,7 +91,7 @@ public class CreativeButtonMover implements ClientModInitializer
 		});
 		 */
         loadConfig();
-        if (false)
+        if (true)
         {
             for (int i = 0; i < 20; i++)
             {

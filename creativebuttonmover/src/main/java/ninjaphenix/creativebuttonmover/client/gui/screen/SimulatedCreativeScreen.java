@@ -5,11 +5,15 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.ToggleButtonWidget;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import ninjaphenix.creativebuttonmover.client.Config;
 import ninjaphenix.creativebuttonmover.client.CreativeButtonMover;
@@ -20,6 +24,8 @@ public class SimulatedCreativeScreen extends Screen
 {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("textures/gui/container/creative_inventory/tab_item_search.png");
     private static final Identifier TAB_TEXTURE = new Identifier("textures/gui/container/creative_inventory/tabs.png");
+    private static final MutableText YES = new TranslatableText("screen.creativebuttonmover.yes").formatted(Formatting.GREEN);
+    private static final MutableText NO = new TranslatableText("screen.creativebuttonmover.no").formatted(Formatting.RED);
     private static final TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
     private static final int containerHeight = 136;
     private static final int containerWidth = 195;
@@ -28,11 +34,12 @@ public class SimulatedCreativeScreen extends Screen
     private int top;
     private DummyButtonWidget prev;
     private DummyButtonWidget next;
+    private ButtonWidget customButtonsEnabled;
+    private Boolean useCustomButtons = Config.INSTANCE.UseCustomButtons;
 
     public SimulatedCreativeScreen(Screen parent)
     {
         super(new LiteralText(""));
-
         returnTo = parent;
     }
 
@@ -44,16 +51,26 @@ public class SimulatedCreativeScreen extends Screen
         top = (this.height - containerHeight) / 2;
         prev = this.addButton(new DummyButtonWidget(Config.INSTANCE.PrevButton, left, top));
         next = this.addButton(new DummyButtonWidget(Config.INSTANCE.NextButton, left, top));
+        customButtonsEnabled = this.addButton(new ButtonWidget(2, height / 2 - 10, 110, 20,
+                new TranslatableText("screen.creativebuttonmover.isEnabled", useCustomButtons ? YES : NO), this::toggleUseCustomButtons));
         final int w = 90;
         final int g = 5;
         // todo: replace with localization
-        this.addButton(new ButtonWidget(width / 2 + g, height / 2 + 96, w, 20, new LiteralText("Save"), (widget) -> onClose()));
-        this.addButton(new ButtonWidget(width / 2 - w - g, height / 2 + 96, w, 20, new LiteralText("Reload"), this::reloadValues));
+        this.addButton(new ButtonWidget(width / 2 + g, height / 2 + 96, w, 20, new TranslatableText("screen.creativebuttonmover.save"), (widget) -> onClose()));
+        this.addButton(new ButtonWidget(width / 2 - w - g, height / 2 + 96, w, 20, new TranslatableText("screen.creativebuttonmover.reload"),
+                this::reloadValues));
+    }
+
+    private void toggleUseCustomButtons(ButtonWidget buttonWidget)
+    {
+        useCustomButtons = !useCustomButtons;
+        customButtonsEnabled.setMessage(new TranslatableText("screen.creativebuttonmover.isEnabled", useCustomButtons ? YES : NO));
     }
 
     private void reloadValues(ButtonWidget buttonWidget)
     {
         CreativeButtonMover.loadConfig();
+        useCustomButtons = Config.INSTANCE.UseCustomButtons;
         prev.update(Config.INSTANCE.PrevButton);
         next.update(Config.INSTANCE.NextButton);
     }
@@ -124,6 +141,7 @@ public class SimulatedCreativeScreen extends Screen
     {
         prev.save();
         next.save();
+        Config.INSTANCE.UseCustomButtons = useCustomButtons;
         CreativeButtonMover.saveConfig();
         client.openScreen(returnTo);
     }
