@@ -1,5 +1,6 @@
 repositories {
-	maven { url = "https://jitpack.io" }
+	maven { name = "Jitpack"; url = "https://jitpack.io" }
+    maven { name = "NerdHubMC"; url = "https://maven.abusedmaster.xyz/" }
 }
 
 minecraft {
@@ -7,7 +8,7 @@ minecraft {
 }
 
 dependencies {
-    modCompile "com.github.emilyploszaj:trinkets:v2.4.2"
+    modCompile "com.github.emilyploszaj:trinkets:755b754ac5"
     compile project(":chainmail"), withoutUnwanted
     include project(":chainmail")
     include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"

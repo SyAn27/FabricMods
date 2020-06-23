@@ -15,10 +15,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.noncorrelatedextras.Main;
 import ninjaphenix.noncorrelatedextras.client.screen.MagnetScreen;
@@ -64,7 +64,7 @@ public class MagnetFeature extends Feature implements ItemAdder
                 }
                 else
                 {
-                    player.sendMessage(new TranslatableText("text.noncorrelatedextras.magnet.fail_update_value"));
+                    player.sendMessage(new TranslatableText("text.noncorrelatedextras.magnet.fail_update_value"), true);
                 }
                 USED_MAGNETS.remove(player);
             });

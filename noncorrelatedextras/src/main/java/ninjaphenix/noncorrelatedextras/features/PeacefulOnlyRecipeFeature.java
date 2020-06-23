@@ -1,11 +1,11 @@
 package ninjaphenix.noncorrelatedextras.features;
 
 import com.google.gson.JsonObject;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.noncorrelatedextras.Main;
 import ninjaphenix.noncorrelatedextras.core.Feature;
