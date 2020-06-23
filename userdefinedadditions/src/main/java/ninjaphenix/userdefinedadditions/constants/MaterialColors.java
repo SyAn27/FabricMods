@@ -5,7 +5,7 @@ import net.minecraft.block.MaterialColor;
 public class MaterialColors
 {
     public static final MaterialColors INSTANCE = new MaterialColors();
-    public final MaterialColor AIR = MaterialColor.AIR;
+    public final MaterialColor CLEAR = MaterialColor.CLEAR;
     public final MaterialColor GRASS = MaterialColor.GRASS;
     public final MaterialColor SAND = MaterialColor.SAND;
     public final MaterialColor WEB = MaterialColor.WEB;
