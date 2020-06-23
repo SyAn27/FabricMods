@@ -34,6 +34,8 @@ public final class ContainerLibraryClient implements ClientModInitializer
     public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
     public static final Config CONFIG = getConfigParser().load(Config.class, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
 
+    private ContainerLibraryClient() {}
+
     private static JanksonConfigParser getConfigParser()
     {
         return new JanksonConfigParser.Builder()
@@ -44,8 +46,6 @@ public final class ContainerLibraryClient implements ClientModInitializer
 
     private static Path getConfigPath() { return FabricLoader.getInstance().getConfigDirectory().toPath().resolve("ninjaphenix-container-library.json"); }
 
-    private ContainerLibraryClient() {}
-
     public static void sendPreferencesToServer()
     {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
@@ -53,7 +53,8 @@ public final class ContainerLibraryClient implements ClientModInitializer
         ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
     }
 
-    public static void sendCallbackRemoveToServer() {
+    public static void sendCallbackRemoveToServer()
+    {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeIdentifier(Constants.id("auto"));
         ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
@@ -70,7 +71,8 @@ public final class ContainerLibraryClient implements ClientModInitializer
     {
         ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER, (ContainerScreenFactory<SingleScreenHandler>) SingleScreen::new);
         ScreenProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, (ContainerScreenFactory<PagedScreenHandler>) PagedScreen::new);
-        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, (ContainerScreenFactory<ScrollableScreenHandler>) ScrollableScreen::new);
+        ScreenProviderRegistry.INSTANCE
+                .registerFactory(Constants.SCROLLABLE_CONTAINER, (ContainerScreenFactory<ScrollableScreenHandler>) ScrollableScreen::new);
 
         ClientSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, (context, buffer) ->
         {

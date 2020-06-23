@@ -20,35 +20,95 @@ public class BlockBuilder implements RegistrableBuilder<Block>
     public BlockBuilder(FabricBlockSettings settings) { this.settings = settings; }
 
     // <editor-fold desc="Builder Methods">
-    public BlockBuilder hardness(float hardness) { settings.hardness(hardness); return this; }
+    public BlockBuilder hardness(float hardness)
+    {
+        settings.hardness(hardness);
+        return this;
+    }
 
-    public BlockBuilder resistance(float resistance) { settings.resistance(resistance); return this; }
+    public BlockBuilder resistance(float resistance)
+    {
+        settings.resistance(resistance);
+        return this;
+    }
 
-    public BlockBuilder strength(float hardness, float resistance) { settings.strength(hardness, resistance); return this; }
+    public BlockBuilder strength(float hardness, float resistance)
+    {
+        settings.strength(hardness, resistance);
+        return this;
+    }
 
-    public BlockBuilder breakByTool(Tool tool) { settings.breakByTool(tool.getTag(), tool.miningLevel); return this; }
+    public BlockBuilder breakByTool(Tool tool)
+    {
+        settings.breakByTool(tool.getTag(), tool.miningLevel);
+        return this;
+    }
 
-    public BlockBuilder breakByHand() { settings.breakByHand(true); return this; }
+    public BlockBuilder breakByHand()
+    {
+        settings.breakByHand(true);
+        return this;
+    }
 
-    public BlockBuilder breakInstantly() { settings.breakInstantly(); return this; }
+    public BlockBuilder breakInstantly()
+    {
+        settings.breakInstantly();
+        return this;
+    }
 
-    public BlockBuilder noCollision() { settings.noCollision(); return this; }
+    public BlockBuilder noCollision()
+    {
+        settings.noCollision();
+        return this;
+    }
 
-    public BlockBuilder lightLevel(int level) { settings.lightLevel(level); return this; }
+    public BlockBuilder lightLevel(int level)
+    {
+        settings.lightLevel(level);
+        return this;
+    }
 
-    public BlockBuilder slipperiness(float slipperiness) { settings.slipperiness(slipperiness); return this; }
+    public BlockBuilder slipperiness(float slipperiness)
+    {
+        settings.slipperiness(slipperiness);
+        return this;
+    }
 
-    public BlockBuilder dropsNothing() { settings.dropsNothing(); return this; }
+    public BlockBuilder dropsNothing()
+    {
+        settings.dropsNothing();
+        return this;
+    }
 
-    public BlockBuilder dropsLike(String block) { settings.dropsLike(Registry.BLOCK.get(new Identifier(block))); return this; }
+    public BlockBuilder dropsLike(String block)
+    {
+        settings.dropsLike(Registry.BLOCK.get(new Identifier(block)));
+        return this;
+    }
 
-    public BlockBuilder drops(String table) { settings.drops(new Identifier(table)); return this; }
+    public BlockBuilder drops(String table)
+    {
+        settings.drops(new Identifier(table));
+        return this;
+    }
 
-    public BlockBuilder dynamicBounds() { settings.dynamicBounds(); return this; }
+    public BlockBuilder dynamicBounds()
+    {
+        settings.dynamicBounds();
+        return this;
+    }
 
-    public BlockBuilder item(ItemBuilder item) { itemSettings = item.getSettings(); return this; }
+    public BlockBuilder item(ItemBuilder item)
+    {
+        itemSettings = item.getSettings();
+        return this;
+    }
 
-    public BlockBuilder item() { itemSettings = new Item.Settings(); return this;}
+    public BlockBuilder item()
+    {
+        itemSettings = new Item.Settings();
+        return this;
+    }
     // </editor-fold>
 
     @Override

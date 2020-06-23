@@ -35,6 +35,16 @@ public class CreativeButtonMover implements ClientModInitializer
     // 	return Optional.empty();
     // }
 
+    public static void loadConfig()
+    {
+        Config.INSTANCE = CONFIG_PARSER.load(Config.class, CONFIG_PATH, new MarkerManager.Log4jMarker("creativebuttonmover"));
+    }
+
+    public static void saveConfig()
+    {
+        CONFIG_PARSER.save(Config.INSTANCE, CONFIG_PATH, new MarkerManager.Log4jMarker("creativebuttonmover"));
+    }
+
     @Override
     public void onInitializeClient()
     {
@@ -89,14 +99,5 @@ public class CreativeButtonMover implements ClientModInitializer
                         () -> new ItemStack(Registry.ITEM.getRandom(new Random()), 1));
             }
         }
-    }
-
-    public static void loadConfig() {
-        Config.INSTANCE = CONFIG_PARSER.load(Config.class, CONFIG_PATH, new MarkerManager.Log4jMarker("creativebuttonmover"));
-    }
-
-    public static void saveConfig()
-    {
-        CONFIG_PARSER.save(Config.INSTANCE, CONFIG_PATH, new MarkerManager.Log4jMarker("creativebuttonmover"));
     }
 }

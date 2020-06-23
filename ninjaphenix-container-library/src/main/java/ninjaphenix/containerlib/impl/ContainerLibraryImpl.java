@@ -58,11 +58,12 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         }
         else
         {
-            if(containerTypeId != null && containerTypeId.equals(Constants.id("auto")))
+            if (containerTypeId != null && containerTypeId.equals(Constants.id("auto")))
             {
                 preferenceCallbacks.remove(uuid);
             }
-            else {
+            else
+            {
                 playerPreferences.remove(uuid);
                 preferenceCallbacks.remove(uuid);
             }
@@ -118,7 +119,8 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         Objects.requireNonNull(containerTypeId,
                 "ContainerLibraryAPI#declareScreenSizeRegisterCallback received null instead of an Identifier. (Container Type ID)");
         Objects.requireNonNull(sizeConsumer, "ContainerLibraryAPI#declareScreenSizeRegisterCallback received null instead of a Consumer. (Size Consumer)");
-        if(!screenSizeCallbacks.containsKey(containerTypeId)) {
+        if (!screenSizeCallbacks.containsKey(containerTypeId))
+        {
             screenSizeCallbacks.put(containerTypeId, new ArrayList<>());
         }
         screenSizeCallbacks.get(containerTypeId).add(sizeConsumer);
@@ -129,11 +131,13 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
     {
         Objects.requireNonNull(containerTypeId, "ContainerLibraryAPI#declareScreenSize received null instead of an Identifier. (Container Type ID)");
         Objects.requireNonNull(screenSize, "ContainerLibraryAPI#declareScreenSize received null instead of an GenericType. (Screen Size)");
-        if(!screenSizeCallbacks.containsKey(containerTypeId)) {
+        if (!screenSizeCallbacks.containsKey(containerTypeId))
+        {
             LOGGER.warn("[ninjaphenix-container-library-API] Failed to register new screen size for " + containerTypeId +
                     ", it either does not exist or the screen size is being registered too early. If you are a modder, consider using the ContainerLibraryExtension entry point.");
         }
-        else {
+        else
+        {
             screenSizeCallbacks.get(containerTypeId).forEach((Consumer consumer) ->
             {
                 consumer.accept(screenSize);

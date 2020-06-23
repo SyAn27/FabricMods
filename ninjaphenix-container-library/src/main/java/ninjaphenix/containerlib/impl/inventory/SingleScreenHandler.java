@@ -5,9 +5,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.containerlib.api.screen.SingleScreenMeta;
 import ninjaphenix.containerlib.api.inventory.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
+import ninjaphenix.containerlib.api.screen.SingleScreenMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,8 +15,6 @@ import java.util.HashMap;
 public final class SingleScreenHandler extends AbstractContainer<SingleScreenMeta>
 {
     private static final HashMap<Integer, SingleScreenMeta> SIZES = new HashMap<>();
-
-    public static void onScreenSizeRegistered(SingleScreenMeta meta) { SIZES.put(meta.TOTAL_SLOTS, meta); }
 
     public SingleScreenHandler(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory,
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
@@ -39,6 +37,8 @@ public final class SingleScreenHandler extends AbstractContainer<SingleScreenMet
         }
         for (int i = 0; i < 9; i++) { this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_hotbar", i, left + 18 * i, top + 58)); }
     }
+
+    public static void onScreenSizeRegistered(SingleScreenMeta meta) { SIZES.put(meta.TOTAL_SLOTS, meta); }
 
     private static SingleScreenMeta getNearestSize(int invSize)
     {

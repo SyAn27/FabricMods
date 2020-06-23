@@ -1,5 +1,5 @@
 repositories {
-	maven { name = "Jitpack"; url = "https://jitpack.io" }
+    maven { name = "Jitpack"; url = "https://jitpack.io" }
     maven { name = "NerdHubMC"; url = "https://maven.abusedmaster.xyz/" }
 }
 

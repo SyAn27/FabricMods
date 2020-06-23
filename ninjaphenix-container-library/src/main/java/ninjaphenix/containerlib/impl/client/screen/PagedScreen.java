@@ -9,9 +9,9 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ninjaphenix.containerlib.api.Constants;
-import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
 import ninjaphenix.containerlib.impl.inventory.PagedScreenHandler;
 
 public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T, PagedScreenMeta>
@@ -139,8 +139,8 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
 
     private static class PageButtonWidget extends ButtonWidget
     {
-        private final int TEXTURE_OFFSET;
         private static final Identifier TEXTURE = Constants.id("textures/gui/page_buttons.png");
+        private final int TEXTURE_OFFSET;
 
         public PageButtonWidget(int x, int y, int textureOffset, PressAction onPress)
         {

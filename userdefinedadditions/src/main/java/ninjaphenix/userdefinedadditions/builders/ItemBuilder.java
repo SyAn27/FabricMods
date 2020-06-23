@@ -13,11 +13,23 @@ public class ItemBuilder implements RegistrableBuilder<Item>
     private final Item.Settings settings = new Item.Settings();
 
     // <editor-fold desc="Builder Methods>
-    public ItemBuilder maxCount(int count) { settings.maxCount(count); return this; }
+    public ItemBuilder maxCount(int count)
+    {
+        settings.maxCount(count);
+        return this;
+    }
 
-    public ItemBuilder maxDamage(int damage) { settings.maxDamage(damage); return this; }
+    public ItemBuilder maxDamage(int damage)
+    {
+        settings.maxDamage(damage);
+        return this;
+    }
 
-    public ItemBuilder remainder(String remainderId) { settings.recipeRemainder(Registry.ITEM.get(new Identifier(remainderId))); return this; }
+    public ItemBuilder remainder(String remainderId)
+    {
+        settings.recipeRemainder(Registry.ITEM.get(new Identifier(remainderId)));
+        return this;
+    }
 
     public ItemBuilder rarity(String rarity)
     {
@@ -25,13 +37,17 @@ public class ItemBuilder implements RegistrableBuilder<Item>
         switch (rarity.toUpperCase())
         {
             case "COMMON":
-                parsed = Rarity.COMMON; break;
+                parsed = Rarity.COMMON;
+                break;
             case "RARE":
-                parsed = Rarity.RARE; break;
+                parsed = Rarity.RARE;
+                break;
             case "UNCOMMON":
-                parsed = Rarity.UNCOMMON; break;
+                parsed = Rarity.UNCOMMON;
+                break;
             case "EPIC":
-                parsed = Rarity.EPIC; break;
+                parsed = Rarity.EPIC;
+                break;
         }
         settings.rarity(parsed);
         return this;

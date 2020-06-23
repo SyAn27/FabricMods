@@ -1,7 +1,8 @@
 package ninjaphenix.containerlib.impl;
 
 import net.minecraft.util.Identifier;
-import ninjaphenix.containerlib.api.*;
+import ninjaphenix.containerlib.api.ContainerLibraryAPI;
+import ninjaphenix.containerlib.api.ContainerLibraryExtension;
 import ninjaphenix.containerlib.api.screen.PagedScreenMeta;
 import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.screen.SingleScreenMeta;

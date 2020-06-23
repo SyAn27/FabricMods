@@ -3,8 +3,8 @@ package ninjaphenix.containerlib.api.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
-import ninjaphenix.containerlib.api.screen.ScreenMeta;
 import ninjaphenix.containerlib.api.inventory.AbstractContainer;
+import ninjaphenix.containerlib.api.screen.ScreenMeta;
 import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 
 import java.util.function.Function;
@@ -47,6 +47,18 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
         textRenderer.draw(matrices, playerInventory.getDisplayName(), INVENTORY_LABEL_LEFT, this.backgroundHeight - 96 + 2, 4210752);
     }
 
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    {
+        if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode))
+        {
+            ContainerLibraryClient.sendCallbackRemoveToServer();
+            client.player.closeHandledScreen();
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
     protected static class Rectangle
     {
         public final int X;
@@ -61,22 +73,17 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
         public Rectangle(final int x, final int y, final int width, final int height,
                 final int textureX, final int textureY, final int textureWidth, final int textureHeight)
         {
-            X = x; Y = y; WIDTH = width; HEIGHT = height;
-            TEXTURE_X = textureX; TEXTURE_Y = textureY; TEXTURE_WIDTH = textureWidth; TEXTURE_HEIGHT = textureHeight;
+            X = x;
+            Y = y;
+            WIDTH = width;
+            HEIGHT = height;
+            TEXTURE_X = textureX;
+            TEXTURE_Y = textureY;
+            TEXTURE_WIDTH = textureWidth;
+            TEXTURE_HEIGHT = textureHeight;
         }
 
         public void render(final MatrixStack matrices) { drawTexture(matrices, X, Y, TEXTURE_X, TEXTURE_Y, WIDTH, HEIGHT, TEXTURE_WIDTH, TEXTURE_HEIGHT); }
-    }
-
-    @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
-    {
-        if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode)) {
-            ContainerLibraryClient.sendCallbackRemoveToServer();
-            client.player.closeHandledScreen();
-            return true;
-        }
-        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
 }

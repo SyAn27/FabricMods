@@ -20,6 +20,12 @@ public class StructureCompassItem extends Item implements Vanishable
 {
     private final StructureFeature<?> STRUCTURE;
 
+    public StructureCompassItem(final Settings settings, final @NotNull StructureFeature<?> structure)
+    {
+        super(settings);
+        STRUCTURE = structure;
+    }
+
     public static Optional<RegistryKey<World>> getTargetDimension(final CompoundTag tag)
     {
         return World.CODEC.parse(NbtOps.INSTANCE, tag.get("dimension")).result();
@@ -51,11 +57,5 @@ public class StructureCompassItem extends Item implements Vanishable
                 }
             }
         }
-    }
-
-    public StructureCompassItem(final Settings settings, final @NotNull StructureFeature<?> structure)
-    {
-        super(settings);
-        STRUCTURE = structure;
     }
 }

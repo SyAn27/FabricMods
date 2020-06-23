@@ -14,10 +14,10 @@ import ninjaphenix.containerlib.api.screen.ScreenMeta;
 public abstract class AbstractContainer<T extends ScreenMeta> extends ScreenHandler
 {
     public final BlockPos ORIGIN;
-    protected final Inventory INVENTORY;
     public final PlayerInventory PLAYER_INVENTORY;
-    private final Text DISPLAY_NAME;
     public final T SCREEN_META;
+    protected final Inventory INVENTORY;
+    private final Text DISPLAY_NAME;
 
     public AbstractContainer(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory, PlayerEntity player, Text displayName, T meta)
     {

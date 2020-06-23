@@ -3,9 +3,9 @@ package ninjaphenix.containerlib.impl.client.screen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.inventory.ScrollableScreenHandler;
 
@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public class ScrollableScreen<T extends ScrollableScreenHandler> extends AbstractScreen<T, ScrollableScreenMeta>
 {
-    private Rectangle blankArea = null;
     protected final boolean hasScrollbar;
+    private Rectangle blankArea = null;
     private boolean isDragging;
     private int topRow;
 
@@ -26,8 +26,9 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
         hasScrollbar = SCREEN_META.TOTAL_ROWS != SCREEN_META.HEIGHT;
     }
 
-    public Optional<me.shedaniel.math.Rectangle> getReiRectangle() {
-        if(!hasScrollbar) { return Optional.empty(); }
+    public Optional<me.shedaniel.math.Rectangle> getReiRectangle()
+    {
+        if (!hasScrollbar) { return Optional.empty(); }
         final int height = SCREEN_META.HEIGHT * 18 + (SCREEN_META.WIDTH > 9 ? 34 : 24);
         return Optional.of(new me.shedaniel.math.Rectangle(x + backgroundWidth - 4, y, 22, height));
     }
@@ -43,9 +44,11 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
             isDragging = false;
             topRow = 0;
         }
-        else {
+        else
+        {
             final int blanked = SCREEN_META.BLANK_SLOTS;
-            if(blanked > 0) {
+            if (blanked > 0)
+            {
                 final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
                 blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18,
                         xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
@@ -201,7 +204,8 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
         if (newTopRow == SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)
         {
             int blanked = SCREEN_META.BLANK_SLOTS;
-            if(blanked > 0) {
+            if (blanked > 0)
+            {
                 final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
                 blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18,
                         xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);

@@ -34,7 +34,8 @@ import ninjaphenix.containerlib.impl.inventory.SingleScreenHandler;
 import java.util.List;
 import java.util.function.Function;
 
-import static ninjaphenix.containerlib.api.Constants.*;
+import static ninjaphenix.containerlib.api.Constants.LIBRARY_ID;
+import static ninjaphenix.containerlib.api.Constants.SINGLE_CONTAINER;
 
 public final class ContainerLibrary implements ModInitializer
 {
@@ -95,12 +96,6 @@ public final class ContainerLibrary implements ModInitializer
         }
     }
 
-    private interface containerConstructor<T extends ScreenHandler>
-    {
-        T create(ScreenHandlerType<T> type, int syncId, BlockPos pos, Inventory inventory,
-                PlayerEntity player, Text containerName, AreaAwareSlotFactory slotFactory);
-    }
-
     private <T extends ScreenHandler> ContainerFactory<T> getContainerFactory(containerConstructor<T> newMethod)
     {
         return (syncId, identifier, player, buffer) -> {
@@ -116,5 +111,11 @@ public final class ContainerLibrary implements ModInitializer
             }
             return null;
         };
+    }
+
+    private interface containerConstructor<T extends ScreenHandler>
+    {
+        T create(ScreenHandlerType<T> type, int syncId, BlockPos pos, Inventory inventory,
+                PlayerEntity player, Text containerName, AreaAwareSlotFactory slotFactory);
     }
 }

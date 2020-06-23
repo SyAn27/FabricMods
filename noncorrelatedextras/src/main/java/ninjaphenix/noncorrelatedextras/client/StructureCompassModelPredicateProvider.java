@@ -23,9 +23,9 @@ import java.util.Optional;
 
 public class StructureCompassModelPredicateProvider implements ModelPredicateProvider
 {
+    private static final double TAU = 6.2831854820251465;
     private final AngleRandomizer unknownTargetAngleSmoother = new AngleRandomizer();
     private final AngleRandomizer knownTargetAngleSmoother = new AngleRandomizer();
-    private static final double TAU = 6.2831854820251465;
 
     public StructureCompassModelPredicateProvider() {}
 
@@ -76,7 +76,8 @@ public class StructureCompassModelPredicateProvider implements ModelPredicatePro
 
     private double getAngle(final Vec3d pos, final Entity entity) { return Math.atan2(pos.getZ() - entity.getZ(), pos.getX() - entity.getX()); }
 
-    private float getRandomAngle(final ItemStack stack, final long time) {
+    private float getRandomAngle(final ItemStack stack, final long time)
+    {
         if (unknownTargetAngleSmoother.shouldUpdate(time)) { unknownTargetAngleSmoother.update(time, Math.random()); }
         double returnedAngle = unknownTargetAngleSmoother.value + stack.hashCode() / 2.14748365E9F;
         return (float) MathHelper.floorMod(returnedAngle, 1);

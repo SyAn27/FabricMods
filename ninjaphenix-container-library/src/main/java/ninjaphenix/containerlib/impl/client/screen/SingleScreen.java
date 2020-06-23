@@ -2,9 +2,9 @@ package ninjaphenix.containerlib.impl.client.screen;
 
 
 import net.minecraft.client.util.math.MatrixStack;
-import ninjaphenix.containerlib.api.screen.SingleScreenMeta;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.containerlib.api.screen.SingleScreenMeta;
 import ninjaphenix.containerlib.impl.inventory.SingleScreenHandler;
 
 public class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<T, SingleScreenMeta>

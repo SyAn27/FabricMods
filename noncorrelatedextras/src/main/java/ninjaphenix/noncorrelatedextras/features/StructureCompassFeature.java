@@ -29,7 +29,7 @@ public class StructureCompassFeature extends Feature implements ItemAdder
             Registry.STRUCTURE_FEATURE.getOrEmpty(structure).ifPresent(feature ->
             {
                 StructureCompassItem item = new StructureCompassItem(settings, feature);
-                if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { registerItemModelPredicate(item); }
+                if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { registerItemModelPredicate(item); }
                 Registry.register(Registry.ITEM, Main.getId(structure.getPath() + "_compass"), item);
             });
 
@@ -37,7 +37,8 @@ public class StructureCompassFeature extends Feature implements ItemAdder
     }
 
     @Environment(EnvType.CLIENT)
-    private void registerItemModelPredicate(Item item) {
+    private void registerItemModelPredicate(Item item)
+    {
         ModelPredicateProviderRegistry.register(item, new Identifier("angle"), new StructureCompassModelPredicateProvider());
     }
 }
