@@ -107,12 +107,12 @@ allprojects {
             if(extensions.getExtraProperties().has("artifactId")) {
                 def artifactId = extensions.getExtraProperties().get("artifactId")
                 def url = String.format(curseforge_url_template, curseforge_project_slug, artifactId)
-                if("false" == upload_debug) {
+                if("false".equalsIgnoreCase(upload_debug)) {
                     "hub release create -t ${commit} -m ${tagName} -m ${url} ${tagName}".execute()
                     println "Created release for tag ${tagName} with message ${url}"
                 }
             } else {
-                if("false" == upload_debug) {
+                if("false".equalsIgnoreCase(upload_debug)) {
                     "hub release create -t ${commit} -m ${tagName} -m ${tagName} -a ${project.buildDir}/libs/${tagName}.jar -a ${project.buildDir}/libs/${tagName}-sources.jar ${tagName}".execute()
                     println "Created release for tag ${tagName} with message ${tagName}"
                 }
@@ -159,7 +159,7 @@ allprojects {
             }
             options {
                 forgeGradleIntegration = false
-                debug = "true" == upload_debug
+                debug = "true".equalsIgnoreCase(upload_debug)
             }
         }
 
