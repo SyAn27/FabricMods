@@ -1,1 +1,1 @@
-- No changes.
+- Config for structure compasses changed to require the identifier instead of internal name.

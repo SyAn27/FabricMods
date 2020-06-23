@@ -1,6 +1,7 @@
 package ninjaphenix.noncorrelatedextras.config;
 
 import blue.endless.jankson.Comment;
+import blue.endless.jankson.JsonPrimitive;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
@@ -62,14 +63,15 @@ public class Config
         map.put(new Identifier("minecraft:village"), false);
         map.put(new Identifier("minecraft:nether_fossil"), false);
         map.put(new Identifier("minecraft:bastion_remnant"), false);
-
     });
 
     public static void initialize()
     {
         final Path configDirectory = FabricLoader.getInstance().getConfigDirectory().toPath();
-        INSTANCE = new JanksonConfigParser.Builder().build().load(Config.class, configDirectory.resolve("NonCorrelatedExtras.json"),
-                new MarkerManager.Log4jMarker("noncorrelatedextras"));
+        INSTANCE = new JanksonConfigParser.Builder()
+                .deSerializer(JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
+                        ((identifier, marshaller) -> marshaller.serialize(identifier.toString()))).build()
+                .load(Config.class, configDirectory.resolve("NonCorrelatedExtras.json"), new MarkerManager.Log4jMarker("noncorrelatedextras"));
     }
 
     private <T, R> HashMap<T, R> initializedMap(Consumer<HashMap<T, R>> initializer)
