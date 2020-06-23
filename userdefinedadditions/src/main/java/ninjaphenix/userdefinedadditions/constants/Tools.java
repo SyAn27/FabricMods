@@ -1,6 +1,6 @@
 package ninjaphenix.userdefinedadditions.constants;
 
-import net.fabricmc.fabric.api.tools.FabricToolTags;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 
@@ -9,11 +9,12 @@ public class Tools
     public static final Tools INSTANCE = new Tools();
     // Maybe abstract tool types into a javascript friendly type with a .name or .id attribute
     // <editor-fold desc="Tool Types">
-    public final Tag<Item> PICKAXE = FabricToolTags.PICKAXES;
-    public final Tag<Item> AXE = FabricToolTags.AXES;
-    public final Tag<Item> SHOVEL = FabricToolTags.SHOVELS;
-    public final Tag<Item> HOE = FabricToolTags.HOES;
-    public final Tag<Item> SWORD = FabricToolTags.SWORDS;
+    public final Tag.Identified<Item> AXE = (Tag.Identified<Item>) FabricToolTags.AXES;
+    public final Tag.Identified<Item> HOE = (Tag.Identified<Item>) FabricToolTags.HOES;
+    public final Tag.Identified<Item> PICKAXE = (Tag.Identified<Item>) FabricToolTags.PICKAXES;
+    public final Tag.Identified<Item> SHEARS = (Tag.Identified<Item>) FabricToolTags.SHEARS;
+    public final Tag.Identified<Item> SHOVEL = (Tag.Identified<Item>) FabricToolTags.SHOVELS;
+    public final Tag.Identified<Item> SWORD = (Tag.Identified<Item>) FabricToolTags.SWORDS;
     // </editor-fold>
     // <editor-fold desc="Tool Tiers">
     public final int WOOD_TIER = 0;
@@ -51,6 +52,9 @@ public class Tools
     public final Tool IRON_AXE = new Tool(AXE, IRON_TIER);
     public final Tool DIAMOND_AXE = new Tool(AXE, DIAMOND_TIER);
     //</editor-fold>
+    //<editor-fold desc="Shears">
+    public final Tool IRON_SHEARS = new Tool(SHEARS, IRON_TIER);
+    //</editor-fold>
 
     private Tools() {}
 
@@ -58,9 +62,9 @@ public class Tools
     {
         public final String type;
         public final int miningLevel;
-        private final Tag<Item> _tag;
+        private final Tag.Identified<Item> _tag;
 
-        private Tool(Tag<Item> type, int miningLevel)
+        private Tool(Tag.Identified<Item> type, int miningLevel)
         {
             this.type = type.getId().toString();
             _tag = type;
