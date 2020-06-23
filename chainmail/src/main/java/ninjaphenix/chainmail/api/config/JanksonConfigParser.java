@@ -61,7 +61,8 @@ public final class JanksonConfigParser
             JsonObject delta = uConfig.getDelta(dConfig); // returns keys overridden from default
             if (delta.size() > 0)
             {
-                save(mergeConfig(delta, dConfig), configPath, marker);
+                final F config = _jankson.fromJson(uConfig, configClass);
+                save(config, configPath, marker);
                 LOGGER.info(MessageFormat.format("[{0}] New config keys found, saved merged config.", marker.getName()));
             }
             return _jankson.fromJson(uConfig, configClass);
