@@ -1,1 +1,1 @@
-- Disable creative button mover by default.
+- Fixes large netherite chest texture.
