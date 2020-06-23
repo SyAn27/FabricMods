@@ -168,6 +168,12 @@ allprojects {
             }
         }
     }
+    else
+    {
+        release {
+            dependsOn remapJar
+        }
+    }
 
     publishing {
         publications {
