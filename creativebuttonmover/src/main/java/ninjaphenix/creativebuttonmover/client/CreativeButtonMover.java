@@ -91,7 +91,7 @@ public class CreativeButtonMover implements ClientModInitializer
 		});
 		 */
         loadConfig();
-        if (true)
+        if (false)
         {
             for (int i = 0; i < 20; i++)
             {
