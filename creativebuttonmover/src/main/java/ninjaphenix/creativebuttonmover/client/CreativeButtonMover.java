@@ -91,13 +91,5 @@ public class CreativeButtonMover implements ClientModInitializer
 		});
 		 */
         loadConfig();
-        if (false)
-        {
-            for (int i = 0; i < 20; i++)
-            {
-                FabricItemGroupBuilder.build(new Identifier("creativebuttonmover", "tab_" + i),
-                        () -> new ItemStack(Registry.ITEM.getRandom(new Random()), 1));
-            }
-        }
     }
 }
