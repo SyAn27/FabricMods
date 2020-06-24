@@ -1,2 +1,1 @@
-- Changes the location of the "Is mod enabled" button in CBM
-- Enabled CBM by default, Can be disabled in the ModMenu config screen.
+- Fixed shipping some debug code.
