@@ -1,17 +1,11 @@
-package ninjaphenix.creativebuttonmover.client;
+package ninjaphenix.tests.creativebuttonmover.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ninjaphenix.chainmail.api.config.JanksonConfigParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.MarkerManager;
 
-import java.nio.file.Path;
 import java.util.Random;
 
 public class Main implements ClientModInitializer
