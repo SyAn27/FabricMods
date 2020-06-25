@@ -1,6 +1,7 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
 import ninjaphenix.containerlib.api.client.screen.AbstractScreen;
 import ninjaphenix.containerlib.api.client.screen.widget.ScreenTypeSelectionScreenButton;
@@ -22,7 +23,10 @@ public class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<
     protected void init()
     {
         super.init();
-        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth - 19, y + 4));
+        int settingsXOffset = -19;
+        if(FabricLoader.getInstance().isModLoaded("inventorysorter")) { settingsXOffset -= 18; }
+        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
+                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         final int blanked = SCREEN_META.BLANK_SLOTS;
         if (blanked > 0)
         {

@@ -2,6 +2,7 @@ package ninjaphenix.containerlib.impl.client.screen;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -45,7 +46,8 @@ public class SelectContainerScreen extends Screen
             final Identifier id = entry.getKey();
             final ScreenMiscSettings settings = entry.getValue();
             addButton(new ScreenTypeButton(leftPadding + (PADDING + 96) * x, topPadding + (PADDING + 96) * y, 96, 96,
-                    settings.SELECT_TEXTURE_ID, settings.NARRATION_MESSAGE, button -> updatePlayerPreference(id)));
+                    settings.SELECT_TEXTURE_ID, settings.NARRATION_MESSAGE, button -> updatePlayerPreference(id),
+                    (button, matrices, tX, tY) -> renderTooltip(matrices, button.getMessage(), tX, tY)));
             x++;
             if (x == maxColumns)
             {
@@ -79,17 +81,26 @@ public class SelectContainerScreen extends Screen
     {
         setZOffset(0);
         renderBackground(matrices);
-        super.render(matrices, mouseX, mouseY, delta);
+        for (AbstractButtonWidget button : this.buttons)
+        {
+            button.render(matrices, mouseX, mouseY, delta);
+        }
+        for (AbstractButtonWidget button : this.buttons)
+        {
+            if(button instanceof ScreenTypeButton) {
+                ((ScreenTypeButton) button).renderTooltip(matrices, mouseX, mouseY, delta);
+            }
+        }
         drawCenteredText(matrices, textRenderer, title, width / 2, Math.max(TOP - 2 * PADDING, 0), 0xFFFFFFFF);
     }
 
-    private class ScreenTypeButton extends ButtonWidget
+    private static class ScreenTypeButton extends ButtonWidget
     {
         private final Identifier TEXTURE;
 
-        public ScreenTypeButton(int x, int y, int width, int height, Identifier texture, Text message, ButtonWidget.PressAction pressAction)
+        public ScreenTypeButton(int x, int y, int width, int height, Identifier texture, Text message, PressAction pressAction, TooltipSupplier tooltipSupplier)
         {
-            super(x, y, width, height, message, pressAction);
+            super(x, y, width, height, message, pressAction, tooltipSupplier);
             TEXTURE = texture;
         }
 
@@ -98,14 +109,15 @@ public class SelectContainerScreen extends Screen
         {
             MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
             drawTexture(matrices, x, y, 0, isHovered() ? height : 0, width, height, width, height * 2);
-            // todo: check in 1.16 if I can fix tooltips rendering under other buttons by sharing the matrix stack.
-            if (isHovered()) { renderToolTip(matrices, x, y); }
         }
 
-        @Override
-        public void renderToolTip(final MatrixStack matrices, final int mouseX, final int mouseY)
+        public void renderTooltip(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
         {
-            SelectContainerScreen.this.renderTooltip(matrices, getMessage(), mouseX, mouseY);
+            if(hovered) {
+                renderToolTip(matrices, mouseX, mouseY);
+            } else if (isHovered()) {
+                renderToolTip(matrices, x, y);
+            }
         }
     }
 

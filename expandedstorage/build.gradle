@@ -7,6 +7,9 @@ repositories {
         name = "JitPack"
         url = "https://jitpack.io"
     }
+    flatDir {
+        dirs file('runtime_mods')
+    }
 }
 
 dependencies {
@@ -23,4 +26,7 @@ dependencies {
         exclude(group: "com.github.Virtuoel", module: "Statement")
     }
     modCompileOnly("com.github.Virtuoel:Statement:${statement_commit}")
+
+    modRuntime('local:InventorySorter:1.6.7-1.16')
+    //modRuntime('local:inventoryprofiles:fabric-20w10a-0.2.0')
 }

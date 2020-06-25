@@ -1,5 +1,6 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
@@ -37,8 +38,10 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
     protected void init()
     {
         super.init();
-        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth -
-                (hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19), y + 4));
+        int settingsXOffset = - (hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19);
+        if(FabricLoader.getInstance().isModLoaded("inventorysorter") && !hasScrollbar) { settingsXOffset -= 18; }
+        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
+                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         if (hasScrollbar)
         {
             isDragging = false;

@@ -2,10 +2,11 @@ package ninjaphenix.containerlib.impl.client.screen;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ninjaphenix.containerlib.api.Constants;
@@ -21,6 +22,7 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     private PageButtonWidget rightPageButton;
     private int page;
     private TranslatableText currentPageText;
+    private float pageTextX;
 
     public PagedScreen(T container)
     {
@@ -69,16 +71,24 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     protected void init()
     {
         super.init();
-        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth - 19, y + 4));
+        int settingsXOffset = -19;
+        if(FabricLoader.getInstance().isModLoaded("inventorysorter")) { settingsXOffset -= 18; }
+        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
+                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         if (SCREEN_META.PAGES != 1)
         {
+            int pageButtonsXOffset = 0;
+            if(FabricLoader.getInstance().isModLoaded("inventorysorter")) {pageButtonsXOffset = -18; }
             page = 1;
             setPageText();
-            leftPageButton = new PageButtonWidget(x + backgroundWidth - 61, y + backgroundHeight - 96, 0, button -> setPage(page, page - 1));
+            leftPageButton = new PageButtonWidget(x + backgroundWidth - 61 + pageButtonsXOffset, y + backgroundHeight - 96, 0,
+                    new TranslatableText("screen.ninjaphenix-container-lib.prev_page"), button -> setPage(page, page - 1));
             leftPageButton.active = false;
             addButton(leftPageButton);
-            rightPageButton = new PageButtonWidget(x + backgroundWidth - 19, y + backgroundHeight - 96, 1, button -> setPage(page, page + 1));
+            rightPageButton = new PageButtonWidget(x + backgroundWidth - 19 + pageButtonsXOffset, y + backgroundHeight - 96, 1,
+                    new TranslatableText("screen.ninjaphenix-container-lib.next_page"), button -> setPage(page, page + 1));
             addButton(rightPageButton);
+            pageTextX =  (1 + leftPageButton.x + rightPageButton.x - rightPageButton.getWidth() / 2F) / 2F;
         }
     }
 
@@ -110,7 +120,7 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY)
     {
         super.drawForeground(matrices, mouseX, mouseY);
-        if (currentPageText != null) { textRenderer.draw(matrices, currentPageText.getString(), backgroundWidth - 42, backgroundHeight - 94, 4210752); }
+        if (currentPageText != null) { textRenderer.draw(matrices, currentPageText, pageTextX - x, backgroundHeight - 94, 4210752); }
     }
 
     @Override
@@ -142,9 +152,9 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
         private static final Identifier TEXTURE = Constants.id("textures/gui/page_buttons.png");
         private final int TEXTURE_OFFSET;
 
-        public PageButtonWidget(int x, int y, int textureOffset, PressAction onPress)
+        public PageButtonWidget(int x, int y, int textureOffset, Text text, PressAction onPress)
         {
-            super(x, y, 12, 12, new LiteralText(""), onPress);
+            super(x, y, 12, 12, text, onPress);
             TEXTURE_OFFSET = textureOffset;
         }
 

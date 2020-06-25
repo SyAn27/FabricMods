@@ -16,13 +16,13 @@ public class ScreenTypeSelectionScreenButton extends ButtonWidget
 {
     private final Identifier TEXTURE;
 
-    public ScreenTypeSelectionScreenButton(int x, int y)
+    public ScreenTypeSelectionScreenButton(int x, int y, TooltipSupplier tooltipSupplier)
     {
-        super(x, y, 12, 12, new TranslatableText("screen.ninjaphenix-container-lib.change_screen_button"), button ->
+        super(x, y, 12, 12, new TranslatableText("screen.ninjaphenix-container-lib.change_screen_button"),button ->
         {
             MinecraftClient.getInstance().player.closeHandledScreen();
             ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
-        });
+        }, tooltipSupplier);
         TEXTURE = Constants.id("textures/gui/select_screen_button.png");
     }
 
@@ -35,5 +35,6 @@ public class ScreenTypeSelectionScreenButton extends ButtonWidget
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         drawTexture(matrices, x, y, 0, isHovered() ? height : 0, width, height, 16, 32);
+        if (isHovered()) { renderToolTip(matrices, mouseX, mouseY); }
     }
 }
