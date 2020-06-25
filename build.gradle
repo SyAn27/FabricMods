@@ -87,13 +87,14 @@ allprojects {
 
     task sourcesJar(type: Jar, dependsOn: classes) {
         archiveClassifier.set("sources")
-        from sourceSets.main.allSource
+        from sourceSets.main.java
     }
 
-    jar { from("LICENSE") }
+    jar { from('LICENSE') }
+    sourcesJar {from('LICENSE')}
 
     runClient {
-        args = ["--username", "Dev"]
+        args = ['--username', 'Dev']
     }
 
     tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
