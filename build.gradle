@@ -151,7 +151,7 @@ allprojects {
                 }
                 addArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}-sources.jar")) {
                     changelogType = 'markdown'
-                    changelog = file('sources-changelog.md')
+                    changelog = file("${project.rootDir}/sources-changelog.md")
                 }
                 afterEvaluate {
                     uploadTask.dependsOn('remapSourcesJar')
