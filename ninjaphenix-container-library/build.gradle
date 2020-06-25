@@ -1,4 +1,4 @@
-minecraft {keyb
+minecraft {
     accessWidener = file('src/main/resources/ninjaphenix-container-lib.accesswidener')
 }
 
