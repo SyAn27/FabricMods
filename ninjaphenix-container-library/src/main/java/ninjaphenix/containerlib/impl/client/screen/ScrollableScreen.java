@@ -38,8 +38,8 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
     protected void init()
     {
         super.init();
-        int settingsXOffset = - (hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19);
-        if(FabricLoader.getInstance().isModLoaded("inventorysorter") && !hasScrollbar) { settingsXOffset -= 18; }
+        int settingsXOffset = -(hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19);
+        if (FabricLoader.getInstance().isModLoaded("inventorysorter") && !hasScrollbar) { settingsXOffset -= 18; }
         addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
                 (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         if (hasScrollbar)

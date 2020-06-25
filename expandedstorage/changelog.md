@@ -2,3 +2,4 @@
 - Fixed narration of next and previous page buttons.
 - Made tooltips follow cursor in scren type select screen.
 - Added tooltip to select screen type button ( settings button )
+- Added tooltips to the page select buttons.

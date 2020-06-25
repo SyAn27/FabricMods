@@ -87,7 +87,8 @@ public class SelectContainerScreen extends Screen
         }
         for (AbstractButtonWidget button : this.buttons)
         {
-            if(button instanceof ScreenTypeButton) {
+            if (button instanceof ScreenTypeButton)
+            {
                 ((ScreenTypeButton) button).renderTooltip(matrices, mouseX, mouseY, delta);
             }
         }
@@ -113,10 +114,10 @@ public class SelectContainerScreen extends Screen
 
         public void renderTooltip(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
         {
-            if(hovered) {
-                renderToolTip(matrices, mouseX, mouseY);
-            } else if (isHovered()) {
-                renderToolTip(matrices, x, y);
+            if (active)
+            {
+                if (hovered) { renderToolTip(matrices, mouseX, mouseY); }
+                else if (isHovered()) { renderToolTip(matrices, x, y); }
             }
         }
     }

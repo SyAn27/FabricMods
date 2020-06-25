@@ -12,12 +12,9 @@ public interface ContainerLibraryExtension
      */
     default void declareScreenSizeCallbacks() {}
 
-    ;
-
     /**
      * This is where you should register new screen sizes.
      */
     default void declareScreenSizes() {}
 
-    ;
 }

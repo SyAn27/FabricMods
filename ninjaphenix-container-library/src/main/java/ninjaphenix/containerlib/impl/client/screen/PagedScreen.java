@@ -68,27 +68,37 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     private void setPageText() { currentPageText = new TranslatableText("screen.ninjaphenix-container-lib.page_x_y", page, SCREEN_META.PAGES); }
 
     @Override
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
+    {
+        super.render(matrices, mouseX, mouseY, delta);
+        leftPageButton.renderTooltip(matrices, mouseX, mouseY);
+        rightPageButton.renderTooltip(matrices, mouseX, mouseY);
+    }
+
+    @Override
     protected void init()
     {
         super.init();
         int settingsXOffset = -19;
-        if(FabricLoader.getInstance().isModLoaded("inventorysorter")) { settingsXOffset -= 18; }
+        if (FabricLoader.getInstance().isModLoaded("inventorysorter")) { settingsXOffset -= 18; }
         addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
                 (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         if (SCREEN_META.PAGES != 1)
         {
             int pageButtonsXOffset = 0;
-            if(FabricLoader.getInstance().isModLoaded("inventorysorter")) {pageButtonsXOffset = -18; }
+            if (FabricLoader.getInstance().isModLoaded("inventorysorter")) {pageButtonsXOffset = -18; }
             page = 1;
             setPageText();
             leftPageButton = new PageButtonWidget(x + backgroundWidth - 61 + pageButtonsXOffset, y + backgroundHeight - 96, 0,
-                    new TranslatableText("screen.ninjaphenix-container-lib.prev_page"), button -> setPage(page, page - 1));
+                    new TranslatableText("screen.ninjaphenix-container-lib.prev_page"), button -> setPage(page, page - 1),
+                    (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             leftPageButton.active = false;
             addButton(leftPageButton);
             rightPageButton = new PageButtonWidget(x + backgroundWidth - 19 + pageButtonsXOffset, y + backgroundHeight - 96, 1,
-                    new TranslatableText("screen.ninjaphenix-container-lib.next_page"), button -> setPage(page, page + 1));
+                    new TranslatableText("screen.ninjaphenix-container-lib.next_page"), button -> setPage(page, page + 1),
+                    (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             addButton(rightPageButton);
-            pageTextX =  (1 + leftPageButton.x + rightPageButton.x - rightPageButton.getWidth() / 2F) / 2F;
+            pageTextX = (1 + leftPageButton.x + rightPageButton.x - rightPageButton.getWidth() / 2F) / 2F;
         }
     }
 
@@ -152,9 +162,9 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
         private static final Identifier TEXTURE = Constants.id("textures/gui/page_buttons.png");
         private final int TEXTURE_OFFSET;
 
-        public PageButtonWidget(int x, int y, int textureOffset, Text text, PressAction onPress)
+        public PageButtonWidget(int x, int y, int textureOffset, Text text, PressAction onPress, TooltipSupplier tooltipSupplier)
         {
-            super(x, y, 12, 12, text, onPress);
+            super(x, y, 12, 12, text, onPress, tooltipSupplier);
             TEXTURE_OFFSET = textureOffset;
         }
 
@@ -177,6 +187,15 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
             RenderSystem.defaultBlendFunc();
             RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
             drawTexture(matrices, x, y, TEXTURE_OFFSET * 12, getYImage(isHovered()) * 12, width, height, 32, 48);
+        }
+
+        public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY)
+        {
+            if (active)
+            {
+                if (hovered) { renderToolTip(matrices, mouseX, mouseY); }
+                else if (isHovered()) { renderToolTip(matrices, x, y); }
+            }
         }
     }
 }
