@@ -112,7 +112,7 @@ allprojects {
                 }
             } else {
                 if ('false'.equalsIgnoreCase(upload_debug)) {
-                    "hub release create -t ${commit} -m ${tagName} -m ${tagName} -a ${project.buildDir}/libs/${tagName}.jar -a ${project.buildDir}/libs/${tagName}-sources.jar ${tagName}".execute()
+                    "hub release create -a ${projectDir.getName()}/build/libs/${tagName}.jar -a ${projectDir.getName()}/build/libs/${tagName}-sources.jar -m ${tagName} -m ${tagName} -t ${commit} ${tagName}".execute()
                     println "Created release for tag ${tagName} with message ${tagName}"
                 }
             }
