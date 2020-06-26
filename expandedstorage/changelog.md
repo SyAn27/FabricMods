@@ -1,5 +1,1 @@
-- Added support for inventory sorter's buttons ( moved mine when mod is loaded )
-- Fixed narration of next and previous page buttons.
-- Made tooltips follow cursor in scren type select screen.
-- Added tooltip to select screen type button ( settings button )
-- Added tooltips to the page select buttons.
+- Fixes crashing when opening up a paged screen without page buttons.

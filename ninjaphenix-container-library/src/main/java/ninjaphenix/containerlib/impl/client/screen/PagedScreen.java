@@ -71,8 +71,11 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
     {
         super.render(matrices, mouseX, mouseY, delta);
-        leftPageButton.renderTooltip(matrices, mouseX, mouseY);
-        rightPageButton.renderTooltip(matrices, mouseX, mouseY);
+        if(SCREEN_META.PAGES != 1)
+        {
+            leftPageButton.renderTooltip(matrices, mouseX, mouseY);
+            rightPageButton.renderTooltip(matrices, mouseX, mouseY);
+        }
     }
 
     @Override
