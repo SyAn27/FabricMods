@@ -1,1 +1,1 @@
-- Fixes crashing when opening up a paged screen without page buttons.
+- Actually fixes the crashing when opening up a paged screen.
