@@ -1,1 +1,1 @@
-- Actually fixes the crashing when opening up a paged screen.
+- Updates simplified chinese translations, provided by qsefthuopq.
