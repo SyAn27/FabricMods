@@ -40,10 +40,10 @@ public class ExpandedStorageClient implements ClientModInitializer
     {
         iterateOurTiers(Registries.CHEST, (data) ->
         {
-            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.SINGLE)));
-            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.BOTTOM)));
-            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.LEFT)));
-            consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(CursedChestType.FRONT)));
+            for (final CursedChestType type : CursedChestType.values())
+            {
+                consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(type)));
+            }
         });
     }
 
@@ -53,10 +53,10 @@ public class ExpandedStorageClient implements ClientModInitializer
         ClientSpriteRegistryCallback.event(CHEST_TEXTURE_ATLAS).register((atlas, registry) ->
                 iterateOurTiers(Registries.CHEST, (data) ->
                 {
-                    registry.register(data.getChestTexture(CursedChestType.SINGLE));
-                    registry.register(data.getChestTexture(CursedChestType.BOTTOM));
-                    registry.register(data.getChestTexture(CursedChestType.LEFT));
-                    registry.register(data.getChestTexture(CursedChestType.FRONT));
+                    for (final CursedChestType type : CursedChestType.values())
+                    {
+                        registry.register(data.getChestTexture(type));
+                    }
                 })
         );
         BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorage.CHEST, CursedChestBlockEntityRenderer::new);

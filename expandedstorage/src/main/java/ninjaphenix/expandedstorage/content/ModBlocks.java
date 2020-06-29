@@ -57,14 +57,11 @@ public final class ModBlocks
     {
         final CursedChestBlock block = new CursedChestBlock(Block.Settings.copy(material));
         final Text containerName = new TranslatableText("container.expandedstorage." + name);
-        final Identifier singleTexture = ExpandedStorage.getId("entity/" + name + "/single");
-        final Identifier vanillaTexture = ExpandedStorage.getId("entity/" + name + "/vanilla");
-        final Identifier tallTexture = ExpandedStorage.getId("entity/" + name + "/tall");
-        final Identifier longTexture = ExpandedStorage.getId("entity/" + name + "/long");
         final Identifier id = ExpandedStorage.getId(name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ExpandedStorage.group)));
-        Registry.register(Registries.CHEST, id, new ChestTierData(rows * 9, containerName, id, singleTexture, vanillaTexture, tallTexture, longTexture));
+        Registry.register(Registries.CHEST, id, new ChestTierData(rows * 9, containerName, id,
+                type -> ExpandedStorage.getId(String.format("entity/%s/%s", name, type.asString()))));
         return block;
     }
 

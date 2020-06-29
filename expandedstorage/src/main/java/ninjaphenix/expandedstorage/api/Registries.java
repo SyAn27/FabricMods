@@ -8,6 +8,8 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.SimpleRegistry;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
 
+import java.util.function.Function;
+
 /**
  * This class provides data registries for adding new chests to already defined chest types. This will likely be refactored in the future as new features and
  * chest types are added.
@@ -33,9 +35,12 @@ public final class Registries
     public static class ChestTierData extends TierData
     {
         private final Identifier singleTexture;
-        private final Identifier vanillaTexture;
-        private final Identifier tallTexture;
-        private final Identifier longTexture;
+        private final Identifier topTexture;
+        private final Identifier backTexture;
+        private final Identifier rightTexture;
+        private final Identifier bottomTexture;
+        private final Identifier frontTexture;
+        private final Identifier leftTexture;
 
         /**
          * Data representing a vanilla looking chest block.
@@ -43,19 +48,18 @@ public final class Registries
          * @param slots The amount of itemstacks this chest tier can hold.
          * @param containerName The default container name for this chest tier.
          * @param blockId The block id that represents this data.
-         * @param singleTexture The blocks single texture.
-         * @param vanillaTexture The blocks vanilla texture ( Vanilla double chests ).
-         * @param tallTexture The blocks tall texture.
-         * @param longTexture The blocks long texture.
+         * @param textureFunction The function which returns the chest texture for a supplied type.
          */
-        public ChestTierData(int slots, Text containerName, Identifier blockId, Identifier singleTexture, Identifier vanillaTexture,
-                Identifier tallTexture, Identifier longTexture)
+        public ChestTierData(int slots, Text containerName, Identifier blockId, Function<CursedChestType, Identifier> textureFunction)
         {
             super(slots, containerName, blockId);
-            this.singleTexture = singleTexture;
-            this.vanillaTexture = vanillaTexture;
-            this.tallTexture = tallTexture;
-            this.longTexture = longTexture;
+            singleTexture = textureFunction.apply(CursedChestType.SINGLE);
+            topTexture = textureFunction.apply(CursedChestType.TOP);
+            backTexture = textureFunction.apply(CursedChestType.BACK);
+            rightTexture = textureFunction.apply(CursedChestType.RIGHT);
+            bottomTexture = textureFunction.apply(CursedChestType.BOTTOM);
+            frontTexture = textureFunction.apply(CursedChestType.FRONT);
+            leftTexture = textureFunction.apply(CursedChestType.LEFT);
         }
 
         /**
@@ -64,10 +68,16 @@ public final class Registries
          */
         public Identifier getChestTexture(CursedChestType type)
         {
-            if (type == CursedChestType.BOTTOM || type == CursedChestType.TOP) { return tallTexture; }
-            else if (type == CursedChestType.LEFT || type == CursedChestType.RIGHT) { return vanillaTexture; }
-            else if (type == CursedChestType.FRONT || type == CursedChestType.BACK) { return longTexture; }
-            return singleTexture;
+            switch(type) {
+
+                case TOP: return topTexture;
+                case BACK: return backTexture;
+                case RIGHT: return rightTexture;
+                case BOTTOM: return bottomTexture;
+                case FRONT: return frontTexture;
+                case LEFT: return leftTexture;
+                default: return singleTexture;
+            }
         }
     }
 

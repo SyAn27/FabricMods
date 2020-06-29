@@ -131,7 +131,7 @@ public abstract class AbstractChestBlock extends BasicStorageBlock
                 BlockEntity pairedBlockEntity = world.getBlockEntity(pairedPos);
                 if (pairedBlockEntity instanceof AbstractChestBlockEntity)
                 {
-                    if (clickedChestType.isRenderedType())
+                    if (clickedChestType.isMainType())
                     { return propertyRetriever.getFromBoth(clickedChestBlockEntity, (AbstractChestBlockEntity) pairedBlockEntity); }
                     else
                     { return propertyRetriever.getFromBoth((AbstractChestBlockEntity) pairedBlockEntity, clickedChestBlockEntity); }
