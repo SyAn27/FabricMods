@@ -1,2 +1,1 @@
 - Fixes lighting issues with chests.
-- Fixes chest bounding boxes causing particles to render incorrectly.
