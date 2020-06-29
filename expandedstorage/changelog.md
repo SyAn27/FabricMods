@@ -1,1 +1,2 @@
-- Updates simplified chinese translations, provided by qsefthuopq.
+- Fixes lighting issues with chests.
+- Fixes chest bounding boxes causing particles to render incorrectly.
