@@ -8,7 +8,6 @@ public class FrontChestModel extends SingleChestModel
 {
     public FrontChestModel()
     {
-        // LongChestModel
         super(64, 48);
         lid.addCuboid(0, 0, 15, 14, 5, 15, 0);
         lid.addCuboid(6, -2, 30, 2, 4, 1, 0);
