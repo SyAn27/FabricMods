@@ -1,1 +1,1 @@
-- Updates simplified chinese translations, provided by qsefthuopq.
+- Fixes lighting issues with chests.
