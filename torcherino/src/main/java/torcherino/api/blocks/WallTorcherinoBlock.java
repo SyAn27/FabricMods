@@ -1,6 +1,5 @@
 package torcherino.api.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -32,9 +31,9 @@ public class WallTorcherinoBlock extends WallTorchBlock implements BlockEntityPr
     private final Identifier tierID;
     private final DefaultParticleType flameParticle;
 
-    public WallTorcherinoBlock(Identifier tier, Identifier dropID)
+    public WallTorcherinoBlock(Identifier tier, Block torcherinoBlock)
     {
-        super(FabricBlockSettings.copy(Blocks.WALL_TORCH).drops(dropID).build());
+        super(Block.Settings.copy(Blocks.WALL_TORCH).dropsLike(torcherinoBlock));
         this.tierID = tier;
         String path = tier.getPath() + "_flame";
         if (path.equals("normal_flame")) { path = "flame"; }

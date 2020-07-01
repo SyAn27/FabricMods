@@ -42,7 +42,6 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
     public void onInitialize()
     {
         Config.initialize();
-        TorcherinoAPI.INSTANCE.registerTier(new Identifier("null"), 4, 4, 4);
         TorcherinoAPI.INSTANCE.getTiers().forEach((id, tier) ->
         {
             if (!id.getNamespace().equals(MOD_ID)) { return; }
@@ -70,7 +69,6 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
             });
         });
         FabricLoader.getInstance().getEntrypoints("torcherinoInitializer", TorcherinoInitializer.class).forEach(TorcherinoInitializer::onTorcherinoInitialize);
-
         PlayerConnectCallback.EVENT.register(player ->
         {
             allowedUuids.add(player.getUuidAsString());
@@ -86,7 +84,6 @@ public class Torcherino implements ModInitializer, TorcherinoInitializer
             });
             ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier(Torcherino.MOD_ID, "tts"), packetBuffer);
         });
-
         PlayerDisconnectCallback.EVENT.register(player ->
         {
             if (Config.INSTANCE.online_mode.equals("ONLINE")) { allowedUuids.remove(player.getUuidAsString()); }

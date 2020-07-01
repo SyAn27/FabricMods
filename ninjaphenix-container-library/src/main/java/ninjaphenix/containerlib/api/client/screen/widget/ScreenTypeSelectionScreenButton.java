@@ -34,5 +34,15 @@ public class ScreenTypeSelectionScreenButton extends ButtonWidget
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         blit(x, y, 0, isHovered() ? height : 0, width, height, 16, 32);
+
+    }
+
+    public void renderTooltip(int x, int y, TooltipRenderer renderer) {
+        if (isHovered()) { renderer.render(getMessage(), x, y); }
+    }
+
+    public interface TooltipRenderer
+    {
+        void render(String message, int xPos, int yPos);
     }
 }

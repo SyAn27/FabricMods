@@ -108,7 +108,7 @@ public class CursedChestBlockEntity extends AbstractChestBlockEntity implements 
     private void playSound(SoundEvent soundEvent)
     {
         CursedChestType chestType = getCachedState().get(CursedChestBlock.TYPE);
-        if (!chestType.isRenderedType()) { return; }
+        if (!chestType.isMainType()) { return; }
         double zOffset = 0.5;
         if (chestType == CursedChestType.BOTTOM) { zOffset = 1; }
         BlockPos otherPos = CursedChestBlock.getPairedPos(world, pos);

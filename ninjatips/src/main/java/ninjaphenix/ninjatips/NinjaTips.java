@@ -1,8 +1,8 @@
 package ninjaphenix.ninjatips;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.fabricmc.fabric.api.registry.CommandRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
@@ -20,7 +20,7 @@ public class NinjaTips implements ModInitializer
     @Override
     public void onInitialize()
     {
-        CommandRegistry.INSTANCE.register(false, NbtCommand::register);
+        CommandRegistrationCallback.EVENT.register(NbtCommand::register);
         ServerSidePacketRegistry.INSTANCE.register(ITEM_CHAT, (ctx, buf) -> {
             final ItemStack stack = buf.readItemStack();
             final PlayerEntity player = ctx.getPlayer();

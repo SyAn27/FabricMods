@@ -1,6 +1,5 @@
 package torcherino.api.blocks;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -33,7 +32,7 @@ public class TorcherinoBlock extends TorchBlock implements BlockEntityProvider, 
 
     public TorcherinoBlock(Identifier tier)
     {
-        super(FabricBlockSettings.copy(Blocks.TORCH).build());
+        super(Block.Settings.copy(Blocks.TORCH));
         tierID = tier;
         String path = tier.getPath() + "_flame";
         if (path.equals("normal_flame")) { path = "flame"; }

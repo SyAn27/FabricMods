@@ -28,7 +28,7 @@ public class JackoLanterinoBlock extends CarvedPumpkinBlock implements BlockEnti
 
     public JackoLanterinoBlock(Identifier tier)
     {
-        super(FabricBlockSettings.copy(Blocks.JACK_O_LANTERN).build());
+        super(Block.Settings.copy(Blocks.JACK_O_LANTERN));
         this.tierID = tier;
     }
 

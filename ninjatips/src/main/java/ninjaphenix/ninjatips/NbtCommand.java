@@ -23,7 +23,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class NbtCommand
 {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher)
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean isDedicated)
     {
         dispatcher.register(literal("nbt")
                 .then(literal("block").then(CommandManager.argument("pos", BlockPosArgumentType.blockPos()).executes(context ->

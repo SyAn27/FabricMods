@@ -3,35 +3,41 @@ package ninjaphenix.creativebuttonmover.client.gui.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import ninjaphenix.creativebuttonmover.client.Config;
 import ninjaphenix.creativebuttonmover.client.CreativeButtonMover;
+import ninjaphenix.creativebuttonmover.client.gui.DummyButtonWidget;
 
 @SuppressWarnings("ConstantConditions")
 public class SimulatedCreativeScreen extends Screen
 {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("textures/gui/container/creative_inventory/tab_item_search.png");
     private static final Identifier TAB_TEXTURE = new Identifier("textures/gui/container/creative_inventory/tabs.png");
-    private static final Identifier BUTTON_TEXTURE = new Identifier("fabric", "textures/gui/creative_buttons.png");
+    private static final Text YES = new TranslatableText("screen.creativebuttonmover.yes").formatted(Formatting.GREEN);
+    private static final Text NO = new TranslatableText("screen.creativebuttonmover.no").formatted(Formatting.RED);
     private static final TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
     private static final int containerHeight = 136;
     private static final int containerWidth = 195;
-    private Screen returnTo;
+    private final Screen returnTo;
     private int left;
     private int top;
-    private int xpos;
-    private int ypos;
-    private boolean dragging;
+    private DummyButtonWidget prev;
+    private DummyButtonWidget next;
+    private ButtonWidget customButtonsEnabled;
+    private Boolean useCustomButtons = Config.INSTANCE.UseCustomButtons;
 
     public SimulatedCreativeScreen(Screen parent)
     {
         super(new LiteralText(""));
-        xpos = CreativeButtonMover.x;
-        ypos = CreativeButtonMover.y;
         returnTo = parent;
     }
 
@@ -39,50 +45,37 @@ public class SimulatedCreativeScreen extends Screen
     protected void init()
     {
         super.init();
-        this.addButton(new ButtonWidget(width / 2 - 50, height / 2 + 96, 100, 20, "Close", (widget) -> onClose()));
-    }
-
-    @Override
-    public boolean mouseClicked(double x, double y, int int_1)
-    {
-        dragging = inPageButtonArea(x, y);
-        if (dragging) { return true; }
-        return super.mouseClicked(x, y, int_1);
-    }
-
-    @Override
-    public boolean mouseReleased(double x, double y, int int_1)
-    {
-        dragging = false;
-        return super.mouseReleased(x, y, int_1);
-    }
-
-    @Override
-    public boolean mouseDragged(double x, double y, int int_1, double double_3, double double_4)
-    {
-        if (dragging)
-        {
-            xpos = (int) x - left - 11;
-            ypos = (int) y - top - 6;
-            return true;
-        }
-        return super.mouseDragged(x, y, int_1, double_3, double_4);
-    }
-
-    private boolean inPageButtonArea(double x, double y)
-    {
-        final int l = left + xpos;
-        final int t = top + ypos;
-        return x >= l && x <= l + 19 && y <= t + 11 && y >= t;
-    }
-
-    @Override
-    public void render(int int_1, int int_2, float float_1)
-    {
-        this.renderBackground();
-        super.render(int_1, int_2, float_1);
         left = (this.width - containerWidth) / 2;
         top = (this.height - containerHeight) / 2;
+        prev = this.addButton(new DummyButtonWidget(Config.INSTANCE.PrevButton, left, top));
+        next = this.addButton(new DummyButtonWidget(Config.INSTANCE.NextButton, left, top));
+        final int w = 90;
+        final int g = 60;
+        this.addButton(new ButtonWidget(width / 2 + g, height / 2 + 96, w, 20, new TranslatableText("screen.creativebuttonmover.save").asFormattedString(), (widget) -> onClose()));
+        this.addButton(new ButtonWidget(width / 2 - w - g, height / 2 + 96, w, 20, new TranslatableText("screen.creativebuttonmover.reload").asFormattedString(),
+                this::reloadValues));
+        customButtonsEnabled = this.addButton(new ButtonWidget(width / 2 - 55, height / 2 + 96, 110, 20,
+                new TranslatableText("screen.creativebuttonmover.isEnabled", useCustomButtons ? YES : NO).asFormattedString(), this::toggleUseCustomButtons));
+    }
+
+    private void toggleUseCustomButtons(ButtonWidget buttonWidget)
+    {
+        useCustomButtons = !useCustomButtons;
+        customButtonsEnabled.setMessage(new TranslatableText("screen.creativebuttonmover.isEnabled", useCustomButtons ? YES : NO).asFormattedString());
+    }
+
+    private void reloadValues(ButtonWidget buttonWidget)
+    {
+        CreativeButtonMover.loadConfig();
+        useCustomButtons = Config.INSTANCE.UseCustomButtons;
+        prev.update(Config.INSTANCE.PrevButton);
+        next.update(Config.INSTANCE.NextButton);
+    }
+
+    @Override
+    public void render(int mouseX, int mouseY, float delta)
+    {
+        this.renderBackground();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableAlphaTest();
         for (int i = 1; i < 12; i++)
@@ -92,13 +85,12 @@ public class SimulatedCreativeScreen extends Screen
         }
         textureManager.bindTexture(BACKGROUND_TEXTURE);
         blit(left, top, 0, 0, containerWidth, containerHeight);
+        //render();
+        //render(left, top, 0, 0, containerWidth, containerHeight); ???
         textureManager.bindTexture(TAB_TEXTURE);
         renderItemGroup(ItemGroup.GROUPS[0]);
         RenderSystem.disableAlphaTest();
-        textureManager.bindTexture(BUTTON_TEXTURE);
-        setBlitOffset(200);
-        blit(left + xpos, top + ypos, 0, 0, 22, 10);
-        setBlitOffset(0);
+        super.render(mouseX, mouseY, delta);
         font.drawWithShadow("Page Button Mover", width / 2f - font.getStringWidth("Page Button Mover") / 2f, top - 40, 5636095);
     }
 
@@ -117,7 +109,7 @@ public class SimulatedCreativeScreen extends Screen
             offY += 64;
             y += containerHeight - 4;
         }
-        this.blit(x, y, column * 28, offY, 28, 32);
+        blit(x, y, column * 28, offY, 28, 32, 256, 256);
         if (minecraft.world != null)
         {
             x += 6;
@@ -125,42 +117,28 @@ public class SimulatedCreativeScreen extends Screen
             RenderSystem.enableRescaleNormal();
             ItemStack itemStack_1 = itemGroup_1.getIcon();
             this.itemRenderer.renderGuiItem(itemStack_1, x, y);
-            this.itemRenderer.renderGuiItemOverlay(this.font, itemStack_1, x, y);
+            this.itemRenderer.renderGuiItemOverlay(font, itemStack_1, x, y);
         }
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    public boolean mouseClicked(double mouseX, double mouseY, int button)
     {
-        if (keyCode == 262)
+        for (AbstractButtonWidget child : buttons)
         {
-            xpos++;
-            return true;
+            if (child.isFocused()) { child.changeFocus(false); }
         }
-        else if (keyCode == 263)
-        {
-            xpos--;
-            return true;
-        }
-        else if (keyCode == 264)
-        {
-            ypos++;
-            return true;
-        }
-        else if (keyCode == 265)
-        {
-            ypos--;
-            return true;
-        }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.mouseClicked(mouseX, mouseY, button);
+
     }
 
     @Override
     public void onClose()
     {
-        CreativeButtonMover.x = xpos;
-        CreativeButtonMover.y = ypos;
-        CreativeButtonMover.saveValues();
-        this.minecraft.openScreen(returnTo);
+        prev.save();
+        next.save();
+        Config.INSTANCE.UseCustomButtons = useCustomButtons;
+        CreativeButtonMover.saveConfig();
+        minecraft.openScreen(returnTo);
     }
 }

@@ -1,3 +1,13 @@
+repositories {
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
+    flatDir {
+        dirs file('runtime_mods')
+    }
+}
+
 dependencies {
     compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
     compile project(path: ":chainmail"), withoutUnwanted
@@ -8,8 +18,11 @@ dependencies {
     include project(path: ":creativebuttonmover")
     include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 
-    modCompileOnly("virtuoel:Towelette:${towelette_version}") {
+    modCompileOnly("com.github.Virtuoel:Towelette:${towelette_commit}") {
         exclude(group: "com.github.Virtuoel", module: "Statement")
     }
-    modCompileOnly("virtuoel:Statement:${statement_version}")
+    modCompileOnly("com.github.Virtuoel:Statement:${statement_commit}")
+
+    //modRuntime('local:InventorySorter:1.6.7-1.16')
+    //modRuntime('local:inventoryprofiles:fabric-20w10a-0.2.0')
 }
