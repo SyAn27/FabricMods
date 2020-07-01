@@ -1,10 +1,10 @@
 package ninjaphenix.tests.creativebuttonmover.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import ninjaphenix.chainmail.api.ChainmailCommonApi;
 
 import java.util.Random;
 
@@ -15,8 +15,14 @@ public class Main implements ClientModInitializer
     {
         for (int i = 0; i < 20; i++)
         {
-            FabricItemGroupBuilder.build(new Identifier("creativebuttonmover", "tab_" + i),
-                    () -> new ItemStack(Registry.ITEM.getRandom(new Random()), 1));
+            ChainmailCommonApi.INSTANCE.registerItemGroup((index) -> new ItemGroup(index, "creativebuttonmover.tab_" + index)
+            {
+                @Override
+                public ItemStack createIcon() { return new ItemStack(Registry.ITEM.getRandom(new Random())); }
+
+                @Override
+                public String getTranslationKey() { return "itemgroup."+getId(); }
+            });
         }
     }
 }
