@@ -2,6 +2,7 @@ package ninjaphenix.containerlib.impl.client.screen;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -17,7 +18,7 @@ public class SelectContainerScreen extends Screen
     private final int PADDING = 24;
     private int TOP;
 
-    public SelectContainerScreen(HashMap<Identifier, ScreenMiscSettings> options)
+    public SelectContainerScreen(final HashMap<Identifier, ScreenMiscSettings> options)
     {
         super(new TranslatableText("screen.ninjaphenix-container-lib.screen_picker_title"));
         OPTIONS = options;
@@ -77,7 +78,17 @@ public class SelectContainerScreen extends Screen
     {
         setBlitOffset(0);
         renderBackground();
-        super.render(mouseX, mouseY, delta);
+        for (AbstractButtonWidget button : this.buttons)
+        {
+            button.render(mouseX, mouseY, delta);
+        }
+        for (AbstractButtonWidget button : this.buttons)
+        {
+            if (button instanceof ScreenTypeButton)
+            {
+                ((ScreenTypeButton) button).renderTooltip(mouseX, mouseY, delta);
+            }
+        }
         drawCenteredString(font, title.asFormattedString(), width / 2, Math.max(TOP - 2 * PADDING, 0), 0xFFFFFFFF);
     }
 
@@ -96,12 +107,17 @@ public class SelectContainerScreen extends Screen
         {
             MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
             blit(x, y, 0, isHovered() ? height : 0, width, height, width, height * 2);
-            // todo: check in 1.16 if I can fix tooltips rendering under other buttons by sharing the matrix stack.
             if (isHovered()) { renderToolTip(x, y); }
         }
 
-        @Override
-        public void renderToolTip(int mouseX, int mouseY) { SelectContainerScreen.this.renderTooltip(this.getMessage(), mouseX, mouseY); }
+        public void renderTooltip(final int mouseX, final int mouseY, final float delta)
+        {
+            if (active)
+            {
+                if (isHovered) { SelectContainerScreen.this.renderTooltip(getMessage(), mouseX, mouseY); }
+                else if (isHovered()) { SelectContainerScreen.this.renderTooltip(getMessage(), x, y); }
+            }
+        }
     }
 
 }

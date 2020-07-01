@@ -17,6 +17,7 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
     protected final boolean hasScrollbar;
     private boolean isDragging;
     private int topRow;
+    private ScreenTypeSelectionScreenButton screenSelectButton;
 
     public ScrollableScreen(T container)
     {
@@ -36,16 +37,19 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
     protected void init()
     {
         super.init();
-        addButton(new ScreenTypeSelectionScreenButton(x + containerWidth -
-                (hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19), y + 4));
+        int settingsXOffset = -(hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19);
+        if (FabricLoader.getInstance().isModLoaded("inventorysorter") && !hasScrollbar) { settingsXOffset -= 18; }
+        screenSelectButton = addButton(new ScreenTypeSelectionScreenButton(x + containerWidth + settingsXOffset, y + 4));
         if (hasScrollbar)
         {
             isDragging = false;
             topRow = 0;
         }
-        else {
+        else
+        {
             final int blanked = SCREEN_META.BLANK_SLOTS;
-            if(blanked > 0) {
+            if (blanked > 0)
+            {
                 final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
                 blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, blanked * 18, 18,
                         xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
@@ -66,6 +70,13 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
             blit(x + containerWidth - 2, y + yOffset + 18, containerWidth, scrollbarHeight, 12, 15, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         }
         if (blankArea != null) { blankArea.render(); }
+    }
+
+    @Override
+    public void render(int mouseX, int mouseY, float delta)
+    {
+        super.render(mouseX, mouseY, delta);
+        screenSelectButton.renderTooltip(mouseX, mouseY, this::renderTooltip);
     }
 
     private boolean isMouseOverScrollbar(double mouseX, double mouseY)
@@ -200,7 +211,8 @@ public class ScrollableScreen<T extends ScrollableContainer> extends AbstractScr
         if (newTopRow == SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)
         {
             int blanked = SCREEN_META.BLANK_SLOTS;
-            if(blanked > 0) {
+            if (blanked > 0)
+            {
                 final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
                 blankArea = new Rectangle(x + xOffset, y + containerHeight - 115, blanked * 18, 18,
                         xOffset, containerHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);

@@ -49,7 +49,7 @@ public class ModBlocks
             Identifier jackoLanterinoID = getIdentifier(tierID, "lanterino");
             Identifier lanterinoID = getIdentifier(tierID, "lantern");
             Block torcherinoBlock = new TorcherinoBlock(tierID);
-            Block torcherinoWallBlock = new WallTorcherinoBlock(tierID, new Identifier(Torcherino.MOD_ID, "blocks/" + torcherinoID.getPath()));
+            Block torcherinoWallBlock = new WallTorcherinoBlock(tierID, torcherinoBlock);
             Block jackoLanterinoBlock = new JackoLanterinoBlock(tierID);
             Block lanterinoBlock = new LanterinoBlock(tierID);
             blocks.put(torcherinoID, torcherinoBlock);

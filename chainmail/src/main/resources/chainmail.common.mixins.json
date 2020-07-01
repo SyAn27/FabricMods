@@ -4,6 +4,7 @@
   "package": "ninjaphenix.chainmail.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ItemGroupMixin",
     "PlayerManagerMixin",
     "WorldMixin"
   ],

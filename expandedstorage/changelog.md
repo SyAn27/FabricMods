@@ -1,1 +1,4 @@
-- No changes
+- **This should be the final version for 1.15.2**
+- Backport of 1.16 changes
+- Fix a minor issue with tooltip rendering for select screen type button
+- Fixed model being remade every frame for chests.

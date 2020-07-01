@@ -1,6 +1,6 @@
 package ninjaphenix.userdefinedadditions.constants;
 
-import net.fabricmc.fabric.api.tools.FabricToolTags;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 

@@ -1,10 +1,8 @@
-import java.util.Optional;
-
 plugins {
     id 'java'
     id 'maven-publish'
     //id 'fabric-loom' version '0.2.7-SNAPSHOT' apply false
-    id 'fabric-loom' version '0.4.3' apply false
+    id 'fabric-loom' version '0.4-SNAPSHOT' apply false
     id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
 }
 
@@ -29,19 +27,19 @@ allprojects {
     }
 
     ext {
-        dep_chainmail_version = findProject(":chainmail").mod_version
-        dep_container_lib_version = findProject(":ninjaphenix-container-library").mod_version
+        dep_chainmail_version = findProject(':chainmail').mod_version
+        dep_container_lib_version = findProject(':ninjaphenix-container-library').mod_version
         withoutUnwanted = {
-            exclude(module: "minecraft")
-            exclude(module: "fabric-loader")
-            exclude(module: "fabric-api")
-            exclude(module: "modmenu")
+            exclude(module: 'minecraft')
+            exclude(module: 'fabric-loader')
+            exclude(module: 'fabric-api')
+            exclude(module: 'modmenu')
         }
     }
 
     repositories {
         mavenLocal()
-        maven { url "http://server.bbkr.space:8081/artifactory/libs-release/" }
+        maven { url 'http://server.bbkr.space:8081/artifactory/libs-release/' }
     }
 
     dependencies {
@@ -56,95 +54,95 @@ allprojects {
 
         modImplementation "io.github.cottonmc:Jankson-Fabric:${jankson_version}", withoutUnwanted
 
-        compileOnly("org.jetbrains:annotations:19.0.0")
-        compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+        compileOnly('org.jetbrains:annotations:19.0.0')
+        compileOnly('com.google.code.findbugs:jsr305:3.0.2')
     }
 
     processResources {
         inputs.properties(
-                "mod_version": mod_version,
-                "minecraft_version": minecraft_version,
-                "dep_minecraft_version": dep_minecraft_version,
-                "dep_loader_version": dep_loader_version,
-                "dep_fabric_version": dep_fabric_version,
-                "dep_container_lib_version": dep_container_lib_version,
-                "dep_chainmail_version": dep_chainmail_version
+                'mod_version': mod_version,
+                'minecraft_version': minecraft_version,
+                'dep_minecraft_version': dep_minecraft_version,
+                'dep_loader_version': dep_loader_version,
+                'dep_fabric_version': dep_fabric_version,
+                'dep_container_lib_version': dep_container_lib_version,
+                'dep_chainmail_version': dep_chainmail_version
         )
         from(sourceSets.main.resources.srcDirs) {
-            include("fabric.mod.json")
+            include('fabric.mod.json')
             expand(
-                    "mod_version": mod_version,
-                    "minecraft_version": minecraft_version,
-                    "dep_minecraft_version": dep_minecraft_version,
-                    "dep_loader_version": dep_loader_version,
-                    "dep_fabric_version": dep_fabric_version,
-                    "dep_container_lib_version": dep_container_lib_version,
-                    "dep_chainmail_version": dep_chainmail_version
+                    'mod_version': mod_version,
+                    'minecraft_version': minecraft_version,
+                    'dep_minecraft_version': dep_minecraft_version,
+                    'dep_loader_version': dep_loader_version,
+                    'dep_fabric_version': dep_fabric_version,
+                    'dep_container_lib_version': dep_container_lib_version,
+                    'dep_chainmail_version': dep_chainmail_version
             )
         }
         from(sourceSets.main.resources.srcDirs) {
-            exclude("fabric.mod.json")
+            exclude('fabric.mod.json')
         }
     }
 
     task sourcesJar(type: Jar, dependsOn: classes) {
-        archiveClassifier.set("sources")
-        from sourceSets.main.allSource
+        archiveClassifier.set('sources')
+        from sourceSets.main.java
     }
 
-    jar { from("LICENSE") }
+    jar { from('LICENSE') }
+    sourcesJar {from('LICENSE')}
 
     runClient {
-        args = ["--username", "Dev"]
+        args = ['--username', 'Dev']
     }
 
-    tasks.withType(JavaCompile) { options.setEncoding("UTF-8") }
+    tasks.withType(JavaCompile) { options.setEncoding('UTF-8') }
 
     task release {
         doLast {
             def tagName = "${mod_id}-${mod_version}+${minecraft_version}"
-            if(extensions.getExtraProperties().has("artifactId")) {
-                def artifactId = extensions.getExtraProperties().get("artifactId")
+            def commit = "git rev-parse HEAD".execute().in.readLines().get(0)
+            if (extensions.getExtraProperties().has('artifactId')) {
+                def artifactId = extensions.getExtraProperties().get('artifactId')
                 def url = String.format(curseforge_url_template, curseforge_project_slug, artifactId)
-                "hub release create -m ${tagName} -m ${url} ${tagName}".execute()
-                println "Created release for tag ${tagName} with message ${url}"
+                if ('false'.equalsIgnoreCase(upload_debug)) {
+                    "hub release create -t ${commit} -m ${tagName} -m ${url} ${tagName}".execute()
+                    println "Created release for tag ${tagName} with message ${url}"
+                }
             } else {
-                "hub release create -m ${tagName} -m ${tagName} ${tagName}".execute()
-                println "Created release for tag ${tagName} with message ${tagName}"
+                if ('false'.equalsIgnoreCase(upload_debug)) {
+                    "hub release create -a ${projectDir.getName()}/build/libs/${tagName}.jar -a ${projectDir.getName()}/build/libs/${tagName}-sources.jar -m ${tagName} -m ${tagName} -t ${commit} ${tagName}".execute()
+                    println "Created release for tag ${tagName} with message ${tagName}"
+                }
             }
         }
     }
-    def curseforge_api_key = Optional.ofNullable(System.getenv().get("CURSEFORGE_API_KEY"))
-    if (curseforge_api_key.isPresent() && project.hasProperty("curseforge_project_id")) {
+    def curseforge_api_key = System.getenv('CURSEFORGE_API_KEY')
+    if (curseforge_api_key != null && project.hasProperty('curseforge_project_id')) {
         curseforge {
-            apiKey = curseforge_api_key.get()
+            apiKey = curseforge_api_key
             //noinspection GroovyAssignabilityCheck
             project {
-                id = "${curseforge_project_id}"
-                changelogType = "markdown"
-                changelog = file("${project.projectDir}/changelog.md")
-                releaseType = "${project.curseforge_release_type}"
-                addGameVersion "${project.curseforge_game_version}"
-                addGameVersion "Fabric"
-                addGameVersion "Java 8" // lets be honest, we're going to be stuck on java 8 for the next 5 years.
-                if(project.hasProperty("curseforge_required_dependencies") ||
-                        project.hasProperty("curseforge_embedded_dependencies") ||
-                        project.hasProperty("curseforge_optional_dependencies")) {
+                id = curseforge_project_id
+                changelogType = 'markdown'
+                changelog = file("${projectDir}/changelog.md")
+                releaseType = curseforge_release_type
+                addGameVersion curseforge_game_version
+                addGameVersion 'Fabric'
+                addGameVersion 'Java 8' // lets be honest, we're going to be stuck on java 8 for the next 5 years.
+                if (project.hasProperty('curseforge_required_dependencies') ||
+                        project.hasProperty('curseforge_embedded_dependencies') ||
+                        project.hasProperty('curseforge_optional_dependencies')) {
                     relations {
-                        if(project.hasProperty("curseforge_required_dependencies")) {
-                            for(String dep : project.curseforge_required_dependencies.split(":")) {
-                                requiredDependency dep
-                            }
+                        if (project.hasProperty('curseforge_required_dependencies')) {
+                            curseforge_required_dependencies.tokenize(':').each { requiredDependency it }
                         }
-                        if(project.hasProperty("curseforge_embedded_dependencies")) {
-                            for(String dep : project.curseforge_embedded_dependencies.split(":")) {
-                                embeddedLibrary dep
-                            }
+                        if (project.hasProperty('curseforge_embedded_dependencies')) {
+                            curseforge_embedded_dependencies.tokenize(':').each { embeddedLibrary it }
                         }
-                        if(project.hasProperty("curseforge_optional_dependencies")) {
-                            for(String dep : project.curseforge_optional_dependencies.split(":")) {
-                                optionalDependency dep
-                            }
+                        if (project.hasProperty('curseforge_optional_dependencies')) {
+                            curseforge_optional_dependencies.tokenize(':').each { optionalDependency it }
                         }
                     }
                 }
@@ -152,23 +150,30 @@ allprojects {
                     displayName = "${mod_name} ${mod_version}+${minecraft_version}"
                 }
                 addArtifact(file("${project.buildDir}/libs/${mod_id}-${mod_version}+${minecraft_version}-sources.jar")) {
-                    changelog = "- See main artifact for changelog."
+                    changelogType = 'markdown'
+                    changelog = file("${project.rootDir}/sources-changelog.md")
                 }
                 afterEvaluate {
-                    uploadTask.dependsOn("remapSourcesJar")
+                    uploadTask.dependsOn('remapSourcesJar')
                 }
             }
             options {
                 forgeGradleIntegration = false
-                debug = curseforge_debug == "true"
+                debug = 'true'.equalsIgnoreCase(upload_debug)
             }
         }
 
         release {
-            dependsOn "curseforge"
+            dependsOn 'curseforge'
             doFirst {
-                extensions.getExtraProperties().set("artifactId", curseforge.curseProjects[0].mainArtifact.getFileID())
+                extensions.getExtraProperties().set('artifactId', curseforge.curseProjects[0].mainArtifact.getFileID())
             }
+        }
+    }
+    else
+    {
+        release {
+            dependsOn remapSourcesJar
         }
     }
 
@@ -180,7 +185,7 @@ allprojects {
                     builtBy remapJar
                 }
                 artifact(sourcesJar) {
-                    classifier = "sources"
+                    classifier = 'sources'
                     builtBy remapSourcesJar
                 }
             }

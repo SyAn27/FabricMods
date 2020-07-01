@@ -26,12 +26,6 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
     @Override
     public void declareScreenSizes()
     {
-        /* todo: make these user configurable in the future
-            Requires asset generation as well as creation of custom resource packs.
-            \
-            Plan: once a screen is first opened, generate the texture and add it to a generated pack
-            Then use that cached texture to render the gui. Will need a way to store texture width and height
-         */
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(9, 3, 27, getTexture("shared", 9, 3), 208, 192)); // Wood
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(9, 6, 54, getTexture("shared", 9, 6), 208, 240)); // Iron / Large Wood
         API.declareScreenSize(SINGLE_CONTAINER, new SingleScreenMeta(9, 9, 81, getTexture("shared", 9, 9), 208, 304)); // Gold

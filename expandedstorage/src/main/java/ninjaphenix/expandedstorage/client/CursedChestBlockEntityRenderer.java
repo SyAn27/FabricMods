@@ -15,19 +15,12 @@ import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
-import ninjaphenix.expandedstorage.client.models.LongChestModel;
 import ninjaphenix.expandedstorage.client.models.SingleChestModel;
-import ninjaphenix.expandedstorage.client.models.TallChestModel;
-import ninjaphenix.expandedstorage.client.models.VanillaChestModel;
 import ninjaphenix.expandedstorage.content.ModBlocks;
 
 @Environment(EnvType.CLIENT)
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>
 {
-    private static final SingleChestModel singleChestModel = new SingleChestModel();
-    private static final SingleChestModel tallChestModel = new TallChestModel();
-    private static final SingleChestModel vanillaChestModel = new VanillaChestModel();
-    private static final SingleChestModel longChestModel = new LongChestModel();
     private static final BlockState defaultState = ModBlocks.wood_chest.getDefaultState();
 
     public CursedChestBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) { super(dispatcher); }
@@ -37,18 +30,12 @@ public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<Cu
     {
         BlockState state = be.hasWorld() ? be.getCachedState() : defaultState;
         CursedChestType chestType = state.get(CursedChestBlock.TYPE);
-        SingleChestModel model = singleChestModel;
-        if (chestType == CursedChestType.BOTTOM || chestType == CursedChestType.TOP) { model = tallChestModel; }
-        else if (chestType == CursedChestType.FRONT || chestType == CursedChestType.BACK) { model = longChestModel; }
-        else if (chestType == CursedChestType.LEFT || chestType == CursedChestType.RIGHT) { model = vanillaChestModel; }
+        SingleChestModel model = chestType.getModel();
         stack.push();
         stack.translate(0.5D, 0.5D, 0.5D);
         stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-state.get(Properties.HORIZONTAL_FACING).asRotation()));
         stack.translate(-0.5D, -0.5D, -0.5D);
         model.setLidPitch(be.getAnimationProgress(tickDelta));
-        if (chestType == CursedChestType.BACK) { stack.translate(0.0D, 0.0D, 1.0D); }
-        else if (chestType == CursedChestType.TOP) { stack.translate(0.0D, -1.0D, 0.0D); }
-        else if (chestType == CursedChestType.RIGHT) { stack.translate(-1.0D, 0.0D, 0.0D); }
         //noinspection ConstantConditions
         model.render(stack, new SpriteIdentifier(ExpandedStorageClient.CHEST_TEXTURE_ATLAS,
                 Registries.CHEST.get(be.getBlock()).getChestTexture(chestType)).getVertexConsumer(vcp, RenderLayer::getEntityCutout), x, y);

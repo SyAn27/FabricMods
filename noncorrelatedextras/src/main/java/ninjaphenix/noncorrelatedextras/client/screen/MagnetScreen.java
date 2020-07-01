@@ -83,11 +83,9 @@ public class MagnetScreen extends Screen
     public void render(int mouseX, int mouseY, float delta)
     {
         renderBackground();
-
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.minecraft.getTextureManager().bindTexture(SCREEN_TEXTURE);
         this.blit(x, y, 0, 0, WIDTH, HEIGHT);
-
         super.render(mouseX, mouseY, delta);
         this.font.draw(this.title.asFormattedString(), x + 8.0F, y + 6.0F, 4210752);
     }
