@@ -1,1 +1,1 @@
-- Fixes lighting issues with chests.
+- Fixes issue where chest models are remade every frame.

@@ -31,7 +31,7 @@ public enum CursedChestType implements StringIdentifiable
         else if (this == TOP) { return BOTTOM; }
         else if (this == LEFT) { return RIGHT; }
         else if (this == RIGHT) { return LEFT; }
-        throw new IllegalArgumentException("this cannot be SINGLE");
+        throw new IllegalArgumentException("CursedChestType#getOpposite is not supported for type SINGLE");
     }
 
     public boolean isMainType() { return this == FRONT || this == BOTTOM || this == LEFT || this == SINGLE; }
@@ -39,7 +39,7 @@ public enum CursedChestType implements StringIdentifiable
     @Environment(EnvType.CLIENT)
     public SingleChestModel getModel()
     {
-        if(model == null || true) // todo: remove || true
+        if(model == null)
         {
             if(this == FRONT) { model = new FrontChestModel(); }
             else if(this == BACK) { model = new BackChestModel(); }
