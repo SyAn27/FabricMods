@@ -2,3 +2,7 @@
 **/.gradle/
 /*/build/
 /*/run/
+/*/runtime_mods/
+/gradle/wrapper/
+/gradlew
+/gradlew.bat
