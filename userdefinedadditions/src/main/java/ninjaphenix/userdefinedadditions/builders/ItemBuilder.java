@@ -45,7 +45,6 @@ public class ItemBuilder implements RegistrableBuilder<Item>
 
     public ItemBuilder foodOf(String of)
     {
-        //TODO: handle if not food
         Item item = Registry.ITEM.get(new Identifier(of));
         if (item.isFood())
         {

@@ -107,7 +107,6 @@ public class SelectContainerScreen extends Screen
         {
             MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
             blit(x, y, 0, isHovered() ? height : 0, width, height, width, height * 2);
-            // todo: check in 1.16 if I can fix tooltips rendering under other buttons by sharing the matrix stack.
             if (isHovered()) { renderToolTip(x, y); }
         }
 
