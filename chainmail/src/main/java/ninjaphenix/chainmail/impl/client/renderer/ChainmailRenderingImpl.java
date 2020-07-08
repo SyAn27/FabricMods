@@ -11,7 +11,7 @@ import ninjaphenix.chainmail.impl.mixinhelpers.BuiltinModelItemRendererExtension
 
 import java.util.function.Predicate;
 
-public class ChainmainRenderingImpl implements ChainmailRendering
+public class ChainmailRenderingImpl implements ChainmailRendering
 {
 
     public static final BuiltinModelItemRendererExtensions ext = (BuiltinModelItemRendererExtensions) BuiltinModelItemRenderer.INSTANCE;
