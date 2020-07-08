@@ -44,7 +44,7 @@ public class NinjaTipsClient implements ClientModInitializer
         }
 
 
-        final Collection<Identifier> tags = ItemTags.getContainer().getTagsFor(stack.getItem());
+        final Collection<Identifier> tags = ItemTags.getTagGroup().getTagsFor(stack.getItem());
         if (tags.size() == 0) { return; }
         if (Screen.hasAltDown())
         {
