@@ -1,1 +1,1 @@
-- Fixes issue where chest models are remade every frame.
+- Fixed crash when placing a renamed chest.

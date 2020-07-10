@@ -15,9 +15,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
-import ninjaphenix.expandedstorage.block.misc.Nameable;
 
-public abstract class AbstractChestBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Nameable
+public abstract class AbstractChestBlockEntity extends LootableContainerBlockEntity implements SidedInventory
 {
     protected Text defaultContainerName;
     protected int inventorySize;
@@ -71,7 +70,6 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
         { if (!stack.isEmpty()) { return false; } }
         return true;
     }
-
 
     // todo: can I use the new state to remove need for type?
     @Override

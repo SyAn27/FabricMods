@@ -34,7 +34,6 @@ import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.block.misc.BasicStorageBlock;
 import ninjaphenix.expandedstorage.block.misc.CursedChestType;
-import ninjaphenix.expandedstorage.block.misc.Nameable;
 
 import java.util.List;
 import java.util.Optional;
@@ -277,7 +276,7 @@ public abstract class AbstractChestBlock extends BasicStorageBlock
         if (stack.hasCustomName())
         {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof ninjaphenix.expandedstorage.block.misc.Nameable) { ((Nameable) blockEntity).setCustomName(stack.getName()); }
+            if (blockEntity instanceof AbstractChestBlockEntity) { ((AbstractChestBlockEntity) blockEntity).setCustomName(stack.getName()); }
         }
     }
 
