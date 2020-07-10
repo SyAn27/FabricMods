@@ -36,9 +36,6 @@ public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<Cu
         stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-state.get(Properties.HORIZONTAL_FACING).asRotation()));
         stack.translate(-0.5D, -0.5D, -0.5D);
         model.setLidPitch(be.getAnimationProgress(tickDelta));
-        //if (chestType == CursedChestType.BACK) { stack.translate(0.0D, 0.0D, 1.0D); }
-        //else if (chestType == CursedChestType.TOP) { stack.translate(0.0D, -1.0D, 0.0D); }
-        //else if (chestType == CursedChestType.RIGHT) { stack.translate(-1.0D, 0.0D, 0.0D); }
         //noinspection ConstantConditions
         model.render(stack, new SpriteIdentifier(ExpandedStorageClient.CHEST_TEXTURE_ATLAS,
                 Registries.CHEST.get(be.getBlock()).getChestTexture(chestType)).getVertexConsumer(vcp, RenderLayer::getEntityCutout), x, y);
