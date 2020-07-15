@@ -1,22 +1,17 @@
 package ninjaphenix.creativebuttonmover.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.nio.file.Path;
-import java.util.Random;
 
 public class CreativeButtonMover implements ClientModInitializer
 {
-    public static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("creativebuttonmover.json");
+    public static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("creativebuttonmover.json");
     public static final Logger LOGGER = LogManager.getLogger("creativebuttonmover");
     private static final JanksonConfigParser CONFIG_PARSER = new JanksonConfigParser.Builder().build();
 

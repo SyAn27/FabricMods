@@ -7,10 +7,7 @@ import ninjaphenix.chainmail.api.blockentity.ExpandedBlockEntity;
 
 public class TestBlockEntity extends BlockEntity implements ExpandedBlockEntity
 {
-    public TestBlockEntity()
-    {
-        super(Registry.BLOCK_ENTITY_TYPE.get(new Identifier("test_a", "test_block_entity")));
-    }
+    public TestBlockEntity() { super(Registry.BLOCK_ENTITY_TYPE.get(new Identifier("test_a", "test_block_entity"))); }
 
     @Override
     public void onLoad() { System.out.println("Test block entity instance loaded."); }

@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 @Mixin(BuiltinModelItemRenderer.class)
@@ -24,14 +25,15 @@ public abstract class BuiltinModelItemRendererMixin implements BuiltinModelItemR
     private void chainmail_render(ItemStack stack, Mode mode, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay,
             CallbackInfo ci)
     {
-        chainmail_renderers.forEach((predicate, renderer) -> {
-            if (predicate.test(stack))
+        for (final Map.Entry<Predicate<ItemStack>, ItemStackRenderFunction> entry : chainmail_renderers.entrySet())
+        {
+            if (entry.getKey().test(stack))
             {
-                renderer.render(stack, mode, matrix, vertexConsumerProvider, light, overlay);
+                entry.getValue().render(stack, mode, matrix, vertexConsumerProvider, light, overlay);
                 ci.cancel();
-                return;
+                break;
             }
-        });
+        }
     }
 
     @Override

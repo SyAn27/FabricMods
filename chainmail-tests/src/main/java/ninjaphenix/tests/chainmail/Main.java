@@ -17,6 +17,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 public class Main implements ModInitializer
 {
+    @SuppressWarnings("unused")
     public static Main INSTANCE = new Main();
 
     @Override
@@ -27,9 +28,8 @@ public class Main implements ModInitializer
                 BlockEntityType.Builder.create(TestBlockEntity::new, TEST_BLOCK).build(null));
         Registry.register(Registry.ITEM, new Identifier("test_a", "test_block"), new BlockItem(TEST_BLOCK, new Item.Settings()));
 
-        Config g = new JanksonConfigParser.Builder().build()
-                                                    .load(Config.class, FabricLoader.getInstance().getConfigDirectory().toPath().resolve("test/config.json"),
-                                                            new MarkerManager.Log4jMarker("chainmail-tests"));
+        Config g = new JanksonConfigParser.Builder().build().load(Config.class, Config::new,
+                FabricLoader.getInstance().getConfigDir().resolve("test/config.json"), new MarkerManager.Log4jMarker("chainmail-tests"));
         System.out.println(g.a);
         System.out.println(g.B);
 
