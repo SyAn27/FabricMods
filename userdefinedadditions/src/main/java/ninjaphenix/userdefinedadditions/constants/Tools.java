@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 
+@SuppressWarnings("unused")
 public class Tools
 {
     public static final Tools INSTANCE = new Tools();

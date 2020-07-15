@@ -22,7 +22,7 @@ import torcherino.api.blocks.entity.TorcherinoBlockEntity;
 
 import java.util.Random;
 
-@SuppressWarnings({ "SpellCheckingInspection", "deprecation" })
+@SuppressWarnings({ "deprecation" })
 public class TorcherinoBlock extends TorchBlock implements BlockEntityProvider, TierSupplier
 {
     private final Identifier tierID;

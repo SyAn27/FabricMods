@@ -1,6 +1,5 @@
 package torcherino.api.entrypoints;
 
-@SuppressWarnings("SpellCheckingInspection")
 @FunctionalInterface
 public interface TorcherinoInitializer
 {

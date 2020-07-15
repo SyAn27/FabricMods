@@ -58,15 +58,8 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         }
         else
         {
-            if (containerTypeId != null && containerTypeId.equals(Constants.id("auto")))
-            {
-                preferenceCallbacks.remove(uuid);
-            }
-            else
-            {
-                playerPreferences.remove(uuid);
-                preferenceCallbacks.remove(uuid);
-            }
+            if (containerTypeId == null || !containerTypeId.equals(Constants.id("auto"))) { playerPreferences.remove(uuid); }
+            preferenceCallbacks.remove(uuid);
         }
     }
 
@@ -138,10 +131,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         }
         else
         {
-            screenSizeCallbacks.get(containerTypeId).forEach((Consumer consumer) ->
-            {
-                consumer.accept(screenSize);
-            });
+            screenSizeCallbacks.get(containerTypeId).forEach((Consumer consumer) -> consumer.accept(screenSize));
         }
     }
 

@@ -28,7 +28,6 @@ import torcherino.config.Config;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class Torcherino implements ModInitializer, TorcherinoInitializer
 {
     public static final String MOD_ID = "torcherino";

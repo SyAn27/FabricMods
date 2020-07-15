@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 import static torcherino.Torcherino.MOD_ID;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class TorcherinoClient implements ClientModInitializer
 {
     @Override

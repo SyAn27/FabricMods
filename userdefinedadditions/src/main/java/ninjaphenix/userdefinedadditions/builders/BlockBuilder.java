@@ -1,6 +1,6 @@
 package ninjaphenix.userdefinedadditions.builders;
 
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
@@ -12,9 +12,10 @@ import ninjaphenix.userdefinedadditions.api.RegistrableBuilder;
 
 import static ninjaphenix.userdefinedadditions.constants.Tools.Tool;
 
+@SuppressWarnings("unused")
 public class BlockBuilder implements RegistrableBuilder<Block>
 {
-    private FabricBlockSettings settings;
+    private final FabricBlockSettings settings;
     private Item.Settings itemSettings;
 
     public BlockBuilder(FabricBlockSettings settings) { this.settings = settings; }
@@ -120,7 +121,7 @@ public class BlockBuilder implements RegistrableBuilder<Block>
     }
 
     @Override
-    public Block build() { return new Block(settings.build()); }
+    public Block build() { return new Block(settings); }
 
     public static class Factory
     {

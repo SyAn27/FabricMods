@@ -47,25 +47,25 @@ public class LanterinoBlock extends LanternBlock implements BlockEntityProvider,
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) { return PistonBehavior.IGNORE; }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public void onBlockAdded(BlockState newState, World world, BlockPos pos, BlockState state, boolean boolean_1)
     {
         neighborUpdate(null, world, pos, null, null, false);
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
     {
         TorcherinoLogic.scheduledTick(state, world, pos, random);
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
     {
         return TorcherinoLogic.onUse(state, world, pos, player, hand, hit);
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean boolean_1)
     {
         TorcherinoLogic.neighborUpdate(state, world, pos, neighborBlock, neighborPos, boolean_1, (be) ->

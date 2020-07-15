@@ -23,7 +23,6 @@ import torcherino.api.TierSupplier;
 import torcherino.api.TorcherinoAPI;
 import torcherino.config.Config;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tickable, TierSupplier, ExpandedBlockEntity
 {
     private static final String onlineMode = Config.INSTANCE.online_mode;
@@ -58,8 +57,7 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
         if (world.isClient) { return; }
         area = BlockPos.iterate(pos.getX() - xRange, pos.getY() - yRange, pos.getZ() - zRange,
                 pos.getX() + xRange, pos.getY() + yRange, pos.getZ() + zRange);
-        world.getServer().send(new ServerTask(world.getServer().getTicks(), () ->
-                getCachedState().getBlock().neighborUpdate(getCachedState(), world, pos, null, null, false)));
+        world.getServer().send(new ServerTask(world.getServer().getTicks(), () -> getCachedState().neighborUpdate(world, pos, null, null, false)));
     }
 
     @Override
@@ -79,7 +77,7 @@ public class TorcherinoBlockEntity extends BlockEntity implements Nameable, Tick
         if (world instanceof ServerWorld && block.hasRandomTicks(blockState) &&
                 world.getRandom().nextInt(MathHelper.clamp(4096 / (speed * Config.INSTANCE.random_tick_rate), 1, 4096)) < randomTicks)
         {
-            block.randomTick(blockState, (ServerWorld) world, pos, world.getRandom());
+            blockState.randomTick((ServerWorld) world, pos, world.getRandom());
         }
         if (!block.hasBlockEntity()) { return; }
         BlockEntity blockEntity = world.getBlockEntity(pos);

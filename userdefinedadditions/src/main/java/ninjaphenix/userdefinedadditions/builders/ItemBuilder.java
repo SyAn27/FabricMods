@@ -8,6 +8,7 @@ import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.userdefinedadditions.api.RegistrableBuilder;
 
+@SuppressWarnings("unused")
 public class ItemBuilder implements RegistrableBuilder<Item>
 {
     private final Item.Settings settings = new Item.Settings();

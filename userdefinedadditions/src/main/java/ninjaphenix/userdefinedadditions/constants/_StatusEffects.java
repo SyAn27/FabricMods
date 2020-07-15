@@ -1,9 +1,9 @@
 package ninjaphenix.userdefinedadditions.constants;
 
-
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 
+@SuppressWarnings("unused")
 public class _StatusEffects
 {
     public static final _StatusEffects INSTANCE = new _StatusEffects();

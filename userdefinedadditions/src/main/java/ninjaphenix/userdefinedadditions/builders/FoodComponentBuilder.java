@@ -5,6 +5,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
 import ninjaphenix.userdefinedadditions.api.Builder;
 
+@SuppressWarnings("unused")
 public class FoodComponentBuilder implements Builder<FoodComponent>
 {
     private final FoodComponent.Builder builder = new FoodComponent.Builder();

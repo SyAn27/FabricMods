@@ -26,7 +26,6 @@ import torcherino.api.blocks.entity.TorcherinoBlockEntity;
 
 import java.util.Map;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class ModBlocks
 {
     public static final ModBlocks INSTANCE = new ModBlocks();

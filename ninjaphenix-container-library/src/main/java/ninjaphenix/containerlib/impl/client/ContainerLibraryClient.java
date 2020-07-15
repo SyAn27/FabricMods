@@ -32,7 +32,7 @@ import static ninjaphenix.containerlib.api.Constants.SCREEN_SELECT;
 public final class ContainerLibraryClient implements ClientModInitializer
 {
     public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
-    public static final Config CONFIG = getConfigParser().load(Config.class, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
+    public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
 
     private ContainerLibraryClient() {}
 
@@ -44,7 +44,7 @@ public final class ContainerLibraryClient implements ClientModInitializer
                 .build();
     }
 
-    private static Path getConfigPath() { return FabricLoader.getInstance().getConfigDirectory().toPath().resolve("ninjaphenix-container-library.json"); }
+    private static Path getConfigPath() { return FabricLoader.getInstance().getConfigDir().resolve("ninjaphenix-container-library.json"); }
 
     public static void sendPreferencesToServer()
     {

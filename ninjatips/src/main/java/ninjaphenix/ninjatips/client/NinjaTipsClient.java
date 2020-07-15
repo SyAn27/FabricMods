@@ -2,7 +2,7 @@ package ninjaphenix.ninjatips.client;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.event.client.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;

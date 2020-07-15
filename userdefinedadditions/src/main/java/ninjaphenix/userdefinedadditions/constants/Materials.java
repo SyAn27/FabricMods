@@ -2,6 +2,7 @@ package ninjaphenix.userdefinedadditions.constants;
 
 import net.minecraft.block.Material;
 
+@SuppressWarnings("unused")
 public class Materials
 {
     public static final Materials INSTANCE = new Materials();

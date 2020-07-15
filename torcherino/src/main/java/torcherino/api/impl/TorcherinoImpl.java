@@ -16,7 +16,6 @@ import java.util.HashSet;
 /**
  * DO NOT USE THIS CLASS DIRECTLY. Use TorcherinoAPI.INSTANCE instead.
  */
-@SuppressWarnings("SpellCheckingInspection")
 public class TorcherinoImpl implements TorcherinoAPI
 {
     @Deprecated

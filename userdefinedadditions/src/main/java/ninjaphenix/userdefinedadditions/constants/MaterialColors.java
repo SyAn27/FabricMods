@@ -2,6 +2,7 @@ package ninjaphenix.userdefinedadditions.constants;
 
 import net.minecraft.block.MaterialColor;
 
+@SuppressWarnings("unused")
 public class MaterialColors
 {
     public static final MaterialColors INSTANCE = new MaterialColors();

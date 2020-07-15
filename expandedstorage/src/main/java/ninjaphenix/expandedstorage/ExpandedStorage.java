@@ -1,7 +1,6 @@
 package ninjaphenix.expandedstorage;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.impl.item.group.ItemGroupExtensions;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

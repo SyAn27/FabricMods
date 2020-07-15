@@ -10,12 +10,13 @@ import torcherino.api.impl.TorcherinoImpl;
  * @author NinjaPhenix
  * @since 1.9.51
  */
-@SuppressWarnings({ "UnusedReturnValue", "unused", "SpellCheckingInspection" })
+@SuppressWarnings({ "UnusedReturnValue", "unused" })
 public interface TorcherinoAPI
 {
     /**
      * The Implementation of the API, you should use this for all methods. e.g. TorcherinoAPI.INSTANCE.blacklistBlock(Blocks.STONE)
      */
+    @SuppressWarnings("deprecation")
     TorcherinoAPI INSTANCE = TorcherinoImpl.INSTANCE;
 
     /**

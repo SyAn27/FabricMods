@@ -35,6 +35,7 @@ public class ItemGroups
         itemGroups.put(new Identifier("tools"), TOOLS);
     }
 
+    @SuppressWarnings("unused")
     public ItemGroup get(String id) { return itemGroups.getOrDefault(new Identifier(id), null); }
 
     public void put(Identifier id, ItemGroup group) { itemGroups.putIfAbsent(id, group); }

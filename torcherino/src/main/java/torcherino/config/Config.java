@@ -52,7 +52,7 @@ public class Config
                     rv.put("y_range", new JsonPrimitive(tier.y_range));
                     return rv;
                 }).build();
-        INSTANCE = parser.load(Config.class, FabricLoader.getInstance().getConfigDirectory().toPath().resolve("sci4me/Torcherino.cfg"),
+        INSTANCE = parser.load(Config.class, Config::new, FabricLoader.getInstance().getConfigDir().resolve("sci4me/Torcherino.cfg"),
                 new MarkerManager.Log4jMarker("torcherino"));
         INSTANCE.onConfigLoaded();
     }
