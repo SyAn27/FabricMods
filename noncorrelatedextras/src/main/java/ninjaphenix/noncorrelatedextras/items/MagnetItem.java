@@ -42,7 +42,7 @@ public class MagnetItem extends Item
         ensureValidMagnetRange(player, magnetStack);
         final int range = getMagnetRange(magnetStack);
         final Vec3d finePos = player.getPos().add(0, 0.25, 0);
-        final List<ItemEntity> entities = player.getEntityWorld().getEntities(EntityType.ITEM, new Box(finePos.subtract(range, range, range),
+        final List<ItemEntity> entities = player.getEntityWorld().getEntitiesByType(EntityType.ITEM, new Box(finePos.subtract(range, range, range),
                 finePos.add(range, range, range)), EntityPredicates.EXCEPT_SPECTATOR);
         if (getMagnetMode(magnetStack)) { for (ItemEntity item : entities) { if (!item.cannotPickup()) { item.onPlayerCollision(player); } } }
         else { for (ItemEntity item : entities) { item.setVelocity(finePos.subtract(item.getPos()).multiply(SPEED)); } }
