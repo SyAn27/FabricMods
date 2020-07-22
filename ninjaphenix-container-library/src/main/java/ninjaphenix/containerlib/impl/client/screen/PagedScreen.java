@@ -149,7 +149,7 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY)
     {
         super.drawForeground(matrices, mouseX, mouseY);
-        if (currentPageText != null) { textRenderer.draw(matrices, currentPageText, pageTextX - x, backgroundHeight - 94, 4210752); }
+        if (currentPageText != null) { textRenderer.draw(matrices, currentPageText.method_30937(), pageTextX - x, backgroundHeight - 94, 4210752); }
     }
 
     @Override

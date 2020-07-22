@@ -20,7 +20,7 @@ public abstract class ExperienceOrbEntityMixin extends Entity
     @Shadow public int orbAge;
     @Shadow private int amount;
 
-    public ExperienceOrbEntityMixin(EntityType<?> type, World world) { super(type, world); }
+    public ExperienceOrbEntityMixin(final EntityType<?> type, final World world) { super(type, world); }
 
     @Inject(at = @At("TAIL"), method = "tick", cancellable = true)
     private void tick(CallbackInfo info)
@@ -28,11 +28,11 @@ public abstract class ExperienceOrbEntityMixin extends Entity
         if (world.isClient) { return; }
         if (world.getTime() % 5 == 0)
         {
-            BlockPos pos = getBlockPos();
-            List<ExperienceOrbEntity> entities = world.getEntitiesByClass(ExperienceOrbEntity.class,
+            final BlockPos pos = getBlockPos();
+            final List<ExperienceOrbEntity> entities = world.getEntitiesByClass(ExperienceOrbEntity.class,
                     new Box(pos.west(2).north(2).up(2), pos.east(2).south(2).down(2)), e -> e.isAlive() && !e.getUuid().equals(uuid));
             if (entities.isEmpty()) { return; }
-            ExperienceOrbEntity orb = entities.get(0);
+            final ExperienceOrbEntity orb = entities.get(0);
             amount += orb.getExperienceAmount();
             orb.remove();
             orbAge = 0;

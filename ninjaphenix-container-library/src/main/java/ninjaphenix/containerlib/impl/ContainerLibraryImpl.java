@@ -16,15 +16,12 @@ import ninjaphenix.containerlib.api.ContainerLibraryAPI;
 import ninjaphenix.containerlib.impl.client.ScreenMiscSettings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 import static ninjaphenix.containerlib.api.Constants.SCREEN_SELECT;
 
-@ApiStatus.Internal
 public class ContainerLibraryImpl implements ContainerLibraryAPI
 {
     public static final ContainerLibraryImpl INSTANCE = new ContainerLibraryImpl();
@@ -43,8 +40,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         return declaredContainerTypes.contains(containerTypeId);
     }
 
-    @ApiStatus.Internal
-    public void setPlayerPreference(final PlayerEntity player, @Nullable final Identifier containerTypeId)
+    public void setPlayerPreference(final PlayerEntity player, final Identifier containerTypeId)
     {
         Objects.requireNonNull(player, "ContainerLibraryImpl#setPlayerPreference received null instead of a PlayerEntity.");
         final UUID uuid = player.getUuid();
@@ -84,8 +80,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         }
     }
 
-    @ApiStatus.Internal
-    public void openSelectScreen(final PlayerEntity player, @Nullable final Consumer<Identifier> playerPreferenceCallback)
+    public void openSelectScreen(final PlayerEntity player, final Consumer<Identifier> playerPreferenceCallback)
     {
         Objects.requireNonNull(player, "ContainerLibraryImpl#openSelectScreen received null instead of a PlayerEntity.");
         if (playerPreferenceCallback != null) { preferenceCallbacks.put(player.getUuid(), playerPreferenceCallback); }

@@ -43,8 +43,8 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
     @Override
     protected void drawForeground(final MatrixStack matrices, final int mouseX, final int mouseY)
     {
-        textRenderer.draw(matrices, title, 8, 6, 4210752);
-        textRenderer.draw(matrices, playerInventory.getDisplayName(), INVENTORY_LABEL_LEFT, this.backgroundHeight - 96 + 2, 4210752);
+        textRenderer.draw(matrices, title.method_30937(), 8, 6, 4210752);
+        textRenderer.draw(matrices, playerInventory.getDisplayName().method_30937(), INVENTORY_LABEL_LEFT, this.backgroundHeight - 96 + 2, 4210752);
     }
 
     @Override

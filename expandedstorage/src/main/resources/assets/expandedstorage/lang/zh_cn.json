@@ -1,7 +1,7 @@
 {
   "container.expandedstorage.wood_chest": "木箱",
   "container.expandedstorage.pumpkin_chest": "南瓜箱",
-  "container.expandedstorage.christmas_chest": "圣诞箱",  
+  "container.expandedstorage.christmas_chest": "圣诞箱",
   "container.expandedstorage.iron_chest": "铁箱",
   "container.expandedstorage.gold_chest": "金箱",
   "container.expandedstorage.diamond_chest": "钻石箱",
@@ -35,7 +35,7 @@
   "item.expandedstorage.diamond_to_obsidian_conversion_kit": "升级:钻石>黑曜石",
   "item.expandedstorage.gold_to_netherite_conversion_kit": "升级:金>下界合金",
   "item.expandedstorage.diamond_to_netherite_conversion_kit": "升级:钻石>下界合金",
-  "item.expandedstorage.obsidian_to_netherite_conversion_kit": "升级:黑曜石>下界合金",  
+  "item.expandedstorage.obsidian_to_netherite_conversion_kit": "升级:黑曜石>下界合金",
   "item.expandedstorage.chest_mutator": "箱子改变器",
   "tooltip.expandedstorage.chest_mutator.merge": "合并",
   "tooltip.expandedstorage.chest_mutator.merge_start": "合并开始，现在请点击其他箱子。",
@@ -44,6 +44,6 @@
   "tooltip.expandedstorage.chest_mutator.rotate": "旋转",
   "tooltip.expandedstorage.tool_mode": "工具模式: %s",
   "container.expandedstorage.generic_double": "大型%s",
-  "itemgroup.expandedstorage.expandedstorage": "扩展存储",
+  "itemGroup.expandedstorage": "扩展存储",
   "container.expandedstorage.error": "错误"
 }

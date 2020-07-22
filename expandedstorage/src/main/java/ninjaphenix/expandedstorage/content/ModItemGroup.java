@@ -12,8 +12,4 @@ public class ModItemGroup extends ItemGroup
     @Override
     @Environment(EnvType.CLIENT)
     public ItemStack createIcon() { return new ItemStack(ModBlocks.diamond_chest); }
-
-    @Override
-    @Environment(EnvType.CLIENT)
-    public String getTranslationKey() { return "itemgroup.expandedstorage.expandedstorage"; }
 }

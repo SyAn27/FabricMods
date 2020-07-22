@@ -15,11 +15,9 @@ repositories {
 dependencies {
     compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
     compile project(path: ":chainmail"), withoutUnwanted
-    compile project(path: ":creativebuttonmover"), withoutUnwanted
 
     include project(path: ":ninjaphenix-container-library")
     include project(path: ":chainmail")
-    include project(path: ":creativebuttonmover")
     include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 
     modCompileOnly("com.github.Virtuoel:Towelette:${towelette_commit}") {

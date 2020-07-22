@@ -9,7 +9,6 @@ import net.minecraft.util.math.MathHelper;
 import ninjaphenix.containerlib.api.inventory.AbstractContainer;
 import ninjaphenix.containerlib.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public final class ScrollableScreenHandler extends AbstractContainer<ScrollableS
         throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
     }
 
-    private void resetSlotPositions(@Nullable AreaAwareSlotFactory slotFactory)
+    private void resetSlotPositions(AreaAwareSlotFactory slotFactory)
     {
         for (int i = 0; i < INVENTORY.size(); i++)
         {
