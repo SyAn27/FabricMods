@@ -37,18 +37,21 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
     @Override
     protected void init()
     {
+        final FabricLoader instance = FabricLoader.getInstance();
+        final boolean inventoryProfilesLoaded = instance.isModLoaded("inventoryprofiles");
+        final boolean inventorySorterLoaded = instance.isModLoaded("inventorysorter");
         super.init();
-        int settingsXOffset = -(hasScrollbar ? (ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? 2 : 1) : 19);
-        if (FabricLoader.getInstance().isModLoaded("inventorysorter") && !hasScrollbar) { settingsXOffset -= 18; }
-        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
-                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
-        if (hasScrollbar)
+        int settingsXOffset = -19;
+        if (!hasScrollbar)
         {
-            isDragging = false;
-            topRow = 0;
-        }
-        else
-        {
+            if (inventoryProfilesLoaded)
+            {
+                settingsXOffset -= 48;
+            }
+            else if (inventorySorterLoaded)
+            {
+                settingsXOffset -= 18;
+            }
             final int blanked = SCREEN_META.BLANK_SLOTS;
             if (blanked > 0)
             {
@@ -57,6 +60,14 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
                         xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
             }
         }
+        else
+        {
+            settingsXOffset = ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? -2 : -1;
+            isDragging = false;
+            topRow = 0;
+        }
+        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
+                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
     }
 
     @Override

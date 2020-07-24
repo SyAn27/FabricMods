@@ -22,9 +22,19 @@ public class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<
     @Override
     protected void init()
     {
+        final FabricLoader instance = FabricLoader.getInstance();
+        final boolean inventoryProfilesLoaded = instance.isModLoaded("inventoryprofiles");
+        final boolean inventorySorterLoaded = instance.isModLoaded("inventorysorter");
         super.init();
         int settingsXOffset = -19;
-        if (FabricLoader.getInstance().isModLoaded("inventorysorter")) { settingsXOffset -= 18; }
+        if (inventoryProfilesLoaded)
+        {
+            settingsXOffset -= 48;
+        }
+        else if (inventorySorterLoaded)
+        {
+            settingsXOffset -= 18;
+        }
         addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
                 (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         final int blanked = SCREEN_META.BLANK_SLOTS;

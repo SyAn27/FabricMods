@@ -1,1 +1,2 @@
-- Fixed crash when placing a renamed chest.
+- Adds support for inventory profiles.
+- Settings button now centers on scrollbar by default.

@@ -27,6 +27,7 @@ dependencies {
     }
     modCompileOnly("com.github.Virtuoel:Statement:${statement_commit}")
 
-    modRuntime('local:InventorySorter:1.6.7-1.16')
-    //modRuntime('local:inventoryprofiles:fabric-20w10a-0.2.0')
+    // todo: grab off curseforge
+    modRuntime('local:InventorySorter:1.7.0-1.16')
+    //modRuntime('local:inventoryprofiles:fabric-1.16.1-0.4.2')
 }

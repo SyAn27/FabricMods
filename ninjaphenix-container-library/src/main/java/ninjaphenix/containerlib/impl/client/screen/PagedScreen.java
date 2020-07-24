@@ -71,7 +71,7 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
     {
         super.render(matrices, mouseX, mouseY, delta);
-        if(SCREEN_META.PAGES != 1)
+        if (SCREEN_META.PAGES != 1)
         {
             leftPageButton.renderTooltip(matrices, mouseX, mouseY);
             rightPageButton.renderTooltip(matrices, mouseX, mouseY);
@@ -81,15 +81,31 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
     @Override
     protected void init()
     {
+        final FabricLoader instance = FabricLoader.getInstance();
+        final boolean inventoryProfilesLoaded = instance.isModLoaded("inventoryprofiles");
+        final boolean inventorySorterLoaded = instance.isModLoaded("inventorysorter");
         super.init();
         int settingsXOffset = -19;
-        if (FabricLoader.getInstance().isModLoaded("inventorysorter")) { settingsXOffset -= 18; }
+        if (inventoryProfilesLoaded)
+        {
+            settingsXOffset -= 48;
+        }
+        else if (inventorySorterLoaded)
+        {
+            settingsXOffset -= 18;
+        }
         addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
                 (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         if (SCREEN_META.PAGES != 1)
         {
             int pageButtonsXOffset = 0;
-            if (FabricLoader.getInstance().isModLoaded("inventorysorter")) {pageButtonsXOffset = -18; }
+            if (inventoryProfilesLoaded )
+            {
+                pageButtonsXOffset = -12;
+            }
+            else if(inventorySorterLoaded) {
+                pageButtonsXOffset = -18;
+            }
             page = 1;
             setPageText();
             leftPageButton = new PageButtonWidget(x + backgroundWidth - 61 + pageButtonsXOffset, y + backgroundHeight - 96, 0,

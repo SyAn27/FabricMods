@@ -16,5 +16,5 @@ public class Config
     public Boolean restrictive_scrolling = Boolean.FALSE;
 
     @Comment("\nIf true centers the settings cog to the scrollbar in scrollable screens.")
-    public Boolean settings_button_center_on_scrollbar = Boolean.FALSE;
+    public Boolean settings_button_center_on_scrollbar = Boolean.TRUE;
 }
