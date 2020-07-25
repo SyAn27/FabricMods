@@ -88,6 +88,6 @@ public class MagnetScreen extends Screen
         client.getTextureManager().bindTexture(SCREEN_TEXTURE);
         drawTexture(matrices, x, y, 0, 0, WIDTH, HEIGHT);
         super.render(matrices, mouseX, mouseY, delta);
-        textRenderer.draw(matrices, this.title, x + 8.0F, y + 6.0F, 4210752);
+        textRenderer.draw(matrices, title.method_30937(), x + 8.0F, y + 6.0F, 4210752);
     }
 }

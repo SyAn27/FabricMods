@@ -2,7 +2,7 @@ package ninjaphenix.ninjatips;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.command.arguments.BlockPosArgumentType;
+import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.MessageType;
