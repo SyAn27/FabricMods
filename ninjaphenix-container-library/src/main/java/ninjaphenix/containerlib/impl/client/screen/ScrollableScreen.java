@@ -1,5 +1,6 @@
 package ninjaphenix.containerlib.impl.client.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,28 +11,20 @@ import ninjaphenix.containerlib.api.screen.ScrollableScreenMeta;
 import ninjaphenix.containerlib.impl.client.ContainerLibraryClient;
 import ninjaphenix.containerlib.impl.inventory.ScrollableScreenHandler;
 
-import java.util.Optional;
-
 public class ScrollableScreen<T extends ScrollableScreenHandler> extends AbstractScreen<T, ScrollableScreenMeta>
 {
     protected final boolean hasScrollbar;
     private Rectangle blankArea = null;
     private boolean isDragging;
     private int topRow;
-
+    private final int renderBackgroundWidth;
     public ScrollableScreen(T container)
     {
         super(container, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
-        backgroundWidth = 14 + 18 * SCREEN_META.WIDTH;
-        backgroundHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
+        renderBackgroundWidth = 14 + 18 * SCREEN_META.WIDTH;
         hasScrollbar = SCREEN_META.TOTAL_ROWS != SCREEN_META.HEIGHT;
-    }
-
-    public Optional<me.shedaniel.math.Rectangle> getReiRectangle()
-    {
-        if (!hasScrollbar) { return Optional.empty(); }
-        final int height = SCREEN_META.HEIGHT * 18 + (SCREEN_META.WIDTH > 9 ? 34 : 24);
-        return Optional.of(new me.shedaniel.math.Rectangle(x + backgroundWidth - 4, y, 22, height));
+        backgroundWidth = renderBackgroundWidth + (hasScrollbar ? 18 : 0);
+        backgroundHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
     }
 
     @Override
@@ -66,22 +59,24 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
             isDragging = false;
             topRow = 0;
         }
-        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
+        addButton(new ScreenTypeSelectionScreenButton(x + renderBackgroundWidth + settingsXOffset, y + 4,
                 (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
     }
 
     @Override
     protected void drawBackground(final MatrixStack matrices, final float delta, final int mouseX, final int mouseY)
     {
-        super.drawBackground(matrices, delta, mouseX, mouseY);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        //noinspection ConstantConditions
+        client.getTextureManager().bindTexture(SCREEN_META.TEXTURE);
+        drawTexture(matrices, x, y, 0, 0, renderBackgroundWidth, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         if (hasScrollbar)
         {
             final int slotsHeight = SCREEN_META.HEIGHT * 18;
             final int scrollbarHeight = slotsHeight + (SCREEN_META.WIDTH > 9 ? 34 : 24);
-            drawTexture(matrices, x + backgroundWidth - 4, y, backgroundWidth, 0, 22, scrollbarHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            drawTexture(matrices, x + renderBackgroundWidth - 4, y, renderBackgroundWidth, 0, 22, scrollbarHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
             int yOffset = MathHelper.floor((slotsHeight - 17) * (((double) topRow) / (SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)));
-            drawTexture(matrices, x + backgroundWidth - 2, y + yOffset + 18, backgroundWidth,
-                    scrollbarHeight, 12, 15, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            drawTexture(matrices, x + renderBackgroundWidth - 2, y + yOffset + 18, renderBackgroundWidth, scrollbarHeight, 12, 15, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         }
         if (blankArea != null) { blankArea.render(matrices); }
     }
@@ -89,7 +84,7 @@ public class ScrollableScreen<T extends ScrollableScreenHandler> extends Abstrac
     private boolean isMouseOverScrollbar(double mouseX, double mouseY)
     {
         final int top = y + 18;
-        final int left = x + backgroundWidth - 2;
+        final int left = x + renderBackgroundWidth - 2;
         return mouseX >= left && mouseY >= top && mouseX < left + 12 && mouseY < top + SCREEN_META.HEIGHT * 18;
     }
 

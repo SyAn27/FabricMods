@@ -21,9 +21,6 @@
     "client": [
       "ninjaphenix.containerlib.impl.client.ContainerLibraryClient::INSTANCE"
     ],
-    "rei_plugins_v0": [
-      "ninjaphenix.containerlib.impl.client.ContainerLibREIPlugin"
-    ],
     "ninjaphenix-container-library-screens": [
       "ninjaphenix.containerlib.impl.DefaultScreenSizes"
     ]

@@ -3,10 +3,6 @@ minecraft {
 }
 
 repositories {
-    maven {
-        name = "JitPack"
-        url = "https://jitpack.io"
-    }
     flatDir {
         dirs file('runtime_mods')
     }
@@ -26,6 +22,6 @@ dependencies {
     modCompileOnly("com.github.Virtuoel:Statement:${statement_commit}")
 
     // todo: grab off curseforge
-    modRuntime('local:InventorySorter:1.7.0-1.16')
+    //modRuntime('local:InventorySorter:1.7.0-1.16')
     //modRuntime('local:inventoryprofiles:fabric-1.16.1-0.4.2')
 }
