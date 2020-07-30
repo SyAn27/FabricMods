@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class WorldMixin
 {
     @Inject(method = "addBlockEntity", at = @At("TAIL"))
-    private void chainmail_addBlockEntity(BlockEntity be, CallbackInfoReturnable<Boolean> cir)
+    private void chainmail_addBlockEntity(final BlockEntity be, final CallbackInfoReturnable<Boolean> cir)
     {
         if (be instanceof ExpandedBlockEntity)
         {

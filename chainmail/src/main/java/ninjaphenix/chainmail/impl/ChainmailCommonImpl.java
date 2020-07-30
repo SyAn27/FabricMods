@@ -11,10 +11,11 @@ public class ChainmailCommonImpl implements ChainmailCommonApi
     public static final ChainmailCommonApi INSTANCE = new ChainmailCommonImpl();
 
     @Override
-    public <T extends ItemGroup> T registerItemGroup(IntFunction<T> itemGroup)
+    public <T extends ItemGroup> T registerItemGroup(final IntFunction<T> itemGroup)
     {
         final ItemGroup buildingBlocks = ItemGroup.BUILDING_BLOCKS;
-        if(buildingBlocks instanceof ItemGroupArrayExpander) {
+        if (buildingBlocks instanceof ItemGroupArrayExpander)
+        {
             final int index = ((ItemGroupArrayExpander) buildingBlocks).chainmail_expandArraySize();
             final T group = itemGroup.apply(index);
             ItemGroup.GROUPS[index] = group;

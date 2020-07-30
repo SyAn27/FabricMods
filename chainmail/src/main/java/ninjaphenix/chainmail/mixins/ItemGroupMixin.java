@@ -13,7 +13,7 @@ public class ItemGroupMixin implements ItemGroupArrayExpander
     @Override
     public int chainmail_expandArraySize()
     {
-        ItemGroup[] temp = GROUPS.clone();
+        final ItemGroup[] temp = GROUPS.clone();
         GROUPS = new ItemGroup[temp.length + 1];
         System.arraycopy(temp, 0, GROUPS, 0, temp.length);
         return temp.length;

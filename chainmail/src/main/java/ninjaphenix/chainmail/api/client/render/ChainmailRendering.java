@@ -17,10 +17,5 @@ public interface ChainmailRendering
     /**
      * @since 0.0.2
      */
-    void registerBlockEntityItemStackRenderer(BlockEntityType<?> type, ItemStackRenderFunction renderFunction);
-
-    /**
-     * @since 0.0.2
-     */
-    void registerItemStackRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction);
+    void registerBlockEntityItemStackRenderer(final BlockEntityType<?> type, final ItemStackRenderFunction renderFunction);
 }

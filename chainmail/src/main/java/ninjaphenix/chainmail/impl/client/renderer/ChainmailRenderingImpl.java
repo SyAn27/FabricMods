@@ -17,17 +17,11 @@ public class ChainmailRenderingImpl implements ChainmailRendering
     public static final BuiltinModelItemRendererExtensions ext = (BuiltinModelItemRendererExtensions) BuiltinModelItemRenderer.INSTANCE;
 
     @Override
-    public void registerBlockEntityItemStackRenderer(BlockEntityType<?> type, ItemStackRenderFunction renderFunction)
+    public void registerBlockEntityItemStackRenderer(final BlockEntityType<?> type, final ItemStackRenderFunction renderFunction)
     {
         ext.chainmail_addRenderer((stack) -> {
             final Item item = stack.getItem();
             return item instanceof BlockItem && type.supports(((BlockItem) item).getBlock());
         }, renderFunction);
-    }
-
-    @Override
-    public void registerItemStackRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction)
-    {
-        ext.chainmail_addRenderer(stackPredicate, renderFunction);
     }
 }

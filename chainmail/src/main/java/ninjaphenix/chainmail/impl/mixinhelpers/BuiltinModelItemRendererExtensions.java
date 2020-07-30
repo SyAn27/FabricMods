@@ -7,5 +7,5 @@ import java.util.function.Predicate;
 
 public interface BuiltinModelItemRendererExtensions
 {
-    void chainmail_addRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction);
+    void chainmail_addRenderer(final Predicate<ItemStack> stackPredicate, final ItemStackRenderFunction renderFunction);
 }

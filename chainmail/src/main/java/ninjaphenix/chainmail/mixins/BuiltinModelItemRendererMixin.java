@@ -22,8 +22,8 @@ public abstract class BuiltinModelItemRendererMixin implements BuiltinModelItemR
     private final HashMap<Predicate<ItemStack>, ItemStackRenderFunction> chainmail_renderers = new HashMap<>();
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void chainmail_render(ItemStack stack, Mode mode, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay,
-            CallbackInfo ci)
+    private void chainmail_render(final ItemStack stack, final Mode mode, final MatrixStack matrix, final VertexConsumerProvider vertexConsumerProvider,
+            final int light, final int overlay, final CallbackInfo ci)
     {
         for (final Map.Entry<Predicate<ItemStack>, ItemStackRenderFunction> entry : chainmail_renderers.entrySet())
         {
@@ -37,7 +37,7 @@ public abstract class BuiltinModelItemRendererMixin implements BuiltinModelItemR
     }
 
     @Override
-    public void chainmail_addRenderer(Predicate<ItemStack> stackPredicate, ItemStackRenderFunction renderFunction)
+    public void chainmail_addRenderer(final Predicate<ItemStack> stackPredicate, final ItemStackRenderFunction renderFunction)
     {
         if (stackPredicate == null) { throw new NullPointerException("Stack predicate must not be null."); }
         if (renderFunction == null) { throw new NullPointerException("Render Function must not be null."); }
