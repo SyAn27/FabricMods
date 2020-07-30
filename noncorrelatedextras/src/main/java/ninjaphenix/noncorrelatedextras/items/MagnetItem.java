@@ -34,9 +34,9 @@ public class MagnetItem extends Item
     private static final EquipmentSlot[] EQUIPMENT_SLOTS = new EquipmentSlot[]
             { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
 
-    public MagnetItem(Settings settings) { super(settings); }
+    public MagnetItem(final Settings settings) { super(settings); }
 
-    public static void magnetTick(PlayerEntity player, ItemStack magnetStack)
+    public static void magnetTick(final PlayerEntity player, final ItemStack magnetStack)
     {
         if (player.isSneaking()) { return; }
         ensureValidMagnetRange(player, magnetStack);
@@ -48,7 +48,7 @@ public class MagnetItem extends Item
         else { for (ItemEntity item : entities) { item.setVelocity(finePos.subtract(item.getPos()).multiply(SPEED)); } }
     }
 
-    private static void ensureValidMagnetRange(PlayerEntity player, ItemStack stack)
+    private static void ensureValidMagnetRange(final PlayerEntity player, final ItemStack stack)
     {
         final int range = getMagnetRange(stack);
         if (range > MAX_RANGE)
@@ -58,7 +58,7 @@ public class MagnetItem extends Item
         }
     }
 
-    public static int getMagnetMaxRange(PlayerEntity player)
+    public static int getMagnetMaxRange(final PlayerEntity player)
     {
         int range = MAX_RANGE;
         if (player != null)
@@ -71,40 +71,40 @@ public class MagnetItem extends Item
         return range;
     }
 
-    public static int getMagnetRange(ItemStack stack)
+    public static int getMagnetRange(final ItemStack stack)
     {
-        CompoundTag tag = stack.getOrCreateTag();
+        final CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains("range")) { tag.putInt("range", MAX_RANGE); }
         return tag.getInt("range");
     }
 
-    public static void setMagnetRange(ItemStack stack, int range)
+    public static void setMagnetRange(final ItemStack stack, final int range)
     {
-        CompoundTag tag = stack.getOrCreateTag();
+        final CompoundTag tag = stack.getOrCreateTag();
         tag.putInt("range", range);
     }
 
-    public static void setMagnetMode(ItemStack stack, boolean mode)
+    public static void setMagnetMode(final ItemStack stack, final boolean mode)
     {
-        CompoundTag tag = stack.getOrCreateTag();
+        final CompoundTag tag = stack.getOrCreateTag();
         tag.putBoolean("mode", mode);
     }
 
-    public static boolean getMagnetMode(ItemStack stack)
+    public static boolean getMagnetMode(final ItemStack stack)
     {
-        CompoundTag tag = stack.getOrCreateTag();
+        final CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains("mode")) { tag.putBoolean("mode", false); }
         return tag.getBoolean("mode");
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected)
+    public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int slot, final boolean selected)
     {
         if (slot < 9 && entity instanceof PlayerEntity) { magnetTick((PlayerEntity) entity, stack); }
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
+    public TypedActionResult<ItemStack> use(final World world, final PlayerEntity user, final Hand hand)
     {
         ItemStack stack = user.getStackInHand(hand);
         if (!world.isClient) { if (user.isSneaking()) { MagnetFeature.openMagnetScreen(user, stack); } }
@@ -113,7 +113,7 @@ public class MagnetItem extends Item
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context)
+    public void appendTooltip(final ItemStack stack, final World world, final List<Text> tooltip, final TooltipContext context)
     {
         final int magnet_range = getMagnetMaxRange(MinecraftClient.getInstance().player);
         Text rangeText = new TranslatableText("noncorrelatedextras.tooltip.magnet.range",

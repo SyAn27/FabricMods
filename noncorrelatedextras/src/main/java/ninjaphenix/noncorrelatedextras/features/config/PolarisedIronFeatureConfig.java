@@ -5,7 +5,7 @@ import ninjaphenix.noncorrelatedextras.features.PolarisedIronFeature;
 
 public class PolarisedIronFeatureConfig extends FeatureConfig<PolarisedIronFeature>
 {
-    public PolarisedIronFeatureConfig(Boolean enabled) { super(enabled); }
+    public PolarisedIronFeatureConfig(final Boolean enabled) { super(enabled); }
 
     @Override
     public PolarisedIronFeature getFeature() { return new PolarisedIronFeature(); }

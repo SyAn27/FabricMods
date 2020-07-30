@@ -5,7 +5,7 @@ import ninjaphenix.noncorrelatedextras.features.PeacefulOnlyRecipeFeature;
 
 public class PeacefulOnlyRecipeFeatureConfig extends FeatureConfig<PeacefulOnlyRecipeFeature>
 {
-    public PeacefulOnlyRecipeFeatureConfig(Boolean enabled) { super(enabled); }
+    public PeacefulOnlyRecipeFeatureConfig(final Boolean enabled) { super(enabled); }
 
     @Override
     public PeacefulOnlyRecipeFeature getFeature() { return new PeacefulOnlyRecipeFeature(); }

@@ -10,7 +10,7 @@ public class Main implements ModInitializer
 
     private Main() {}
 
-    public static Identifier getId(String path) { return new Identifier("noncorrelatedextras", path); }
+    public static Identifier getId(final String path) { return new Identifier("noncorrelatedextras", path); }
 
     @Override
     public void onInitialize() { FeatureManager.initialise(); }

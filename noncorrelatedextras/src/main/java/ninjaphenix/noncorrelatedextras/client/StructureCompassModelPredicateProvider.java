@@ -17,7 +17,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import ninjaphenix.noncorrelatedextras.items.StructureCompassItem;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -30,7 +29,7 @@ public class StructureCompassModelPredicateProvider implements ModelPredicatePro
     public StructureCompassModelPredicateProvider() {}
 
     @Override
-    public float call(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user)
+    public float call(final ItemStack stack, ClientWorld world, final LivingEntity user)
     {
         final CompoundTag stackTag = stack.getOrCreateTag();
         final BlockPos pos = StructureCompassItem.getTargetPos(stackTag);

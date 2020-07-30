@@ -41,7 +41,7 @@ public class FeatureManager
 
     public static HashMap<String, Boolean> getMixinMap()
     {
-        HashMap<String, Boolean> map = new HashMap<>();
+        final HashMap<String, Boolean> map = new HashMap<>();
         configs.forEach(featureConfig -> featureConfig.getMixins().forEach((str, bool) -> { if (bool) { map.putIfAbsent(str, Boolean.TRUE); } }));
         return map;
     }

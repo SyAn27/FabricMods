@@ -21,7 +21,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class NbtCommand
 {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean isDedicated)
+    public static void register(final CommandDispatcher<ServerCommandSource> dispatcher, final boolean isDedicated)
     {
         dispatcher.register(literal("nbt")
                 .then(literal("block").then(CommandManager.argument("pos", BlockPosArgumentType.blockPos()).executes(context ->
@@ -50,7 +50,7 @@ public class NbtCommand
                 }))));
     }
 
-    private static int dumpItemStackNbt(ItemStack stack, ServerPlayerEntity player)
+    private static int dumpItemStackNbt(final ItemStack stack, final ServerPlayerEntity player)
     {
         final MutableText ninjaTips = new LiteralText("").append(new LiteralText("[Ninja Tips] ").formatted(Formatting.BLUE));
         if (stack.isEmpty())
@@ -67,7 +67,7 @@ public class NbtCommand
         return SINGLE_SUCCESS;
     }
 
-    private static Text getItemText(ItemStack stack, boolean copyText)
+    private static Text getItemText(final ItemStack stack, final boolean copyText)
     {
         MutableText text = new LiteralText("").append(stack.toHoverableText());
         if (copyText && !stack.getTag().isEmpty())
@@ -79,7 +79,7 @@ public class NbtCommand
         return text;
     }
 
-    private static int dumpBlockNBT(BlockPos pos, ServerPlayerEntity player)
+    private static int dumpBlockNBT(final BlockPos pos, final ServerPlayerEntity player)
     {
         final ServerWorld world = player.getServerWorld();
         final ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock(), 1);

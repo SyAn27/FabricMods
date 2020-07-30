@@ -19,7 +19,7 @@ public class MagnetisedArmourItem extends ArmorItem
     private static final ArmorMaterial MATERIAL = new MagnetisedArmorMaterial();
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public MagnetisedArmourItem(EquipmentSlot slot, Settings settings)
+    public MagnetisedArmourItem(final EquipmentSlot slot, final Settings settings)
     {
         super(MATERIAL, slot, settings);
         final int magnetModifier = Config.INSTANCE.getAdditionalMagnetRange(slot);
@@ -30,7 +30,7 @@ public class MagnetisedArmourItem extends ArmorItem
     }
 
     @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot)
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(final EquipmentSlot slot)
     {
         return this.slot == slot ? attributeModifiers : super.getAttributeModifiers(slot);
     }

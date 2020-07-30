@@ -6,7 +6,7 @@ public abstract class FeatureConfig<T extends Feature>
 {
     private final Boolean enabled;
 
-    protected FeatureConfig(Boolean enabled) { this.enabled = enabled; }
+    protected FeatureConfig(final Boolean enabled) { this.enabled = enabled; }
 
     public Boolean isEnabled() { return enabled; }
 

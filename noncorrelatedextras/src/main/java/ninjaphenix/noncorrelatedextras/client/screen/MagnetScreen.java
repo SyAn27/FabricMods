@@ -27,7 +27,7 @@ public class MagnetScreen extends Screen
     private int magnetRange;
     private boolean magnetMode;
 
-    public MagnetScreen(Text title, int maxRange, int currentRange, boolean currentMode)
+    public MagnetScreen(final Text title, final int maxRange, final int currentRange, final boolean currentMode)
     {
         super(title);
         MAX_RANGE = maxRange;
@@ -36,7 +36,7 @@ public class MagnetScreen extends Screen
     }
 
     @Override
-    public void init(MinecraftClient client, int width, int height)
+    public void init(final MinecraftClient client, final int width, final int height)
     {
         this.x = (width - WIDTH) / 2;
         this.y = (height - HEIGHT) / 2;
@@ -59,7 +59,7 @@ public class MagnetScreen extends Screen
     @Override
     public void onClose()
     {
-        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+        final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeInt(magnetRange);
         buffer.writeBoolean(magnetMode);
         ClientSidePacketRegistry.INSTANCE.sendToServer(MagnetFeature.UPDATE_VALUES_PACKET_ID, buffer);
@@ -70,7 +70,7 @@ public class MagnetScreen extends Screen
     public boolean isPauseScreen() { return false; }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers)
+    public boolean keyReleased(final int keyCode, final int scanCode, final int modifiers)
     {
         if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode))
         {

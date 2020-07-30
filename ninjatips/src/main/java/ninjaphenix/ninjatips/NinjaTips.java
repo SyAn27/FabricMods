@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 public class NinjaTips implements ModInitializer
 {
-    public static final Logger logger = LogManager.getLogger();
     public static final String MOD_ID = "ninjatips";
     public static final Identifier ITEM_CHAT = new Identifier(MOD_ID, "item_chat");
 

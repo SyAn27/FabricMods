@@ -13,10 +13,10 @@ public class MagnetisedArmorMaterial implements ArmorMaterial
     private static final ArmorMaterial BASE = ArmorMaterials.CHAIN;
 
     @Override
-    public int getDurability(EquipmentSlot slot) { return BASE.getDurability(slot); }
+    public int getDurability(final EquipmentSlot slot) { return BASE.getDurability(slot); }
 
     @Override
-    public int getProtectionAmount(EquipmentSlot slot) { return BASE.getProtectionAmount(slot); }
+    public int getProtectionAmount(final EquipmentSlot slot) { return BASE.getProtectionAmount(slot); }
 
     @Override
     public int getEnchantability() { return BASE.getEnchantability(); }
@@ -34,8 +34,5 @@ public class MagnetisedArmorMaterial implements ArmorMaterial
     public float getToughness() { return BASE.getToughness(); }
 
     @Override
-    public float getKnockbackResistance()
-    {
-        return BASE.getKnockbackResistance();
-    }
+    public float getKnockbackResistance() { return BASE.getKnockbackResistance(); }
 }

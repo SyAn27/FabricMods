@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class StructureCompassFeatureConfig extends FeatureConfig<StructureCompassFeature>
 {
-    public StructureCompassFeatureConfig(Boolean enabled) { super(enabled); }
+    public StructureCompassFeatureConfig(final Boolean enabled) { super(enabled); }
 
     @Override
     public StructureCompassFeature getFeature() { return new StructureCompassFeature(); }
@@ -15,7 +15,7 @@ public class StructureCompassFeatureConfig extends FeatureConfig<StructureCompas
     @Override
     public HashMap<String, Boolean> getMixins()
     {
-        HashMap<String, Boolean> map = super.getMixins();
+        final HashMap<String, Boolean> map = super.getMixins();
         map.put("ItemStackEqualMixin", isEnabled());
         return map;
     }

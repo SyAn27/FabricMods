@@ -35,7 +35,7 @@ public class MagnetFeature extends Feature implements ItemAdder
     public static final Identifier MAGNET_OPEN_SCREEN_PACKET_ID = Main.getId("open_magnet_screen");
     public static final Identifier UPDATE_VALUES_PACKET_ID = Main.getId("update_magnet_values");
 
-    public static void openMagnetScreen(PlayerEntity player, ItemStack stack)
+    public static void openMagnetScreen(final PlayerEntity player, final ItemStack stack)
     {
         USED_MAGNETS.put(player, stack);
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
@@ -97,10 +97,10 @@ public class MagnetFeature extends Feature implements ItemAdder
         {
             ClientSidePacketRegistry.INSTANCE.register(MAGNET_OPEN_SCREEN_PACKET_ID, (context, buffer) ->
             {
-                Text title = buffer.readText();
-                int maxRange = buffer.readInt() - 1;
-                int currentRange = buffer.readInt();
-                boolean mode = buffer.readBoolean();
+                final Text title = buffer.readText();
+                final int maxRange = buffer.readInt() - 1;
+                final int currentRange = buffer.readInt();
+                final boolean mode = buffer.readBoolean();
                 context.getTaskQueue().execute(() -> MinecraftClient.getInstance().openScreen(new MagnetScreen(title, maxRange, currentRange, mode)));
             });
 

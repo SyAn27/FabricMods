@@ -8,7 +8,7 @@ import net.minecraft.text.LiteralText;
 @Environment(EnvType.CLIENT)
 public abstract class CustomSliderWidget extends SliderWidget
 {
-    public CustomSliderWidget(int x, int y, int width, int height, double progress)
+    public CustomSliderWidget(final int x, final int y, final int width, final int height, final double progress)
     {
         super(x, y, width, height, LiteralText.EMPTY, progress);
         this.updateMessage();

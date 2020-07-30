@@ -74,27 +74,27 @@ public class Config
                 .load(Config.class, Config::new, configDirectory.resolve("NonCorrelatedExtras.json"), new MarkerManager.Log4jMarker("noncorrelatedextras"));
     }
 
-    private <T, R> HashMap<T, R> initializedMap(Consumer<HashMap<T, R>> initializer)
+    private <T, R> HashMap<T, R> initializedMap(final Consumer<HashMap<T, R>> initializer)
     {
         final HashMap<T, R> map = new HashMap<>();
         initializer.accept(map);
         return map;
     }
 
-    public Boolean isFeatureEnabled(String feature) { return enabled_features.getOrDefault(feature, Boolean.FALSE); }
+    public Boolean isFeatureEnabled(final String feature) { return enabled_features.getOrDefault(feature, Boolean.FALSE); }
 
     public double getMagnetSpeed() { return magnet_speed; }
 
     public int getMagnetMaxRange() { return magnet_range; }
 
-    public int getAdditionalMagnetRange(EquipmentSlot type) { return polarized_iron_armor_additional_magnet_range.getOrDefault(type, 0); }
+    public int getAdditionalMagnetRange(final EquipmentSlot type) { return polarized_iron_armor_additional_magnet_range.getOrDefault(type, 0); }
 
     public double getProjectileReflectionChance() { return polarized_iron_armor_reflection_chance; }
 
     public Set<Identifier> getEnabledStructureCompasses()
     {
-        HashSet<Identifier> set = new HashSet<>();
-        for (Map.Entry<Identifier, Boolean> entry : enabled_structure_compasses.entrySet())
+        final HashSet<Identifier> set = new HashSet<>();
+        for (final Map.Entry<Identifier, Boolean> entry : enabled_structure_compasses.entrySet())
         {
             if (Boolean.TRUE.equals(entry.getValue())) { set.add(entry.getKey());}
         }

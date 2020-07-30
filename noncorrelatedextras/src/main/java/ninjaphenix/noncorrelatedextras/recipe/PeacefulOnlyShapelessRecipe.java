@@ -11,13 +11,13 @@ import net.minecraft.world.World;
 
 public class PeacefulOnlyShapelessRecipe extends ShapelessRecipe
 {
-    public PeacefulOnlyShapelessRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input)
+    public PeacefulOnlyShapelessRecipe(final Identifier id, final String group, final ItemStack output, final DefaultedList<Ingredient> input)
     {
         super(id, group, output, input);
     }
 
     @Override
-    public boolean matches(CraftingInventory craftingInventory, World world)
+    public boolean matches(final CraftingInventory craftingInventory, final World world)
     {
         return Difficulty.PEACEFUL.equals(world.getDifficulty()) && super.matches(craftingInventory, world);
     }

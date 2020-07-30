@@ -19,7 +19,7 @@ public class PolarizedArmorProjectileReflection
     private static final double chance = Config.INSTANCE.getProjectileReflectionChance();
 
     @Inject(method = "onEntityHit(Lnet/minecraft/util/hit/EntityHitResult;)V", at = @At("HEAD"), cancellable = true)
-    private void onEntityHit(EntityHitResult hit, CallbackInfo ci)
+    private void onEntityHit(final EntityHitResult hit, final CallbackInfo ci)
     {
         if (hit.getEntity().world.getRandom().nextDouble() <= chance)
         {

@@ -16,9 +16,9 @@ public class ItemStackEqualMixin
     If there's a better way to stop the player's active item from being cleared when its nbt is updated let me know.
      */
     @Inject(method = "isEqual", at = @At("HEAD"), cancellable = true)
-    private void noncorrelatedextras_areStacksEqual(ItemStack stack, CallbackInfoReturnable<Boolean> cir)
+    private void noncorrelatedextras_areStacksEqual(final ItemStack stack, final CallbackInfoReturnable<Boolean> cir)
     {
-        ItemStack self = (ItemStack) (Object) this;
+        final ItemStack self = (ItemStack) (Object) this;
         if (self.getItem() == stack.getItem() && self.getItem() instanceof StructureCompassItem)
         {
             if (self.hasTag() && stack.hasTag())

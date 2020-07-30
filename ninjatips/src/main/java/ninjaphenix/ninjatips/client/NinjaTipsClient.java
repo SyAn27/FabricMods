@@ -14,7 +14,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +24,7 @@ import static ninjaphenix.ninjatips.NinjaTips.ITEM_CHAT;
 
 public class NinjaTipsClient implements ClientModInitializer
 {
-    public static void modifyToolTip(@NotNull final ItemStack stack, @NotNull final List<Text> tooltip)
+    public static void modifyToolTip(final ItemStack stack, final List<Text> tooltip)
     {
         if (stack.hasTag())
         {
@@ -58,8 +57,7 @@ public class NinjaTipsClient implements ClientModInitializer
         }
     }
 
-    @NotNull
-    private static String getTranslationId(@NotNull String string) { return "ninjatips.text." + string; }
+    private static String getTranslationId(String string) { return "ninjatips.text." + string; }
 
     public static void chatItem(ItemStack stack)
     {

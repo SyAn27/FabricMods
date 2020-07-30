@@ -37,7 +37,7 @@ public class StructureCompassFeature extends Feature implements ItemAdder
     }
 
     @Environment(EnvType.CLIENT)
-    private void registerItemModelPredicate(Item item)
+    private void registerItemModelPredicate(final Item item)
     {
         ModelPredicateProviderRegistry.register(item, new Identifier("angle"), new StructureCompassModelPredicateProvider());
     }

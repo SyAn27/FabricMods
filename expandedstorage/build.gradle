@@ -6,6 +6,10 @@ repositories {
     flatDir {
         dirs file('runtime_mods')
     }
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
 }
 
 dependencies {

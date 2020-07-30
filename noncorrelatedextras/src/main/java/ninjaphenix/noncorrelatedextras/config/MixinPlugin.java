@@ -16,26 +16,26 @@ public class MixinPlugin implements IMixinConfigPlugin
     public MixinPlugin() {}
 
     @Override
-    public void onLoad(String mixinPackage) { if (enabledMixins == null) { enabledMixins = FeatureManager.getMixinMap(); } }
+    public void onLoad(final String mixinPackage) { if (enabledMixins == null) { enabledMixins = FeatureManager.getMixinMap(); } }
 
     @Override
     public String getRefMapperConfig() { return null; }
 
     @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
+    public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName)
     {
         return enabledMixins.getOrDefault(mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1), Boolean.FALSE);
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) { }
+    public void acceptTargets(final Set<String> myTargets, final Set<String> otherTargets) { }
 
     @Override
     public List<String> getMixins() { return null; }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) { }
+    public void preApply(final String targetClassName, final ClassNode targetClass, final String mixinClassName, final IMixinInfo mixinInfo) { }
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) { }
+    public void postApply(final String targetClassName, final ClassNode targetClass, final String mixinClassName, final IMixinInfo mixinInfo) { }
 }

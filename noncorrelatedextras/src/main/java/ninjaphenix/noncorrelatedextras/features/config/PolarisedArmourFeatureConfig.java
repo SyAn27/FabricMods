@@ -8,12 +8,12 @@ import java.util.HashMap;
 
 public class PolarisedArmourFeatureConfig extends FeatureConfig<PolarisedArmourFeature>
 {
-    public PolarisedArmourFeatureConfig(Boolean enabled) { super(enabled); }
+    public PolarisedArmourFeatureConfig(final Boolean enabled) { super(enabled); }
 
     @Override
     public HashMap<String, Boolean> getMixins()
     {
-        HashMap<String, Boolean> map = super.getMixins();
+        final HashMap<String, Boolean> map = super.getMixins();
         map.put("PolarizedArmorProjectileReflection", isEnabled() && Config.INSTANCE.isFeatureEnabled("polarized_iron_armor_reflects_projectiles"));
         map.put("PolarizedArmorTextureFix", isEnabled());
         return map;

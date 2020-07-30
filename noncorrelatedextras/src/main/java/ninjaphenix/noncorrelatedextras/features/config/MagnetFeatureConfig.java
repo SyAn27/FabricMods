@@ -10,12 +10,12 @@ public class MagnetFeatureConfig extends FeatureConfig<MagnetFeature>
 {
     public static final Boolean isTrinketLoaded = FabricLoader.getInstance().isModLoaded("trinkets");
 
-    public MagnetFeatureConfig(Boolean enabled) { super(enabled); }
+    public MagnetFeatureConfig(final Boolean enabled) { super(enabled); }
 
     @Override
     public HashMap<String, Boolean> getMixins()
     {
-        HashMap<String, Boolean> map = super.getMixins();
+        final HashMap<String, Boolean> map = super.getMixins();
         map.put("MagnetTrinketCompat", isEnabled() && isTrinketLoaded);
         return map;
     }

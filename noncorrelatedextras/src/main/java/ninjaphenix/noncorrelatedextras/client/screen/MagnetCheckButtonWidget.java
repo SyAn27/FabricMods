@@ -12,7 +12,7 @@ public abstract class MagnetCheckButtonWidget extends AbstractPressableButtonWid
     private final Screen screen;
     private boolean selected;
 
-    public MagnetCheckButtonWidget(int x, int y, int width, int height, boolean selected, Screen parent)
+    public MagnetCheckButtonWidget(final int x, final int y, final int width, final int height, final boolean selected, final Screen parent)
     {
         super(x, y, width, height, LiteralText.EMPTY);
         this.selected = selected;
@@ -27,7 +27,7 @@ public abstract class MagnetCheckButtonWidget extends AbstractPressableButtonWid
     }
 
     @Override
-    public void renderButton(final MatrixStack matrices, int mouseX, int mouseY, float delta)
+    public void renderButton(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
     {
         super.renderButton(matrices, mouseX, mouseY, delta);
         MinecraftClient.getInstance().getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
@@ -36,5 +36,5 @@ public abstract class MagnetCheckButtonWidget extends AbstractPressableButtonWid
         if (isMouseOver(mouseX, mouseY)) { screen.renderTooltip(matrices, mode.getText(), mouseX, mouseY); }
     }
 
-    abstract void onValueChanged(boolean value);
+    abstract void onValueChanged(final boolean value);
 }

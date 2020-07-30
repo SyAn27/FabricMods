@@ -20,7 +20,7 @@ public enum MagnetModes implements ButtonModeProvider
     private TranslatableText translation;
     private SpriteIdentifier texture;
 
-    MagnetModes(String texturePath)
+    MagnetModes(final String texturePath)
     {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
         {

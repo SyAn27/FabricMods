@@ -10,13 +10,13 @@ import net.minecraft.tag.BlockTags;
 
 public class CustomShearsItem extends MiningToolItem
 {
-    public CustomShearsItem(float attackDamage, float attackSpeed, ToolMaterial material, Settings settings)
+    public CustomShearsItem(final float attackDamage, final float attackSpeed, final ToolMaterial material, final Settings settings)
     {
         super(attackDamage, attackSpeed, material, null, settings);
     }
 
     @Override
-    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state)
+    public float getMiningSpeedMultiplier(final ItemStack stack, final BlockState state)
     {
         Block block = state.getBlock();
         if (block == Blocks.COBWEB || BlockTags.LEAVES.contains(block)) { return 15.0f; }
@@ -24,7 +24,7 @@ public class CustomShearsItem extends MiningToolItem
     }
 
     @Override
-    public boolean isEffectiveOn(BlockState state)
+    public boolean isEffectiveOn(final BlockState state)
     {
         Block block = state.getBlock();
         return BlockTags.WOOL.contains(block) || BlockTags.LEAVES.contains(block) || BlockTags.CARPETS.contains(block) ||
