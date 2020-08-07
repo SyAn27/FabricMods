@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'fabric-loom' version '0.4-SNAPSHOT' apply false
+    id 'fabric-loom' version '0.5.local' apply false
     id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
 }
 
@@ -20,7 +20,7 @@ allprojects {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    minecraft {
+    loom {
         refmapName = "${mod_id}-refmap.json"
         runDir = "${project.projectDir.getName()}/run/"
     }
@@ -46,7 +46,7 @@ allprojects {
         mappings("net.fabricmc:yarn:${minecraft_version}+build.${yarn_version}:v2")
         modImplementation("net.fabricmc:fabric-loader:${loader_version}")
         modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")  {
-            if(fabric_api_jar_old) {
+            if(fabric_api_jar_old == "true") {
                 exclude(module: "fabric-registry-sync-v0")
                 exclude(module: "fabric-biomes-v1")
             }
