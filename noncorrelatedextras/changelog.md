@@ -1,1 +1,2 @@
-- Fixes incompatibility with new trinket build.
+- Fixes early class loading of Identifier class which fixes an incompatibility with connected textures.
+- This is likely the last build of the mod I'll be releasing.

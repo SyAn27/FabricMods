@@ -22,15 +22,16 @@ public class StructureCompassFeature extends Feature implements ItemAdder
     @Override
     public void registerItems()
     {
-        final Set<Identifier> structures = Config.INSTANCE.getEnabledStructureCompasses();
+        final Set<String> structures = Config.INSTANCE.getEnabledStructureCompasses();
         final Item.Settings settings = new Item.Settings().maxCount(1).group(ItemGroup.TOOLS);
-        for (final Identifier structure : structures)
+        for (final String structure : structures)
         {
-            Registry.STRUCTURE_FEATURE.getOrEmpty(structure).ifPresent(feature ->
+            final Identifier structureId = new Identifier(structure);
+            Registry.STRUCTURE_FEATURE.getOrEmpty(structureId).ifPresent(feature ->
             {
                 StructureCompassItem item = new StructureCompassItem(settings, feature);
                 if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { registerItemModelPredicate(item); }
-                Registry.register(Registry.ITEM, Main.getId(structure.getPath() + "_compass"), item);
+                Registry.register(Registry.ITEM, Main.getId(structureId.getPath() + "_compass"), item);
             });
 
         }
