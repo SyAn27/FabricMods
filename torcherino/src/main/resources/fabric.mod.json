@@ -34,9 +34,7 @@
   ],
   "accessWidener": "torcherino.accesswidener",
   "depends": {
-    "fabricloader": ">=${dep_loader_version}",
     "fabric": ">=${dep_fabric_version}",
-    "minecraft": ">=${dep_minecraft_version}",
     "chainmail": ">=${dep_chainmail_version}"
   }
 }
