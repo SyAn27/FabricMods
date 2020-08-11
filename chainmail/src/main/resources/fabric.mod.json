@@ -17,9 +17,7 @@
     "chainmail.common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${dep_loader_version}",
-    "fabric": ">=${dep_fabric_version}",
-    "minecraft": ">=${dep_minecraft_version}"
+    "fabric": ">=${dep_fabric_version}"
   },
   "custom": {
     "modmenu:api": true

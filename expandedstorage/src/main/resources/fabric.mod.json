@@ -31,9 +31,7 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=${dep_loader_version}",
     "fabric": ">=${dep_fabric_version}",
-    "minecraft": ">=${dep_minecraft_version}",
     "ninjaphenix-container-lib": ">=${dep_container_lib_version}"
   }
 }
