@@ -1,5 +1,6 @@
 .gradle/
 .idea/
-/*/build/
-/*/run/
-/*/runtime_mods/
+build/
+run/
+runtime_mods/
+logs/
