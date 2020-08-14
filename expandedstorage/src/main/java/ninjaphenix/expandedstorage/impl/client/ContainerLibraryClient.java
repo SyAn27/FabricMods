@@ -32,8 +32,8 @@ import static ninjaphenix.expandedstorage.api.Constants.SCREEN_SELECT;
 
 public final class ContainerLibraryClient implements ClientModInitializer
 {
-    public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
     public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
+    public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
 
     private ContainerLibraryClient()
     {
