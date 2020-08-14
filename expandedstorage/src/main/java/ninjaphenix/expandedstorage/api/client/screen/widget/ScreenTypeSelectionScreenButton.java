@@ -18,7 +18,7 @@ public class ScreenTypeSelectionScreenButton extends ButtonWidget
 
     public ScreenTypeSelectionScreenButton(int x, int y, TooltipSupplier tooltipSupplier)
     {
-        super(x, y, 12, 12, new TranslatableText("screen.ninjaphenix-container-lib.change_screen_button"), button ->
+        super(x, y, 12, 12, new TranslatableText("screen.expandedstorage.change_screen_button"), button ->
         {
             MinecraftClient.getInstance().player.closeHandledScreen();
             ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));

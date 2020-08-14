@@ -11,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
+import ninjaphenix.expandedstorage.ContainerLibrary;
 import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
 import ninjaphenix.expandedstorage.impl.client.config.Config;
@@ -34,7 +35,12 @@ public final class ContainerLibraryClient implements ClientModInitializer
     public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
     public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
 
-    private ContainerLibraryClient() {}
+    private ContainerLibraryClient()
+    {
+        if(CONFIG.preferred_container_type.getNamespace().equals("ninjaphenix-container-lib")) {
+            setPreference(new Identifier(LIBRARY_ID, CONFIG.preferred_container_type.getPath()));
+        }
+    }
 
     private static JanksonConfigParser getConfigParser()
     {

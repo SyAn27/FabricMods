@@ -4,7 +4,7 @@ import net.minecraft.util.Identifier;
 
 public class Constants
 {
-    public static final String LIBRARY_ID = "ninjaphenix-container-lib";
+    public static final String LIBRARY_ID = "expandedstorage";
     public static final String ENTRY_POINT_ID = "ninjaphenix-container-library-screens";
     public static final Identifier SCREEN_SELECT = id("screen_select");
     public static final Identifier OPEN_SCREEN_SELECT = id("open_screen_select");

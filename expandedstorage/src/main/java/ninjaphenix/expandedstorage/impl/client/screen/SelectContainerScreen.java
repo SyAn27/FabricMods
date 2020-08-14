@@ -22,7 +22,7 @@ public class SelectContainerScreen extends Screen
 
     public SelectContainerScreen(final HashMap<Identifier, ScreenMiscSettings> options)
     {
-        super(new TranslatableText("screen.ninjaphenix-container-lib.screen_picker_title"));
+        super(new TranslatableText("screen.expandedstorage.screen_picker_title"));
         OPTIONS = options;
     }
 
