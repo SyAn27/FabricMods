@@ -1,5 +1,5 @@
 - Removed REI integration
 - Removed Creative Button Mover
 - Removed Minecraft and Fabric Loader dependencies due to constraint limitations
-  - Please use minecraft >= 1.16.2-rc1
-- Note: this build is intended for 1.16.2 however may not work as it is still targeting 1.16.2-rc2
+  - Please use minecraft >= 1.16.2
+- Fixed Container Library's Access Wideners not remapping.
