@@ -65,7 +65,7 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
         setPageText();
     }
 
-    private void setPageText() { currentPageText = new TranslatableText("screen.ninjaphenix-container-lib.page_x_y", page, SCREEN_META.PAGES); }
+    private void setPageText() { currentPageText = new TranslatableText("screen.expandedstorage.page_x_y", page, SCREEN_META.PAGES); }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
@@ -109,12 +109,12 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
             page = 1;
             setPageText();
             leftPageButton = new PageButtonWidget(x + backgroundWidth - 61 + pageButtonsXOffset, y + backgroundHeight - 96, 0,
-                    new TranslatableText("screen.ninjaphenix-container-lib.prev_page"), button -> setPage(page, page - 1),
+                    new TranslatableText("screen.expandedstorage.prev_page"), button -> setPage(page, page - 1),
                     (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             leftPageButton.active = false;
             addButton(leftPageButton);
             rightPageButton = new PageButtonWidget(x + backgroundWidth - 19 + pageButtonsXOffset, y + backgroundHeight - 96, 1,
-                    new TranslatableText("screen.ninjaphenix-container-lib.next_page"), button -> setPage(page, page + 1),
+                    new TranslatableText("screen.expandedstorage.next_page"), button -> setPage(page, page + 1),
                     (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             addButton(rightPageButton);
             pageTextX = (1 + leftPageButton.x + rightPageButton.x - rightPageButton.getWidth() / 2F) / 2F;

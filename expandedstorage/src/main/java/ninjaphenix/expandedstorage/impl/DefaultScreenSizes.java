@@ -63,6 +63,6 @@ public final class DefaultScreenSizes implements ContainerLibraryExtension
 
     private Identifier getTexture(String type, int width, int height)
     {
-        return new Identifier("ninjaphenix-container-lib", String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
+        return new Identifier("expandedstorage", String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
     }
 }
