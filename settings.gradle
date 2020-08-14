@@ -12,6 +12,5 @@ pluginManagement {
 include 'chainmail'
 include 'chainmail-tests'
 include 'torcherino'
-include 'ninjaphenix-container-library'
 include 'expandedstorage'
 include 'fatexperienceorbs'

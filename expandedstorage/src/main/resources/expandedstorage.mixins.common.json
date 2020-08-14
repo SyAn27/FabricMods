@@ -1,16 +1,17 @@
 {
   "required": true,
-  "package": "ninjaphenix.expandedstorage.mixins",
+  "package": "ninjaphenix.expandedstorage.mixin",
   "plugin": "ninjaphenix.expandedstorage.ExpandedStorageMixinPlugin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ToweletteSupportMixin"
   ],
   "client": [
-    "TexturedRenderLayersMixin"
+    "TexturedRenderLayersMixin",
+    "ClientGameStart"
   ],
   "injectors": {
     "defaultRequire": 1
   },
-  "minVersion": "0.7.11"
+  "minVersion": "0.8"
 }

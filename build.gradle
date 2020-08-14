@@ -27,7 +27,6 @@ allprojects {
 
     ext {
         dep_chainmail_version = findProject(':chainmail').mod_version
-        dep_container_lib_version = findProject(':ninjaphenix-container-library').mod_version
         withoutUnwanted = {
             exclude(module: 'minecraft')
             exclude(module: 'fabric-loader')
@@ -67,7 +66,6 @@ allprojects {
                 'dep_minecraft_version': dep_minecraft_version,
                 'dep_loader_version': dep_loader_version,
                 'dep_fabric_version': dep_fabric_version,
-                'dep_container_lib_version': dep_container_lib_version,
                 'dep_chainmail_version': dep_chainmail_version
         )
         from(sourceSets.main.resources.srcDirs) {
@@ -78,7 +76,6 @@ allprojects {
                     'dep_minecraft_version': dep_minecraft_version,
                     'dep_loader_version': dep_loader_version,
                     'dep_fabric_version': dep_fabric_version,
-                    'dep_container_lib_version': dep_container_lib_version,
                     'dep_chainmail_version': dep_chainmail_version
             )
         }

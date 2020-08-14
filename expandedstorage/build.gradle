@@ -13,10 +13,8 @@ repositories {
 }
 
 dependencies {
-    compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
     compile project(path: ":chainmail"), withoutUnwanted
 
-    include project(path: ":ninjaphenix-container-library")
     include project(path: ":chainmail")
     include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 

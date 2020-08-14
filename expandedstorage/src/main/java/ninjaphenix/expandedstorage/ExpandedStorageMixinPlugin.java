@@ -15,7 +15,7 @@ public final class ExpandedStorageMixinPlugin implements IMixinConfigPlugin
 
     public ExpandedStorageMixinPlugin()
     {
-        conditionalMixins.put("ninjaphenix.expandedstorage.mixins.ToweletteSupportMixin", FabricLoader.getInstance().isModLoaded("towelette"));
+        conditionalMixins.put("ninjaphenix.expandedstorage.mixin.ToweletteSupportMixin", FabricLoader.getInstance().isModLoaded("towelette"));
     }
 
     @Override
