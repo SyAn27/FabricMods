@@ -5,14 +5,14 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.ChainmailCommonApi;
-import ninjaphenix.expandedstorage.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.block.OldChestBlock;
-import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.block.entity.CustomBlockEntityType;
-import ninjaphenix.expandedstorage.block.entity.OldChestBlockEntity;
-import ninjaphenix.expandedstorage.content.ModBlocks;
-import ninjaphenix.expandedstorage.content.ModItemGroup;
-import ninjaphenix.expandedstorage.content.ModItems;
+import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.impl.block.OldChestBlock;
+import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.impl.block.entity.CustomBlockEntityType;
+import ninjaphenix.expandedstorage.impl.block.entity.OldChestBlockEntity;
+import ninjaphenix.expandedstorage.impl.content.ModBlocks;
+import ninjaphenix.expandedstorage.impl.content.ModItemGroup;
+import ninjaphenix.expandedstorage.impl.content.ModItems;
 
 public class ExpandedStorage implements ModInitializer
 {
