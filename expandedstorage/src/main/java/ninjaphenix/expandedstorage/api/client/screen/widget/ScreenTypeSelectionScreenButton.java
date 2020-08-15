@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Constants;
 
 public final class ScreenTypeSelectionScreenButton extends ButtonWidget
@@ -24,7 +24,7 @@ public final class ScreenTypeSelectionScreenButton extends ButtonWidget
             MinecraftClient.getInstance().player.closeHandledScreen();
             ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
         }, tooltipSupplier);
-        TEXTURE = ExpandedStorage.getId("textures/gui/select_screen_button.png");
+        TEXTURE = ExpandedStorage.id("textures/gui/select_screen_button.png");
     }
 
     @Override

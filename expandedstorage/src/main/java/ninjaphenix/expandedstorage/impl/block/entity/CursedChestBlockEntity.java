@@ -22,7 +22,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.api.inventory.DoubleSidedInventory;
-import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
