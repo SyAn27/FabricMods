@@ -10,7 +10,7 @@ import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
 
-public class ScrollableScreen<T extends ScrollableScreenHandler> extends AbstractScreen<T, ScrollableScreenMeta>
+public final class ScrollableScreen<T extends ScrollableScreenHandler> extends AbstractScreen<T, ScrollableScreenMeta>
 {
     protected final boolean hasScrollbar;
     private Rectangle blankArea = null;

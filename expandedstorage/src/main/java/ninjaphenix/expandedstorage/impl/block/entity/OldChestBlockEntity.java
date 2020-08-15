@@ -6,7 +6,7 @@ import net.minecraft.util.collection.DefaultedList;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 
-public class OldChestBlockEntity extends AbstractChestBlockEntity
+public final class OldChestBlockEntity extends AbstractChestBlockEntity
 {
     public OldChestBlockEntity(Identifier block) { super(ExpandedStorage.OLD_CHEST, block); }
 

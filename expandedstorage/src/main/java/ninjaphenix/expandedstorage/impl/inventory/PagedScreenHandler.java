@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -26,23 +27,21 @@ public final class PagedScreenHandler extends AbstractContainer<PagedScreenMeta>
     });
 
     public PagedScreenHandler(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory,
-            PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
+            PlayerEntity player, Text displayName)
     {
         super(type, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
-        resetSlotPositions(slotFactory);
+        resetSlotPositions(true);
         final int left = (SCREEN_META.WIDTH * 18 + 14) / 2 - 80;
         final int top = 18 + 14 + (SCREEN_META.HEIGHT * 18);
         for (int x = 0; x < 9; x++)
         {
             for (int y = 0; y < 3; y++)
             {
-                this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_inventory", y * 9 + x + 9, left + 18 * x, top + y * 18));
+                this.addSlot(new Slot(PLAYER_INVENTORY,y * 9 + x + 9, left + 18 * x, top + y * 18));
             }
         }
-        for (int i = 0; i < 9; i++) { this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_hotbar", i, left + 18 * i, top + 58)); }
+        for (int i = 0; i < 9; i++) { this.addSlot(new Slot(PLAYER_INVENTORY, i, left + 18 * i, top + 58)); }
     }
-
-    public static void onScreenSizeRegistered(PagedScreenMeta meta) { SIZES.put(meta.TOTAL_SLOTS, meta); }
 
     private static PagedScreenMeta getNearestSize(int invSize)
     {
@@ -56,7 +55,7 @@ public final class PagedScreenHandler extends AbstractContainer<PagedScreenMeta>
         throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
     }
 
-    public void resetSlotPositions(AreaAwareSlotFactory slotFactory)
+    public void resetSlotPositions(final boolean createSlots)
     {
         for (int i = 0; i < INVENTORY.size(); i++)
         {
@@ -64,7 +63,7 @@ public final class PagedScreenHandler extends AbstractContainer<PagedScreenMeta>
             int y = MathHelper.ceil((((double) (i - x)) / SCREEN_META.WIDTH));
             if (y >= SCREEN_META.HEIGHT) { y = (18 * (y % SCREEN_META.HEIGHT)) - 2000; }
             else {y = y * 18;}
-            if (slotFactory != null) { this.addSlot(slotFactory.create(INVENTORY, "inventory", i, x * 18 + 8, y + 18)); }
+            if (createSlots) { addSlot(new Slot(INVENTORY, i, x * 18 + 8, y + 18)); }
             else { slots.get(i).y = y + 18; }
         }
     }

@@ -14,7 +14,7 @@ import ninjaphenix.expandedstorage.impl.content.ModBlocks;
 import ninjaphenix.expandedstorage.impl.content.ModItemGroup;
 import ninjaphenix.expandedstorage.impl.content.ModItems;
 
-public class ExpandedStorage implements ModInitializer
+public final class ExpandedStorage implements ModInitializer
 {
     public static final ExpandedStorage INSTANCE = new ExpandedStorage();
     public static final String MOD_ID = "expandedstorage";

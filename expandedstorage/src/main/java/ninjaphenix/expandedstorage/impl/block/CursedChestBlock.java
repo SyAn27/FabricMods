@@ -17,7 +17,7 @@ import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 import static ninjaphenix.expandedstorage.impl.block.misc.CursedChestType.*;
 
 @SuppressWarnings("deprecation")
-public class CursedChestBlock extends FluidLoggableChestBlock
+public final class CursedChestBlock extends FluidLoggableChestBlock
 {
     private static final VoxelShape SINGLE_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 14, 15);
     private static final VoxelShape TOP_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 14, 15);

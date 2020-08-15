@@ -7,7 +7,7 @@ import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelection
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 
-public class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<T, SingleScreenMeta>
+public final class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<T, SingleScreenMeta>
 {
     private Rectangle blankArea = null;
 

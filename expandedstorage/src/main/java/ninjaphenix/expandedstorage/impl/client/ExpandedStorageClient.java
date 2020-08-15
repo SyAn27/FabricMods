@@ -20,7 +20,7 @@ import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public class ExpandedStorageClient implements ClientModInitializer
+public final class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();
     public static final Identifier CHEST_TEXTURE_ATLAS = ExpandedStorage.id("chest_textures");

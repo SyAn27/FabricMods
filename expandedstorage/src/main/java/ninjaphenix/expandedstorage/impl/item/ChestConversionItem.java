@@ -26,7 +26,7 @@ import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 
-public class ChestConversionItem extends ChestModifierItem
+public final class ChestConversionItem extends ChestModifierItem
 {
     private final Identifier from;
     private final Identifier to;

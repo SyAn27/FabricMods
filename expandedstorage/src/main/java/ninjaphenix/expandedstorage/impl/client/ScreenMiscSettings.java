@@ -6,7 +6,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class ScreenMiscSettings
+public final class ScreenMiscSettings
 {
     public final Identifier SELECT_TEXTURE_ID;
     public final Text NARRATION_MESSAGE;
