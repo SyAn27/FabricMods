@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
-import ninjaphenix.expandedstorage.api.screen.PagedScreenMeta;
+import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;

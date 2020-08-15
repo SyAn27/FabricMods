@@ -7,7 +7,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
-import ninjaphenix.expandedstorage.api.screen.SingleScreenMeta;
+import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;

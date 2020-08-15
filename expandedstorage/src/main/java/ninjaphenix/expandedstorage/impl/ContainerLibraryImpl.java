@@ -11,6 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.api.ContainerLibraryAPI;
 import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
@@ -54,7 +55,7 @@ public class ContainerLibraryImpl implements ContainerLibraryAPI
         }
         else
         {
-            if (containerTypeId == null || !containerTypeId.equals(Constants.id("auto"))) { playerPreferences.remove(uuid); }
+            if (containerTypeId == null || !containerTypeId.equals(ExpandedStorage.getId("auto"))) { playerPreferences.remove(uuid); }
             preferenceCallbacks.remove(uuid);
         }
     }
