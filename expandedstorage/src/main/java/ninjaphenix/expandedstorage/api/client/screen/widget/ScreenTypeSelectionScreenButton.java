@@ -10,8 +10,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
-import ninjaphenix.expandedstorage.api.Constants;
 
 public final class ScreenTypeSelectionScreenButton extends ButtonWidget
 {
@@ -22,7 +22,7 @@ public final class ScreenTypeSelectionScreenButton extends ButtonWidget
         super(x, y, 12, 12, new TranslatableText("screen.expandedstorage.change_screen_button"), button ->
         {
             MinecraftClient.getInstance().player.closeHandledScreen();
-            ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
+            ClientSidePacketRegistry.INSTANCE.sendToServer(ContainerLibrary.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
         }, tooltipSupplier);
         TEXTURE = ExpandedStorage.id("textures/gui/select_screen_button.png");
     }
