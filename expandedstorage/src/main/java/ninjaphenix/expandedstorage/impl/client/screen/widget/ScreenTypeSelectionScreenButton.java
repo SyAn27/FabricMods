@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.api.client.screen.widget;
+package ninjaphenix.expandedstorage.impl.client.screen.widget;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

@@ -6,8 +6,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
-import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 
 import java.util.Arrays;

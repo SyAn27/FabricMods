@@ -1,7 +1,6 @@
 package ninjaphenix.expandedstorage.impl.screen;
 
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.api.screen.ScreenMeta;
 
 public final class PagedScreenMeta extends ScreenMeta
 {

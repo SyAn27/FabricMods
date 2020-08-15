@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.api.inventory;
+package ninjaphenix.expandedstorage.impl.inventory;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.slot.Slot;
