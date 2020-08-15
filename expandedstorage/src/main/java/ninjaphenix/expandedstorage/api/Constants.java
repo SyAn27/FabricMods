@@ -5,7 +5,6 @@ import ninjaphenix.expandedstorage.ExpandedStorage;
 
 public class Constants
 {
-    public static final String ENTRY_POINT_ID = "ninjaphenix-container-library-screens";
     public static final Identifier SCREEN_SELECT = ExpandedStorage.getId("screen_select");
     public static final Identifier OPEN_SCREEN_SELECT = ExpandedStorage.getId("open_screen_select");
 

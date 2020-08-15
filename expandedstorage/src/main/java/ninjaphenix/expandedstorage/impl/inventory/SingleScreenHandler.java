@@ -1,5 +1,6 @@
 package ninjaphenix.expandedstorage.impl.inventory;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
@@ -10,11 +11,21 @@ import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 public final class SingleScreenHandler extends AbstractContainer<SingleScreenMeta>
 {
-    private static final HashMap<Integer, SingleScreenMeta> SIZES = new HashMap<>();
+    // todo: replace with datapack extension
+    private static final ImmutableMap<Integer, SingleScreenMeta> SIZES = initializedMap(map ->
+    {
+        map.put(27, new SingleScreenMeta(9, 3, 27, getTexture("shared", 9, 3), 208, 192)); // Wood
+        map.put(54, new SingleScreenMeta(9, 6, 54, getTexture("shared", 9, 6), 208, 240)); // Iron / Large Wood
+        map.put(81, new SingleScreenMeta(9, 9, 81, getTexture("shared", 9, 9), 208, 304)); // Gold
+        map.put(108, new SingleScreenMeta(12, 9, 108, getTexture("shared", 12, 9), 256, 304)); // Diamond / Large Iron
+        map.put(135, new SingleScreenMeta(15, 9, 135, getTexture("shared", 15, 9), 320, 304)); // Netherite
+        map.put(162, new SingleScreenMeta(18, 9, 162, getTexture("shared", 18, 9), 368, 304)); // Large Gold
+        map.put(216, new SingleScreenMeta(18, 12, 216, getTexture("shared", 18, 12), 368, 352)); // Large Diamond
+        map.put(270, new SingleScreenMeta(18, 15, 270, getTexture("shared", 18, 15), 368, 416)); // Large Netherite
+    });
 
     public SingleScreenHandler(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory,
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
