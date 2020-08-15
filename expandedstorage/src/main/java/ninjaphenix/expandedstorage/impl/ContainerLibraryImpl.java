@@ -25,7 +25,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
-import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
@@ -74,7 +73,7 @@ public class ContainerLibraryImpl implements ModInitializer
         }
         else
         {
-            if (containerTypeId == null || !containerTypeId.equals(ExpandedStorage.getId("auto"))) { playerPreferences.remove(uuid); }
+            if (containerTypeId == null || !containerTypeId.equals(ExpandedStorage.id("auto"))) { playerPreferences.remove(uuid); }
             preferenceCallbacks.remove(uuid);
         }
     }
@@ -142,9 +141,9 @@ public class ContainerLibraryImpl implements ModInitializer
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
         final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", ExpandedStorage.MOD_ID, name));
-        declareContainerType(SINGLE_CONTAINER, ExpandedStorage.getId("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
-        declareContainerType(Constants.SCROLLABLE_CONTAINER, ExpandedStorage.getId("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
-        declareContainerType(Constants.PAGED_CONTAINER, ExpandedStorage.getId("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
+        declareContainerType(SINGLE_CONTAINER, ExpandedStorage.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
+        declareContainerType(Constants.SCROLLABLE_CONTAINER, ExpandedStorage.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
+        declareContainerType(Constants.PAGED_CONTAINER, ExpandedStorage.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, this::onReceivePlayerPreference);
         PlayerDisconnectCallback.EVENT.register(player -> setPlayerPreference(player, null));

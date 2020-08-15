@@ -11,7 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
-import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
 import ninjaphenix.expandedstorage.impl.client.config.Config;
@@ -61,7 +61,7 @@ public final class ContainerLibraryClient implements ClientModInitializer
     public static void sendCallbackRemoveToServer()
     {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-        buffer.writeIdentifier(ExpandedStorage.getId("auto"));
+        buffer.writeIdentifier(ExpandedStorage.id("auto"));
         ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
     }
 

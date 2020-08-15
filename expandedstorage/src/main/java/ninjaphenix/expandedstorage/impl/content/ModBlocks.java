@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.api.Registries.ChestTierData;
 import ninjaphenix.expandedstorage.api.Registries.TierData;
@@ -46,10 +46,10 @@ public final class ModBlocks
     {
         final OldChestBlock block = new OldChestBlock(Block.Settings.copy(material));
         final Text containerName = new TranslatableText("container.expandedstorage." + name);
-        final Identifier id = ExpandedStorage.getId("old_" + name);
+        final Identifier id = ExpandedStorage.id("old_" + name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ExpandedStorage.group)));
-        Registry.register(Registries.OLD_CHEST, ExpandedStorage.getId(name), new TierData(rows * 9, containerName, id));
+        Registry.register(Registries.OLD_CHEST, ExpandedStorage.id(name), new TierData(rows * 9, containerName, id));
         return block;
     }
 
@@ -57,11 +57,11 @@ public final class ModBlocks
     {
         final CursedChestBlock block = new CursedChestBlock(Block.Settings.copy(material));
         final Text containerName = new TranslatableText("container.expandedstorage." + name);
-        final Identifier id = ExpandedStorage.getId(name);
+        final Identifier id = ExpandedStorage.id(name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ExpandedStorage.group)));
         Registry.register(Registries.CHEST, id, new ChestTierData(rows * 9, containerName, id,
-                type -> ExpandedStorage.getId(String.format("entity/%s/%s", name, type.asString()))));
+                type -> ExpandedStorage.id(String.format("entity/%s/%s", name, type.asString()))));
         return block;
     }
 

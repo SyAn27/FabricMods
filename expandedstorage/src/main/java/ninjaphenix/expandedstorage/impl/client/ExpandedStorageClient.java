@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import ninjaphenix.chainmail.api.client.render.ChainmailRendering;
-import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 public class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();
-    public static final Identifier CHEST_TEXTURE_ATLAS = ExpandedStorage.getId("chest_textures");
+    public static final Identifier CHEST_TEXTURE_ATLAS = ExpandedStorage.id("chest_textures");
     private static final CursedChestBlockEntity CURSED_CHEST_RENDER_ENTITY = new CursedChestBlockEntity(null);
 
     @SuppressWarnings("SameParameterValue")

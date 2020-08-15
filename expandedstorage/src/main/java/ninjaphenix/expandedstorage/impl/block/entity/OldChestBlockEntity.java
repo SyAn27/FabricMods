@@ -3,7 +3,7 @@ package ninjaphenix.expandedstorage.impl.block.entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import ninjaphenix.expandedstorage.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 
 public class OldChestBlockEntity extends AbstractChestBlockEntity
