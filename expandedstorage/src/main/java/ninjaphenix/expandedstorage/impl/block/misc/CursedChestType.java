@@ -15,7 +15,7 @@ public enum CursedChestType implements StringIdentifiable
 
     CursedChestType(String string) { name = string; }
 
-    public static CursedChestType valueOf(ChestType type)
+    public static CursedChestType valueOf(final ChestType type)
     {
         if (type == ChestType.SINGLE) { return SINGLE; }
         else if (type == ChestType.RIGHT) { return LEFT; }
@@ -35,22 +35,6 @@ public enum CursedChestType implements StringIdentifiable
     }
 
     public boolean isMainType() { return this == FRONT || this == BOTTOM || this == LEFT || this == SINGLE; }
-
-    @Environment(EnvType.CLIENT)
-    public SingleChestModel getModel()
-    {
-        if(model == null)
-        {
-            if(this == FRONT) { model = new FrontChestModel(); }
-            else if(this == BACK) { model = new BackChestModel(); }
-            else if(this == TOP) { model = new TopChestModel(); }
-            else if(this == BOTTOM) { model = new BottomChestModel(); }
-            else if(this == LEFT) { model = new LeftChestModel(); }
-            else if(this == RIGHT) { model = new RightChestModel(); }
-            else if(this == SINGLE) { model = new SingleChestModel(); }
-        }
-        return model;
-    }
 
     public String asString() { return name; }
 }

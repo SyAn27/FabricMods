@@ -4,7 +4,7 @@ import blue.endless.jankson.Comment;
 import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 
-public final class Config
+public final class ContainerConfig
 {
     @Comment("\nPrefered container type, set to expandedstorage:auto to reuse selection screen.")
     public Identifier preferred_container_type = ExpandedStorage.id("auto");

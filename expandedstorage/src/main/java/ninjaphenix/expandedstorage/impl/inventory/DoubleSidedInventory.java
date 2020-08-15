@@ -10,23 +10,22 @@ public final class DoubleSidedInventory implements SidedInventory
     private final SidedInventory first;
     private final SidedInventory second;
 
-    public DoubleSidedInventory(SidedInventory firstInventory, SidedInventory secondInventory)
+    public DoubleSidedInventory(final SidedInventory first, final SidedInventory second)
     {
-        if (firstInventory == null) { firstInventory = secondInventory; }
-        if (secondInventory == null) { secondInventory = firstInventory; }
-        first = firstInventory;
-        second = secondInventory;
+        this.first = first;
+        this.second = second;
     }
 
     @Override
-    public int[] getAvailableSlots(Direction direction)
+    public int[] getAvailableSlots(final Direction direction)
     {
-        int[] firstSlots = first.getAvailableSlots(direction);
-        int[] secondSlots = second.getAvailableSlots(direction);
-        int[] combined = new int[firstSlots.length + secondSlots.length];
+        final int firstSize = first.size();
+        final int[] firstSlots = first.getAvailableSlots(direction);
+        final int[] secondSlots = second.getAvailableSlots(direction);
+        final int[] combined = new int[firstSlots.length + secondSlots.length];
         int index = 0;
         for (int slot : firstSlots) { combined[index++] = slot; }
-        for (int slot : secondSlots) { combined[index++] = slot + first.size(); }
+        for (int slot : secondSlots) { combined[index++] = slot + firstSize; }
         return combined;
     }
 
