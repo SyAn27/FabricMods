@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.impl.ContainerLibrary;
-import ninjaphenix.expandedstorage.impl.client.config.Config;
+import ninjaphenix.expandedstorage.impl.client.config.ContainerConfig;
 import ninjaphenix.expandedstorage.impl.client.screen.PagedScreen;
 import ninjaphenix.expandedstorage.impl.client.screen.ScrollableScreen;
 import ninjaphenix.expandedstorage.impl.client.screen.SelectContainerScreen;
@@ -28,7 +28,7 @@ import java.util.HashMap;
 
 public final class ContainerLibraryClient implements ClientModInitializer
 {
-    public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(ExpandedStorage.MOD_ID));
+    public static final ContainerConfig CONFIG = getConfigParser().load(ContainerConfig.class, ContainerConfig::new, getConfigPath(), new MarkerManager.Log4jMarker(ExpandedStorage.MOD_ID));
     public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
 
     private ContainerLibraryClient()

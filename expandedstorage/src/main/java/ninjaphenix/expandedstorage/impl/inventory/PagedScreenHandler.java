@@ -37,7 +37,7 @@ public final class PagedScreenHandler extends AbstractContainer<PagedScreenMeta>
         {
             for (int y = 0; y < 3; y++)
             {
-                this.addSlot(new Slot(PLAYER_INVENTORY,y * 9 + x + 9, left + 18 * x, top + y * 18));
+                addSlot(new Slot(PLAYER_INVENTORY,y * 9 + x + 9, left + 18 * x, top + y * 18));
             }
         }
         for (int i = 0; i < 9; i++) { this.addSlot(new Slot(PLAYER_INVENTORY, i, left + 18 * i, top + 58)); }
@@ -52,7 +52,7 @@ public final class PagedScreenHandler extends AbstractContainer<PagedScreenMeta>
         final int largestKey = keys[Math.abs(Arrays.binarySearch(keys, invSize)) - 1];
         val = SIZES.get(largestKey);
         if (largestKey > invSize && largestKey - invSize <= val.WIDTH) { return SIZES.get(largestKey); }
-        throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
+        throw new RuntimeException("No screen can show an inventory of size " + invSize + ".");
     }
 
     public void resetSlotPositions(final boolean createSlots)

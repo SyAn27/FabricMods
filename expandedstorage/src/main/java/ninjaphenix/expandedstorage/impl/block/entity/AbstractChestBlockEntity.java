@@ -28,7 +28,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     protected AbstractChestBlockEntity(final BlockEntityType type, final Identifier block)
     {
         super(type);
-        if (block != null) { this.initialize(block); }
+        if (block != null) { initialize(block); }
     }
 
     protected void initialize(final Identifier block) { }
@@ -65,18 +65,14 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     @Override
     public boolean isEmpty()
     {
-        for (ItemStack stack : inventory)
-        { if (!stack.isEmpty()) { return false; } }
-        return true;
+        return inventory.stream().allMatch(ItemStack::isEmpty);
     }
 
-    // todo: can I use the new state to remove need for type?
     @Override
     public void fromTag(final BlockState state, final CompoundTag tag)
     {
         super.fromTag(state, tag);
-        Identifier id = new Identifier(tag.getString("type"));
-        this.initialize(id);
+        initialize(new Identifier(tag.getString("type")));
         if (!deserializeLootTable(tag)) { Inventories.fromTag(tag, inventory); }
     }
 
@@ -92,7 +88,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     @Override
     public CompoundTag toInitialChunkDataTag()
     {
-        CompoundTag initialChunkTag = super.toTag(new CompoundTag());
+        final CompoundTag initialChunkTag = super.toTag(new CompoundTag());
         initialChunkTag.putString("type", block.toString());
         return initialChunkTag;
     }

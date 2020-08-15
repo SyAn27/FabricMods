@@ -19,10 +19,8 @@ public final class ExpandedStorage implements ModInitializer
     public static final ExpandedStorage INSTANCE = new ExpandedStorage();
     public static final String MOD_ID = "expandedstorage";
     public static final ItemGroup group = ChainmailCommonApi.INSTANCE.registerItemGroup((index) -> new ModItemGroup(index, MOD_ID));
-    public static final CustomBlockEntityType<CursedChestBlockEntity> CHEST =
-            new CustomBlockEntityType<>(() -> new CursedChestBlockEntity(null), b -> b instanceof CursedChestBlock);
-    public static final CustomBlockEntityType<OldChestBlockEntity> OLD_CHEST =
-            new CustomBlockEntityType<>(() -> new OldChestBlockEntity(null), b -> b instanceof OldChestBlock);
+    public static final CustomBlockEntityType<CursedChestBlockEntity> CHEST = new CustomBlockEntityType<>(() -> new CursedChestBlockEntity(null), b -> b instanceof CursedChestBlock);
+    public static final CustomBlockEntityType<OldChestBlockEntity> OLD_CHEST = new CustomBlockEntityType<>(() -> new OldChestBlockEntity(null), b -> b instanceof OldChestBlock);
 
     public static Identifier id(String path) { return new Identifier(MOD_ID, path); }
 

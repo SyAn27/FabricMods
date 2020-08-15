@@ -16,7 +16,7 @@ public final class OldChestBlock extends AbstractChestBlock
     @Override
     public BlockEntity createBlockEntity(BlockView view)
     {
-        Identifier blockId = Registry.BLOCK.getId(this);
+        final Identifier blockId = Registry.BLOCK.getId(this);
         return new OldChestBlockEntity(new Identifier(blockId.getNamespace(), blockId.getPath().substring(4)));
     }
 

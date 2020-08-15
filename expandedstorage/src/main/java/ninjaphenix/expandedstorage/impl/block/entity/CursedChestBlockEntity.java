@@ -110,10 +110,9 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     {
         final CursedChestType chestType = getCachedState().get(CursedChestBlock.TYPE);
         if (!chestType.isMainType()) { return; }
-        double zOffset = 0.5;
-        if (chestType == CursedChestType.BOTTOM) { zOffset = 1; }
-        BlockPos otherPos = CursedChestBlock.getPairedPos(world, pos);
-        Vec3d center = Vec3d.of(pos).add(Vec3d.of(otherPos == null ? pos : otherPos));
+        final double zOffset = chestType == CursedChestType.BOTTOM ? 1 : 0.5;
+        final BlockPos otherPos = CursedChestBlock.getPairedPos(world, pos);
+        final Vec3d center = Vec3d.of(pos).add(Vec3d.of(otherPos == null ? pos : otherPos));
         world.playSound(null, center.getX() / 2 + 0.5D, center.getY() / 2 + 0.5D, center.getZ() / 2 + zOffset, soundEvent, SoundCategory.BLOCKS, 0.5F,
                 world.random.nextFloat() * 0.1F + 0.9F);
     }
