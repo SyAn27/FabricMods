@@ -2,7 +2,6 @@ package ninjaphenix.expandedstorage.impl.screen;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.api.screen.ScreenMeta;
 
 public final class ScrollableScreenMeta extends ScreenMeta
 {

@@ -3,8 +3,7 @@ package ninjaphenix.expandedstorage.impl.client.screen;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
-import ninjaphenix.expandedstorage.api.client.screen.AbstractScreen;
-import ninjaphenix.expandedstorage.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 

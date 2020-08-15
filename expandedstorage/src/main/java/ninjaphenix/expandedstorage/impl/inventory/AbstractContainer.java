@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.api.inventory;
+package ninjaphenix.expandedstorage.impl.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
-import ninjaphenix.expandedstorage.api.screen.ScreenMeta;
+import ninjaphenix.expandedstorage.impl.screen.ScreenMeta;
 
 import java.util.HashMap;
 import java.util.function.Consumer;

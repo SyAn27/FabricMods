@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.api.inventory;
+package ninjaphenix.expandedstorage.impl.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;

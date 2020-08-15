@@ -28,7 +28,7 @@ import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.api.inventory.DoubleSidedInventory;
+import ninjaphenix.expandedstorage.impl.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.block.entity.AbstractChestBlockEntity;

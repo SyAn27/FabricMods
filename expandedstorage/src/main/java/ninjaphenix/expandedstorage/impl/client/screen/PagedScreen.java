@@ -10,8 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
-import ninjaphenix.expandedstorage.api.client.screen.AbstractScreen;
-import ninjaphenix.expandedstorage.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
 

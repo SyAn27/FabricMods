@@ -1,10 +1,10 @@
-package ninjaphenix.expandedstorage.api.client.screen;
+package ninjaphenix.expandedstorage.impl.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
-import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
-import ninjaphenix.expandedstorage.api.screen.ScreenMeta;
+import ninjaphenix.expandedstorage.impl.inventory.AbstractContainer;
+import ninjaphenix.expandedstorage.impl.screen.ScreenMeta;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 
 import java.util.function.Function;
