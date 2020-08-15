@@ -25,7 +25,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
-import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
@@ -39,12 +38,16 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static ninjaphenix.expandedstorage.api.Constants.SCREEN_SELECT;
-import static ninjaphenix.expandedstorage.api.Constants.SINGLE_CONTAINER;
-
-public class ContainerLibraryImpl implements ModInitializer
+public final class ContainerLibrary implements ModInitializer
 {
-    public static final ContainerLibraryImpl INSTANCE = new ContainerLibraryImpl();
+    public static final ContainerLibrary INSTANCE = new ContainerLibrary();
+
+    public static final Identifier SCREEN_SELECT = ExpandedStorage.id("screen_select");
+    public static final Identifier OPEN_SCREEN_SELECT = ExpandedStorage.id("open_screen_select");
+
+    public static final Identifier SINGLE_CONTAINER = ExpandedStorage.id("single");
+    public static final Identifier SCROLLABLE_CONTAINER = ExpandedStorage.id("scrollable");
+    public static final Identifier PAGED_CONTAINER = ExpandedStorage.id("paged");
 
     @Environment(EnvType.CLIENT)
     private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
@@ -138,20 +141,20 @@ public class ContainerLibraryImpl implements ModInitializer
     public void onInitialize()
     {
         ContainerProviderRegistry.INSTANCE.registerFactory(SINGLE_CONTAINER, getContainerFactory(SingleScreenHandler::new));
-        ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
-        ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
         final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", ExpandedStorage.MOD_ID, name));
         declareContainerType(SINGLE_CONTAINER, ExpandedStorage.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
-        declareContainerType(Constants.SCROLLABLE_CONTAINER, ExpandedStorage.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
-        declareContainerType(Constants.PAGED_CONTAINER, ExpandedStorage.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
-        ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
-        ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, this::onReceivePlayerPreference);
+        declareContainerType(SCROLLABLE_CONTAINER, ExpandedStorage.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
+        declareContainerType(PAGED_CONTAINER, ExpandedStorage.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
+        ServerSidePacketRegistry.INSTANCE.register(OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
+        ServerSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, this::onReceivePlayerPreference);
         PlayerDisconnectCallback.EVENT.register(player -> setPlayerPreference(player, null));
     }
 
     private void onReceivePlayerPreference(PacketContext context, PacketByteBuf buffer)
     {
-        context.getTaskQueue().submitAndJoin(() -> ContainerLibraryImpl.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
+        context.getTaskQueue().submitAndJoin(() -> ContainerLibrary.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
     }
 
     private void onReceiveOpenSelectScreenPacket(final PacketContext context, final PacketByteBuf buffer)
@@ -166,7 +169,7 @@ public class ContainerLibraryImpl implements ModInitializer
         }
         else
         {
-            ContainerLibraryImpl.INSTANCE.openSelectScreen(player, null);
+            ContainerLibrary.INSTANCE.openSelectScreen(player, null);
         }
     }
 

@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ninjaphenix.expandedstorage.api.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.api.Registries;
-import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
+import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.BasicStorageBlock;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
@@ -308,7 +308,7 @@ public abstract class AbstractChestBlock extends BasicStorageBlock
                 if (cursedClickBlockEntity.checkUnlocked(player))
                 {
                     cursedClickBlockEntity.checkLootInteraction(player);
-                    ContainerLibraryImpl.INSTANCE.openContainer(player, pos, containerName.get());
+                    ContainerLibrary.INSTANCE.openContainer(player, pos, containerName.get());
                 }
             }
         }
@@ -323,7 +323,7 @@ public abstract class AbstractChestBlock extends BasicStorageBlock
                 {
                     cursedClickBlockEntity.checkLootInteraction(player);
                     cursedPairedBlockEntity.checkLootInteraction(player);
-                    ContainerLibraryImpl.INSTANCE.openContainer(player, pos, containerName.get());
+                    ContainerLibrary.INSTANCE.openContainer(player, pos, containerName.get());
                 }
             }
         }

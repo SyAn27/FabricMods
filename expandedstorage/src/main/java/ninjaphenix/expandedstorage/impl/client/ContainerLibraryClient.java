@@ -12,8 +12,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
-import ninjaphenix.expandedstorage.api.Constants;
-import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
+import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.client.config.Config;
 import ninjaphenix.expandedstorage.impl.client.screen.PagedScreen;
 import ninjaphenix.expandedstorage.impl.client.screen.ScrollableScreen;
@@ -26,8 +25,6 @@ import org.apache.logging.log4j.MarkerManager;
 
 import java.nio.file.Path;
 import java.util.HashMap;
-
-import static ninjaphenix.expandedstorage.api.Constants.SCREEN_SELECT;
 
 public final class ContainerLibraryClient implements ClientModInitializer
 {
@@ -55,14 +52,14 @@ public final class ContainerLibraryClient implements ClientModInitializer
     {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeIdentifier(CONFIG.preferred_container_type);
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(ContainerLibrary.SCREEN_SELECT, buffer);
     }
 
     public static void sendCallbackRemoveToServer()
     {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeIdentifier(ExpandedStorage.id("auto"));
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(ContainerLibrary.SCREEN_SELECT, buffer);
     }
 
     public static void setPreference(Identifier container_type)
@@ -74,22 +71,22 @@ public final class ContainerLibraryClient implements ClientModInitializer
     @Override
     public void onInitializeClient()
     {
-        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.SINGLE_CONTAINER, (ContainerScreenFactory<SingleScreenHandler>) SingleScreen::new);
-        ScreenProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, (ContainerScreenFactory<PagedScreenHandler>) PagedScreen::new);
+        ScreenProviderRegistry.INSTANCE.registerFactory(ContainerLibrary.SINGLE_CONTAINER, (ContainerScreenFactory<SingleScreenHandler>) SingleScreen::new);
+        ScreenProviderRegistry.INSTANCE.registerFactory(ContainerLibrary.PAGED_CONTAINER, (ContainerScreenFactory<PagedScreenHandler>) PagedScreen::new);
         ScreenProviderRegistry.INSTANCE
-                .registerFactory(Constants.SCROLLABLE_CONTAINER, (ContainerScreenFactory<ScrollableScreenHandler>) ScrollableScreen::new);
+                .registerFactory(ContainerLibrary.SCROLLABLE_CONTAINER, (ContainerScreenFactory<ScrollableScreenHandler>) ScrollableScreen::new);
 
-        ClientSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, (context, buffer) ->
+        ClientSidePacketRegistry.INSTANCE.register(ContainerLibrary.SCREEN_SELECT, (context, buffer) ->
         {
             final int count = buffer.readInt();
             final HashMap<Identifier, ScreenMiscSettings> allowed = new HashMap<>();
             for (int i = 0; i < count; i++)
             {
                 final Identifier containerFactoryId = buffer.readIdentifier();
-                if (ContainerLibraryImpl.INSTANCE.isContainerTypeDeclared(containerFactoryId) /*&&
+                if (ContainerLibrary.INSTANCE.isContainerTypeDeclared(containerFactoryId) /*&&
                         ContainerProviderRegistry.INSTANCE.factoryExists(containerFactoryId)*/)
                 {
-                    allowed.put(containerFactoryId, ContainerLibraryImpl.INSTANCE.getScreenSettings(containerFactoryId));
+                    allowed.put(containerFactoryId, ContainerLibrary.INSTANCE.getScreenSettings(containerFactoryId));
                 }
             }
             MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed));
