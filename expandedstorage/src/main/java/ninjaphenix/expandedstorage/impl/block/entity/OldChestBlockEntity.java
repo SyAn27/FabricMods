@@ -8,11 +8,11 @@ import ninjaphenix.expandedstorage.api.Registries;
 
 public final class OldChestBlockEntity extends AbstractChestBlockEntity
 {
-    public OldChestBlockEntity(Identifier block) { super(ExpandedStorage.OLD_CHEST, block); }
+    public OldChestBlockEntity(final Identifier block) { super(ExpandedStorage.OLD_CHEST, block); }
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    protected void initialize(Identifier block)
+    protected void initialize(final Identifier block)
     {
         this.block = block;
         defaultContainerName = Registries.OLD_CHEST.get(block).getContainerName();

@@ -25,37 +25,36 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
 
     protected Identifier block;
 
-    protected AbstractChestBlockEntity(BlockEntityType type, Identifier block)
+    protected AbstractChestBlockEntity(final BlockEntityType type, final Identifier block)
     {
         super(type);
         if (block != null) { this.initialize(block); }
     }
 
-    protected void initialize(Identifier block) { }
-
+    protected void initialize(final Identifier block) { }
 
     public Identifier getBlock() { return block; }
 
     @Environment(EnvType.CLIENT)
-    public void setBlock(Identifier block) { this.block = block; }
+    public void setBlock(final Identifier block) { this.block = block; }
 
     @Override
     protected DefaultedList<ItemStack> getInvStackList() { return inventory; }
 
     @Override
-    public void setInvStackList(DefaultedList<ItemStack> inventory) { this.inventory = inventory; }
+    public void setInvStackList(final DefaultedList<ItemStack> inventory) { this.inventory = inventory; }
 
     @Override
-    protected ScreenHandler createScreenHandler(int i, PlayerInventory playerInventory) { return null; }
+    protected ScreenHandler createScreenHandler(final int i, final PlayerInventory playerInventory) { return null; }
 
     @Override
-    public int[] getAvailableSlots(Direction side) { return SLOTS; }
+    public int[] getAvailableSlots(final Direction side) { return SLOTS; }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, Direction direction) { return this.isValid(slot, stack); }
+    public boolean canInsert(final int slot, final ItemStack stack, final Direction direction) { return this.isValid(slot, stack); }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction direction) { return true; }
+    public boolean canExtract(final int slot, final ItemStack stack, final Direction direction) { return true; }
 
     @Override
     public int size() { return inventorySize; }
@@ -73,7 +72,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
 
     // todo: can I use the new state to remove need for type?
     @Override
-    public void fromTag(BlockState state, CompoundTag tag)
+    public void fromTag(final BlockState state, final CompoundTag tag)
     {
         super.fromTag(state, tag);
         Identifier id = new Identifier(tag.getString("type"));
@@ -82,7 +81,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag)
+    public CompoundTag toTag(final CompoundTag tag)
     {
         super.toTag(tag);
         tag.putString("type", block.toString());

@@ -37,32 +37,33 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     private int viewerCount;
     private int ticksOpen;
 
-    public CursedChestBlockEntity(Identifier block) { super(ExpandedStorage.CHEST, block); }
+    public CursedChestBlockEntity(final Identifier block) { super(ExpandedStorage.CHEST, block); }
 
     private static int tickViewerCount(World world, CursedChestBlockEntity instance, int ticksOpen, int x, int y, int z, int viewCount)
     {
-        if (!world.isClient && viewCount != 0 && (ticksOpen + x + y + z) % 200 == 0) { return countViewers(world, instance, x, y, z); }
-        return viewCount;
-    }
-
-    private static int countViewers(World world, CursedChestBlockEntity instance, int x, int y, int z)
-    {
-        int viewers = 0;
-        final List<PlayerEntity> playersInRange = world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6));
-        for (PlayerEntity player : playersInRange)
+        if (!world.isClient && viewCount != 0 && (ticksOpen + x + y + z) % 200 == 0)
         {
-            if (player.currentScreenHandler instanceof AbstractContainer)
+            int viewers = 0;
+            final List<PlayerEntity> playersInRange = world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6));
+            for (PlayerEntity player : playersInRange)
             {
-                final Inventory inventory = ((AbstractContainer<?>) player.currentScreenHandler).getInventory();
-                if (inventory == instance || inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance)) {viewers++;}
+                if (player.currentScreenHandler instanceof AbstractContainer)
+                {
+                    final Inventory inventory = ((AbstractContainer<?>) player.currentScreenHandler).getInventory();
+                    if (inventory == instance || inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance))
+                    {
+                        viewers++;
+                    }
+                }
             }
+            return viewers;
         }
-        return viewers;
+        return viewCount;
     }
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    protected void initialize(Identifier block)
+    protected void initialize(final Identifier block)
     {
         this.block = block;
         defaultContainerName = Registries.CHEST.get(block).getContainerName();
@@ -73,7 +74,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     }
 
     @Override
-    public boolean onSyncedBlockEvent(int actionId, int value)
+    public boolean onSyncedBlockEvent(final int actionId, final int value)
     {
         if (actionId == 1)
         {
@@ -85,7 +86,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
 
     @Environment(EnvType.CLIENT)
     @Override
-    public float getAnimationProgress(float f) { return MathHelper.lerp(f, lastAnimationAngle, animationAngle); }
+    public float getAnimationProgress(final float f) { return MathHelper.lerp(f, lastAnimationAngle, animationAngle); }
 
     @Override
     @SuppressWarnings("ConstantConditions")
@@ -105,9 +106,9 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     }
 
     @SuppressWarnings("ConstantConditions")
-    private void playSound(SoundEvent soundEvent)
+    private void playSound(final SoundEvent soundEvent)
     {
-        CursedChestType chestType = getCachedState().get(CursedChestBlock.TYPE);
+        final CursedChestType chestType = getCachedState().get(CursedChestBlock.TYPE);
         if (!chestType.isMainType()) { return; }
         double zOffset = 0.5;
         if (chestType == CursedChestType.BOTTOM) { zOffset = 1; }
@@ -118,7 +119,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     }
 
     @Override
-    public void onOpen(PlayerEntity player)
+    public void onOpen(final PlayerEntity player)
     {
         if (player.isSpectator()) { return; }
         if (viewerCount < 0) { viewerCount = 0; }
@@ -127,7 +128,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     }
 
     @Override
-    public void onClose(PlayerEntity player)
+    public void onClose(final PlayerEntity player)
     {
         if (player.isSpectator()) { return; }
         viewerCount--;
@@ -137,7 +138,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     @SuppressWarnings("ConstantConditions")
     private void onInvOpenOrClose()
     {
-        Block block = getCachedState().getBlock();
+        final Block block = getCachedState().getBlock();
         if (block instanceof CursedChestBlock)
         {
             world.addSyncedBlockEvent(pos, block, 1, viewerCount);
