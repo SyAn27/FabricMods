@@ -44,18 +44,6 @@ public final class ContainerLibrary implements ModInitializer
 
     private ContainerLibrary() {}
 
-    /**
-     * Open's a modded container which block implements InventoryProvider.
-     *
-     * @param player The Player who attempted to open the container.
-     * @param pos The block pos of the container.
-     * @param containerName The text that should be displayed as the container name.
-     * @since 0.0.1
-     * @deprecated {@link ContainerLibraryAPI#openContainer}
-     */
-    @Deprecated
-    public static void openContainer(PlayerEntity player, BlockPos pos, Text containerName) { IMPL.openContainer(player, pos, containerName); }
-
     @Override
     public void onInitialize()
     {
