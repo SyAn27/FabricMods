@@ -1,5 +1,6 @@
 package ninjaphenix.expandedstorage.impl.inventory;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
@@ -11,12 +12,21 @@ import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.function.IntUnaryOperator;
 
 public final class ScrollableScreenHandler extends AbstractContainer<ScrollableScreenMeta>
 {
-    private static final HashMap<Integer, ScrollableScreenMeta> SIZES = new HashMap<>();
+    private static final ImmutableMap<Integer, ScrollableScreenMeta> SIZES = initializedMap(map ->
+    {
+        map.put(27, new ScrollableScreenMeta(9, 3, 27, getTexture("shared", 9, 3), 208, 192)); // Wood
+        map.put(54, new ScrollableScreenMeta(9, 6, 54, getTexture("shared", 9, 6), 208, 240)); // Iron / Large Wood
+        map.put(81, new ScrollableScreenMeta(9, 9, 81, getTexture("shared", 9, 9), 208, 304)); // Gold
+        map.put(108, new ScrollableScreenMeta(9, 9, 108, getTexture("shared", 9, 9), 208, 304)); // Diamond / Large Iron
+        map.put(135, new ScrollableScreenMeta(9, 9, 135, getTexture("shared", 9, 9), 208, 304)); // Netherite
+        map.put(162, new ScrollableScreenMeta(9, 9, 162, getTexture("shared", 9, 9), 208, 304)); // Large Gold
+        map.put(216, new ScrollableScreenMeta(9, 9, 216, getTexture("shared", 9, 9), 208, 304)); // Large Diamond
+        map.put(270, new ScrollableScreenMeta(9, 9, 270, getTexture("shared", 9, 9), 208, 304)); // Large Netherite
+    });
 
     public ScrollableScreenHandler(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory,
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)

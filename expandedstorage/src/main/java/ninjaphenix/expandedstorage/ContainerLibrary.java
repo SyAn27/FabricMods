@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.container.ContainerFactory;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
@@ -22,8 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
 import ninjaphenix.expandedstorage.api.Constants;
-import ninjaphenix.expandedstorage.api.ContainerLibraryAPI;
-import ninjaphenix.expandedstorage.api.ContainerLibraryExtension;
 import ninjaphenix.expandedstorage.api.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
@@ -31,7 +28,6 @@ import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
 import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 
-import java.util.List;
 import java.util.function.Function;
 
 import static ninjaphenix.expandedstorage.api.Constants.SINGLE_CONTAINER;
@@ -46,9 +42,6 @@ public final class ContainerLibrary implements ModInitializer
     @Override
     public void onInitialize()
     {
-        List<ContainerLibraryExtension> extensions = FabricLoader.getInstance().getEntrypoints(Constants.ENTRY_POINT_ID, ContainerLibraryExtension.class);
-        extensions.forEach(ContainerLibraryExtension::declareScreenSizeCallbacks);
-        extensions.forEach(ContainerLibraryExtension::declareScreenSizes);
         ContainerProviderRegistry.INSTANCE.registerFactory(SINGLE_CONTAINER, getContainerFactory(SingleScreenHandler::new));
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
@@ -58,7 +51,6 @@ public final class ContainerLibrary implements ModInitializer
         IMPL.declareContainerType(Constants.PAGED_CONTAINER, ExpandedStorage.getId("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, this::onReceivePlayerPreference);
-
         PlayerDisconnectCallback.EVENT.register(player -> IMPL.setPlayerPreference(player, null));
     }
 

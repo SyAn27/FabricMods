@@ -1,5 +1,6 @@
 package ninjaphenix.expandedstorage.impl.inventory;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
@@ -11,11 +12,20 @@ import ninjaphenix.expandedstorage.api.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 public final class PagedScreenHandler extends AbstractContainer<PagedScreenMeta>
 {
-    private static final HashMap<Integer, PagedScreenMeta> SIZES = new HashMap<>();
+    private static final ImmutableMap<Integer, PagedScreenMeta> SIZES = initializedMap(map ->
+    {
+        map.put(27, new PagedScreenMeta(9, 3, 1, 27, getTexture("shared", 9, 3), 208, 192)); // Wood
+        map.put(54, new PagedScreenMeta(9, 6, 1, 54, getTexture("shared", 9, 6), 208, 240)); // Iron / Large Wood
+        map.put(81, new PagedScreenMeta(9, 9, 1, 81, getTexture("shared", 9, 9), 208, 304)); // Gold
+        map.put(108, new PagedScreenMeta(9, 6, 2, 108, getTexture("shared", 9, 6), 208, 240)); // Diamond / Large Iron
+        map.put(135, new PagedScreenMeta(9, 5, 3, 135, getTexture("shared", 9, 5), 208, 224)); // Netherite
+        map.put(162, new PagedScreenMeta(9, 6, 3, 162, getTexture("shared", 9, 6), 208, 240)); // Large Gold
+        map.put(216, new PagedScreenMeta(9, 8, 3, 216, getTexture("shared", 9, 8), 208, 288)); // Large Diamond
+        map.put(270, new PagedScreenMeta(10, 9, 3, 270, getTexture("shared", 10, 9), 224, 304)); // Large Netherite
+    });
 
     public PagedScreenHandler(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory,
             PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)

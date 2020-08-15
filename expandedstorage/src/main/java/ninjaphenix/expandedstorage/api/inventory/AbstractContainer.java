@@ -1,5 +1,6 @@
 package ninjaphenix.expandedstorage.api.inventory;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -8,8 +9,13 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.screen.ScreenMeta;
+
+import java.util.HashMap;
+import java.util.function.Consumer;
 
 public abstract class AbstractContainer<T extends ScreenMeta> extends ScreenHandler
 {
@@ -60,4 +66,15 @@ public abstract class AbstractContainer<T extends ScreenMeta> extends ScreenHand
     }
 
     public Inventory getInventory() { return INVENTORY; }
+
+    public static Identifier getTexture(final String type, final int width, final int height)
+    {
+        return new Identifier(ExpandedStorage.MOD_ID, String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
+    }
+
+    public static <A, B> ImmutableMap<A, B> initializedMap(final Consumer<HashMap<A, B>> initializer) {
+        HashMap<A, B> rv = new HashMap<A, B>();
+        initializer.accept(rv);
+        return ImmutableMap.copyOf(rv);
+    }
 }
