@@ -7,7 +7,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.api.client.screen.AbstractScreen;
 import ninjaphenix.expandedstorage.api.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.api.screen.ScrollableScreenMeta;
+import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
 

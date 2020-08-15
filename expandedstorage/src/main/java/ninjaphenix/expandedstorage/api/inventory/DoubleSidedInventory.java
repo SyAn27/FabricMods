@@ -5,7 +5,7 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
 
-public class DoubleSidedInventory implements SidedInventory
+public final class DoubleSidedInventory implements SidedInventory
 {
     private final SidedInventory first;
     private final SidedInventory second;

@@ -1,8 +1,9 @@
-package ninjaphenix.expandedstorage.api.screen;
+package ninjaphenix.expandedstorage.impl.screen;
 
 import net.minecraft.util.Identifier;
+import ninjaphenix.expandedstorage.api.screen.ScreenMeta;
 
-public class SingleScreenMeta extends ScreenMeta
+public final class SingleScreenMeta extends ScreenMeta
 {
     public final int BLANK_SLOTS;
 

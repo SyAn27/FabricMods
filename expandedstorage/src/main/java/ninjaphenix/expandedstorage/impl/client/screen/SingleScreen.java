@@ -5,7 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
 import ninjaphenix.expandedstorage.api.client.screen.AbstractScreen;
 import ninjaphenix.expandedstorage.api.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.api.screen.SingleScreenMeta;
+import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 
 public class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<T, SingleScreenMeta>

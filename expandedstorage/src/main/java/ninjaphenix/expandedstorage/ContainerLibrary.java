@@ -34,7 +34,6 @@ import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 import java.util.List;
 import java.util.function.Function;
 
-import static ninjaphenix.expandedstorage.api.Constants.LIBRARY_ID;
 import static ninjaphenix.expandedstorage.api.Constants.SINGLE_CONTAINER;
 
 public final class ContainerLibrary implements ModInitializer
@@ -53,10 +52,10 @@ public final class ContainerLibrary implements ModInitializer
         ContainerProviderRegistry.INSTANCE.registerFactory(SINGLE_CONTAINER, getContainerFactory(SingleScreenHandler::new));
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
         ContainerProviderRegistry.INSTANCE.registerFactory(Constants.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
-        final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", LIBRARY_ID, name));
-        IMPL.declareContainerType(SINGLE_CONTAINER, Constants.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
-        IMPL.declareContainerType(Constants.SCROLLABLE_CONTAINER, Constants.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
-        IMPL.declareContainerType(Constants.PAGED_CONTAINER, Constants.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
+        final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", ExpandedStorage.MOD_ID, name));
+        IMPL.declareContainerType(SINGLE_CONTAINER, ExpandedStorage.getId("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
+        IMPL.declareContainerType(Constants.SCROLLABLE_CONTAINER, ExpandedStorage.getId("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
+        IMPL.declareContainerType(Constants.PAGED_CONTAINER, ExpandedStorage.getId("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
         ServerSidePacketRegistry.INSTANCE.register(Constants.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
         ServerSidePacketRegistry.INSTANCE.register(Constants.SCREEN_SELECT, this::onReceivePlayerPreference);
 

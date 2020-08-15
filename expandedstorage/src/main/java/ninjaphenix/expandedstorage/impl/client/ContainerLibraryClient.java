@@ -12,6 +12,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.expandedstorage.ContainerLibrary;
+import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
 import ninjaphenix.expandedstorage.impl.client.config.Config;
@@ -27,18 +28,17 @@ import org.apache.logging.log4j.MarkerManager;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-import static ninjaphenix.expandedstorage.api.Constants.LIBRARY_ID;
 import static ninjaphenix.expandedstorage.api.Constants.SCREEN_SELECT;
 
 public final class ContainerLibraryClient implements ClientModInitializer
 {
-    public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
+    public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(ExpandedStorage.MOD_ID));
     public static final ContainerLibraryClient INSTANCE = new ContainerLibraryClient();
 
     private ContainerLibraryClient()
     {
         if(CONFIG.preferred_container_type.getNamespace().equals("ninjaphenix-container-lib")) {
-            setPreference(new Identifier(LIBRARY_ID, CONFIG.preferred_container_type.getPath()));
+            setPreference(new Identifier(ExpandedStorage.MOD_ID, CONFIG.preferred_container_type.getPath()));
         }
     }
 
@@ -62,14 +62,14 @@ public final class ContainerLibraryClient implements ClientModInitializer
     public static void sendCallbackRemoveToServer()
     {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-        buffer.writeIdentifier(Constants.id("auto"));
+        buffer.writeIdentifier(ExpandedStorage.getId("auto"));
         ClientSidePacketRegistry.INSTANCE.sendToServer(Constants.SCREEN_SELECT, buffer);
     }
 
     public static void setPreference(Identifier container_type)
     {
         CONFIG.preferred_container_type = container_type;
-        getConfigParser().save(CONFIG, getConfigPath(), new MarkerManager.Log4jMarker(LIBRARY_ID));
+        getConfigParser().save(CONFIG, getConfigPath(), new MarkerManager.Log4jMarker(ExpandedStorage.MOD_ID));
     }
 
     @Override
