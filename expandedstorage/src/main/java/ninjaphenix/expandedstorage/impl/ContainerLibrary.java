@@ -17,7 +17,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -26,13 +25,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
 import ninjaphenix.expandedstorage.impl.inventory.AbstractContainer;
-import ninjaphenix.expandedstorage.impl.inventory.AreaAwareSlotFactory;
 import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
 import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
 import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -54,7 +50,6 @@ public final class ContainerLibrary implements ModInitializer
     private final HashSet<Identifier> declaredContainerTypes = new HashSet<>();
     private final HashMap<UUID, Consumer<Identifier>> preferenceCallbacks = new HashMap<>();
     private final HashMap<UUID, Identifier> playerPreferences = new HashMap<>();
-    private final Logger LOGGER = LogManager.getLogger(ExpandedStorage.MOD_ID);
 
     public boolean isContainerTypeDeclared(final Identifier containerTypeId)
     {
@@ -173,7 +168,7 @@ public final class ContainerLibrary implements ModInitializer
         }
     }
 
-    private <T extends ScreenHandler> ContainerFactory<T> getContainerFactory(containerConstructor<T> newMethod)
+    private <T extends ScreenHandler> ContainerFactory<T> getContainerFactory(final ContainerConstructor<T> newMethod)
     {
         return (syncId, identifier, player, buffer) -> {
             final BlockPos pos = buffer.readBlockPos();
@@ -183,16 +178,14 @@ public final class ContainerLibrary implements ModInitializer
             final Block block = state.getBlock();
             if (block instanceof InventoryProvider)
             {
-                return newMethod.create(null, syncId, pos, ((InventoryProvider) block).getInventory(state, world, pos), player, name,
-                        (inventory, area, index, x, y) -> new Slot(inventory, index, x, y));
+                return newMethod.create(null, syncId, pos, ((InventoryProvider) block).getInventory(state, world, pos), player, name);
             }
             return null;
         };
     }
 
-    private interface containerConstructor<T extends ScreenHandler>
+    private interface ContainerConstructor<T extends ScreenHandler>
     {
-        T create(ScreenHandlerType<T> type, int syncId, BlockPos pos, Inventory inventory,
-                PlayerEntity player, Text containerName, AreaAwareSlotFactory slotFactory);
+        T create(ScreenHandlerType<T> type, int syncId, BlockPos pos, Inventory inventory, PlayerEntity player, Text containerName);
     }
 }

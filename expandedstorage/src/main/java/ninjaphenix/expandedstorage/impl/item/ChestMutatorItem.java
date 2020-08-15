@@ -43,7 +43,7 @@ import static net.minecraft.util.BlockRotation.CLOCKWISE_180;
 import static net.minecraft.util.BlockRotation.CLOCKWISE_90;
 
 @SuppressWarnings("ConstantConditions")
-public class ChestMutatorItem extends ChestModifierItem
+public final class ChestMutatorItem extends ChestModifierItem
 {
     private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     private static final EnumProperty<CursedChestType> TYPE = AbstractChestBlock.TYPE;

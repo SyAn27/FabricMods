@@ -4,11 +4,8 @@ import blue.endless.jankson.Comment;
 import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 
-public class Config
+public final class Config
 {
-    @Comment("\nEnables auto focus of the search bar as soon as screen is opened.\nNo longer used.")
-    public final Boolean auto_focus_searchbar = Boolean.FALSE;
-
     @Comment("\nPrefered container type, set to expandedstorage:auto to reuse selection screen.")
     public Identifier preferred_container_type = ExpandedStorage.id("auto");
 

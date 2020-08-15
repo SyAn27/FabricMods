@@ -8,7 +8,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class CustomBlockEntityType<T extends BlockEntity> extends BlockEntityType<T>
+public final class CustomBlockEntityType<T extends BlockEntity> extends BlockEntityType<T>
 {
     private final Predicate<Block> predicate;
 

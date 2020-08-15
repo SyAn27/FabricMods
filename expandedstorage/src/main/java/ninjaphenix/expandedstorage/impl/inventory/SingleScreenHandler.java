@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
@@ -26,14 +27,14 @@ public final class SingleScreenHandler extends AbstractContainer<SingleScreenMet
     });
 
     public SingleScreenHandler(ScreenHandlerType<?> type, int syncId, BlockPos pos, Inventory inventory,
-            PlayerEntity player, Text displayName, AreaAwareSlotFactory slotFactory)
+            PlayerEntity player, Text displayName)
     {
         super(type, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
         for (int i = 0; i < inventory.size(); i++)
         {
             final int x = i % SCREEN_META.WIDTH;
             final int y = (i - x) / SCREEN_META.WIDTH;
-            this.addSlot(slotFactory.create(inventory, "inventory", i, x * 18 + 8, y * 18 + 18));
+            this.addSlot(new Slot(inventory, i, x * 18 + 8, y * 18 + 18));
         }
         final int left = (SCREEN_META.WIDTH * 18 + 14) / 2 - 80;
         final int top = 18 + 14 + (SCREEN_META.HEIGHT * 18);
@@ -41,13 +42,11 @@ public final class SingleScreenHandler extends AbstractContainer<SingleScreenMet
         {
             for (int y = 0; y < 3; y++)
             {
-                this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_inventory", y * 9 + x + 9, left + 18 * x, top + y * 18));
+                this.addSlot(new Slot(PLAYER_INVENTORY, y * 9 + x + 9, left + 18 * x, top + y * 18));
             }
         }
-        for (int i = 0; i < 9; i++) { this.addSlot(slotFactory.create(PLAYER_INVENTORY, "player_hotbar", i, left + 18 * i, top + 58)); }
+        for (int i = 0; i < 9; i++) { this.addSlot(new Slot(PLAYER_INVENTORY, i, left + 18 * i, top + 58)); }
     }
-
-    public static void onScreenSizeRegistered(SingleScreenMeta meta) { SIZES.put(meta.TOTAL_SLOTS, meta); }
 
     private static SingleScreenMeta getNearestSize(int invSize)
     {

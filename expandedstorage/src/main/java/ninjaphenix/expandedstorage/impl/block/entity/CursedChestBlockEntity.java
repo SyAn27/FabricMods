@@ -30,7 +30,7 @@ import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 import java.util.List;
 
 @EnvironmentInterfaces({ @EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class) })
-public class CursedChestBlockEntity extends AbstractChestBlockEntity implements ChestAnimationProgress, Tickable
+public final class CursedChestBlockEntity extends AbstractChestBlockEntity implements ChestAnimationProgress, Tickable
 {
     private float animationAngle;
     private float lastAnimationAngle;

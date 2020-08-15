@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class FrontChestModel extends SingleChestModel
+public final class FrontChestModel extends SingleChestModel
 {
     public FrontChestModel()
     {

@@ -14,7 +14,7 @@ import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
 
 import java.util.HashMap;
 
-public class SelectContainerScreen extends Screen
+public final class SelectContainerScreen extends Screen
 {
     private final HashMap<Identifier, ScreenMiscSettings> OPTIONS;
     private final int PADDING = 24;

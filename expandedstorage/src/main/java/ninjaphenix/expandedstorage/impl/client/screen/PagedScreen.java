@@ -14,7 +14,7 @@ import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelection
 import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
 
-public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T, PagedScreenMeta>
+public final class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T, PagedScreenMeta>
 {
     private Rectangle blankArea = null;
     private PageButtonWidget leftPageButton;
@@ -135,7 +135,7 @@ public class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T,
             int currentPage = page;
             if (currentPage != 1)
             {
-                handler.resetSlotPositions(null);
+                handler.resetSlotPositions(false);
                 super.resize(client, width, height);
                 setPage(1, currentPage);
                 return;

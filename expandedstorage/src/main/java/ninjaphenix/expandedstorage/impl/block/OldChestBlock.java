@@ -9,7 +9,7 @@ import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.api.Registries.TierData;
 import ninjaphenix.expandedstorage.impl.block.entity.OldChestBlockEntity;
 
-public class OldChestBlock extends AbstractChestBlock
+public final class OldChestBlock extends AbstractChestBlock
 {
     public OldChestBlock(Settings settings) { super(settings); }
 
