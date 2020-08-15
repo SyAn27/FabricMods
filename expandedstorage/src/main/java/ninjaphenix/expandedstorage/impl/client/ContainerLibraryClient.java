@@ -11,7 +11,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
-import ninjaphenix.expandedstorage.ContainerLibrary;
 import ninjaphenix.expandedstorage.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Constants;
 import ninjaphenix.expandedstorage.impl.ContainerLibraryImpl;
