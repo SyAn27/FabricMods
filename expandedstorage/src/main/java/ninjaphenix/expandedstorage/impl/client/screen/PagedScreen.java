@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
@@ -177,7 +177,7 @@ public final class PagedScreen<T extends PagedScreenHandler> extends AbstractScr
 
     private static class PageButtonWidget extends ButtonWidget
     {
-        private static final Identifier TEXTURE = ExpandedStorage.id("textures/gui/page_buttons.png");
+        private static final Identifier TEXTURE = Const.id("textures/gui/page_buttons.png");
         private final int TEXTURE_OFFSET;
 
         public PageButtonWidget(int x, int y, int textureOffset, Text text, PressAction onPress, TooltipSupplier tooltipSupplier)

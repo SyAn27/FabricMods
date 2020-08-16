@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClientGame.class)
 public class ClientGameStart
 {
-
     @Inject(method = "onStartGameSession", at = @At("TAIL"))
-    private void ninjaphenix_container_lib_onStartGameSession(CallbackInfo ci) { ContainerLibraryClient.sendPreferencesToServer(); }
+    private void expandedstorage_onStartGameSession(CallbackInfo ci) { ContainerLibraryClient.sendPreferencesToServer(); }
 }

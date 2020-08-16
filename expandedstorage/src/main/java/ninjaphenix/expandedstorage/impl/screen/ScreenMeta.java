@@ -4,14 +4,10 @@ import net.minecraft.util.Identifier;
 
 public abstract class ScreenMeta
 {
-    public final int WIDTH;
-    public final int HEIGHT;
-    public final int TOTAL_SLOTS;
+    public final int WIDTH, HEIGHT, TOTAL_SLOTS, TEXTURE_WIDTH, TEXTURE_HEIGHT;
     public final Identifier TEXTURE;
-    public final int TEXTURE_WIDTH;
-    public final int TEXTURE_HEIGHT;
 
-    protected ScreenMeta(int width, int height, int totalSlots, Identifier texture, int textureWidth, int textureHeight)
+    protected ScreenMeta(final int width, final int height, final int totalSlots, final Identifier texture, final int textureWidth, final int textureHeight)
     {
         WIDTH = width;
         HEIGHT = height;

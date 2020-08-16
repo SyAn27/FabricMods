@@ -30,8 +30,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.ModContent;
 import ninjaphenix.expandedstorage.impl.block.AbstractChestBlock;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
@@ -48,36 +50,33 @@ public final class ChestMutatorItem extends ChestModifierItem
     private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     private static final EnumProperty<CursedChestType> TYPE = AbstractChestBlock.TYPE;
 
-    public ChestMutatorItem() { super(new Item.Settings().maxCount(1).group(ExpandedStorage.group)); }
+    public ChestMutatorItem() { super(new Item.Settings().maxCount(1).group(ModContent.GROUP)); }
 
     @Override
-    protected ActionResult useModifierOnChestBlock(ItemUsageContext context, BlockState mainState, BlockPos mainBlockPos, BlockState otherState,
-            BlockPos otherBlockPos)
+    protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos, final BlockState otherState, final BlockPos otherBlockPos)
     {
-        PlayerEntity player = context.getPlayer();
-        World world = context.getWorld();
-        ItemStack stack = context.getStack();
+        final PlayerEntity player = context.getPlayer();
+        final World world = context.getWorld();
+        final ItemStack stack = context.getStack();
         switch (getMode(stack))
         {
             case MERGE:
-                CompoundTag tag = stack.getOrCreateTag();
+                final CompoundTag tag = stack.getOrCreateTag();
                 if (tag.contains("pos"))
                 {
                     if (mainState.get(TYPE) == CursedChestType.SINGLE)
                     {
-                        BlockPos pos = NbtHelper.toBlockPos(tag.getCompound("pos"));
-                        BlockState realOtherState = world.getBlockState(pos);
-                        if (realOtherState.getBlock() == mainState.getBlock() && realOtherState.get(FACING) == mainState.get(FACING) &&
-                                realOtherState.get(TYPE) == CursedChestType.SINGLE)
+                        final BlockPos pos = NbtHelper.toBlockPos(tag.getCompound("pos"));
+                        final BlockState realOtherState = world.getBlockState(pos);
+                        if (realOtherState.getBlock() == mainState.getBlock() && realOtherState.get(FACING) == mainState.get(FACING) && realOtherState.get(TYPE) == CursedChestType.SINGLE)
                         {
                             if (!world.isClient)
                             {
-                                BlockPos vec = pos.subtract(mainBlockPos);
+                                final BlockPos vec = pos.subtract(mainBlockPos);
                                 int sum = vec.getX() + vec.getY() + vec.getZ();
                                 if (sum == 1 || sum == -1)
                                 {
-                                    CursedChestType mainChestType = CursedChestBlock
-                                            .getChestType(mainState.get(FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
+                                    CursedChestType mainChestType = CursedChestBlock.getChestType(mainState.get(FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
                                     world.setBlockState(mainBlockPos, mainState.with(TYPE, mainChestType));
                                     world.setBlockState(pos, world.getBlockState(pos).with(TYPE, mainChestType.getOpposite()));
                                     tag.remove("pos");
@@ -166,8 +165,7 @@ public final class ChestMutatorItem extends ChestModifierItem
                     {
                         BlockPos otherPos = NbtHelper.toBlockPos(tag.getCompound("pos"));
                         BlockState realOtherState = world.getBlockState(otherPos);
-                        if (realOtherState.getBlock() == state.getBlock() && realOtherState.get(FACING) == state.get(FACING) &&
-                                realOtherState.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
+                        if (realOtherState.getBlock() == state.getBlock() && realOtherState.get(FACING) == state.get(FACING) && realOtherState.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
                         {
                             BlockPos vec = otherPos.subtract(mainPos);
                             int sum = vec.getX() + vec.getY() + vec.getZ();
@@ -175,12 +173,10 @@ public final class ChestMutatorItem extends ChestModifierItem
                             {
                                 if (!world.isClient)
                                 {
-                                    Registries.TierData entry = Registries.CHEST.get(ExpandedStorage.id("wood_chest"));
-                                    BlockState defState = Registry.BLOCK.get(entry.getBlockId())
-                                                                        .getDefaultState().with(FACING, state.get(FACING));
-                                    CursedChestType mainChestType = AbstractChestBlock
-                                            .getChestType(state.get(FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
-
+                                    Registries.TierData entry = Registries.CHEST.get(Const.id("wood_chest"));
+                                    final BlockState defState = Registry.BLOCK.get(entry.getBlockId()).getDefaultState().with(FACING, state.get(FACING));
+                                    final CursedChestType mainChestType = AbstractChestBlock.getChestType(state.get(FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
+                                    // todo: refactor into method.
                                     BlockEntity blockEntity = world.getBlockEntity(mainPos);
                                     DefaultedList<ItemStack> invData = DefaultedList.ofSize(entry.getSlotCount(), ItemStack.EMPTY);
                                     Inventories.fromTag(blockEntity.toTag(new CompoundTag()), invData);
@@ -221,14 +217,12 @@ public final class ChestMutatorItem extends ChestModifierItem
             }
             else if (mode == MutatorModes.UNMERGE)
             {
-                BlockPos otherPos;
+                final BlockPos otherPos;
                 switch (state.get(ChestBlock.CHEST_TYPE))
                 {
-                    case LEFT:
-                        otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYClockwise());
+                    case LEFT: otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYClockwise());
                         break;
-                    case RIGHT:
-                        otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYCounterclockwise());
+                    case RIGHT: otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYCounterclockwise());
                         break;
                     default:
                         return ActionResult.FAIL;
@@ -243,7 +237,7 @@ public final class ChestMutatorItem extends ChestModifierItem
             }
             else if (mode == MutatorModes.ROTATE)
             {
-                BlockPos otherPos;
+                final BlockPos otherPos;
                 switch (state.get(ChestBlock.CHEST_TYPE))
                 {
                     case LEFT:
@@ -261,11 +255,9 @@ public final class ChestMutatorItem extends ChestModifierItem
                 }
                 if (!world.isClient)
                 {
-                    BlockState otherState = world.getBlockState(otherPos);
-                    world.setBlockState(mainPos, state.rotate(CLOCKWISE_180)
-                                                      .with(ChestBlock.CHEST_TYPE, state.get(ChestBlock.CHEST_TYPE).getOpposite()));
-                    world.setBlockState(otherPos, otherState.rotate(CLOCKWISE_180)
-                                                            .with(ChestBlock.CHEST_TYPE, otherState.get(ChestBlock.CHEST_TYPE).getOpposite()));
+                    final BlockState otherState = world.getBlockState(otherPos);
+                    world.setBlockState(mainPos, state.rotate(CLOCKWISE_180).with(ChestBlock.CHEST_TYPE, state.get(ChestBlock.CHEST_TYPE).getOpposite()));
+                    world.setBlockState(otherPos, otherState.rotate(CLOCKWISE_180).with(ChestBlock.CHEST_TYPE, otherState.get(ChestBlock.CHEST_TYPE).getOpposite()));
                 }
                 player.getItemCooldownManager().set(this, 5);
                 return ActionResult.SUCCESS;
@@ -289,8 +281,8 @@ public final class ChestMutatorItem extends ChestModifierItem
     {
         if (player.isSneaking())
         {
-            ItemStack stack = player.getStackInHand(hand);
-            CompoundTag tag = stack.getOrCreateTag();
+            final ItemStack stack = player.getStackInHand(hand);
+            final CompoundTag tag = stack.getOrCreateTag();
             tag.putByte("mode", getMode(stack).next);
             if (tag.contains("pos")) { tag.remove("pos"); }
             if (!world.isClient) { player.sendMessage(getMode(stack).translation, true); }
@@ -309,7 +301,7 @@ public final class ChestMutatorItem extends ChestModifierItem
     @Override
     public ItemStack getStackForRender()
     {
-        ItemStack stack = super.getStackForRender();
+        final ItemStack stack = super.getStackForRender();
         getMode(stack);
         return stack;
     }
@@ -322,13 +314,13 @@ public final class ChestMutatorItem extends ChestModifierItem
 
     private MutatorModes getMode(ItemStack stack)
     {
-        CompoundTag tag = stack.getOrCreateTag();
+        final CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains("mode", 1)) { tag.putByte("mode", (byte) 0); }
         return MutatorModes.values()[tag.getByte("mode")];
     }
 
-    @Environment(EnvType.CLIENT)
     @Override
+    @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context)
     {
         tooltip.add(new TranslatableText("tooltip.expandedstorage.tool_mode", getMode(stack).translation).formatted(Formatting.GRAY));

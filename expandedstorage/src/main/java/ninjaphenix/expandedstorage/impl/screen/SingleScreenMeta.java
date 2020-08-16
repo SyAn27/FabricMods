@@ -6,7 +6,8 @@ public final class SingleScreenMeta extends ScreenMeta
 {
     public final int BLANK_SLOTS;
 
-    public SingleScreenMeta(int width, int height, int totalSlots, Identifier texture, int textureWidth, int textureHeight)
+    public SingleScreenMeta(final int width, final int height, final int totalSlots, final Identifier texture, final int textureWidth,
+                            final int textureHeight)
     {
         super(width, height, totalSlots, texture, textureWidth, textureHeight);
         BLANK_SLOTS = width * height - totalSlots;

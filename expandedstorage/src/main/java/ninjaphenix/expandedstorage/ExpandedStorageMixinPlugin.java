@@ -13,10 +13,7 @@ public final class ExpandedStorageMixinPlugin implements IMixinConfigPlugin
 {
     private final HashMap<String, Boolean> conditionalMixins = new HashMap<>();
 
-    public ExpandedStorageMixinPlugin()
-    {
-        conditionalMixins.put("ninjaphenix.expandedstorage.mixin.ToweletteSupportMixin", FabricLoader.getInstance().isModLoaded("towelette"));
-    }
+    public ExpandedStorageMixinPlugin() { conditionalMixins.put("ninjaphenix.expandedstorage.mixin.ToweletteSupportMixin", FabricLoader.getInstance().isModLoaded("towelette")); }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) { return conditionalMixins.getOrDefault(mixinClassName, Boolean.TRUE); }

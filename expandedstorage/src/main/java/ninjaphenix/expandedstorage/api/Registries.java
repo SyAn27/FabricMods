@@ -6,6 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.SimpleRegistry;
+import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 
@@ -15,9 +16,9 @@ import java.util.function.Function;
 @Deprecated
 public final class Registries
 {
-    private static final RegistryKey<Registry<ChestTierData>> CHEST_KEY = RegistryKey.of(new Identifier(ExpandedStorage.MOD_ID, "root"), new Identifier(ExpandedStorage.MOD_ID, "chest"));
+    private static final RegistryKey<Registry<ChestTierData>> CHEST_KEY = RegistryKey.of(new Identifier(Const.MOD_ID, "root"), new Identifier(ExpandedStorage.MOD_ID, "chest"));
     public static final SimpleRegistry<ChestTierData> CHEST = new SimpleRegistry<>(CHEST_KEY, Lifecycle.experimental());
-    private static final RegistryKey<Registry<TierData>> OLD_CHEST_KEY = RegistryKey.of(new Identifier(ExpandedStorage.MOD_ID, "root"), new Identifier(ExpandedStorage.MOD_ID, "old_chest"));
+    private static final RegistryKey<Registry<TierData>> OLD_CHEST_KEY = RegistryKey.of(new Identifier(Const.MOD_ID, "root"), new Identifier(ExpandedStorage.MOD_ID, "old_chest"));
     public static final SimpleRegistry<TierData> OLD_CHEST = new SimpleRegistry<>(OLD_CHEST_KEY, Lifecycle.experimental());
 
     public static class ChestTierData extends TierData
