@@ -16,20 +16,14 @@ import java.util.function.Function;
 @Deprecated
 public final class Registries
 {
-    private static final RegistryKey<Registry<ChestTierData>> CHEST_KEY = RegistryKey.of(new Identifier(Const.MOD_ID, "root"), new Identifier(ExpandedStorage.MOD_ID, "chest"));
+    private static final RegistryKey<Registry<ChestTierData>> CHEST_KEY = RegistryKey.of(Const.id("root"), Const.id("chest"));
     public static final SimpleRegistry<ChestTierData> CHEST = new SimpleRegistry<>(CHEST_KEY, Lifecycle.experimental());
-    private static final RegistryKey<Registry<TierData>> OLD_CHEST_KEY = RegistryKey.of(new Identifier(Const.MOD_ID, "root"), new Identifier(ExpandedStorage.MOD_ID, "old_chest"));
+    private static final RegistryKey<Registry<TierData>> OLD_CHEST_KEY = RegistryKey.of(Const.id("root"), Const.id("old_chest"));
     public static final SimpleRegistry<TierData> OLD_CHEST = new SimpleRegistry<>(OLD_CHEST_KEY, Lifecycle.experimental());
 
     public static class ChestTierData extends TierData
     {
-        private final Identifier singleTexture;
-        private final Identifier topTexture;
-        private final Identifier backTexture;
-        private final Identifier rightTexture;
-        private final Identifier bottomTexture;
-        private final Identifier frontTexture;
-        private final Identifier leftTexture;
+        private final Identifier singleTexture, topTexture, backTexture, rightTexture, bottomTexture, frontTexture, leftTexture;
 
         public ChestTierData(final int slots, final Text containerName, final Identifier blockId, final Function<CursedChestType, Identifier> textureFunction)
         {

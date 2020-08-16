@@ -20,9 +20,9 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import ninjaphenix.expandedstorage.impl.content.ModContent;
 import ninjaphenix.expandedstorage.impl.inventory.AbstractContainer;
 import ninjaphenix.expandedstorage.impl.inventory.DoubleSidedInventory;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
@@ -37,7 +37,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     private int viewerCount;
     private int ticksOpen;
 
-    public CursedChestBlockEntity(final Identifier block) { super(ExpandedStorage.CHEST, block); }
+    public CursedChestBlockEntity(final Identifier block) { super(ModContent.CHEST, block); }
 
     private static int tickViewerCount(World world, CursedChestBlockEntity instance, int ticksOpen, int x, int y, int z, int viewCount)
     {

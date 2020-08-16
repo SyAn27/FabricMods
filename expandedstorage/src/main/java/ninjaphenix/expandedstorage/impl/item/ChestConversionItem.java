@@ -104,16 +104,16 @@ public final class ChestConversionItem extends ChestModifierItem
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    protected ActionResult useModifierOnBlock(ItemUsageContext context, BlockState state)
+    protected ActionResult useModifierOnBlock(final ItemUsageContext context, final BlockState state)
     {
-        // todo fix this for other mods.
-        // Pehaps allow mods to define equivalents or use tags somehow e.g. Tag<Identifier>("expandedstorage:wood")
+        // todo: fix this for other mods.
+        //  Perhaps allow mods to define equivalents or use tags somehow e.g. Tag<Identifier>("expandedstorage:wood")
         if (state.getBlock() == Blocks.CHEST && from.equals(Const.id("wood_chest")))
         {
-            World world = context.getWorld();
-            BlockPos mainpos = context.getBlockPos();
-            PlayerEntity player = context.getPlayer();
-            ItemStack handStack = player.getStackInHand(context.getHand());
+            final World world = context.getWorld();
+            final BlockPos mainpos = context.getBlockPos();
+            final PlayerEntity player = context.getPlayer();
+            final ItemStack handStack = player.getStackInHand(context.getHand());
             if (state.get(Properties.CHEST_TYPE) == ChestType.SINGLE)
             {
                 if (!world.isClient)
