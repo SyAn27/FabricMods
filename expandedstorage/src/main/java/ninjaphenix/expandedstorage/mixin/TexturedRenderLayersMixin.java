@@ -1,7 +1,5 @@
 package ninjaphenix.expandedstorage.mixin;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.util.SpriteIdentifier;
 import ninjaphenix.expandedstorage.impl.client.ExpandedStorageClient;
@@ -13,9 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Consumer;
 
 @Mixin(TexturedRenderLayers.class)
-@Environment(EnvType.CLIENT)
 public final class TexturedRenderLayersMixin
 {
     @Inject(at = @At("HEAD"), method = "addDefaultTextures(Ljava/util/function/Consumer;)V")
-    private static void method(Consumer<SpriteIdentifier> consumer, CallbackInfo ci) { ExpandedStorageClient.INSTANCE.makeAtlas(consumer); }
+    private static void expandedstorage_addSprites(Consumer<SpriteIdentifier> consumer, CallbackInfo ci)
+    {
+        ExpandedStorageClient.INSTANCE.makeAtlas(consumer);
+    }
 }

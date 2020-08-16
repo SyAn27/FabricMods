@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
+import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.AbstractChestBlock;
@@ -107,7 +108,7 @@ public final class ChestConversionItem extends ChestModifierItem
     {
         // todo fix this for other mods.
         // Pehaps allow mods to define equivalents or use tags somehow e.g. Tag<Identifier>("expandedstorage:wood")
-        if (state.getBlock() == Blocks.CHEST && from.equals(ExpandedStorage.id("wood_chest")))
+        if (state.getBlock() == Blocks.CHEST && from.equals(Const.id("wood_chest")))
         {
             World world = context.getWorld();
             BlockPos mainpos = context.getBlockPos();

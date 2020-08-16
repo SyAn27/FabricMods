@@ -11,6 +11,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.impl.screen.ScreenMeta;
 
@@ -69,7 +70,7 @@ public abstract class AbstractContainer<T extends ScreenMeta> extends ScreenHand
 
     public static Identifier getTexture(final String type, final int width, final int height)
     {
-        return new Identifier(ExpandedStorage.MOD_ID, String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
+        return new Identifier(Const.MOD_ID, String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
     }
 
     public static <A, B> ImmutableMap<A, B> initializedMap(final Consumer<HashMap<A, B>> initializer) {

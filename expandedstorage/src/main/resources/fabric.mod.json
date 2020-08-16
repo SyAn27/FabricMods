@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ninjaphenix.expandedstorage.impl.ExpandedStorage::INSTANCE",
+      "ninjaphenix.expandedstorage.impl.ExpandedStorage",
       "ninjaphenix.expandedstorage.impl.ContainerLibraryImpl::INSTANCE"
     ],
     "client": [

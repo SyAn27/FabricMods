@@ -4,10 +4,10 @@ import net.minecraft.util.Identifier;
 
 public final class PagedScreenMeta extends ScreenMeta
 {
-    public final int BLANK_SLOTS;
-    public final int PAGES;
+    public final int BLANK_SLOTS, PAGES;
 
-    public PagedScreenMeta(int width, int height, int pages, int totalSlots, Identifier texture, int textureWidth, int textureHeight)
+    public PagedScreenMeta(final int width, final int height, final int pages, final int totalSlots, final Identifier texture, final int textureWidth,
+                           final int textureHeight)
     {
         super(width, height, totalSlots, texture, textureWidth, textureHeight);
         PAGES = pages;

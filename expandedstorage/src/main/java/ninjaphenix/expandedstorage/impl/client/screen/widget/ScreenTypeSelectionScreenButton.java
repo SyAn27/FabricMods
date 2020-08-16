@@ -10,24 +10,25 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.impl.ContainerLibrary;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.Const;
 
 public final class ScreenTypeSelectionScreenButton extends ButtonWidget
 {
     private final Identifier TEXTURE;
 
+    @SuppressWarnings("ConstantConditions")
     public ScreenTypeSelectionScreenButton(final int x, final int y, final TooltipSupplier tooltipSupplier)
     {
         super(x, y, 12, 12, new TranslatableText("screen.expandedstorage.change_screen_button"), button ->
         {
             MinecraftClient.getInstance().player.closeHandledScreen();
-            ClientSidePacketRegistry.INSTANCE.sendToServer(ContainerLibrary.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
+            ClientSidePacketRegistry.INSTANCE.sendToServer(Const.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
         }, tooltipSupplier);
-        TEXTURE = ExpandedStorage.id("textures/gui/select_screen_button.png");
+        TEXTURE = Const.id("textures/gui/select_screen_button.png");
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void renderButton(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
     {
         MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);

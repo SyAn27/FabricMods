@@ -34,16 +34,12 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+
 public final class ContainerLibrary implements ModInitializer
 {
     public static final ContainerLibrary INSTANCE = new ContainerLibrary();
 
-    public static final Identifier SCREEN_SELECT = ExpandedStorage.id("screen_select");
-    public static final Identifier OPEN_SCREEN_SELECT = ExpandedStorage.id("open_screen_select");
-
-    public static final Identifier SINGLE_CONTAINER = ExpandedStorage.id("single");
-    public static final Identifier SCROLLABLE_CONTAINER = ExpandedStorage.id("scrollable");
-    public static final Identifier PAGED_CONTAINER = ExpandedStorage.id("paged");
+    private ContainerLibrary() {}
 
     @Environment(EnvType.CLIENT)
     private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
@@ -64,14 +60,11 @@ public final class ContainerLibrary implements ModInitializer
         if (declaredContainerTypes.contains(containerTypeId))
         {
             playerPreferences.put(uuid, containerTypeId);
-            if (preferenceCallbacks.containsKey(uuid))
-            {
-                preferenceCallbacks.get(uuid).accept(containerTypeId);
-            }
+            if (preferenceCallbacks.containsKey(uuid)) { preferenceCallbacks.get(uuid).accept(containerTypeId); }
         }
         else
         {
-            if (containerTypeId == null || !containerTypeId.equals(ExpandedStorage.id("auto"))) { playerPreferences.remove(uuid); }
+            if (containerTypeId == null || !containerTypeId.equals(Const.id("auto"))) { playerPreferences.remove(uuid); }
             preferenceCallbacks.remove(uuid);
         }
     }
@@ -83,9 +76,7 @@ public final class ContainerLibrary implements ModInitializer
         Objects.requireNonNull(containerName, "ContainerLibraryImpl#declareContainerType received null instead of a Text. (Container Name)");
         final UUID uuid = player.getUuid();
         Identifier playerPreference;
-        if (playerPreferences.containsKey(uuid) &&
-                declaredContainerTypes.contains(playerPreference = playerPreferences.get(uuid)) /*&&
-                ContainerProviderRegistry.INSTANCE.factoryExists(playerPreference)*/)
+        if (playerPreferences.containsKey(uuid) && declaredContainerTypes.contains(playerPreference = playerPreferences.get(uuid)))
         {
             openContainer(player, playerPreference, pos, containerName);
             preferenceCallbacks.put(player.getUuid(), (type) -> openContainer(player, type, pos, containerName));
@@ -103,7 +94,7 @@ public final class ContainerLibrary implements ModInitializer
         final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeInt(declaredContainerTypes.size());
         declaredContainerTypes.forEach(buffer::writeIdentifier);
-        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SCREEN_SELECT, buffer);
+        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, Const.SCREEN_SELECT, buffer);
     }
 
     public void declareContainerType(final Identifier containerTypeId, final Identifier selectTextureId, final Text narrationMessage)
@@ -111,8 +102,7 @@ public final class ContainerLibrary implements ModInitializer
         Objects.requireNonNull(containerTypeId, "ContainerLibraryImpl#declareContainerType received null instead of an Identifier. (Container Type ID)");
         Objects.requireNonNull(selectTextureId, "ContainerLibraryImpl#declareContainerType received null instead of an Identifier. (Select Texture ID)");
         Objects.requireNonNull(narrationMessage, "ContainerLibraryImpl#declareContainerType received null instead of a Text. (Narration Message)");
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
-        { screenMiscSettings.put(containerTypeId, new ScreenMiscSettings(selectTextureId, narrationMessage)); }
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { screenMiscSettings.put(containerTypeId, new ScreenMiscSettings(selectTextureId, narrationMessage)); }
         declaredContainerTypes.add(containerTypeId);
     }
 
@@ -125,25 +115,21 @@ public final class ContainerLibrary implements ModInitializer
 
     private void openContainer(final PlayerEntity player, final Identifier type, final BlockPos pos, final Text containerName)
     {
-        ContainerProviderRegistry.INSTANCE.openContainer(type, player, buf ->
-        {
-            buf.writeBlockPos(pos);
-            buf.writeText(containerName);
-        });
+        ContainerProviderRegistry.INSTANCE.openContainer(type, player, buf -> { buf.writeBlockPos(pos).writeText(containerName); });
     }
 
     @Override
     public void onInitialize()
     {
-        ContainerProviderRegistry.INSTANCE.registerFactory(SINGLE_CONTAINER, getContainerFactory(SingleScreenHandler::new));
-        ContainerProviderRegistry.INSTANCE.registerFactory(PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
-        ContainerProviderRegistry.INSTANCE.registerFactory(SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
-        final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", ExpandedStorage.MOD_ID, name));
-        declareContainerType(SINGLE_CONTAINER, ExpandedStorage.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
-        declareContainerType(SCROLLABLE_CONTAINER, ExpandedStorage.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
-        declareContainerType(PAGED_CONTAINER, ExpandedStorage.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
-        ServerSidePacketRegistry.INSTANCE.register(OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
-        ServerSidePacketRegistry.INSTANCE.register(SCREEN_SELECT, this::onReceivePlayerPreference);
+        ContainerProviderRegistry.INSTANCE.registerFactory(Const.SINGLE_CONTAINER, getContainerFactory(SingleScreenHandler::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(Const.PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
+        ContainerProviderRegistry.INSTANCE.registerFactory(Const.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
+        final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", Const.MOD_ID, name));
+        declareContainerType(Const.SINGLE_CONTAINER, Const.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
+        declareContainerType(Const.SCROLLABLE_CONTAINER, Const.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
+        declareContainerType(Const.PAGED_CONTAINER, Const.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
+        ServerSidePacketRegistry.INSTANCE.register(Const.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
+        ServerSidePacketRegistry.INSTANCE.register(Const.SCREEN_SELECT, this::onReceivePlayerPreference);
         PlayerDisconnectCallback.EVENT.register(player -> setPlayerPreference(player, null));
     }
 
@@ -159,8 +145,7 @@ public final class ContainerLibrary implements ModInitializer
         if (container instanceof AbstractContainer)
         {
             final AbstractContainer<?> abstractContainer = (AbstractContainer<?>) container;
-            openSelectScreen(player, (type) -> openContainer(player, abstractContainer.ORIGIN, abstractContainer.getDisplayName())
-            );
+            openSelectScreen(player, (type) -> openContainer(player, abstractContainer.ORIGIN, abstractContainer.getDisplayName()));
         }
         else
         {
@@ -170,7 +155,8 @@ public final class ContainerLibrary implements ModInitializer
 
     private <T extends ScreenHandler> ContainerFactory<T> getContainerFactory(final ContainerConstructor<T> newMethod)
     {
-        return (syncId, identifier, player, buffer) -> {
+        return (syncId, identifier, player, buffer) ->
+        {
             final BlockPos pos = buffer.readBlockPos();
             final Text name = buffer.readText();
             final World world = player.getEntityWorld();

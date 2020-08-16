@@ -5,10 +5,10 @@ import net.minecraft.util.math.MathHelper;
 
 public final class ScrollableScreenMeta extends ScreenMeta
 {
-    public final int BLANK_SLOTS;
-    public final int TOTAL_ROWS;
+    public final int BLANK_SLOTS, TOTAL_ROWS;
 
-    public ScrollableScreenMeta(int width, int height, int totalSlots, Identifier texture, int textureWidth, int textureHeight)
+    public ScrollableScreenMeta(final int width, final int height, final int totalSlots, final Identifier texture, final int textureWidth,
+                                final int textureHeight)
     {
         super(width, height, totalSlots, texture, textureWidth, textureHeight);
         TOTAL_ROWS = MathHelper.ceil((double) totalSlots / width);
