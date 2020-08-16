@@ -22,14 +22,12 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
     }
 
     @Override
+    @SuppressWarnings({"ConstantConditions", "deprecation"})
     protected void drawBackground(final MatrixStack matrices, final float delta, final int mouseX, final int mouseY)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        //noinspection ConstantConditions
         client.getTextureManager().bindTexture(SCREEN_META.TEXTURE);
-        final int left = (width - backgroundWidth) / 2;
-        final int top = (height - backgroundHeight) / 2;
-        drawTexture(matrices, left, top, 0, 0, backgroundWidth, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+        drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
     }
 
     @Override
@@ -37,17 +35,18 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
     {
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
-        this.drawMouseoverTooltip(matrices, mouseX, mouseY);
+        drawMouseoverTooltip(matrices, mouseX, mouseY);
     }
 
     @Override
     protected void drawForeground(final MatrixStack matrices, final int mouseX, final int mouseY)
     {
-        textRenderer.draw(matrices, title.asOrderedText(), 8, 6, 4210752);
-        textRenderer.draw(matrices, playerInventory.getDisplayName().asOrderedText(), INVENTORY_LABEL_LEFT, this.backgroundHeight - 96 + 2, 4210752);
+        textRenderer.draw(matrices, title, 8, 6, 4210752);
+        textRenderer.draw(matrices, playerInventory.getDisplayName(), INVENTORY_LABEL_LEFT, this.backgroundHeight - 96 + 2, 4210752);
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public boolean keyPressed(int keyCode, int scanCode, int modifiers)
     {
         if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode))
@@ -61,14 +60,7 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
 
     protected static class Rectangle
     {
-        public final int X;
-        public final int Y;
-        public final int WIDTH;
-        public final int HEIGHT;
-        public final int TEXTURE_X;
-        public final int TEXTURE_Y;
-        public final int TEXTURE_WIDTH;
-        public final int TEXTURE_HEIGHT;
+        public final int X, Y, WIDTH, HEIGHT, TEXTURE_X, TEXTURE_Y, TEXTURE_WIDTH, TEXTURE_HEIGHT;
 
         public Rectangle(final int x, final int y, final int width, final int height,
                 final int textureX, final int textureY, final int textureWidth, final int textureHeight)
@@ -85,5 +77,4 @@ public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends S
 
         public void render(final MatrixStack matrices) { drawTexture(matrices, X, Y, TEXTURE_X, TEXTURE_Y, WIDTH, HEIGHT, TEXTURE_WIDTH, TEXTURE_HEIGHT); }
     }
-
 }
