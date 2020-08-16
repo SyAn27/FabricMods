@@ -1,5 +1,6 @@
 package ninjaphenix.expandedstorage.impl.client;
 
+import com.google.common.collect.ImmutableMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -22,13 +23,8 @@ import ninjaphenix.expandedstorage.impl.content.ModBlocks;
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>
 {
     private static final BlockState defaultState = ModBlocks.wood_chest.getDefaultState();
-    private static final SingleChestModel singleChestModel = new SingleChestModel();
-    private static final LeftChestModel leftChestModel = new LeftChestModel();
-    private static final RightChestModel rightChestModel = new RightChestModel();
-    private static final TopChestModel topChestModel = new TopChestModel();
-    private static final BottomChestModel bottomChestModel = new BottomChestModel();
-    private static final FrontChestModel frontChestModel = new FrontChestModel();
-    private static final BackChestModel backChestModel = new BackChestModel();
+
+    private static final ImmutableMap<CursedChestType, SingleChestModel> MODELS = new ImmutableMap.Builder<CursedChestType, SingleChestModel>().put(CursedChestType.SINGLE, new SingleChestModel()).put(CursedChestType.FRONT, new FrontChestModel()).put(CursedChestType.BACK, new BackChestModel()).put(CursedChestType.TOP, new TopChestModel()).put(CursedChestType.BOTTOM, new BottomChestModel()).put(CursedChestType.LEFT, new LeftChestModel()).put(CursedChestType.RIGHT, new RightChestModel()).build();
 
     public CursedChestBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) { super(dispatcher); }
 
@@ -48,19 +44,5 @@ public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<Cu
         stack.pop();
     }
 
-    @Environment(EnvType.CLIENT)
-    public SingleChestModel getModel(final CursedChestType type)
-    {
-       switch (type)
-       {
-           case SINGLE: return singleChestModel;
-           case TOP: return topChestModel;
-           case BACK: return backChestModel;
-           case RIGHT: return rightChestModel;
-           case BOTTOM: return bottomChestModel;
-           case FRONT: return frontChestModel;
-           case LEFT: return leftChestModel;
-       }
-       throw new RuntimeException("Unexpected enum value in CursedChestEntityRenderer#getModel");
-    }
+    public SingleChestModel getModel(final CursedChestType type) { return MODELS.get(type); }
 }
