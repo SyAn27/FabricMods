@@ -12,8 +12,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import ninjaphenix.chainmail.api.client.render.ChainmailRendering;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
+import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.content.ModContent;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 
@@ -23,7 +24,7 @@ import java.util.function.Consumer;
 public final class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();
-    public static final Identifier CHEST_TEXTURE_ATLAS = ExpandedStorage.id("chest_textures");
+    public static final Identifier CHEST_TEXTURE_ATLAS = Const.id("chest_textures");
     private static final CursedChestBlockEntity CURSED_CHEST_RENDER_ENTITY = new CursedChestBlockEntity(null);
 
     @SuppressWarnings("SameParameterValue")
@@ -31,7 +32,7 @@ public final class ExpandedStorageClient implements ClientModInitializer
     {
         for (Identifier id : registry.getIds())
         {
-            if (id.getNamespace().equals(ExpandedStorage.MOD_ID) && !id.getPath().equals("null"))
+            if (id.getNamespace().equals(Const.MOD_ID) && !id.getPath().equals("null"))
             { registry.getOrEmpty(id).ifPresent(consumer); }
         }
     }
@@ -59,8 +60,8 @@ public final class ExpandedStorageClient implements ClientModInitializer
                     }
                 })
         );
-        BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorage.CHEST, CursedChestBlockEntityRenderer::new);
-        ChainmailRendering.INSTANCE.registerBlockEntityItemStackRenderer(ExpandedStorage.CHEST,
+        BlockEntityRendererRegistry.INSTANCE.register(ModContent.CHEST, CursedChestBlockEntityRenderer::new);
+        ChainmailRendering.INSTANCE.registerBlockEntityItemStackRenderer(ModContent.CHEST,
                 (itemStack, mode, matrixStack, consumerProvider, light, overlay) -> {
                     CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.BLOCK.getId(((BlockItem) itemStack.getItem()).getBlock()));
                     BlockEntityRenderDispatcher.INSTANCE.renderEntity(CURSED_CHEST_RENDER_ENTITY, matrixStack, consumerProvider, light, overlay);

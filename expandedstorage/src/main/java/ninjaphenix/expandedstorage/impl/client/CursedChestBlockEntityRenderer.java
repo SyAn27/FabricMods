@@ -17,12 +17,12 @@ import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.impl.client.models.*;
-import ninjaphenix.expandedstorage.impl.content.ModBlocks;
+import ninjaphenix.expandedstorage.impl.content.ModContent;
 
 @Environment(EnvType.CLIENT)
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>
 {
-    private static final BlockState defaultState = ModBlocks.wood_chest.getDefaultState();
+    private static final BlockState defaultState = ModContent.WOOD_CHEST.getDefaultState();
 
     private static final ImmutableMap<CursedChestType, SingleChestModel> MODELS = new ImmutableMap.Builder<CursedChestType, SingleChestModel>().put(CursedChestType.SINGLE, new SingleChestModel()).put(CursedChestType.FRONT, new FrontChestModel()).put(CursedChestType.BACK, new BackChestModel()).put(CursedChestType.TOP, new TopChestModel()).put(CursedChestType.BOTTOM, new BottomChestModel()).put(CursedChestType.LEFT, new LeftChestModel()).put(CursedChestType.RIGHT, new RightChestModel()).build();
 

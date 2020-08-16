@@ -11,7 +11,7 @@ public enum MutatorModes
     public final TranslatableText translation;
     public final byte next;
 
-    MutatorModes(TranslatableText translation, int next)
+    MutatorModes(final TranslatableText translation, final int next)
     {
         this.translation = translation;
         this.next = (byte) next;

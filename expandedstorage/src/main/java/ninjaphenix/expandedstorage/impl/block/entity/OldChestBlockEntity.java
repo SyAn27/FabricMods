@@ -3,12 +3,12 @@ package ninjaphenix.expandedstorage.impl.block.entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.content.ModContent;
 
 public final class OldChestBlockEntity extends AbstractChestBlockEntity
 {
-    public OldChestBlockEntity(final Identifier block) { super(ExpandedStorage.OLD_CHEST, block); }
+    public OldChestBlockEntity(final Identifier block) { super(ModContent.OLD_CHEST, block); }
 
     @Override
     @SuppressWarnings("ConstantConditions")
