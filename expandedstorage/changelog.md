@@ -1,1 +1,1 @@
-- Fixed dedicated server crash at launch.
+- Add russian translations by Miros77.
