@@ -1,5 +1,1 @@
-- Removed REI integration
-- Removed Creative Button Mover
-- Removed Minecraft and Fabric Loader dependencies due to constraint limitations
-  - Please use minecraft >= 1.16.2
-- Fixed Container Library's Access Wideners not remapping.
+- Fixed dedicated server crash at launch.
