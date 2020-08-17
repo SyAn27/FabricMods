@@ -24,7 +24,7 @@ public final class ModItems
     }
 
     @SafeVarargs
-    private static void registerConversionPath(Pair<Identifier, String>... values)
+    private static void registerConversionPath(final Pair<Identifier, String>... values)
     {
         final int length = values.length;
         for (int i = 0; i < length - 1; i++)
@@ -34,14 +34,9 @@ public final class ModItems
                 final Pair<Identifier, String> from = values[i];
                 final Pair<Identifier, String> to = values[x];
                 final Identifier itemId = ExpandedStorage.getId(from.getRight() + "_to_" + to.getRight() + "_conversion_kit");
-                if (!Registry.ITEM.containsId(itemId))
-                {
                     Registry.register(Registry.ITEM, itemId,
                             new ChestConversionItem(new Item.Settings().group(ExpandedStorage.group).maxCount(16), from.getLeft(), to.getLeft()));
-                }
             }
-
         }
-
     }
 }
