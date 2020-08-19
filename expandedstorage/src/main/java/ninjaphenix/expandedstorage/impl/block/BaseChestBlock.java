@@ -35,6 +35,7 @@ import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.impl.inventory.DoubleSidedInventory;
@@ -92,9 +93,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             {
                                 first.checkLootInteraction(player);
                                 second.checkLootInteraction(player);
-                                // todo calculate container
-                                return null;
-                                //return Networker.INSTANCE.getContainer(windowId, first.getPos(), inventory, player, getDisplayName());
+                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
                             }
                             return null;
                         }
@@ -122,9 +121,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             if (single.canPlayerUse(player))
                             {
                                 single.checkLootInteraction(player);
-                                // todo calculate container
-                                return null;
-                                //return Networker.INSTANCE.getContainer(windowId, single.getPos(), single, player, getDisplayName());
+                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
                             }
                             return null;
                         }
@@ -216,8 +213,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
             final Optional<ExtendedScreenHandlerFactory> containerProvider = combine(state, world, pos, false).apply(CONTAINER_GETTER);
             containerProvider.ifPresent(provider ->
                                         {
-                                            // todo: open container
-                                            // Networker.INSTANCE.openContainer((ServerPlayerEntity) player, provider);
+                                            ContainerLibrary.INSTANCE.openContainer(player, provider);
                                             player.incrementStat(getOpenStat());
                                         });
         }

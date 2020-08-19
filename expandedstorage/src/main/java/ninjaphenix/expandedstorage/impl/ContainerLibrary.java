@@ -1,35 +1,29 @@
 package ninjaphenix.expandedstorage.impl;
 
+import com.google.common.collect.ImmutableMap;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.container.ContainerFactory;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
-import ninjaphenix.expandedstorage.impl.inventory.AbstractContainer;
+import ninjaphenix.expandedstorage.impl.inventory.*;
 import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
-import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
-import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
-import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -46,6 +40,12 @@ public final class ContainerLibrary implements ModInitializer
     private final HashSet<Identifier> declaredContainerTypes = new HashSet<>();
     private final HashMap<UUID, Consumer<Identifier>> preferenceCallbacks = new HashMap<>();
     private final HashMap<UUID, Identifier> playerPreferences = new HashMap<>();
+    private final ImmutableMap<Identifier, ServerScreenHandlerFactory<?>> handlerFactories =
+            new ImmutableMap.Builder<Identifier, ServerScreenHandlerFactory<?>>()
+                    .put(Const.id("single"), SingleScreenHandler::new)
+                    .put(Const.id("scrollable"), ScrollableScreenHandler::new)
+                    .put(Const.id("paged"), PagedScreenHandler::new)
+                    .build();
 
     public boolean isContainerTypeDeclared(final Identifier containerTypeId)
     {
@@ -69,21 +69,16 @@ public final class ContainerLibrary implements ModInitializer
         }
     }
 
-    public void openContainer(final PlayerEntity player, final BlockPos pos, final Text containerName)
+    public void openContainer(final PlayerEntity player, final ExtendedScreenHandlerFactory handlerFactory)
     {
-        Objects.requireNonNull(player, "ContainerLibraryImpl#openContainer received null instead of a PlayerEntity.");
-        Objects.requireNonNull(pos, "ContainerLibraryImpl#openContainer received null instead of a BlockPos.");
-        Objects.requireNonNull(containerName, "ContainerLibraryImpl#declareContainerType received null instead of a Text. (Container Name)");
         final UUID uuid = player.getUuid();
-        Identifier playerPreference;
-        if (playerPreferences.containsKey(uuid) && declaredContainerTypes.contains(playerPreference = playerPreferences.get(uuid)))
+        if (playerPreferences.containsKey(uuid) && handlerFactories.containsKey(playerPreferences.get(uuid)))
         {
-            openContainer(player, playerPreference, pos, containerName);
-            preferenceCallbacks.put(player.getUuid(), (type) -> openContainer(player, type, pos, containerName));
+            player.openHandledScreen(handlerFactory);
         }
         else
         {
-            openSelectScreen(player, (type) -> openContainer(player, type, pos, containerName));
+            openSelectScreen(player, (type) -> openContainer(player, handlerFactory));
         }
     }
 
@@ -113,17 +108,9 @@ public final class ContainerLibrary implements ModInitializer
         return screenMiscSettings.get(containerTypeId);
     }
 
-    private void openContainer(final PlayerEntity player, final Identifier type, final BlockPos pos, final Text containerName)
-    {
-        ContainerProviderRegistry.INSTANCE.openContainer(type, player, buf -> { buf.writeBlockPos(pos).writeText(containerName); });
-    }
-
     @Override
     public void onInitialize()
     {
-        ContainerProviderRegistry.INSTANCE.registerFactory(Const.SINGLE_CONTAINER, getContainerFactory(SingleScreenHandler::new));
-        ContainerProviderRegistry.INSTANCE.registerFactory(Const.PAGED_CONTAINER, getContainerFactory(PagedScreenHandler::new));
-        ContainerProviderRegistry.INSTANCE.registerFactory(Const.SCROLLABLE_CONTAINER, getContainerFactory(ScrollableScreenHandler::new));
         final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", Const.MOD_ID, name));
         declareContainerType(Const.SINGLE_CONTAINER, Const.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
         declareContainerType(Const.SCROLLABLE_CONTAINER, Const.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
@@ -138,40 +125,51 @@ public final class ContainerLibrary implements ModInitializer
         context.getTaskQueue().submitAndJoin(() -> ContainerLibrary.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
     }
 
-    private void onReceiveOpenSelectScreenPacket(final PacketContext context, final PacketByteBuf buffer)
+    private void onReceiveOpenSelectScreenPacket(final PacketContext context, final PacketByteBuf rOpenBuffer)
     {
-        final ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
-        final ScreenHandler container = player.currentScreenHandler;
-        if (container instanceof AbstractContainer)
+        final ServerPlayerEntity sender = (ServerPlayerEntity) context.getPlayer();
+        final ScreenHandler currentScreenHandler = sender.currentScreenHandler;
+        if (currentScreenHandler instanceof AbstractScreenHandler)
         {
-            final AbstractContainer<?> abstractContainer = (AbstractContainer<?>) container;
-            openSelectScreen(player, (type) -> openContainer(player, abstractContainer.ORIGIN, abstractContainer.getDisplayName()));
+            final AbstractScreenHandler<?> screenHandler = (AbstractScreenHandler<?>) currentScreenHandler;
+            openSelectScreen(sender, (type) -> sender.openHandledScreen(new ExtendedScreenHandlerFactory()
+            {
+                @Nullable
+                @Override
+                public ScreenHandler createMenu(final int syncId, final PlayerInventory inv, final PlayerEntity player)
+                {
+                    return ContainerLibrary.INSTANCE.getScreenHandler(syncId, screenHandler.ORIGIN, screenHandler.getInventory(),
+                                                                      player, screenHandler.getDisplayName());
+                }
+
+                @Override
+                public Text getDisplayName()
+                {
+                    return screenHandler.getDisplayName();
+                }
+
+                @Override
+                public void writeScreenOpeningData(final ServerPlayerEntity player, final PacketByteBuf wOpenBuffer)
+                {
+                    wOpenBuffer.writeBlockPos(screenHandler.ORIGIN).writeInt(screenHandler.getInventory().size());
+                }
+            }));
         }
         else
         {
-            ContainerLibrary.INSTANCE.openSelectScreen(player, null);
+            ContainerLibrary.INSTANCE.openSelectScreen(sender, null);
         }
     }
 
-    private <T extends ScreenHandler> ContainerFactory<T> getContainerFactory(final ContainerConstructor<T> newMethod)
+    public ScreenHandler getScreenHandler(final int syncId, final BlockPos pos, final Inventory inventory, final PlayerEntity player,
+                                          final Text displayName)
     {
-        return (syncId, identifier, player, buffer) ->
+        final UUID uuid = player.getUuid();
+        final Identifier playerPreference;
+        if (playerPreferences.containsKey(uuid) && handlerFactories.containsKey(playerPreference = playerPreferences.get(uuid)))
         {
-            final BlockPos pos = buffer.readBlockPos();
-            final Text name = buffer.readText();
-            final World world = player.getEntityWorld();
-            final BlockState state = world.getBlockState(pos);
-            final Block block = state.getBlock();
-            if (block instanceof InventoryProvider)
-            {
-                return newMethod.create(null, syncId, pos, ((InventoryProvider) block).getInventory(state, world, pos), player, name);
-            }
-            return null;
-        };
-    }
-
-    private interface ContainerConstructor<T extends ScreenHandler>
-    {
-        T create(ScreenHandlerType<T> type, int syncId, BlockPos pos, Inventory inventory, PlayerEntity player, Text containerName);
+            return handlerFactories.get(playerPreference).create(syncId, pos, inventory, player, displayName);
+        }
+        return null;
     }
 }

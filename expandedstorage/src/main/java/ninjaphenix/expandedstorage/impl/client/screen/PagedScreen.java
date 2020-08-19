@@ -6,6 +6,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -14,7 +15,7 @@ import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelection
 import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
 
-public final class PagedScreen<T extends PagedScreenHandler> extends AbstractScreen<T, PagedScreenMeta>
+public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedScreenMeta>
 {
     private Rectangle blankArea = null;
     private PageButtonWidget leftPageButton;
@@ -23,9 +24,9 @@ public final class PagedScreen<T extends PagedScreenHandler> extends AbstractScr
     private TranslatableText currentPageText;
     private float pageTextX;
 
-    public PagedScreen(T container)
+    public PagedScreen(final PagedScreenHandler screenHandler, final PlayerInventory playerInventory, final Text title)
     {
-        super(container, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
+        super(screenHandler, playerInventory, title, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
         backgroundWidth = 14 + 18 * SCREEN_META.WIDTH;
         backgroundHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
     }
@@ -196,6 +197,7 @@ public final class PagedScreen<T extends PagedScreenHandler> extends AbstractScr
         }
 
         @Override
+        @SuppressWarnings("deprecation")
         public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta)
         {
             MinecraftClient minecraftClient = MinecraftClient.getInstance();

@@ -3,20 +3,23 @@ package ninjaphenix.expandedstorage.impl.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
-import ninjaphenix.expandedstorage.impl.inventory.AbstractContainer;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
+import ninjaphenix.expandedstorage.impl.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.impl.screen.ScreenMeta;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 
 import java.util.function.Function;
 
-public abstract class AbstractScreen<T extends AbstractContainer<R>, R extends ScreenMeta> extends HandledScreen<T>
+public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R extends ScreenMeta> extends HandledScreen<T>
 {
     protected final R SCREEN_META;
     private final Integer INVENTORY_LABEL_LEFT;
 
-    protected AbstractScreen(T container, Function<R, Integer> inventoryLabelLeftFunction)
+    protected AbstractScreen(final T container, final PlayerInventory playerInventory, final Text title,
+                             final Function<R, Integer> inventoryLabelLeftFunction)
     {
-        super(container, container.PLAYER_INVENTORY, container.getDisplayName());
+        super(container, playerInventory, title);
         SCREEN_META = container.SCREEN_META;
         INVENTORY_LABEL_LEFT = inventoryLabelLeftFunction.apply(SCREEN_META);
     }

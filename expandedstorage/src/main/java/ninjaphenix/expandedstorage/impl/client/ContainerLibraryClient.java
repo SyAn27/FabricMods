@@ -2,9 +2,9 @@ package ninjaphenix.expandedstorage.impl.client;
 
 import blue.endless.jankson.JsonPrimitive;
 import io.netty.buffer.Unpooled;
+import java.nio.file.Path;
+import java.util.HashMap;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.screen.ContainerScreenFactory;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -14,17 +14,8 @@ import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.client.config.ContainerConfig;
-import ninjaphenix.expandedstorage.impl.client.screen.PagedScreen;
-import ninjaphenix.expandedstorage.impl.client.screen.ScrollableScreen;
 import ninjaphenix.expandedstorage.impl.client.screen.SelectContainerScreen;
-import ninjaphenix.expandedstorage.impl.client.screen.SingleScreen;
-import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
-import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
-import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 import org.apache.logging.log4j.MarkerManager;
-
-import java.nio.file.Path;
-import java.util.HashMap;
 
 public final class ContainerLibraryClient implements ClientModInitializer
 {
@@ -33,7 +24,8 @@ public final class ContainerLibraryClient implements ClientModInitializer
 
     private ContainerLibraryClient()
     {
-        if(CONFIG.preferred_container_type.getNamespace().equals("ninjaphenix-container-lib")) {
+        if (CONFIG.preferred_container_type.getNamespace().equals("ninjaphenix-container-lib"))
+        {
             setPreference(new Identifier(Const.MOD_ID, CONFIG.preferred_container_type.getPath()));
         }
     }
@@ -42,24 +34,21 @@ public final class ContainerLibraryClient implements ClientModInitializer
     {
         return new JanksonConfigParser.Builder()
                 .deSerializer(JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
-                        ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
-                .build();
+                              ((identifier, marshaller) -> marshaller.serialize(identifier.toString()))).build();
     }
 
     private static Path getConfigPath() { return FabricLoader.getInstance().getConfigDir().resolve("ninjaphenix-container-library.json"); }
 
     public static void sendPreferencesToServer()
     {
-        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-        buffer.writeIdentifier(CONFIG.preferred_container_type);
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Const.SCREEN_SELECT, buffer);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(Const.SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer())
+                .writeIdentifier(CONFIG.preferred_container_type));
     }
 
     public static void sendCallbackRemoveToServer()
     {
-        PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-        buffer.writeIdentifier(Const.id("auto"));
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Const.SCREEN_SELECT, buffer);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(Const.SCREEN_SELECT,
+                                                       new PacketByteBuf(Unpooled.buffer()).writeIdentifier(Const.id("auto")));
     }
 
     public static void setPreference(Identifier container_type)
@@ -71,10 +60,6 @@ public final class ContainerLibraryClient implements ClientModInitializer
     @Override
     public void onInitializeClient()
     {
-        ScreenProviderRegistry.INSTANCE.registerFactory(Const.SINGLE_CONTAINER, (ContainerScreenFactory<SingleScreenHandler>) SingleScreen::new);
-        ScreenProviderRegistry.INSTANCE.registerFactory(Const.PAGED_CONTAINER, (ContainerScreenFactory<PagedScreenHandler>) PagedScreen::new);
-        ScreenProviderRegistry.INSTANCE.registerFactory(Const.SCROLLABLE_CONTAINER, (ContainerScreenFactory<ScrollableScreenHandler>) ScrollableScreen::new);
-
         ClientSidePacketRegistry.INSTANCE.register(Const.SCREEN_SELECT, (context, buffer) ->
         {
             final int count = buffer.readInt();
@@ -82,8 +67,7 @@ public final class ContainerLibraryClient implements ClientModInitializer
             for (int i = 0; i < count; i++)
             {
                 final Identifier containerFactoryId = buffer.readIdentifier();
-                if (ContainerLibrary.INSTANCE.isContainerTypeDeclared(containerFactoryId) /*&&
-                        ContainerProviderRegistry.INSTANCE.factoryExists(containerFactoryId)*/)
+                if (ContainerLibrary.INSTANCE.isContainerTypeDeclared(containerFactoryId))
                 {
                     allowed.put(containerFactoryId, ContainerLibrary.INSTANCE.getScreenSettings(containerFactoryId));
                 }

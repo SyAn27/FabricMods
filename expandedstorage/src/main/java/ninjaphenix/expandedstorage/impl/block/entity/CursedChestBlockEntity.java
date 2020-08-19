@@ -1,7 +1,6 @@
 package ninjaphenix.expandedstorage.impl.block.entity;
 
 import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
 import net.fabricmc.api.EnvironmentInterfaces;
 import net.minecraft.block.Block;
@@ -9,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.client.block.ChestAnimationProgress;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -21,13 +19,10 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
-import ninjaphenix.expandedstorage.impl.inventory.AbstractContainer;
+import ninjaphenix.expandedstorage.impl.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.impl.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
-
-import java.util.List;
 
 @EnvironmentInterfaces({ @EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class) })
 public final class CursedChestBlockEntity extends AbstractChestBlockEntity implements ChestAnimationProgress, Tickable
@@ -43,8 +38,8 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
         if (!world.isClient && viewCount != 0 && (ticksOpen + x + y + z) % 200 == 0)
         {
             return world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6)).stream()
-                    .filter(player -> player.currentScreenHandler instanceof AbstractContainer)
-                    .map(player -> ((AbstractContainer<?>) player.currentScreenHandler).getInventory())
+                    .filter(player -> player.currentScreenHandler instanceof AbstractScreenHandler)
+                    .map(player -> ((AbstractScreenHandler<?>) player.currentScreenHandler).getInventory())
                     .filter(inventory -> inventory == instance ||
                             inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance))
                     .mapToInt(inv -> 1).sum();

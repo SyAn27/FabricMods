@@ -3,17 +3,19 @@ package ninjaphenix.expandedstorage.impl.client.screen;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
 import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 
-public final class SingleScreen<T extends SingleScreenHandler> extends AbstractScreen<T, SingleScreenMeta>
+public final class SingleScreen extends AbstractScreen<SingleScreenHandler, SingleScreenMeta>
 {
     private Rectangle blankArea = null;
 
-    public SingleScreen(final T container)
+    public SingleScreen(final SingleScreenHandler container, final PlayerInventory playerInventory, final Text title)
     {
-        super(container, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
+        super(container, playerInventory, title, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
         backgroundWidth = 14 + 18 * SCREEN_META.WIDTH;
         backgroundHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
     }

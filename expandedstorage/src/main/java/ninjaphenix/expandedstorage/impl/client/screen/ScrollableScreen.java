@@ -4,13 +4,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
 
-public final class ScrollableScreen<T extends ScrollableScreenHandler> extends AbstractScreen<T, ScrollableScreenMeta>
+public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandler, ScrollableScreenMeta>
 {
     protected final boolean hasScrollbar;
     private Rectangle blankArea = null;
@@ -18,9 +20,9 @@ public final class ScrollableScreen<T extends ScrollableScreenHandler> extends A
     private int topRow;
     private final int renderBackgroundWidth;
 
-    public ScrollableScreen(T container)
+    public ScrollableScreen(final ScrollableScreenHandler container, final PlayerInventory playerInventory, final Text title)
     {
-        super(container, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
+        super(container, playerInventory, title, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);
         renderBackgroundWidth = 14 + 18 * SCREEN_META.WIDTH;
         hasScrollbar = SCREEN_META.TOTAL_ROWS != SCREEN_META.HEIGHT;
         backgroundWidth = renderBackgroundWidth + (hasScrollbar ? 18 : 0);

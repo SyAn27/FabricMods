@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -52,7 +53,7 @@ public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<Cu
         final DoubleBlockProperties.PropertySource<? extends CursedChestBlockEntity> wrapper = blockEntity.hasWorld() ?
                 ((CursedChestBlock) state.getBlock()).combine(state, blockEntity.getWorld(), blockEntity.getPos(), true) :
                 DoubleBlockProperties.PropertyRetriever::getFallback;
-        model.render(stack, new SpriteIdentifier(ExpandedStorageClient.CHEST_TEXTURE_ATLAS,
+        model.render(stack, new SpriteIdentifier(TexturedRenderLayers.CHEST_ATLAS_TEXTURE,
                                                  Registries.CHEST.get(blockEntity.getBlock()).getChestTexture(chestType))
                 .getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutout),
                      wrapper.apply(new LightmapCoordinatesRetriever<>()).applyAsInt(light), overlay);

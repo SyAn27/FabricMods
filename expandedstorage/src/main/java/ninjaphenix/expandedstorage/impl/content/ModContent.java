@@ -1,11 +1,14 @@
 package ninjaphenix.expandedstorage.impl.content;
 
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -17,11 +20,20 @@ import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.OldChestBlock;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.entity.OldChestBlockEntity;
+import ninjaphenix.expandedstorage.impl.client.screen.PagedScreen;
+import ninjaphenix.expandedstorage.impl.client.screen.ScrollableScreen;
+import ninjaphenix.expandedstorage.impl.client.screen.SingleScreen;
+import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
+import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
+import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
 import ninjaphenix.expandedstorage.impl.item.ChestConversionItem;
 import ninjaphenix.expandedstorage.impl.item.ChestMutatorItem;
 
 public final class ModContent
 {
+    public static final ScreenHandlerType<PagedScreenHandler> PAGED_HANDLER_TYPE;
+    public static final ScreenHandlerType<SingleScreenHandler> SINGLE_HANDLER_TYPE;
+    public static final ScreenHandlerType<ScrollableScreenHandler> SCROLLABLE_HANDLER_TYPE;
     public static final BlockEntityType<CursedChestBlockEntity> CHEST;
     public static final BlockEntityType<OldChestBlockEntity> OLD_CHEST;
     public static final CursedChestBlock WOOD_CHEST;
@@ -29,6 +41,10 @@ public final class ModContent
 
     static
     {
+        SCROLLABLE_HANDLER_TYPE = ScreenHandlerRegistry.registerExtended(Const.id("scrollable"), new ScrollableScreenHandler.Factory());
+        PAGED_HANDLER_TYPE = ScreenHandlerRegistry.registerExtended(Const.id("paged"), new PagedScreenHandler.Factory());
+        SINGLE_HANDLER_TYPE = ScreenHandlerRegistry.registerExtended(Const.id("single"), new SingleScreenHandler.Factory());
+
         final ItemGroup group = ChainmailCommonApi.INSTANCE.registerItemGroup((index) -> new ModItemGroup(index, Const.MOD_ID));
 
         WOOD_CHEST = chest(Blocks.OAK_PLANKS, "wood_chest", 3, group);
@@ -100,5 +116,12 @@ public final class ModContent
                 Registry.register(Registry.ITEM, id, new ChestConversionItem(new Item.Settings().group(group).maxCount(16), from, to));
             }
         }
+    }
+
+    public static void registerScreenHandlerScreens()
+    {
+        ScreenRegistry.register(SCROLLABLE_HANDLER_TYPE, ScrollableScreen::new);
+        ScreenRegistry.register(PAGED_HANDLER_TYPE, PagedScreen::new);
+        ScreenRegistry.register(SINGLE_HANDLER_TYPE, SingleScreen::new);
     }
 }

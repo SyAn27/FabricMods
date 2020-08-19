@@ -9,7 +9,6 @@
     "WorldMixin"
   ],
   "client": [
-    "BuiltinModelItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
