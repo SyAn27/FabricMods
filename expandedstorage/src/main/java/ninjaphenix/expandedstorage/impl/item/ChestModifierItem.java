@@ -14,13 +14,14 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import ninjaphenix.expandedstorage.impl.block.AbstractChestBlock;
+import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
+
+import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
 public abstract class ChestModifierItem extends Item
 {
-    private static final DirectionProperty FACING = AbstractChestBlock.FACING;
-    private static final EnumProperty<CursedChestType> TYPE = AbstractChestBlock.TYPE;
+    private static final EnumProperty<CursedChestType> TYPE = BaseChestBlock.TYPE;
 
     public ChestModifierItem(final Settings settings) { super(settings); }
 
@@ -30,11 +31,11 @@ public abstract class ChestModifierItem extends Item
         final World world = context.getWorld();
         final BlockPos pos = context.getBlockPos();
         final BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof AbstractChestBlock)
+        if (state.getBlock() instanceof BaseChestBlock)
         {
             ActionResult result = ActionResult.FAIL;
             final CursedChestType type = state.get(TYPE);
-            final Direction facing = state.get(FACING);
+            final Direction facing = state.get(HORIZONTAL_FACING);
             if (type == CursedChestType.SINGLE) { result = useModifierOnChestBlock(context, state, pos, null, null); }
             else if (type == CursedChestType.BOTTOM)
             {

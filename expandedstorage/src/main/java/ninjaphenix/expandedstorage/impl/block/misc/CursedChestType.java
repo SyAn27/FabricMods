@@ -8,19 +8,23 @@ import ninjaphenix.expandedstorage.impl.client.models.*;
 
 public enum CursedChestType implements StringIdentifiable
 {
-    SINGLE("single"), TOP("top"), BACK("back"), RIGHT("right"), BOTTOM("bottom"), FRONT("front"), LEFT("left");
+    SINGLE("single", -1), TOP("top", -1), BACK("back", 2), RIGHT("right", 3), BOTTOM("bottom", -1), FRONT("front", 0), LEFT("left", 1);
 
     private final String name;
-    private SingleChestModel model = null;
+    private final int offset;
 
-    CursedChestType(String string) { name = string; }
+    CursedChestType(final String string, final int outlineOffset)
+    {
+        name = string;
+        offset = outlineOffset;
+    }
 
     public static CursedChestType valueOf(final ChestType type)
     {
         if (type == ChestType.SINGLE) { return SINGLE; }
         else if (type == ChestType.RIGHT) { return LEFT; }
         else if (type == ChestType.LEFT) { return RIGHT; }
-        throw new IllegalArgumentException("Unexpected chest type passed.");
+        throw new IllegalArgumentException("Unexpected chest type passed to CursedChestType#valueOf.");
     }
 
     public CursedChestType getOpposite()
@@ -34,7 +38,7 @@ public enum CursedChestType implements StringIdentifiable
         throw new IllegalArgumentException("CursedChestType#getOpposite is not supported for type SINGLE");
     }
 
-    public boolean isMainType() { return this == FRONT || this == BOTTOM || this == LEFT || this == SINGLE; }
-
     public String asString() { return name; }
+
+    public int getOffset() { return offset; }
 }

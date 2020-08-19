@@ -9,10 +9,7 @@ import net.minecraft.item.ItemStack;
 
 public final class ModItemGroup extends ItemGroup
 {
-    public ModItemGroup(final int index, final String id)
-    {
-        super(index, id);
-    }
+    public ModItemGroup(final int index, final String id) { super(index, id); }
 
     @Override
     @Environment(EnvType.CLIENT)

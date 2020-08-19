@@ -20,7 +20,6 @@ import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 
 import java.util.function.Consumer;
 
-@Environment(EnvType.CLIENT)
 public final class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();

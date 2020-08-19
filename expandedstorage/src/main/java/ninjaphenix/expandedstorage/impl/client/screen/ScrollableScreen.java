@@ -17,6 +17,7 @@ public final class ScrollableScreen<T extends ScrollableScreenHandler> extends A
     private boolean isDragging;
     private int topRow;
     private final int renderBackgroundWidth;
+
     public ScrollableScreen(T container)
     {
         super(container, (screenMeta) -> (screenMeta.WIDTH * 18 + 14) / 2 - 80);

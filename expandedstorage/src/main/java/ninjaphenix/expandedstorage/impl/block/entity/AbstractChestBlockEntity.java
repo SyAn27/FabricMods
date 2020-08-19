@@ -22,7 +22,6 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     protected int inventorySize;
     protected DefaultedList<ItemStack> inventory;
     protected int[] SLOTS;
-
     protected Identifier block;
 
     protected AbstractChestBlockEntity(final BlockEntityType type, final Identifier block)
@@ -31,7 +30,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
         if (block != null) { initialize(block); }
     }
 
-    protected void initialize(final Identifier block) { }
+    protected abstract void initialize(final Identifier block);
 
     public Identifier getBlock() { return block; }
 
@@ -51,7 +50,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     public int[] getAvailableSlots(final Direction side) { return SLOTS; }
 
     @Override
-    public boolean canInsert(final int slot, final ItemStack stack, final Direction direction) { return this.isValid(slot, stack); }
+    public boolean canInsert(final int slot, final ItemStack stack, final Direction direction) { return isValid(slot, stack); }
 
     @Override
     public boolean canExtract(final int slot, final ItemStack stack, final Direction direction) { return true; }
@@ -63,10 +62,7 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     protected Text getContainerName() { return defaultContainerName; }
 
     @Override
-    public boolean isEmpty()
-    {
-        return inventory.stream().allMatch(ItemStack::isEmpty);
-    }
+    public boolean isEmpty() { return inventory.stream().allMatch(ItemStack::isEmpty); }
 
     @Override
     public void fromTag(final BlockState state, final CompoundTag tag)

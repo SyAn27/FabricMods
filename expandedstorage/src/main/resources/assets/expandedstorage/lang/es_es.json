@@ -24,6 +24,5 @@
   "tooltip.expandedstorage.chest_mutator.unmerge": "Separar",
   "tooltip.expandedstorage.chest_mutator.rotate": "Rotar",
   "tooltip.expandedstorage.tool_mode": "Modo de herramienta: %s",
-  "container.expandedstorage.generic_double": "Grande %s",
-  "container.expandedstorage.error": "Error"
+  "container.expandedstorage.generic_double": "Grande %s"
 }

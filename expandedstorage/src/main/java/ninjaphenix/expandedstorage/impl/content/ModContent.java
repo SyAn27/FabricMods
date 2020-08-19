@@ -97,10 +97,7 @@ public final class ModContent
                 final Pair<Identifier, String> from = values[i];
                 final Pair<Identifier, String> to = values[x];
                 final Identifier id = Const.id(from.getRight() + "_to_" + to.getRight() + "_conversion_kit");
-                if (!Registry.ITEM.containsId(id))
-                {
-                    Registry.register(Registry.ITEM, id, new ChestConversionItem(new Item.Settings().group(group).maxCount(16), from.getLeft(), to.getLeft()));
-                }
+                Registry.register(Registry.ITEM, id, new ChestConversionItem(new Item.Settings().group(group).maxCount(16), from, to));
             }
         }
     }

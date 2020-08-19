@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.util.shape.VoxelShape;
@@ -13,78 +14,46 @@ import net.minecraft.world.BlockView;
 import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.impl.content.ModContent;
 
-import static ninjaphenix.expandedstorage.impl.block.misc.CursedChestType.*;
+import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
-@SuppressWarnings("deprecation")
-public final class CursedChestBlock extends FluidLoggableChestBlock
+public final class CursedChestBlock extends FluidLoggableChestBlock<CursedChestBlockEntity>
 {
     private static final VoxelShape SINGLE_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 14, 15);
     private static final VoxelShape TOP_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 14, 15);
     private static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 16, 15);
-    private static final VoxelShape A = Block.createCuboidShape(1, 0, 1, 16, 14, 15);
-    private static final VoxelShape B = Block.createCuboidShape(0, 0, 1, 15, 14, 15);
-    private static final VoxelShape C = Block.createCuboidShape(1, 0, 0, 15, 14, 15);
-    private static final VoxelShape D = Block.createCuboidShape(1, 0, 1, 15, 14, 16);
+    private static final VoxelShape[] HORIZONTAL_VALUES = {
+            Block.createCuboidShape(1, 0, 0, 15, 14, 15),
+            Block.createCuboidShape(1, 0, 1, 16, 14, 15),
+            Block.createCuboidShape(1, 0, 1, 15, 14, 16),
+            Block.createCuboidShape(0, 0, 1, 15, 14, 15)
+    };
 
-    public CursedChestBlock(Settings settings) { super(settings); }
-
-    @Override
-    public BlockEntity createBlockEntity(BlockView view) { return new CursedChestBlockEntity(Registry.BLOCK.getId(this)); }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context)
+    public CursedChestBlock(final Settings settings)
     {
-        CursedChestType type = state.get(TYPE);
-        if (type == SINGLE) { return SINGLE_SHAPE; }
-        if (type == TOP) { return TOP_SHAPE; }
-        if (type == BOTTOM) { return BOTTOM_SHAPE; }
-        switch (type)
-        {
-            case BACK:
-                switch (state.get(FACING))
-                {
-                    case NORTH: return C;
-                    case SOUTH: return D;
-                    case WEST: return B;
-                    case EAST: return A;
-                }
-                break;
-            case RIGHT:
-                switch (state.get(FACING))
-                {
-                    case NORTH: return A;
-                    case SOUTH: return B;
-                    case WEST: return C;
-                    case EAST: return D;
-                }
-                break;
-            case FRONT:
-                switch (state.get(FACING))
-                {
-                    case NORTH: return D;
-                    case SOUTH: return C;
-                    case WEST: return A;
-                    case EAST: return B;
-                }
-                break;
-            case LEFT:
-                switch (state.get(FACING))
-                {
-                    case NORTH: return B;
-                    case SOUTH: return A;
-                    case WEST: return D;
-                    case EAST: return C;
-                }
-                break;
-        }
-        return SINGLE_SHAPE;
+        super(settings, () -> ModContent.CHEST);
+        setDefaultState(getDefaultState().with(HORIZONTAL_FACING, Direction.SOUTH));
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.ENTITYBLOCK_ANIMATED; }
+    public BlockEntity createBlockEntity(final BlockView view) { return new CursedChestBlockEntity(Registry.BLOCK.getId(this)); }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("deprecation")
+    public VoxelShape getOutlineShape(final BlockState state, final BlockView view, final BlockPos pos, final ShapeContext context)
+    {
+        final CursedChestType type = state.get(TYPE);
+        if (type == CursedChestType.TOP) { return TOP_SHAPE; }
+        else if (type == CursedChestType.BOTTOM) { return BOTTOM_SHAPE; }
+        else if (type == CursedChestType.SINGLE) {return SINGLE_SHAPE; }
+        else { return HORIZONTAL_VALUES[(state.get(HORIZONTAL_FACING).getHorizontal() + type.getOffset()) % 4]; }
+    }
+
+    @Override
+    public BlockRenderType getRenderType(final BlockState state) { return BlockRenderType.ENTITYBLOCK_ANIMATED; }
+
+    @Override
+    @SuppressWarnings({"unchecked", "deprecation"})
     public SimpleRegistry<Registries.ChestTierData> getDataRegistry() { return Registries.CHEST; }
 }

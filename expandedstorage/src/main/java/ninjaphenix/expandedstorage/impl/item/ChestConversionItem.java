@@ -1,10 +1,13 @@
 package ninjaphenix.expandedstorage.impl.item;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
@@ -12,73 +15,84 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
-import ninjaphenix.expandedstorage.impl.Const;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.api.Registries;
-import ninjaphenix.expandedstorage.impl.block.AbstractChestBlock;
+import ninjaphenix.expandedstorage.impl.Const;
+import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 
 public final class ChestConversionItem extends ChestModifierItem
 {
-    private final Identifier from;
-    private final Identifier to;
+    private final Text TOOLTIP;
+    private final Identifier FROM, TO;
+    private static final MutableText DOUBLE_REQUIRES_2 = new TranslatableText("tooltip.expandedstorage.conversion_kit_double_requires_2")
+            .formatted(Formatting.GRAY);
 
-    public ChestConversionItem(Item.Settings settings, Identifier from, Identifier to)
+    public ChestConversionItem(final Item.Settings settings, final Pair<Identifier, String> from, final Pair<Identifier, String> to)
     {
         super(settings);
-        this.from = from;
-        this.to = to;
+        FROM = from.getLeft();
+        TO = to.getLeft();
+        TOOLTIP = new TranslatableText(String.format("tooltip.expandedstorage.conversion_kit_%s_%s", from.getRight(), to.getRight()),
+                                       Const.leftShiftRightClick).formatted(Formatting.GRAY);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "unchecked"})
     private void upgradeCursedChest(World world, BlockPos pos, BlockState state)
     {
         AbstractChestBlockEntity blockEntity = (AbstractChestBlockEntity) world.getBlockEntity(pos);
-        final SimpleRegistry<Registries.TierData> registry = ((AbstractChestBlock) state.getBlock()).getDataRegistry();
-        DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(registry.get(to).getSlotCount(), ItemStack.EMPTY);
+        final SimpleRegistry<Registries.TierData> registry = ((BaseChestBlock<AbstractChestBlockEntity>) state.getBlock()).getDataRegistry();
+        DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(registry.get(TO).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
-        BlockState newState = Registry.BLOCK.get(registry.get(to).getBlockId()).getDefaultState();
-        if (newState.getBlock() instanceof Waterloggable) { newState = newState.with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED)); }
+        BlockState newState = Registry.BLOCK.get(registry.get(TO).getBlockId()).getDefaultState();
+        if (newState.getBlock() instanceof Waterloggable)
+        {
+            newState = newState.with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED));
+        }
         world.setBlockState(pos, newState.with(Properties.HORIZONTAL_FACING, state.get(Properties.HORIZONTAL_FACING))
-                                         .with(CursedChestBlock.TYPE, state.get(CursedChestBlock.TYPE)));
+                .with(CursedChestBlock.TYPE, state.get(CursedChestBlock.TYPE)));
         blockEntity = (AbstractChestBlockEntity) world.getBlockEntity(pos);
         blockEntity.fromTag(world.getBlockState(pos), Inventories.toTag(blockEntity.toTag(new CompoundTag()), inventoryData));
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "deprecation"})
     private void upgradeChest(World world, BlockPos pos, BlockState state)
     {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.CHEST.get(from).getSlotCount(), ItemStack.EMPTY);
+        DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.CHEST.get(FROM).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
-        BlockState newState = Registry.BLOCK.get(Registries.CHEST.get(to).getBlockId()).getDefaultState();
+        BlockState newState = Registry.BLOCK.get(Registries.CHEST.get(TO).getBlockId()).getDefaultState();
         world.setBlockState(pos, newState.with(Properties.HORIZONTAL_FACING, state.get(Properties.HORIZONTAL_FACING))
-                                         .with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED))
-                                         .with(CursedChestBlock.TYPE, CursedChestType.valueOf(state.get(Properties.CHEST_TYPE))));
+                .with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED))
+                .with(CursedChestBlock.TYPE, CursedChestType.valueOf(state.get(Properties.CHEST_TYPE))));
         blockEntity = world.getBlockEntity(pos);
         blockEntity.fromTag(world.getBlockState(pos), Inventories.toTag(blockEntity.toTag(new CompoundTag()), inventoryData));
     }
 
     @Override
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "unchecked"})
     protected ActionResult useModifierOnChestBlock(ItemUsageContext context, BlockState mainState, BlockPos mainBlockPos, BlockState otherState,
-            BlockPos otherBlockPos)
+                                                   BlockPos otherBlockPos)
     {
         World world = context.getWorld();
         PlayerEntity player = context.getPlayer();
-        AbstractChestBlock chestBlock = (AbstractChestBlock) mainState.getBlock();
-        if (Registry.BLOCK.getId(chestBlock) != chestBlock.getDataRegistry().get(from).getBlockId()) { return ActionResult.FAIL; }
+        BaseChestBlock<AbstractChestBlockEntity> chestBlock = (BaseChestBlock<AbstractChestBlockEntity>) mainState.getBlock();
+        if (Registry.BLOCK.getId(chestBlock) != chestBlock.getDataRegistry().get(FROM).getBlockId()) { return ActionResult.FAIL; }
         ItemStack handStack = player.getStackInHand(context.getHand());
         if (otherBlockPos == null)
         {
@@ -108,17 +122,17 @@ public final class ChestConversionItem extends ChestModifierItem
     {
         // todo: fix this for other mods.
         //  Perhaps allow mods to define equivalents or use tags somehow e.g. Tag<Identifier>("expandedstorage:wood")
-        if (state.getBlock() == Blocks.CHEST && from.equals(Const.id("wood_chest")))
+        if (state.getBlock() == Blocks.CHEST && FROM.equals(Const.id("wood_chest")))
         {
             final World world = context.getWorld();
-            final BlockPos mainpos = context.getBlockPos();
+            final BlockPos mainPos = context.getBlockPos();
             final PlayerEntity player = context.getPlayer();
             final ItemStack handStack = player.getStackInHand(context.getHand());
             if (state.get(Properties.CHEST_TYPE) == ChestType.SINGLE)
             {
                 if (!world.isClient)
                 {
-                    upgradeChest(world, mainpos, state);
+                    upgradeChest(world, mainPos, state);
                     handStack.decrement(1);
                 }
                 return ActionResult.SUCCESS;
@@ -128,22 +142,30 @@ public final class ChestConversionItem extends ChestModifierItem
                 BlockPos otherPos;
                 if (state.get(Properties.CHEST_TYPE) == ChestType.RIGHT)
                 {
-                    otherPos = mainpos.offset(state.get(Properties.HORIZONTAL_FACING).rotateYCounterclockwise());
+                    otherPos = mainPos.offset(state.get(Properties.HORIZONTAL_FACING).rotateYCounterclockwise());
                 }
                 else if (state.get(Properties.CHEST_TYPE) == ChestType.LEFT)
                 {
-                    otherPos = mainpos.offset(state.get(Properties.HORIZONTAL_FACING).rotateYClockwise());
+                    otherPos = mainPos.offset(state.get(Properties.HORIZONTAL_FACING).rotateYClockwise());
                 }
                 else { return ActionResult.FAIL; }
                 if (!world.isClient)
                 {
                     upgradeChest(world, otherPos, world.getBlockState(otherPos));
-                    upgradeChest(world, mainpos, state);
+                    upgradeChest(world, mainPos, state);
                     handStack.decrement(2);
                 }
                 return ActionResult.SUCCESS;
             }
         }
         return ActionResult.FAIL;
+    }
+
+    @Override
+    public void appendTooltip(final ItemStack stack, @Nullable final World world, final List<Text> tooltip, final TooltipContext context)
+    {
+        super.appendTooltip(stack, world, tooltip, context);
+        tooltip.add(TOOLTIP);
+        tooltip.add(DOUBLE_REQUIRES_2);
     }
 }
