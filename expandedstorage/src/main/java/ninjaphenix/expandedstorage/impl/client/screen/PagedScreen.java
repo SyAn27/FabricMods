@@ -48,7 +48,7 @@ public final class PagedScreen<T extends PagedScreenHandler> extends AbstractScr
             }
             if (!leftPageButton.active) { leftPageButton.setActive(true); }
         }
-        else
+        else if (newPage < oldPage)
         {
             if (page == 1) { leftPageButton.setActive(false); }
             if (blankArea != null) {blankArea = null; }
