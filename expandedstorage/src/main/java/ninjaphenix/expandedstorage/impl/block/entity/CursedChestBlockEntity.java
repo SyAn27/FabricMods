@@ -15,16 +15,18 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import ninjaphenix.expandedstorage.api.Registries;
 import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
 import ninjaphenix.expandedstorage.impl.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.impl.inventory.DoubleSidedInventory;
-import ninjaphenix.expandedstorage.api.Registries;
-import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 
-@EnvironmentInterfaces({ @EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class) })
+@EnvironmentInterfaces({@EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class)})
 public final class CursedChestBlockEntity extends AbstractChestBlockEntity implements ChestAnimationProgress, Tickable
 {
     private float animationAngle, lastAnimationAngle;
@@ -91,9 +93,14 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     private void playSound(final SoundEvent soundEvent)
     {
         final BlockState state = getCachedState();
-        if (BaseChestBlock.getMergeType(state) == DoubleBlockProperties.Type.SECOND) { return; }
-        final Vec3i offset = BaseChestBlock.getDirectionToAttached(state).getVector();
-        final Vec3d soundPos = Vec3d.ofCenter(pos).add(offset.getX() * 0.5D, offset.getY() * 0.5D, offset.getZ() * 0.5D);
+        final DoubleBlockProperties.Type mergeType = BaseChestBlock.getMergeType(state);
+        final Vec3d soundPos;
+        if (mergeType == DoubleBlockProperties.Type.SINGLE) { soundPos = Vec3d.ofCenter(pos); }
+        else if (mergeType == DoubleBlockProperties.Type.FIRST)
+        {
+            soundPos = Vec3d.ofCenter(pos).add(Vec3d.of(BaseChestBlock.getDirectionToAttached(state).getVector()).multiply(0.5D));
+        }
+        else { return; }
         world.playSound(null, soundPos.getX(), soundPos.getY(), soundPos.getZ(), soundEvent, SoundCategory.BLOCKS, 0.5F,
                         world.random.nextFloat() * 0.1F + 0.9F);
     }
