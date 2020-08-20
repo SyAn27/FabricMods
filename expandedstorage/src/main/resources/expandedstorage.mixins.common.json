@@ -1,7 +1,7 @@
 {
   "required": true,
-  "package": "ninjaphenix.expandedstorage.impl.mixin",
-  "plugin": "ninjaphenix.expandedstorage.impl.ExpandedStorageMixinPlugin",
+  "package": "ninjaphenix.expandedstorage.mixin",
+  "plugin": "ninjaphenix.expandedstorage.ExpandedStorageMixinPlugin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ToweletteSupportMixin"
