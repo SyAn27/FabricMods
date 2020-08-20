@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.content.block.BaseChestBlock;
-import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.misc.CursedChestType;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 

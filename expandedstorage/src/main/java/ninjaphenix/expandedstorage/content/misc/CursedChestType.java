@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.content.block.misc;
+package ninjaphenix.expandedstorage.content.misc;
 
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.util.StringIdentifiable;

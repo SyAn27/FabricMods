@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.Const;
 import ninjaphenix.expandedstorage.Registries;
 import ninjaphenix.expandedstorage.content.block.BaseChestBlock;
-import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.misc.CursedChestType;
 
 import java.util.List;
 

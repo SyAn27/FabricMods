@@ -12,7 +12,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import ninjaphenix.expandedstorage.Registries;
 import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.misc.CursedChestType;
 import ninjaphenix.expandedstorage.content.ModContent;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;

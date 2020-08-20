@@ -32,7 +32,7 @@ import ninjaphenix.expandedstorage.Registries;
 import ninjaphenix.expandedstorage.content.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.content.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.content.block.entity.AbstractChestBlockEntity;
-import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.misc.CursedChestType;
 
 public final class ChestConversionItem extends ChestModifierItem
 {

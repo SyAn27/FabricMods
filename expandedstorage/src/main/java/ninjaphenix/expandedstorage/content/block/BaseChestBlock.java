@@ -37,7 +37,7 @@ import net.minecraft.world.WorldAccess;
 import ninjaphenix.expandedstorage.ContainerLibrary;
 import ninjaphenix.expandedstorage.Registries;
 import ninjaphenix.expandedstorage.content.block.entity.AbstractChestBlockEntity;
-import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.misc.CursedChestType;
 import ninjaphenix.expandedstorage.inventory.DoubleSidedInventory;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;

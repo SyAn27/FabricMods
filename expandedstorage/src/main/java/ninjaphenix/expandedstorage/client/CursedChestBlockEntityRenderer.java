@@ -15,7 +15,7 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
 import ninjaphenix.expandedstorage.Registries;
 import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.misc.CursedChestType;
 import ninjaphenix.expandedstorage.client.models.*;
 import ninjaphenix.expandedstorage.content.ModContent;
 import ninjaphenix.expandedstorage.content.block.CursedChestBlock;
