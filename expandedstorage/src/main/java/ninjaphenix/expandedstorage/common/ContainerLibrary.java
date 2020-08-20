@@ -45,10 +45,7 @@ public final class ContainerLibrary implements ModInitializer
                     .put(Const.id("paged"), PagedScreenHandler::new)
                     .build();
 
-    public boolean isContainerTypeDeclared(final Identifier containerTypeId)
-    {
-        return declaredContainerTypes.contains(containerTypeId);
-    }
+    public boolean isContainerTypeDeclared(final Identifier containerTypeId) { return declaredContainerTypes.contains(containerTypeId); }
 
     public void setPlayerPreference(final PlayerEntity player, final Identifier containerTypeId)
     {
@@ -86,13 +83,15 @@ public final class ContainerLibrary implements ModInitializer
 
     public void declareContainerType(final Identifier containerTypeId, final Identifier selectTextureId, final Text narrationMessage)
     {
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { screenMiscSettings.put(containerTypeId, new Pair<>(selectTextureId, narrationMessage)); }
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+        {
+            screenMiscSettings.put(containerTypeId, new Pair<>(selectTextureId, narrationMessage));
+        }
         declaredContainerTypes.add(containerTypeId);
     }
 
     public Pair<Identifier, Text> getScreenSettings(final Identifier containerTypeId)
     {
-        Objects.requireNonNull(containerTypeId, "ContainerLibraryImpl#getScreenSettings received null instead of an Identifier. (Container Type ID)");
         return screenMiscSettings.get(containerTypeId);
     }
 
