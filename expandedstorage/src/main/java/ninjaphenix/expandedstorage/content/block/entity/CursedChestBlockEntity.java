@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.block.entity;
+package ninjaphenix.expandedstorage.content.block.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.EnvironmentInterface;
@@ -20,8 +20,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.BaseChestBlock;
-import ninjaphenix.expandedstorage.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.content.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.content.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.content.ModContent;
 import ninjaphenix.expandedstorage.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.inventory.DoubleSidedInventory;

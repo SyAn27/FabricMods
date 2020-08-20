@@ -19,18 +19,18 @@ import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.ChainmailCommonApi;
 import ninjaphenix.expandedstorage.Const;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.block.entity.OldChestBlockEntity;
-import ninjaphenix.expandedstorage.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.block.OldChestBlock;
+import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.content.block.entity.OldChestBlockEntity;
+import ninjaphenix.expandedstorage.content.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.content.block.OldChestBlock;
 import ninjaphenix.expandedstorage.client.screen.PagedScreen;
 import ninjaphenix.expandedstorage.client.screen.ScrollableScreen;
 import ninjaphenix.expandedstorage.client.screen.SingleScreen;
 import ninjaphenix.expandedstorage.inventory.PagedScreenHandler;
 import ninjaphenix.expandedstorage.inventory.ScrollableScreenHandler;
 import ninjaphenix.expandedstorage.inventory.SingleScreenHandler;
-import ninjaphenix.expandedstorage.item.ChestConversionItem;
-import ninjaphenix.expandedstorage.item.ChestMutatorItem;
+import ninjaphenix.expandedstorage.content.item.ChestConversionItem;
+import ninjaphenix.expandedstorage.content.item.ChestMutatorItem;
 
 public final class ModContent
 {

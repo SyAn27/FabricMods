@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.item;
+package ninjaphenix.expandedstorage.content.item;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,8 +30,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.Const;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.BaseChestBlock;
-import ninjaphenix.expandedstorage.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
 
 import java.util.List;
 

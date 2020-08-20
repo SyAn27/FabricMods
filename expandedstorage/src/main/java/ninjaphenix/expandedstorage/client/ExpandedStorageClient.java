@@ -9,8 +9,8 @@ import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.content.ModContent;
 
 public final class ExpandedStorageClient implements ClientModInitializer

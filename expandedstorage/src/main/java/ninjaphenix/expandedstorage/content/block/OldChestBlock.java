@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.block;
+package ninjaphenix.expandedstorage.content.block;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -12,7 +12,7 @@ import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.entity.OldChestBlockEntity;
+import ninjaphenix.expandedstorage.content.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.content.ModContent;
 
 public final class OldChestBlock extends BaseChestBlock<OldChestBlockEntity>

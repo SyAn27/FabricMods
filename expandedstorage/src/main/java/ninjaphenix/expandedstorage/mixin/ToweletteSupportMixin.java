@@ -1,6 +1,6 @@
 package ninjaphenix.expandedstorage.mixin;
 
-import ninjaphenix.expandedstorage.block.FluidLoggableChestBlock;
+import ninjaphenix.expandedstorage.content.block.FluidLoggableChestBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import virtuoel.towelette.api.Fluidloggable;
 

@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.item;
+package ninjaphenix.expandedstorage.content.item;
 
 import java.util.List;
 import javax.annotation.Nullable;
@@ -29,10 +29,10 @@ import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.Const;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.BaseChestBlock;
-import ninjaphenix.expandedstorage.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.block.entity.AbstractChestBlockEntity;
-import ninjaphenix.expandedstorage.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.content.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.content.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
 
 public final class ChestConversionItem extends ChestModifierItem
 {

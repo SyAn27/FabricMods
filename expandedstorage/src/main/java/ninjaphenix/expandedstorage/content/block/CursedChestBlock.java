@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.block;
+package ninjaphenix.expandedstorage.content.block;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -11,8 +11,8 @@ import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.content.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.content.ModContent;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
