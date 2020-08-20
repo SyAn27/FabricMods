@@ -10,10 +10,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.Const;
+import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.inventory.PagedScreenHandler;
-import ninjaphenix.expandedstorage.inventory.screen.PagedScreenMeta;
+import ninjaphenix.expandedstorage.common.inventory.PagedScreenHandler;
+import ninjaphenix.expandedstorage.common.inventory.screen.PagedScreenMeta;
 
 public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedScreenMeta>
 {

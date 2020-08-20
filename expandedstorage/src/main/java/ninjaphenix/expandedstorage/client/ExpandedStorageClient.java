@@ -8,10 +8,10 @@ import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.util.registry.Registry;
-import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.content.misc.CursedChestType;
-import ninjaphenix.expandedstorage.content.ModContent;
+import ninjaphenix.expandedstorage.common.Registries;
+import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.content.ModContent;
 
 public final class ExpandedStorageClient implements ClientModInitializer
 {

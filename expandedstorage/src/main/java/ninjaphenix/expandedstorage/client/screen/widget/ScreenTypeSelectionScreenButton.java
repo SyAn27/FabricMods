@@ -10,7 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.Const;
+import ninjaphenix.expandedstorage.common.Const;
 
 public final class ScreenTypeSelectionScreenButton extends ButtonWidget
 {

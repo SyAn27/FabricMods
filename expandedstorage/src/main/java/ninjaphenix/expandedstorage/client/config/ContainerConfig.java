@@ -2,7 +2,7 @@ package ninjaphenix.expandedstorage.client.config;
 
 import blue.endless.jankson.Comment;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.Const;
+import ninjaphenix.expandedstorage.common.Const;
 
 @SuppressWarnings("CanBeFinal")
 public final class ContainerConfig

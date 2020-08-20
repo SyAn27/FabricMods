@@ -5,8 +5,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.inventory.SingleScreenHandler;
-import ninjaphenix.expandedstorage.inventory.screen.SingleScreenMeta;
+import ninjaphenix.expandedstorage.common.inventory.SingleScreenHandler;
+import ninjaphenix.expandedstorage.common.inventory.screen.SingleScreenMeta;
 
 public final class SingleScreen extends AbstractScreen<SingleScreenHandler, SingleScreenMeta>
 {

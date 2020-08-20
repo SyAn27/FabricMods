@@ -7,8 +7,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import ninjaphenix.expandedstorage.client.ContainerLibraryClient;
-import ninjaphenix.expandedstorage.inventory.AbstractScreenHandler;
-import ninjaphenix.expandedstorage.inventory.screen.ScreenMeta;
+import ninjaphenix.expandedstorage.common.inventory.AbstractScreenHandler;
+import ninjaphenix.expandedstorage.common.inventory.screen.ScreenMeta;
 
 public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R extends ScreenMeta> extends HandledScreen<T>
 {

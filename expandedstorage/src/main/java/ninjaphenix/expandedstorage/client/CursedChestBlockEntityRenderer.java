@@ -13,12 +13,12 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
-import ninjaphenix.expandedstorage.Registries;
-import ninjaphenix.expandedstorage.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.content.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.Registries;
+import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
 import ninjaphenix.expandedstorage.client.models.*;
-import ninjaphenix.expandedstorage.content.ModContent;
-import ninjaphenix.expandedstorage.content.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.common.content.ModContent;
+import ninjaphenix.expandedstorage.common.content.block.CursedChestBlock;
 
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>
 {
