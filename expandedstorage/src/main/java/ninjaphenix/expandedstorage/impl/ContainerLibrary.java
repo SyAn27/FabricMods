@@ -33,7 +33,7 @@ public final class ContainerLibrary implements ModInitializer
 {
     public static final ContainerLibrary INSTANCE = new ContainerLibrary();
 
-    private ContainerLibrary() {}
+    private ContainerLibrary() { }
 
     @Environment(EnvType.CLIENT)
     private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
@@ -120,7 +120,7 @@ public final class ContainerLibrary implements ModInitializer
         PlayerDisconnectCallback.EVENT.register(player -> setPlayerPreference(player, null));
     }
 
-    private void onReceivePlayerPreference(PacketContext context, PacketByteBuf buffer)
+    private void onReceivePlayerPreference(final PacketContext context, final PacketByteBuf buffer)
     {
         context.getTaskQueue().submitAndJoin(() -> ContainerLibrary.INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
     }

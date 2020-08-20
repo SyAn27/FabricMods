@@ -6,7 +6,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -81,16 +80,26 @@ public abstract class ChestModifierItem extends Item
     @Override
     public TypedActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand)
     {
-        TypedActionResult<ItemStack> result = useModifierInAir(world, player, hand);
+        final TypedActionResult<ItemStack> result = useModifierInAir(world, player, hand);
         if (result.getResult() == ActionResult.SUCCESS) { player.getItemCooldownManager().set(this, 5); }
         return result;
     }
 
-    protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos, final BlockState otherState, final BlockPos otherBlockPos) { return ActionResult.PASS; }
+    protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos,
+                                                   final BlockState otherState, final BlockPos otherBlockPos)
+    {
+        return ActionResult.PASS;
+    }
 
-    protected ActionResult useModifierOnBlock(final ItemUsageContext context, final BlockState state) { return ActionResult.PASS; }
+    protected ActionResult useModifierOnBlock(final ItemUsageContext context, final BlockState state)
+    {
+        return ActionResult.PASS;
+    }
 
-    protected ActionResult useModifierOnEntity(final ItemStack stack, final PlayerEntity player, final LivingEntity entity, final Hand hand) { return ActionResult.PASS; }
+    protected ActionResult useModifierOnEntity(final ItemStack stack, final PlayerEntity player, final LivingEntity entity, final Hand hand)
+    {
+        return ActionResult.PASS;
+    }
 
     protected TypedActionResult<ItemStack> useModifierInAir(final World world, final PlayerEntity player, final Hand hand)
     {

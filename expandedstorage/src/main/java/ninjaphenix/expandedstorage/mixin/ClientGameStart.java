@@ -11,5 +11,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientGameStart
 {
     @Inject(method = "onStartGameSession", at = @At("TAIL"))
-    private void expandedstorage_onStartGameSession(CallbackInfo ci) { ContainerLibraryClient.sendPreferencesToServer(); }
+    private void expandedstorage_onStartGameSession(final CallbackInfo ci) { ContainerLibraryClient.sendPreferencesToServer(); }
 }

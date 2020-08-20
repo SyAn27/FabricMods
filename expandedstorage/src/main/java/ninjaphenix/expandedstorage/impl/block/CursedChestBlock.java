@@ -11,7 +11,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.Registries;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
@@ -54,6 +54,6 @@ public final class CursedChestBlock extends FluidLoggableChestBlock<CursedChestB
     public BlockRenderType getRenderType(final BlockState state) { return BlockRenderType.ENTITYBLOCK_ANIMATED; }
 
     @Override
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     public SimpleRegistry<Registries.ChestTierData> getDataRegistry() { return Registries.CHEST; }
 }

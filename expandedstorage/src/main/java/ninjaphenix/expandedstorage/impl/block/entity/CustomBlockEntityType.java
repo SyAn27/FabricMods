@@ -19,5 +19,5 @@ public final class CustomBlockEntityType<T extends BlockEntity> extends BlockEnt
     }
 
     @Override
-    public boolean supports(Block block) { return predicate.test(block); }
+    public boolean supports(final Block block) { return predicate.test(block); }
 }

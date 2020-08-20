@@ -2,6 +2,8 @@ package ninjaphenix.expandedstorage.impl.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.IntUnaryOperator;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +16,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
+import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 
 public final class ScrollableScreenHandler extends AbstractScreenHandler<ScrollableScreenMeta>
@@ -52,21 +55,24 @@ public final class ScrollableScreenHandler extends AbstractScreenHandler<Scrolla
         for (int i = 0; i < 9; i++) { addSlot(new Slot(playerInventory, i, left + 18 * i, top + 58)); }
     }
 
-    private static ScrollableScreenMeta getNearestSize(int invSize)
+    private static ScrollableScreenMeta getNearestSize(final int invSize)
     {
-        ScrollableScreenMeta val = SIZES.get(invSize);
-        if (val != null) { return val; }
-        final Integer[] keys = SIZES.keySet().toArray(new Integer[]{});
-        Arrays.sort(keys);
-        final int largestKey = keys[Math.abs(Arrays.binarySearch(keys, invSize)) - 1];
-        val = SIZES.get(largestKey);
-        if (largestKey > invSize && largestKey - invSize <= val.WIDTH) { return SIZES.get(largestKey); }
-        throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
+        final ScrollableScreenMeta exactMeta = SIZES.get(invSize);
+        if (exactMeta != null) { return exactMeta; }
+        final List<Integer> keys = SIZES.keySet().asList();
+        final int index = Collections.binarySearch(keys, invSize);
+        final int largestKey = keys.get(Math.abs(index) - 1);
+        final ScrollableScreenMeta nearestMeta = SIZES.get(largestKey);
+        if (nearestMeta != null && largestKey > invSize && largestKey - invSize <= nearestMeta.WIDTH) { return nearestMeta; }
+        throw new RuntimeException("No screen can show an inventory of size " + invSize + ".");
     }
 
-    public void moveSlotRange(int min, int max, int yChange) { for (int i = min; i < max; i++) { slots.get(i).y += yChange; } }
+    public void moveSlotRange(final int min, final int max, final int yChange)
+    {
+        for (int i = min; i < max; i++) { slots.get(i).y += yChange; }
+    }
 
-    public void setSlotRange(int min, int max, IntUnaryOperator yPos)
+    public void setSlotRange(final int min, final int max, final IntUnaryOperator yPos)
     {
         for (int i = min; i < max; i++) { slots.get(i).y = yPos.applyAsInt(i); }
     }

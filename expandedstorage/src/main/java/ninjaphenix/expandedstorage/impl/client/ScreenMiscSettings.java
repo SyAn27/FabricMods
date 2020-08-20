@@ -8,7 +8,7 @@ public final class ScreenMiscSettings
     public final Identifier SELECT_TEXTURE_ID;
     public final Text NARRATION_MESSAGE;
 
-    public ScreenMiscSettings(Identifier selectTextureId, Text narrationMessage)
+    public ScreenMiscSettings(final Identifier selectTextureId, final Text narrationMessage)
     {
         SELECT_TEXTURE_ID = selectTextureId;
         NARRATION_MESSAGE = narrationMessage;

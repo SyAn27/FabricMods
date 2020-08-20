@@ -3,8 +3,8 @@ package ninjaphenix.expandedstorage.impl.client.config;
 import blue.endless.jankson.Comment;
 import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.impl.Const;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 
+@SuppressWarnings("CanBeFinal")
 public final class ContainerConfig
 {
     @Comment("\nPrefered container type, set to expandedstorage:auto to reuse selection screen.")

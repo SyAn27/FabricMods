@@ -11,17 +11,17 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.api.Registries;
-import ninjaphenix.expandedstorage.api.Registries.TierData;
+import ninjaphenix.expandedstorage.impl.Registries;
+import ninjaphenix.expandedstorage.impl.Registries.TierData;
 import ninjaphenix.expandedstorage.impl.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
 
 public final class OldChestBlock extends BaseChestBlock<OldChestBlockEntity>
 {
-    public OldChestBlock(Settings settings) { super(settings, () -> ModContent.OLD_CHEST); }
+    public OldChestBlock(final Settings settings) { super(settings, () -> ModContent.OLD_CHEST); }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView view)
+    public BlockEntity createBlockEntity(final BlockView view)
     {
         final Identifier blockId = Registry.BLOCK.getId(this);
         return new OldChestBlockEntity(new Identifier(blockId.getNamespace(), blockId.getPath().substring(4)));
@@ -42,6 +42,6 @@ public final class OldChestBlock extends BaseChestBlock<OldChestBlockEntity>
     public BlockRenderType getRenderType(final BlockState state) { return BlockRenderType.MODEL; }
 
     @Override
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     public SimpleRegistry<TierData> getDataRegistry() { return Registries.OLD_CHEST; }
 }

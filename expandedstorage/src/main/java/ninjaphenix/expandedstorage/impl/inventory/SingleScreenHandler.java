@@ -2,6 +2,8 @@ package ninjaphenix.expandedstorage.impl.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,6 +14,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
+import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 
 public final class SingleScreenHandler extends AbstractScreenHandler<SingleScreenMeta>
@@ -48,16 +51,16 @@ public final class SingleScreenHandler extends AbstractScreenHandler<SingleScree
         for (int i = 0; i < 9; i++) { addSlot(new Slot(playerInventory, i, left + 18 * i, top + 58)); }
     }
 
-    private static SingleScreenMeta getNearestSize(int invSize)
+    private static SingleScreenMeta getNearestSize(final int invSize)
     {
-        SingleScreenMeta val = SIZES.get(invSize);
-        if (val != null) { return val; }
-        final Integer[] keys = SIZES.keySet().toArray(new Integer[]{});
-        Arrays.sort(keys);
-        final int largestKey = keys[Math.abs(Arrays.binarySearch(keys, invSize)) - 1];
-        val = SIZES.get(largestKey);
-        if (largestKey > invSize && largestKey - invSize <= val.WIDTH) { return SIZES.get(largestKey); }
-        throw new RuntimeException("No screen can show an inventory of size " + invSize + "."); // make this more obvious?
+        final SingleScreenMeta exactMeta = SIZES.get(invSize);
+        if (exactMeta != null) { return exactMeta; }
+        final List<Integer> keys = SIZES.keySet().asList();
+        final int index = Collections.binarySearch(keys, invSize);
+        final int largestKey = keys.get(Math.abs(index) - 1);
+        final SingleScreenMeta nearestMeta = SIZES.get(largestKey);
+        if (nearestMeta != null && largestKey > invSize && largestKey - invSize <= nearestMeta.WIDTH) { return nearestMeta; }
+        throw new RuntimeException("No screen can show an inventory of size " + invSize + ".");
     }
 
 

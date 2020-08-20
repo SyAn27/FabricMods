@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.api;
+package ninjaphenix.expandedstorage.impl;
 
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.text.Text;
@@ -6,14 +6,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.SimpleRegistry;
-import ninjaphenix.expandedstorage.impl.Const;
-import ninjaphenix.expandedstorage.impl.ExpandedStorage;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
 
 import java.util.function.Function;
 
-/* To be deprecated when refinement is complete. */
-@Deprecated
 public final class Registries
 {
     private static final RegistryKey<Registry<ChestTierData>> CHEST_KEY = RegistryKey.of(Const.id("root"), Const.id("chest"));
@@ -25,7 +21,8 @@ public final class Registries
     {
         private final Identifier singleTexture, topTexture, backTexture, rightTexture, bottomTexture, frontTexture, leftTexture;
 
-        public ChestTierData(final int slots, final Text containerName, final Identifier blockId, final Function<CursedChestType, Identifier> textureFunction)
+        public ChestTierData(final int slots, final Text containerName, final Identifier blockId,
+                             final Function<CursedChestType, Identifier> textureFunction)
         {
             super(slots, containerName, blockId);
             singleTexture = textureFunction.apply(CursedChestType.SINGLE);

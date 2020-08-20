@@ -12,8 +12,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.PagedScreenHandler;
+import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
 
 public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedScreenMeta>
 {
@@ -31,7 +31,7 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         backgroundHeight = 17 + 97 + 18 * SCREEN_META.HEIGHT;
     }
 
-    private void setPage(int oldPage, int newPage)
+    private void setPage(final int oldPage, final int newPage)
     {
         page = newPage;
         if (newPage > oldPage)
@@ -43,8 +43,8 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
                 if (blanked > 0)
                 {
                     final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
-                    blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18,
-                            xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+                    blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18, xOffset, backgroundHeight,
+                                              SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
                 }
             }
             if (!leftPageButton.active) { leftPageButton.setActive(true); }
@@ -56,11 +56,11 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
             if (!rightPageButton.active) { rightPageButton.setActive(true); }
         }
         final int slotsPerPage = SCREEN_META.WIDTH * SCREEN_META.HEIGHT;
-        int oldMin = slotsPerPage * (oldPage - 1);
-        int oldMax = Math.min(oldMin + slotsPerPage, SCREEN_META.TOTAL_SLOTS);
+        final int oldMin = slotsPerPage * (oldPage - 1);
+        final int oldMax = Math.min(oldMin + slotsPerPage, SCREEN_META.TOTAL_SLOTS);
         handler.moveSlotRange(oldMin, oldMax, -2000);
-        int newMin = slotsPerPage * (newPage - 1);
-        int newMax = Math.min(newMin + slotsPerPage, SCREEN_META.TOTAL_SLOTS);
+        final int newMin = slotsPerPage * (newPage - 1);
+        final int newMax = Math.min(newMin + slotsPerPage, SCREEN_META.TOTAL_SLOTS);
         handler.moveSlotRange(newMin, newMax, 2000);
         setPageText();
     }
@@ -68,7 +68,7 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
     private void setPageText() { currentPageText = new TranslatableText("screen.expandedstorage.page_x_y", page, SCREEN_META.PAGES); }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
+    public void render(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
     {
         super.render(matrices, mouseX, mouseY, delta);
         if (SCREEN_META.PAGES != 1)
@@ -85,55 +85,46 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         final boolean inventoryProfilesLoaded = instance.isModLoaded("inventoryprofiles");
         final boolean inventorySorterLoaded = instance.isModLoaded("inventorysorter");
         super.init();
-        int settingsXOffset = -19;
-        if (inventoryProfilesLoaded)
-        {
-            settingsXOffset -= 48;
-        }
-        else if (inventorySorterLoaded)
-        {
-            settingsXOffset -= 18;
-        }
+        final int settingsXOffset;
+        if (inventoryProfilesLoaded) { settingsXOffset = -67; }
+        else if (inventorySorterLoaded) { settingsXOffset = -37; }
+        else { settingsXOffset = -19; }
         addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
-                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
+                                                      (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         if (SCREEN_META.PAGES != 1)
         {
-            int pageButtonsXOffset = 0;
-            if (inventoryProfilesLoaded )
-            {
-                pageButtonsXOffset = -12;
-            }
-            else if(inventorySorterLoaded) {
-                pageButtonsXOffset = -18;
-            }
+            final int pageButtonsXOffset;
+            if (inventoryProfilesLoaded) { pageButtonsXOffset = -12; }
+            else if (inventorySorterLoaded) { pageButtonsXOffset = -18; }
+            else { pageButtonsXOffset = 0; }
             page = 1;
             setPageText();
             leftPageButton = new PageButtonWidget(x + backgroundWidth - 61 + pageButtonsXOffset, y + backgroundHeight - 96, 0,
-                    new TranslatableText("screen.expandedstorage.prev_page"), button -> setPage(page, page - 1),
-                    (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
+                                                  new TranslatableText("screen.expandedstorage.prev_page"), button -> setPage(page, page - 1),
+                                                  (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             leftPageButton.active = false;
             addButton(leftPageButton);
             rightPageButton = new PageButtonWidget(x + backgroundWidth - 19 + pageButtonsXOffset, y + backgroundHeight - 96, 1,
-                    new TranslatableText("screen.expandedstorage.next_page"), button -> setPage(page, page + 1),
-                    (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
+                                                   new TranslatableText("screen.expandedstorage.next_page"), button -> setPage(page, page + 1),
+                                                   (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             addButton(rightPageButton);
             pageTextX = (1 + leftPageButton.x + rightPageButton.x - rightPageButton.getWidth() / 2F) / 2F;
         }
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
+    protected void drawBackground(final MatrixStack matrices, final float delta, final int mouseX, final int mouseY)
     {
         super.drawBackground(matrices, delta, mouseX, mouseY);
         if (blankArea != null) { blankArea.render(matrices); }
     }
 
     @Override
-    public void resize(MinecraftClient client, int width, int height)
+    public void resize(final MinecraftClient client, final int width, final int height)
     {
         if (SCREEN_META.PAGES != 1)
         {
-            int currentPage = page;
+            final int currentPage = page;
             if (currentPage != 1)
             {
                 handler.resetSlotPositions(false);
@@ -146,14 +137,18 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY)
+    protected void drawForeground(final MatrixStack matrices, final int mouseX, final int mouseY)
     {
         super.drawForeground(matrices, mouseX, mouseY);
-        if (currentPageText != null) { textRenderer.draw(matrices, currentPageText.asOrderedText(), pageTextX - x, backgroundHeight - 94, 4210752); }
+        if (currentPageText != null)
+        {
+            textRenderer.draw(matrices, currentPageText.asOrderedText(), pageTextX - x, backgroundHeight - 94,
+                              0x404040);
+        }
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers)
     {
         if (keyCode == 262 || keyCode == 267) // Right Arrow, Page Down
         {
@@ -181,7 +176,8 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         private static final Identifier TEXTURE = Const.id("textures/gui/page_buttons.png");
         private final int TEXTURE_OFFSET;
 
-        public PageButtonWidget(int x, int y, int textureOffset, Text text, PressAction onPress, TooltipSupplier tooltipSupplier)
+        public PageButtonWidget(final int x, final int y, final int textureOffset, final Text text, final PressAction onPress,
+                                final TooltipSupplier tooltipSupplier)
         {
             super(x, y, 12, 12, text, onPress, tooltipSupplier);
             TEXTURE_OFFSET = textureOffset;
@@ -190,26 +186,23 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         public void setActive(final boolean active)
         {
             this.active = active;
-            if (!active)
-            {
-                this.setFocused(false);
-            }
+            if (!active) { setFocused(false); }
         }
 
         @Override
         @SuppressWarnings("deprecation")
-        public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta)
+        public void renderButton(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
         {
-            MinecraftClient minecraftClient = MinecraftClient.getInstance();
+            final MinecraftClient minecraftClient = MinecraftClient.getInstance();
             minecraftClient.getTextureManager().bindTexture(TEXTURE);
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
             drawTexture(matrices, x, y, TEXTURE_OFFSET * 12, getYImage(isHovered()) * 12, width, height, 32, 48);
         }
 
-        public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY)
+        public void renderTooltip(final MatrixStack matrices, final int mouseX, final int mouseY)
         {
             if (active)
             {
@@ -219,6 +212,3 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         }
     }
 }
-
-
-

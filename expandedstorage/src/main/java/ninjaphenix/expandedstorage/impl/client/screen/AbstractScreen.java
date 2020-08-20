@@ -1,15 +1,14 @@
 package ninjaphenix.expandedstorage.impl.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import java.util.function.Function;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
+import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.impl.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.impl.screen.ScreenMeta;
-import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
-
-import java.util.function.Function;
 
 public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R extends ScreenMeta> extends HandledScreen<T>
 {
@@ -45,12 +44,12 @@ public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R exten
     protected void drawForeground(final MatrixStack matrices, final int mouseX, final int mouseY)
     {
         textRenderer.draw(matrices, title, 8, 6, 4210752);
-        textRenderer.draw(matrices, playerInventory.getDisplayName(), INVENTORY_LABEL_LEFT, this.backgroundHeight - 96 + 2, 4210752);
+        textRenderer.draw(matrices, playerInventory.getDisplayName(), INVENTORY_LABEL_LEFT, backgroundHeight - 96 + 2, 4210752);
     }
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers)
     {
         if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode))
         {
@@ -65,8 +64,8 @@ public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R exten
     {
         public final int X, Y, WIDTH, HEIGHT, TEXTURE_X, TEXTURE_Y, TEXTURE_WIDTH, TEXTURE_HEIGHT;
 
-        public Rectangle(final int x, final int y, final int width, final int height,
-                final int textureX, final int textureY, final int textureWidth, final int textureHeight)
+        public Rectangle(final int x, final int y, final int width, final int height, final int textureX, final int textureY,
+                         final int textureWidth, final int textureHeight)
         {
             X = x;
             Y = y;
@@ -78,6 +77,9 @@ public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R exten
             TEXTURE_HEIGHT = textureHeight;
         }
 
-        public void render(final MatrixStack matrices) { drawTexture(matrices, X, Y, TEXTURE_X, TEXTURE_Y, WIDTH, HEIGHT, TEXTURE_WIDTH, TEXTURE_HEIGHT); }
+        public void render(final MatrixStack matrices)
+        {
+            drawTexture(matrices, X, Y, TEXTURE_X, TEXTURE_Y, WIDTH, HEIGHT, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        }
     }
 }

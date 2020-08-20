@@ -1,13 +1,12 @@
 package ninjaphenix.expandedstorage.impl.client.screen;
 
-
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 import ninjaphenix.expandedstorage.impl.inventory.SingleScreenHandler;
+import ninjaphenix.expandedstorage.impl.screen.SingleScreenMeta;
 
 public final class SingleScreen extends AbstractScreen<SingleScreenHandler, SingleScreenMeta>
 {
@@ -27,23 +26,18 @@ public final class SingleScreen extends AbstractScreen<SingleScreenHandler, Sing
         final boolean inventoryProfilesLoaded = instance.isModLoaded("inventoryprofiles");
         final boolean inventorySorterLoaded = instance.isModLoaded("inventorysorter");
         super.init();
-        int settingsXOffset = -19;
-        if (inventoryProfilesLoaded)
-        {
-            settingsXOffset -= 48;
-        }
-        else if (inventorySorterLoaded)
-        {
-            settingsXOffset -= 18;
-        }
-        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4,
-                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
+        final int settingsXOffset;
+        if (inventoryProfilesLoaded) { settingsXOffset = -67; }
+        else if (inventorySorterLoaded) { settingsXOffset = -37; }
+        else { settingsXOffset = -19;}
+        addButton(new ScreenTypeSelectionScreenButton(x + backgroundWidth + settingsXOffset, y + 4, (button, matrices, mouseX, mouseY) ->
+                renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
         final int blanked = SCREEN_META.BLANK_SLOTS;
         if (blanked > 0)
         {
             final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
-            blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18,
-                    xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18, xOffset, backgroundHeight,
+                                      SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         }
     }
 
@@ -54,5 +48,3 @@ public final class SingleScreen extends AbstractScreen<SingleScreenHandler, Sing
         if (blankArea != null) { blankArea.render(matrices); }
     }
 }
-
-

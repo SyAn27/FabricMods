@@ -24,20 +24,20 @@ public final class DoubleSidedInventory implements SidedInventory
         final int[] secondSlots = second.getAvailableSlots(direction);
         final int[] combined = new int[firstSlots.length + secondSlots.length];
         int index = 0;
-        for (int slot : firstSlots) { combined[index++] = slot; }
-        for (int slot : secondSlots) { combined[index++] = slot + firstSize; }
+        for (final int slot : firstSlots) { combined[index++] = slot; }
+        for (final int slot : secondSlots) { combined[index++] = slot + firstSize; }
         return combined;
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, Direction direction)
+    public boolean canInsert(final int slot, final ItemStack stack, final Direction direction)
     {
         if (slot >= first.size()) { return second.canInsert(slot - first.size(), stack, direction); }
         return first.canInsert(slot, stack, direction);
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction direction)
+    public boolean canExtract(final int slot, final ItemStack stack, final Direction direction)
     {
         if (slot >= first.size()) { return second.canExtract(slot - first.size(), stack, direction); }
         return first.canExtract(slot, stack, direction);
@@ -50,7 +50,7 @@ public final class DoubleSidedInventory implements SidedInventory
     public boolean isEmpty() { return first.isEmpty() && second.isEmpty(); }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) { return first.canPlayerUse(player) && second.canPlayerUse(player); }
+    public boolean canPlayerUse(final PlayerEntity player) { return first.canPlayerUse(player) && second.canPlayerUse(player); }
 
     @Override
     public void clear()
@@ -67,53 +67,53 @@ public final class DoubleSidedInventory implements SidedInventory
     }
 
     @Override
-    public void onOpen(PlayerEntity player)
+    public void onOpen(final PlayerEntity player)
     {
         first.onOpen(player);
         second.onOpen(player);
     }
 
     @Override
-    public void onClose(PlayerEntity player)
+    public void onClose(final PlayerEntity player)
     {
         first.onClose(player);
         second.onClose(player);
     }
 
-    public boolean isPart(SidedInventory inventory) { return first == inventory || second == inventory; }
+    public boolean isPart(final SidedInventory inventory) { return first == inventory || second == inventory; }
 
     public int getMaxCountPerStack() { return first.getMaxCountPerStack(); }
 
     @Override
-    public ItemStack getStack(int slot)
+    public ItemStack getStack(final int slot)
     {
         if (slot >= first.size()) { return second.getStack(slot - first.size()); }
         return first.getStack(slot);
     }
 
     @Override
-    public ItemStack removeStack(int slot, int amount)
+    public ItemStack removeStack(final int slot, final int amount)
     {
         if (slot >= first.size()) { return second.removeStack(slot - first.size(), amount); }
         return first.removeStack(slot, amount);
     }
 
     @Override
-    public ItemStack removeStack(int slot)
+    public ItemStack removeStack(final int slot)
     {
         if (slot >= first.size()) { return second.removeStack(slot - first.size()); }
         return first.removeStack(slot);
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack)
+    public void setStack(final int slot, final ItemStack stack)
     {
         if (slot >= first.size()) { second.setStack(slot - first.size(), stack); }
         else { first.setStack(slot, stack); }
     }
 
     @Override
-    public boolean isValid(int slot, ItemStack stack)
+    public boolean isValid(final int slot, final ItemStack stack)
     {
         if (slot >= first.size()) { return second.isValid(slot - first.size(), stack); }
         return first.isValid(slot, stack);

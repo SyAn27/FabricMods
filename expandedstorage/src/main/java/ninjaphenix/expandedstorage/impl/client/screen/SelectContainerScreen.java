@@ -1,5 +1,6 @@
 package ninjaphenix.expandedstorage.impl.client.screen;
 
+import java.util.HashMap;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
@@ -11,8 +12,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
-
-import java.util.HashMap;
 
 public final class SelectContainerScreen extends Screen
 {
@@ -39,15 +38,15 @@ public final class SelectContainerScreen extends Screen
         int x = 0;
         int y = 0;
         int leftPadding = MathHelper.ceil((width - 96 * maxColumns - PADDING * (maxColumns - 1)) / 2D);
-        int topPadding = MathHelper.ceil((height - 96 * totalRows - PADDING * (totalRows - 1)) / 2D);
+        final int topPadding = MathHelper.ceil((height - 96 * totalRows - PADDING * (totalRows - 1)) / 2D);
         TOP = topPadding;
-        for (HashMap.Entry<Identifier, ScreenMiscSettings> entry : OPTIONS.entrySet())
+        for (final HashMap.Entry<Identifier, ScreenMiscSettings> entry : OPTIONS.entrySet())
         {
             final Identifier id = entry.getKey();
             final ScreenMiscSettings settings = entry.getValue();
             addButton(new ScreenTypeButton(leftPadding + (PADDING + 96) * x, topPadding + (PADDING + 96) * y, 96, 96,
-                    settings.SELECT_TEXTURE_ID, settings.NARRATION_MESSAGE, button -> updatePlayerPreference(id),
-                    (button, matrices, tX, tY) -> renderTooltip(matrices, button.getMessage(), tX, tY)));
+                                           settings.SELECT_TEXTURE_ID, settings.NARRATION_MESSAGE, button -> updatePlayerPreference(id),
+                                           (button, matrices, tX, tY) -> renderTooltip(matrices, button.getMessage(), tX, tY)));
             x++;
             if (x == maxColumns)
             {
@@ -69,7 +68,7 @@ public final class SelectContainerScreen extends Screen
         super.onClose();
     }
 
-    private void updatePlayerPreference(Identifier selection)
+    private void updatePlayerPreference(final Identifier selection)
     {
         ContainerLibraryClient.setPreference(selection);
         ContainerLibraryClient.sendPreferencesToServer();
@@ -81,16 +80,10 @@ public final class SelectContainerScreen extends Screen
     {
         setZOffset(0);
         renderBackground(matrices);
-        for (AbstractButtonWidget button : this.buttons)
+        for (final AbstractButtonWidget button : buttons) { button.render(matrices, mouseX, mouseY, delta); }
+        for (final AbstractButtonWidget button : buttons)
         {
-            button.render(matrices, mouseX, mouseY, delta);
-        }
-        for (AbstractButtonWidget button : this.buttons)
-        {
-            if (button instanceof ScreenTypeButton)
-            {
-                ((ScreenTypeButton) button).renderTooltip(matrices, mouseX, mouseY, delta);
-            }
+            if (button instanceof ScreenTypeButton) { ((ScreenTypeButton) button).renderTooltip(matrices, mouseX, mouseY); }
         }
         drawCenteredText(matrices, textRenderer, title, width / 2, Math.max(TOP - 2 * PADDING, 0), 0xFFFFFFFF);
     }
@@ -99,7 +92,8 @@ public final class SelectContainerScreen extends Screen
     {
         private final Identifier TEXTURE;
 
-        public ScreenTypeButton(int x, int y, int width, int height, Identifier texture, Text message, PressAction pressAction, TooltipSupplier tooltipSupplier)
+        public ScreenTypeButton(final int x, final int y, final int width, final int height, final Identifier texture, final Text message,
+                                final PressAction pressAction, final TooltipSupplier tooltipSupplier)
         {
             super(x, y, width, height, message, pressAction, tooltipSupplier);
             TEXTURE = texture;
@@ -112,7 +106,7 @@ public final class SelectContainerScreen extends Screen
             drawTexture(matrices, x, y, 0, isHovered() ? height : 0, width, height, width, height * 2);
         }
 
-        public void renderTooltip(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
+        public void renderTooltip(final MatrixStack matrices, final int mouseX, final int mouseY)
         {
             if (active)
             {
@@ -121,5 +115,4 @@ public final class SelectContainerScreen extends Screen
             }
         }
     }
-
 }

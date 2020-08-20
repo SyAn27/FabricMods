@@ -19,7 +19,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.Registries;
 import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
@@ -50,7 +50,7 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     }
 
     @Override
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions"})
     protected void initialize(final Identifier block)
     {
         this.block = block;

@@ -1,20 +1,17 @@
 package ninjaphenix.expandedstorage.impl.client.models;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 
-@Environment(EnvType.CLIENT)
 public class SingleChestModel extends Model
 {
-    protected ModelPart lid;
-    protected ModelPart base;
+    protected final ModelPart lid;
+    protected final ModelPart base;
 
-    public SingleChestModel(int textureWidth, int textureHeight)
+    public SingleChestModel(final int textureWidth, final int textureHeight)
     {
         super(RenderLayer::getEntityCutout);
         this.textureWidth = textureWidth;
@@ -39,10 +36,10 @@ public class SingleChestModel extends Model
         lid.pitch = -((1.0F - pitch * pitch * pitch) * 1.5707964F);
     }
 
-    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int i, int j) { render(matrices, vertexConsumer, i, j, 1, 1, 1, 1); }
+    public void render(final MatrixStack matrices, final VertexConsumer vertexConsumer, final int i, final int j) { render(matrices, vertexConsumer, i, j, 1, 1, 1, 1); }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer consumer, int i, int j, float r, float g, float b, float f)
+    public void render(final MatrixStack matrices, final VertexConsumer consumer, final int i, final int j, final float r, final float g, final float b, final float f)
     {
         base.render(matrices, consumer, i, j);
         lid.render(matrices, consumer, i, j);

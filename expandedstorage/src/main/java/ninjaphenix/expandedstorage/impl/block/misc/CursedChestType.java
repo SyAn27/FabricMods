@@ -1,10 +1,7 @@
 package ninjaphenix.expandedstorage.impl.block.misc;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.util.StringIdentifiable;
-import ninjaphenix.expandedstorage.impl.client.models.*;
 
 public enum CursedChestType implements StringIdentifiable
 {

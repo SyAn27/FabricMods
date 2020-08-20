@@ -13,7 +13,7 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
-import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.Registries;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
@@ -22,7 +22,7 @@ import ninjaphenix.expandedstorage.impl.content.ModContent;
 
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>
 {
-    private static final BlockState defaultState = ModContent.WOOD_CHEST.getDefaultState();
+    private static final BlockState defaultState = ModContent.DIAMOND_CHEST.getDefaultState();
 
     private static final ImmutableMap<CursedChestType, SingleChestModel> MODELS = new ImmutableMap.Builder<CursedChestType, SingleChestModel>()
             .put(CursedChestType.SINGLE, new SingleChestModel())
@@ -55,7 +55,7 @@ public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<Cu
                 DoubleBlockProperties.PropertyRetriever::getFallback;
         model.render(stack, new SpriteIdentifier(TexturedRenderLayers.CHEST_ATLAS_TEXTURE,
                                                  Registries.CHEST.get(blockEntity.getBlock()).getChestTexture(chestType))
-                .getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutout),
+                             .getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutout),
                      wrapper.apply(new LightmapCoordinatesRetriever<>()).applyAsInt(light), overlay);
         stack.pop();
     }

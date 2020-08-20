@@ -7,18 +7,18 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
+import ninjaphenix.expandedstorage.impl.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.impl.inventory.ScrollableScreenHandler;
+import ninjaphenix.expandedstorage.impl.screen.ScrollableScreenMeta;
 
 public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandler, ScrollableScreenMeta>
 {
     protected final boolean hasScrollbar;
+    private final int renderBackgroundWidth;
     private Rectangle blankArea = null;
     private boolean isDragging;
     private int topRow;
-    private final int renderBackgroundWidth;
 
     public ScrollableScreen(final ScrollableScreenHandler container, final PlayerInventory playerInventory, final Text title)
     {
@@ -36,23 +36,18 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
         final boolean inventoryProfilesLoaded = instance.isModLoaded("inventoryprofiles");
         final boolean inventorySorterLoaded = instance.isModLoaded("inventorysorter");
         super.init();
-        int settingsXOffset = -19;
+        final int settingsXOffset;
         if (!hasScrollbar)
         {
-            if (inventoryProfilesLoaded)
-            {
-                settingsXOffset -= 48;
-            }
-            else if (inventorySorterLoaded)
-            {
-                settingsXOffset -= 18;
-            }
+            if (inventoryProfilesLoaded) { settingsXOffset = -67; }
+            else if (inventorySorterLoaded) { settingsXOffset = -37; }
+            else { settingsXOffset = -19; }
             final int blanked = SCREEN_META.BLANK_SLOTS;
             if (blanked > 0)
             {
                 final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
-                blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18,
-                        xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+                blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18, xOffset, backgroundHeight,
+                                          SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
             }
         }
         else
@@ -62,28 +57,31 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
             topRow = 0;
         }
         addButton(new ScreenTypeSelectionScreenButton(x + renderBackgroundWidth + settingsXOffset, y + 4,
-                (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(), mouseX, mouseY)));
+                                                      (button, matrices, mouseX, mouseY) -> renderTooltip(matrices, button.getMessage(),
+                                                                                                          mouseX, mouseY)));
     }
 
     @Override
+    @SuppressWarnings({"deprecation", "ConstantConditions"})
     protected void drawBackground(final MatrixStack matrices, final float delta, final int mouseX, final int mouseY)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        //noinspection ConstantConditions
         client.getTextureManager().bindTexture(SCREEN_META.TEXTURE);
         drawTexture(matrices, x, y, 0, 0, renderBackgroundWidth, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         if (hasScrollbar)
         {
             final int slotsHeight = SCREEN_META.HEIGHT * 18;
             final int scrollbarHeight = slotsHeight + (SCREEN_META.WIDTH > 9 ? 34 : 24);
-            drawTexture(matrices, x + renderBackgroundWidth - 4, y, renderBackgroundWidth, 0, 22, scrollbarHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
-            int yOffset = MathHelper.floor((slotsHeight - 17) * (((double) topRow) / (SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)));
-            drawTexture(matrices, x + renderBackgroundWidth - 2, y + yOffset + 18, renderBackgroundWidth, scrollbarHeight, 12, 15, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            drawTexture(matrices, x + renderBackgroundWidth - 4, y, renderBackgroundWidth, 0, 22, scrollbarHeight,
+                        SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+            final int yOffset = MathHelper.floor((slotsHeight - 17) * (((double) topRow) / (SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)));
+            drawTexture(matrices, x + renderBackgroundWidth - 2, y + yOffset + 18, renderBackgroundWidth, scrollbarHeight, 12, 15,
+                        SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
         }
         if (blankArea != null) { blankArea.render(matrices); }
     }
 
-    private boolean isMouseOverScrollbar(double mouseX, double mouseY)
+    private boolean isMouseOverScrollbar(final double mouseX, final double mouseY)
     {
         final int top = y + 18;
         final int left = x + renderBackgroundWidth - 2;
@@ -91,13 +89,13 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
     }
 
     @Override
-    protected boolean isClickOutsideBounds(double mouseX, double mouseY, int left, int top, int button)
+    protected boolean isClickOutsideBounds(final double mouseX, final double mouseY, final int left, final int top, final int button)
     {
         return super.isClickOutsideBounds(mouseX, mouseY, left, top, button) && !isMouseOverScrollbar(mouseX, mouseY);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+    public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers)
     {
         if (hasScrollbar)
         {
@@ -105,8 +103,11 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
             {
                 if (topRow != SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)
                 {
-                    if (hasShiftDown()) { setTopRow(topRow, Math.min(topRow + SCREEN_META.HEIGHT, SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)); }
-                    else {setTopRow(topRow, topRow + 1);}
+                    if (hasShiftDown())
+                    {
+                        setTopRow(topRow, Math.min(topRow + SCREEN_META.HEIGHT, SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT));
+                    }
+                    else { setTopRow(topRow, topRow + 1); }
                 }
                 return true;
             }
@@ -124,7 +125,7 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button)
+    public boolean mouseClicked(final double mouseX, final double mouseY, final int button)
     {
         if (hasScrollbar && isMouseOverScrollbar(mouseX, mouseY) && button == 0)
         {
@@ -135,7 +136,7 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY)
+    public boolean mouseDragged(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY)
     {
         if (hasScrollbar && isDragging)
         {
@@ -144,28 +145,23 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    private void updateTopRow(double mouseY)
+    private void updateTopRow(final double mouseY)
     {
-        int top = y + 18;
-        int height = SCREEN_META.HEIGHT * 18;
-        int newTopRow = MathHelper.floor(MathHelper.clampedLerp(0, SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT, (mouseY - top) / height));
-        setTopRow(topRow, newTopRow);
+        setTopRow(topRow, MathHelper.floor(MathHelper.clampedLerp(0, SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT,
+                                                                  (mouseY - (y + 18)) / (SCREEN_META.HEIGHT * 18))));
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta)
+    public boolean mouseScrolled(final double mouseX, final double mouseY, final double delta)
     {
         if (hasScrollbar && (!ContainerLibraryClient.CONFIG.restrictive_scrolling || isMouseOverScrollbar(mouseX, mouseY)))
         {
-            int newTop;
+            final int newTop;
             if (delta < 0)
             {
                 newTop = Math.min(topRow + (hasShiftDown() ? SCREEN_META.HEIGHT : 1), SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT);
             }
-            else
-            {
-                newTop = Math.max(topRow - (hasShiftDown() ? SCREEN_META.HEIGHT : 1), 0);
-            }
+            else { newTop = Math.max(topRow - (hasShiftDown() ? SCREEN_META.HEIGHT : 1), 0); }
             setTopRow(topRow, newTop);
             return true;
         }
@@ -190,7 +186,7 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
                 handler.setSlotRange(setOutBegin, setOutBegin + setAmount, index -> -2000);
                 handler.moveSlotRange(movableBegin, setInBegin, -18 * rows);
                 handler.setSlotRange(setInBegin, Math.min(setInBegin + setAmount, SCREEN_META.TOTAL_SLOTS),
-                        index -> 18 * MathHelper.floorDiv(index - movableBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
+                                     index -> 18 * MathHelper.floorDiv(index - movableBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
             }
             else
             {
@@ -198,7 +194,7 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
                 final int movableBegin = oldTopRow * SCREEN_META.WIDTH;
                 final int setOutBegin = movableBegin + movableAmount;
                 handler.setSlotRange(setInBegin, setInBegin + setAmount,
-                        index -> 18 * MathHelper.floorDiv(index - setInBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
+                                     index -> 18 * MathHelper.floorDiv(index - setInBegin + SCREEN_META.WIDTH, SCREEN_META.WIDTH));
                 handler.moveSlotRange(movableBegin, setOutBegin, 18 * rows);
                 handler.setSlotRange(setOutBegin, Math.min(setOutBegin + setAmount, SCREEN_META.TOTAL_SLOTS), index -> -2000);
             }
@@ -209,42 +205,36 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
             handler.setSlotRange(oldMin, Math.min(oldMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT, SCREEN_META.TOTAL_SLOTS), index -> -2000);
             final int newMin = newTopRow * SCREEN_META.WIDTH;
             handler.setSlotRange(newMin, newMin + SCREEN_META.WIDTH * SCREEN_META.HEIGHT,
-                    index -> 18 + 18 * MathHelper.floorDiv(index - newMin, SCREEN_META.WIDTH));
+                                 index -> 18 + 18 * MathHelper.floorDiv(index - newMin, SCREEN_META.WIDTH));
         }
 
         if (newTopRow == SCREEN_META.TOTAL_ROWS - SCREEN_META.HEIGHT)
         {
-            int blanked = SCREEN_META.BLANK_SLOTS;
+            final int blanked = SCREEN_META.BLANK_SLOTS;
             if (blanked > 0)
             {
                 final int xOffset = 7 + (SCREEN_META.WIDTH - blanked) * 18;
-                blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18,
-                        xOffset, backgroundHeight, SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
+                blankArea = new Rectangle(x + xOffset, y + backgroundHeight - 115, blanked * 18, 18, xOffset, backgroundHeight,
+                                          SCREEN_META.TEXTURE_WIDTH, SCREEN_META.TEXTURE_HEIGHT);
             }
         }
-        else
-        {
-            blankArea = null;
-        }
+        else { blankArea = null; }
     }
 
     @Override
-    public void resize(MinecraftClient client, int width, int height)
+    public void resize(final MinecraftClient client, final int width, final int height)
     {
         if (hasScrollbar)
         {
-            int row = topRow;
+            final int row = topRow;
             super.resize(client, width, height);
             setTopRow(topRow, row);
         }
-        else
-        {
-            super.resize(client, width, height);
-        }
+        else { super.resize(client, width, height); }
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button)
+    public boolean mouseReleased(final double mouseX, final double mouseY, final int button)
     {
         if (hasScrollbar && isDragging)
         {
@@ -254,5 +244,3 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
         return super.mouseReleased(mouseX, mouseY, button);
     }
 }
-
-

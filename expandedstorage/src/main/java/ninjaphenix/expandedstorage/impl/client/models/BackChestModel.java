@@ -1,9 +1,5 @@
 package ninjaphenix.expandedstorage.impl.client.models;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-@Environment(EnvType.CLIENT)
 public final class BackChestModel extends SingleChestModel
 {
     public BackChestModel()

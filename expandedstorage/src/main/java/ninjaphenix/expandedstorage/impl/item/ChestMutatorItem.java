@@ -29,7 +29,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.impl.Const;
-import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.Registries;
 import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;
@@ -69,10 +69,10 @@ public final class ChestMutatorItem extends ChestModifierItem
                             if (!world.isClient)
                             {
                                 final BlockPos vec = pos.subtract(mainBlockPos);
-                                int sum = vec.getX() + vec.getY() + vec.getZ();
+                                final int sum = vec.getX() + vec.getY() + vec.getZ();
                                 if (sum == 1 || sum == -1)
                                 {
-                                    CursedChestType mainChestType = CursedChestBlock.getChestType(mainState.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
+                                    final CursedChestType mainChestType = CursedChestBlock.getChestType(mainState.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
                                     world.setBlockState(mainBlockPos, mainState.with(TYPE, mainChestType));
                                     world.setBlockState(pos, world.getBlockState(pos).with(TYPE, mainChestType.getOpposite()));
                                     tag.remove("pos");
@@ -154,7 +154,7 @@ public final class ChestMutatorItem extends ChestModifierItem
         {
             if (mode == MutatorMode.MERGE)
             {
-                CompoundTag tag = stack.getOrCreateTag();
+                final CompoundTag tag = stack.getOrCreateTag();
                 if (tag.contains("pos"))
                 {
                     if (state.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
@@ -164,12 +164,12 @@ public final class ChestMutatorItem extends ChestModifierItem
                         if (realOtherState.getBlock() == state.getBlock() && realOtherState.get(Properties.HORIZONTAL_FACING) == state.get(Properties.HORIZONTAL_FACING) && realOtherState.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
                         {
                             final BlockPos vec = otherPos.subtract(mainPos);
-                            int sum = vec.getX() + vec.getY() + vec.getZ();
+                            final int sum = vec.getX() + vec.getY() + vec.getZ();
                             if (sum == 1 || sum == -1)
                             {
                                 if (!world.isClient)
                                 {
-                                    Registries.TierData entry = Registries.CHEST.get(Const.id("wood_chest"));
+                                    final Registries.TierData entry = Registries.CHEST.get(Const.id("wood_chest"));
                                     final BlockState defState = Registry.BLOCK.get(entry.getBlockId()).getDefaultState().with(Properties.HORIZONTAL_FACING, state.get(Properties.HORIZONTAL_FACING));
                                     final CursedChestType mainChestType = BaseChestBlock.getChestType(state.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
                                     // todo: refactor into method.

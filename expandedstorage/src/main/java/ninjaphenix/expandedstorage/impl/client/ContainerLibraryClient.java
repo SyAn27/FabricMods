@@ -32,9 +32,9 @@ public final class ContainerLibraryClient implements ClientModInitializer
 
     private static JanksonConfigParser getConfigParser()
     {
-        return new JanksonConfigParser.Builder()
-                .deSerializer(JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
-                              ((identifier, marshaller) -> marshaller.serialize(identifier.toString()))).build();
+        return new JanksonConfigParser.Builder().deSerializer(
+                JsonPrimitive.class, Identifier.class, (it, marshaller) -> new Identifier(it.asString()),
+                ((identifier, marshaller) -> marshaller.serialize(identifier.toString()))).build();
     }
 
     private static Path getConfigPath() { return FabricLoader.getInstance().getConfigDir().resolve("ninjaphenix-container-library.json"); }
@@ -47,13 +47,13 @@ public final class ContainerLibraryClient implements ClientModInitializer
 
     public static void sendCallbackRemoveToServer()
     {
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Const.SCREEN_SELECT,
-                                                       new PacketByteBuf(Unpooled.buffer()).writeIdentifier(Const.id("auto")));
+        ClientSidePacketRegistry.INSTANCE.sendToServer(Const.SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer())
+                .writeIdentifier(Const.id("auto")));
     }
 
-    public static void setPreference(Identifier container_type)
+    public static void setPreference(final Identifier handlerType)
     {
-        CONFIG.preferred_container_type = container_type;
+        CONFIG.preferred_container_type = handlerType;
         getConfigParser().save(CONFIG, getConfigPath(), new MarkerManager.Log4jMarker(Const.MOD_ID));
     }
 

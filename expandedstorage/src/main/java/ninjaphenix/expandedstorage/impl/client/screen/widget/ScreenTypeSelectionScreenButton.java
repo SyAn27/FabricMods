@@ -32,7 +32,7 @@ public final class ScreenTypeSelectionScreenButton extends ButtonWidget
     public void renderButton(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
     {
         MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);

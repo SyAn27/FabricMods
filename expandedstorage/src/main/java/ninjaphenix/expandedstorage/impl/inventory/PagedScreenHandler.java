@@ -1,6 +1,8 @@
 package ninjaphenix.expandedstorage.impl.inventory;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Collections;
+import java.util.List;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,7 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.impl.content.ModContent;
 import ninjaphenix.expandedstorage.impl.screen.PagedScreenMeta;
-import java.util.Arrays;
 
 public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenMeta>
 {
@@ -43,15 +44,15 @@ public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenM
         for (int i = 0; i < 9; i++) { addSlot(new Slot(playerInventory, i, left + 18 * i, top + 58)); }
     }
 
-    private static PagedScreenMeta getNearestSize(int invSize)
+    private static PagedScreenMeta getNearestSize(final int invSize)
     {
-        PagedScreenMeta val = SIZES.get(invSize);
-        if (val != null) { return val; }
-        final Integer[] keys = SIZES.keySet().toArray(new Integer[]{});
-        Arrays.sort(keys);
-        final int largestKey = keys[Math.abs(Arrays.binarySearch(keys, invSize)) - 1];
-        val = SIZES.get(largestKey);
-        if (largestKey > invSize && largestKey - invSize <= val.WIDTH) { return SIZES.get(largestKey); }
+        final PagedScreenMeta exactMeta = SIZES.get(invSize);
+        if (exactMeta != null) { return exactMeta; }
+        final List<Integer> keys = SIZES.keySet().asList();
+        final int index = Collections.binarySearch(keys, invSize);
+        final int largestKey = keys.get(Math.abs(index) - 1);
+        final PagedScreenMeta nearestMeta = SIZES.get(largestKey);
+        if (nearestMeta != null && largestKey > invSize && largestKey - invSize <= nearestMeta.WIDTH) { return nearestMeta; }
         throw new RuntimeException("No screen can show an inventory of size " + invSize + ".");
     }
 
@@ -68,7 +69,10 @@ public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenM
         }
     }
 
-    public void moveSlotRange(int min, int max, int yChange) { for (int i = min; i < max; i++) { slots.get(i).y += yChange; } }
+    public void moveSlotRange(final int min, final int max, final int yChange)
+    {
+        for (int i = min; i < max; i++) { slots.get(i).y += yChange; }
+    }
 
     public static final class Factory implements ScreenHandlerRegistry.ExtendedClientHandlerFactory<PagedScreenHandler>
     {

@@ -34,7 +34,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.Registries;
 import ninjaphenix.expandedstorage.impl.ContainerLibrary;
 import ninjaphenix.expandedstorage.impl.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.impl.block.misc.CursedChestType;

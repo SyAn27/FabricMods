@@ -27,7 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
-import ninjaphenix.expandedstorage.api.Registries;
+import ninjaphenix.expandedstorage.impl.Registries;
 import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.impl.block.CursedChestBlock;
@@ -51,11 +51,11 @@ public final class ChestConversionItem extends ChestModifierItem
     }
 
     @SuppressWarnings({"ConstantConditions", "unchecked"})
-    private void upgradeCursedChest(World world, BlockPos pos, BlockState state)
+    private void upgradeCursedChest(final World world, final BlockPos pos, final BlockState state)
     {
         AbstractChestBlockEntity blockEntity = (AbstractChestBlockEntity) world.getBlockEntity(pos);
         final SimpleRegistry<Registries.TierData> registry = ((BaseChestBlock<AbstractChestBlockEntity>) state.getBlock()).getDataRegistry();
-        DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(registry.get(TO).getSlotCount(), ItemStack.EMPTY);
+        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(registry.get(TO).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
         BlockState newState = Registry.BLOCK.get(registry.get(TO).getBlockId()).getDefaultState();
@@ -69,14 +69,14 @@ public final class ChestConversionItem extends ChestModifierItem
         blockEntity.fromTag(world.getBlockState(pos), Inventories.toTag(blockEntity.toTag(new CompoundTag()), inventoryData));
     }
 
-    @SuppressWarnings({"ConstantConditions", "deprecation"})
-    private void upgradeChest(World world, BlockPos pos, BlockState state)
+    @SuppressWarnings({"ConstantConditions"})
+    private void upgradeChest(final World world, final BlockPos pos, final BlockState state)
     {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.CHEST.get(FROM).getSlotCount(), ItemStack.EMPTY);
+        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.CHEST.get(FROM).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
-        BlockState newState = Registry.BLOCK.get(Registries.CHEST.get(TO).getBlockId()).getDefaultState();
+        final BlockState newState = Registry.BLOCK.get(Registries.CHEST.get(TO).getBlockId()).getDefaultState();
         world.setBlockState(pos, newState.with(Properties.HORIZONTAL_FACING, state.get(Properties.HORIZONTAL_FACING))
                 .with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED))
                 .with(CursedChestBlock.TYPE, CursedChestType.valueOf(state.get(Properties.CHEST_TYPE))));
@@ -86,14 +86,14 @@ public final class ChestConversionItem extends ChestModifierItem
 
     @Override
     @SuppressWarnings({"ConstantConditions", "unchecked"})
-    protected ActionResult useModifierOnChestBlock(ItemUsageContext context, BlockState mainState, BlockPos mainBlockPos, BlockState otherState,
-                                                   BlockPos otherBlockPos)
+    protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos, final BlockState otherState,
+                                                   final BlockPos otherBlockPos)
     {
-        World world = context.getWorld();
-        PlayerEntity player = context.getPlayer();
-        BaseChestBlock<AbstractChestBlockEntity> chestBlock = (BaseChestBlock<AbstractChestBlockEntity>) mainState.getBlock();
+        final World world = context.getWorld();
+        final PlayerEntity player = context.getPlayer();
+        final BaseChestBlock<AbstractChestBlockEntity> chestBlock = (BaseChestBlock<AbstractChestBlockEntity>) mainState.getBlock();
         if (Registry.BLOCK.getId(chestBlock) != chestBlock.getDataRegistry().get(FROM).getBlockId()) { return ActionResult.FAIL; }
-        ItemStack handStack = player.getStackInHand(context.getHand());
+        final ItemStack handStack = player.getStackInHand(context.getHand());
         if (otherBlockPos == null)
         {
             if (!world.isClient)
@@ -139,7 +139,7 @@ public final class ChestConversionItem extends ChestModifierItem
             }
             else if (handStack.getCount() > 1 || player.isCreative())
             {
-                BlockPos otherPos;
+                final BlockPos otherPos;
                 if (state.get(Properties.CHEST_TYPE) == ChestType.RIGHT)
                 {
                     otherPos = mainPos.offset(state.get(Properties.HORIZONTAL_FACING).rotateYCounterclockwise());

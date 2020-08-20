@@ -19,6 +19,6 @@ public class Const
             new KeybindText("key.sneak"), new KeybindText("key.use")).formatted(Formatting.GOLD);
 
 
-    public static Identifier id(String path) { return new Identifier(MOD_ID, path); }
+    public static Identifier id(final String path) { return new Identifier(MOD_ID, path); }
 
 }
