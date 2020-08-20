@@ -17,15 +17,12 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ninjaphenix.expandedstorage.ExpandedStorage::INSTANCE",
-      "ninjaphenix.expandedstorage.ContainerLibrary::INSTANCE"
+      "ninjaphenix.expandedstorage.common.ExpandedStorage",
+      "ninjaphenix.expandedstorage.common.ContainerLibrary::INSTANCE"
     ],
     "client": [
       "ninjaphenix.expandedstorage.client.ExpandedStorageClient::INSTANCE",
-      "ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient::INSTANCE"
-    ],
-    "ninjaphenix-container-library-screens": [
-      "ninjaphenix.expandedstorage.impl.DefaultScreenSizes"
+      "ninjaphenix.expandedstorage.client.ContainerLibraryClient::INSTANCE"
     ]
   },
   "accessWidener": "expandedstorage.accesswidener",

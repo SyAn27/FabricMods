@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin
 {
-    @Inject(method = "onPlayerConnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;onPlayerConnected(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
+    @Inject(method = "onPlayerConnect", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/server/world/ServerWorld;onPlayerConnected(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
     private void chainmail_onPlayerConnected(final ClientConnection connection, final ServerPlayerEntity player, final CallbackInfo ci)
     {
         PlayerConnectCallback.EVENT.invoker().onPlayerConnected(player);

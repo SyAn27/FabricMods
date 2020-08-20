@@ -1,69 +1,44 @@
 package ninjaphenix.expandedstorage.client;
 
+import java.util.Arrays;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.item.BlockItem;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.SimpleRegistry;
-import ninjaphenix.chainmail.api.client.render.ChainmailRendering;
-import ninjaphenix.expandedstorage.ExpandedStorage;
-import ninjaphenix.expandedstorage.api.Registries;
-import ninjaphenix.expandedstorage.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.block.misc.CursedChestType;
+import ninjaphenix.expandedstorage.client.screen.PagedScreen;
+import ninjaphenix.expandedstorage.client.screen.ScrollableScreen;
+import ninjaphenix.expandedstorage.client.screen.SingleScreen;
+import ninjaphenix.expandedstorage.common.Registries;
+import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.content.ModContent;
 
-import java.util.function.Consumer;
+import static ninjaphenix.expandedstorage.common.content.ModContent.*;
 
-@Environment(EnvType.CLIENT)
-public class ExpandedStorageClient implements ClientModInitializer
+public final class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();
-    public static final Identifier CHEST_TEXTURE_ATLAS = ExpandedStorage.getId("chest_textures");
     private static final CursedChestBlockEntity CURSED_CHEST_RENDER_ENTITY = new CursedChestBlockEntity(null);
-
-    @SuppressWarnings("SameParameterValue")
-    private static <T extends Registries.TierData> void iterateOurTiers(SimpleRegistry<T> registry, Consumer<T> consumer)
-    {
-        for (Identifier id : registry.getIds())
-        {
-            if (id.getNamespace().equals(ExpandedStorage.MOD_ID) && !id.getPath().equals("null"))
-            { registry.getOrEmpty(id).ifPresent(consumer); }
-        }
-    }
-
-    public void makeAtlas(Consumer<SpriteIdentifier> consumer)
-    {
-        iterateOurTiers(Registries.CHEST, (data) ->
-        {
-            for (final CursedChestType type : CursedChestType.values())
-            {
-                consumer.accept(new SpriteIdentifier(CHEST_TEXTURE_ATLAS, data.getChestTexture(type)));
-            }
-        });
-    }
 
     @Override
     public void onInitializeClient()
     {
-        ClientSpriteRegistryCallback.event(CHEST_TEXTURE_ATLAS).register((atlas, registry) ->
-                iterateOurTiers(Registries.CHEST, (data) ->
+        ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register(
+                (atlas, registry) -> Registries.CHEST.stream().forEach(data -> Arrays.stream(CursedChestType.values())
+                        .map(data::getChestTexture).forEach(registry::register)));
+        BlockEntityRendererRegistry.INSTANCE.register(ModContent.CHEST, CursedChestBlockEntityRenderer::new);
+        ModContent.CHEST.blocks.forEach(block -> BuiltinItemRendererRegistry.INSTANCE.register(
+                block.asItem(), (stack, matrices, vertexConsumers, light, overlay) ->
                 {
-                    for (final CursedChestType type : CursedChestType.values())
-                    {
-                        registry.register(data.getChestTexture(type));
-                    }
-                })
-        );
-        BlockEntityRendererRegistry.INSTANCE.register(ExpandedStorage.CHEST, CursedChestBlockEntityRenderer::new);
-        ChainmailRendering.INSTANCE.registerBlockEntityItemStackRenderer(ExpandedStorage.CHEST,
-                (itemStack, mode, matrixStack, consumerProvider, light, overlay) -> {
-                    CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.BLOCK.getId(((BlockItem) itemStack.getItem()).getBlock()));
-                    BlockEntityRenderDispatcher.INSTANCE.renderEntity(CURSED_CHEST_RENDER_ENTITY, matrixStack, consumerProvider, light, overlay);
-                });
+                    CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.ITEM.getId(stack.getItem()));
+                    BlockEntityRenderDispatcher.INSTANCE.renderEntity(CURSED_CHEST_RENDER_ENTITY, matrices, vertexConsumers, light, overlay);
+                }));
+        ScreenRegistry.register(SCROLLABLE_HANDLER_TYPE, ScrollableScreen::new);
+        ScreenRegistry.register(PAGED_HANDLER_TYPE, PagedScreen::new);
+        ScreenRegistry.register(SINGLE_HANDLER_TYPE, SingleScreen::new);
     }
 }

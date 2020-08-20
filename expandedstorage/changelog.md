@@ -1,1 +1,8 @@
-- Add russian translations by Miros77.
+- Updated to be on par with forge version in terms of features.
+  - Added usage tooltips to chest mutator and chest conversion kits.
+  - Fixed a bug where the next page button would be unlocked when using keyboard shortcuts for changing pages.
+  - Fixed adjacent merge chests not sharing the same lighting value.
+- Internal Changes:
+  - Updated to using screen handler api.
+  - Item rendering for chests now uses fabric's BuiltinItemRendererRegistry.
+  - Bunch of non major code style changes.

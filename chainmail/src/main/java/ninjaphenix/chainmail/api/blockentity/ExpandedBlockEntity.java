@@ -7,5 +7,5 @@ public interface ExpandedBlockEntity
      *
      * @since 0.0.1
      */
-    default void onLoad() {}
+    default void onLoad() { }
 }

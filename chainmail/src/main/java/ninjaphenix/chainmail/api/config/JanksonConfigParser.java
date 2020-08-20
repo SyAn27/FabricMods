@@ -49,7 +49,8 @@ public final class JanksonConfigParser
             final F config = defaultConfig.get();
             if (save(config, configPath, marker))
             {
-                throw new RuntimeException(MessageFormat.format("[{0}] Failed to save initial config, look at logs for more info.", marker.getName()));
+                throw new RuntimeException(MessageFormat.format("[{0}] Failed to save initial config, look at logs for more info.",
+                                                                marker.getName()));
             }
             return config;
         }
@@ -58,7 +59,7 @@ public final class JanksonConfigParser
         {
             final JsonObject uConfig = _jankson.load(configStream);
             final JsonObject dConfig = (JsonObject) _jankson.toJson(defaultConfig.get());
-            JsonObject delta = uConfig.getDelta(dConfig); // returns keys overridden from default
+            final JsonObject delta = uConfig.getDelta(dConfig); // returns keys overridden from default
             if (delta.size() > 0)
             {
                 final F config = _jankson.fromJson(uConfig, configClass);
