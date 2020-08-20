@@ -48,7 +48,6 @@ public final class ModContent
             @Environment(EnvType.CLIENT)
             public ItemStack createIcon() { return new ItemStack(DIAMOND_CHEST); }
         });
-        DIAMOND_CHEST = chest(Blocks.DIAMOND_BLOCK, "diamond_chest", 12, group);
         CHEST = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("cursed_chest"),
                                   BlockEntityType.Builder.create(() -> new CursedChestBlockEntity(null),
                                                                  chest(Blocks.OAK_PLANKS, "wood_chest", 3, group),
@@ -56,7 +55,7 @@ public final class ModContent
                                                                  chest(Blocks.OAK_PLANKS, "christmas_chest", 3, group),
                                                                  chest(Blocks.IRON_BLOCK, "iron_chest", 6, group),
                                                                  chest(Blocks.GOLD_BLOCK, "gold_chest", 9, group),
-                                                                 DIAMOND_CHEST,
+                                                                 DIAMOND_CHEST = chest(Blocks.DIAMOND_BLOCK, "diamond_chest", 12, group),
                                                                  chest(Blocks.OBSIDIAN, "obsidian_chest", 12, group),
                                                                  chest(Blocks.NETHERITE_BLOCK, "netherite_chest", 15, group)).build(null));
         OLD_CHEST = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("old_cursed_chest"),
