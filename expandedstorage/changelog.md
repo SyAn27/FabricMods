@@ -1,3 +1,4 @@
+- Fixed crash that happened in previous build.
 - Updated to be on par with forge version in terms of features.
   - Added usage tooltips to chest mutator and chest conversion kits.
   - Fixed a bug where the next page button would be unlocked when using keyboard shortcuts for changing pages.
