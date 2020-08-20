@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.expandedstorage.Const;
-import ninjaphenix.expandedstorage.screen.ScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.ScreenMeta;
 
 public abstract class AbstractScreenHandler<T extends ScreenMeta> extends ScreenHandler
 {

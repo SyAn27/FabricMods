@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.screen;
+package ninjaphenix.expandedstorage.inventory.screen;
 
 import net.minecraft.util.Identifier;
 

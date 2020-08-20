@@ -10,7 +10,7 @@ import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.inventory.ScrollableScreenHandler;
-import ninjaphenix.expandedstorage.screen.ScrollableScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.ScrollableScreenMeta;
 
 public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandler, ScrollableScreenMeta>
 {

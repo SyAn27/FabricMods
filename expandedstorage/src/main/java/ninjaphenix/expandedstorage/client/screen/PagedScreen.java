@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 import ninjaphenix.expandedstorage.Const;
 import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.inventory.PagedScreenHandler;
-import ninjaphenix.expandedstorage.screen.PagedScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.PagedScreenMeta;
 
 public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedScreenMeta>
 {

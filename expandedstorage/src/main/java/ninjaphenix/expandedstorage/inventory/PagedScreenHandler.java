@@ -14,7 +14,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.content.ModContent;
-import ninjaphenix.expandedstorage.screen.PagedScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.PagedScreenMeta;
 
 public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenMeta>
 {

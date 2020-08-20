@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
 import ninjaphenix.expandedstorage.inventory.SingleScreenHandler;
-import ninjaphenix.expandedstorage.screen.SingleScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.SingleScreenMeta;
 
 public final class SingleScreen extends AbstractScreen<SingleScreenHandler, SingleScreenMeta>
 {

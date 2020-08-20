@@ -15,7 +15,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.content.ModContent;
-import ninjaphenix.expandedstorage.screen.ScrollableScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.ScrollableScreenMeta;
 
 public final class ScrollableScreenHandler extends AbstractScreenHandler<ScrollableScreenMeta>
 {

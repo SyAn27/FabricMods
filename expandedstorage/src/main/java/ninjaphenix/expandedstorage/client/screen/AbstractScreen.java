@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import ninjaphenix.expandedstorage.client.ContainerLibraryClient;
 import ninjaphenix.expandedstorage.inventory.AbstractScreenHandler;
-import ninjaphenix.expandedstorage.screen.ScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.ScreenMeta;
 
 public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R extends ScreenMeta> extends HandledScreen<T>
 {

@@ -13,7 +13,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.expandedstorage.content.ModContent;
-import ninjaphenix.expandedstorage.screen.SingleScreenMeta;
+import ninjaphenix.expandedstorage.inventory.screen.SingleScreenMeta;
 
 public final class SingleScreenHandler extends AbstractScreenHandler<SingleScreenMeta>
 {
