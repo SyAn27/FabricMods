@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage;
+package ninjaphenix.expandedstorage.impl;
 
 import com.google.common.collect.ImmutableMap;
 import net.fabricmc.loader.api.FabricLoader;
@@ -12,7 +12,8 @@ import java.util.Set;
 public final class ExpandedStorageMixinPlugin implements IMixinConfigPlugin
 {
     private final ImmutableMap<String, Boolean> conditionalMixins = ImmutableMap.<String, Boolean>builder()
-            .put("ninjaphenix.expandedstorage.mixin.ToweletteSupportMixin", FabricLoader.getInstance().isModLoaded("towelette")).build();
+            .put("ninjaphenix.expandedstorage.impl.mixin.ToweletteSupportMixin", FabricLoader.getInstance().isModLoaded("towelette"))
+            .build();
 
     @Override
     public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName)

@@ -9,7 +9,9 @@ import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
 import ninjaphenix.expandedstorage.impl.Const;
 import ninjaphenix.expandedstorage.impl.ContainerLibrary;
@@ -63,7 +65,7 @@ public final class ContainerLibraryClient implements ClientModInitializer
         ClientSidePacketRegistry.INSTANCE.register(Const.SCREEN_SELECT, (context, buffer) ->
         {
             final int count = buffer.readInt();
-            final HashMap<Identifier, ScreenMiscSettings> allowed = new HashMap<>();
+            final HashMap<Identifier, Pair<Identifier, Text>> allowed = new HashMap<>();
             for (int i = 0; i < count; i++)
             {
                 final Identifier containerFactoryId = buffer.readIdentifier();

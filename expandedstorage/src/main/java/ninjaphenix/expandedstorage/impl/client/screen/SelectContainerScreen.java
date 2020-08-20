@@ -9,17 +9,17 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
-import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
 
 public final class SelectContainerScreen extends Screen
 {
-    private final HashMap<Identifier, ScreenMiscSettings> OPTIONS;
+    private final HashMap<Identifier, Pair<Identifier,Text>> OPTIONS;
     private final int PADDING = 24;
     private int TOP;
 
-    public SelectContainerScreen(final HashMap<Identifier, ScreenMiscSettings> options)
+    public SelectContainerScreen(final HashMap<Identifier, Pair<Identifier,Text>> options)
     {
         super(new TranslatableText("screen.expandedstorage.screen_picker_title"));
         OPTIONS = options;
@@ -40,12 +40,12 @@ public final class SelectContainerScreen extends Screen
         int leftPadding = MathHelper.ceil((width - 96 * maxColumns - PADDING * (maxColumns - 1)) / 2D);
         final int topPadding = MathHelper.ceil((height - 96 * totalRows - PADDING * (totalRows - 1)) / 2D);
         TOP = topPadding;
-        for (final HashMap.Entry<Identifier, ScreenMiscSettings> entry : OPTIONS.entrySet())
+        for (final HashMap.Entry<Identifier, Pair<Identifier,Text>> entry : OPTIONS.entrySet())
         {
             final Identifier id = entry.getKey();
-            final ScreenMiscSettings settings = entry.getValue();
+            final Pair<Identifier,Text> settings = entry.getValue();
             addButton(new ScreenTypeButton(leftPadding + (PADDING + 96) * x, topPadding + (PADDING + 96) * y, 96, 96,
-                                           settings.SELECT_TEXTURE_ID, settings.NARRATION_MESSAGE, button -> updatePlayerPreference(id),
+                                           settings.getLeft(), settings.getRight(), button -> updatePlayerPreference(id),
                                            (button, matrices, tX, tY) -> renderTooltip(matrices, button.getMessage(), tX, tY)));
             x++;
             if (x == maxColumns)

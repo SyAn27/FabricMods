@@ -3,7 +3,6 @@ package ninjaphenix.expandedstorage.impl;
 import com.google.common.collect.ImmutableMap;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -18,10 +17,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
 import ninjaphenix.expandedstorage.impl.inventory.*;
-import ninjaphenix.expandedstorage.impl.client.ScreenMiscSettings;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -35,8 +34,7 @@ public final class ContainerLibrary implements ModInitializer
 
     private ContainerLibrary() { }
 
-    @Environment(EnvType.CLIENT)
-    private final HashMap<Identifier, ScreenMiscSettings> screenMiscSettings = new HashMap<>();
+    private final HashMap<Identifier, Pair<Identifier, Text>> screenMiscSettings = new HashMap<>();
     private final HashSet<Identifier> declaredContainerTypes = new HashSet<>();
     private final HashMap<UUID, Consumer<Identifier>> preferenceCallbacks = new HashMap<>();
     private final HashMap<UUID, Identifier> playerPreferences = new HashMap<>();
@@ -49,13 +47,11 @@ public final class ContainerLibrary implements ModInitializer
 
     public boolean isContainerTypeDeclared(final Identifier containerTypeId)
     {
-        Objects.requireNonNull(containerTypeId, "ContainerTypeImpl#isContainerTypeDeclared received null instead of an Identifier. (Container Type ID)");
         return declaredContainerTypes.contains(containerTypeId);
     }
 
     public void setPlayerPreference(final PlayerEntity player, final Identifier containerTypeId)
     {
-        Objects.requireNonNull(player, "ContainerLibraryImpl#setPlayerPreference received null instead of a PlayerEntity.");
         final UUID uuid = player.getUuid();
         if (declaredContainerTypes.contains(containerTypeId))
         {
@@ -76,15 +72,11 @@ public final class ContainerLibrary implements ModInitializer
         {
             player.openHandledScreen(handlerFactory);
         }
-        else
-        {
-            openSelectScreen(player, (type) -> openContainer(player, handlerFactory));
-        }
+        else { openSelectScreen(player, (type) -> openContainer(player, handlerFactory)); }
     }
 
     public void openSelectScreen(final PlayerEntity player, final Consumer<Identifier> playerPreferenceCallback)
     {
-        Objects.requireNonNull(player, "ContainerLibraryImpl#openSelectScreen received null instead of a PlayerEntity.");
         if (playerPreferenceCallback != null) { preferenceCallbacks.put(player.getUuid(), playerPreferenceCallback); }
         final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeInt(declaredContainerTypes.size());
@@ -94,15 +86,11 @@ public final class ContainerLibrary implements ModInitializer
 
     public void declareContainerType(final Identifier containerTypeId, final Identifier selectTextureId, final Text narrationMessage)
     {
-        Objects.requireNonNull(containerTypeId, "ContainerLibraryImpl#declareContainerType received null instead of an Identifier. (Container Type ID)");
-        Objects.requireNonNull(selectTextureId, "ContainerLibraryImpl#declareContainerType received null instead of an Identifier. (Select Texture ID)");
-        Objects.requireNonNull(narrationMessage, "ContainerLibraryImpl#declareContainerType received null instead of a Text. (Narration Message)");
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { screenMiscSettings.put(containerTypeId, new ScreenMiscSettings(selectTextureId, narrationMessage)); }
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { screenMiscSettings.put(containerTypeId, new Pair<>(selectTextureId, narrationMessage)); }
         declaredContainerTypes.add(containerTypeId);
     }
 
-    @Environment(EnvType.CLIENT)
-    public ScreenMiscSettings getScreenSettings(final Identifier containerTypeId)
+    public Pair<Identifier, Text> getScreenSettings(final Identifier containerTypeId)
     {
         Objects.requireNonNull(containerTypeId, "ContainerLibraryImpl#getScreenSettings received null instead of an Identifier. (Container Type ID)");
         return screenMiscSettings.get(containerTypeId);
@@ -112,9 +100,9 @@ public final class ContainerLibrary implements ModInitializer
     public void onInitialize()
     {
         final Function<String, TranslatableText> nameFunc = (name) -> new TranslatableText(String.format("screen.%s.%s", Const.MOD_ID, name));
-        declareContainerType(Const.SINGLE_CONTAINER, Const.id("textures/gui/single_button.png"), nameFunc.apply("single_screen_type"));
-        declareContainerType(Const.SCROLLABLE_CONTAINER, Const.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen_type"));
-        declareContainerType(Const.PAGED_CONTAINER, Const.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen_type"));
+        declareContainerType(Const.SINGLE_CONTAINER, Const.id("textures/gui/single_button.png"), nameFunc.apply("single_screen"));
+        declareContainerType(Const.SCROLLABLE_CONTAINER, Const.id("textures/gui/scrollable_button.png"), nameFunc.apply("scrollable_screen"));
+        declareContainerType(Const.PAGED_CONTAINER, Const.id("textures/gui/paged_button.png"), nameFunc.apply("paged_screen"));
         ServerSidePacketRegistry.INSTANCE.register(Const.OPEN_SCREEN_SELECT, this::onReceiveOpenSelectScreenPacket);
         ServerSidePacketRegistry.INSTANCE.register(Const.SCREEN_SELECT, this::onReceivePlayerPreference);
         PlayerDisconnectCallback.EVENT.register(player -> setPlayerPreference(player, null));
@@ -143,10 +131,7 @@ public final class ContainerLibrary implements ModInitializer
                 }
 
                 @Override
-                public Text getDisplayName()
-                {
-                    return screenHandler.getDisplayName();
-                }
+                public Text getDisplayName() { return screenHandler.getDisplayName(); }
 
                 @Override
                 public void writeScreenOpeningData(final ServerPlayerEntity player, final PacketByteBuf wOpenBuffer)
@@ -155,10 +140,7 @@ public final class ContainerLibrary implements ModInitializer
                 }
             }));
         }
-        else
-        {
-            ContainerLibrary.INSTANCE.openSelectScreen(sender, null);
-        }
+        else { ContainerLibrary.INSTANCE.openSelectScreen(sender, null); }
     }
 
     public ScreenHandler getScreenHandler(final int syncId, final BlockPos pos, final Inventory inventory, final PlayerEntity player,

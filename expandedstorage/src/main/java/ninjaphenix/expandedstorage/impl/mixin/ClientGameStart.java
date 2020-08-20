@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.mixin;
+package ninjaphenix.expandedstorage.impl.mixin;
 
 import net.minecraft.client.MinecraftClientGame;
 import ninjaphenix.expandedstorage.impl.client.ContainerLibraryClient;
