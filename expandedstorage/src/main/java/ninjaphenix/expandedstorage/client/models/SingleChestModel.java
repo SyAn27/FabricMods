@@ -36,10 +36,14 @@ public class SingleChestModel extends Model
         lid.pitch = -((1.0F - pitch * pitch * pitch) * 1.5707964F);
     }
 
-    public void render(final MatrixStack matrices, final VertexConsumer vertexConsumer, final int i, final int j) { render(matrices, vertexConsumer, i, j, 1, 1, 1, 1); }
+    public void render(final MatrixStack matrices, final VertexConsumer vertexConsumer, final int i, final int j)
+    {
+        render(matrices, vertexConsumer, i, j, 1, 1, 1, 1);
+    }
 
     @Override
-    public void render(final MatrixStack matrices, final VertexConsumer consumer, final int i, final int j, final float r, final float g, final float b, final float f)
+    public void render(final MatrixStack matrices, final VertexConsumer consumer, final int i, final int j, final float r, final float g,
+                       final float b, final float f)
     {
         base.render(matrices, consumer, i, j);
         lid.render(matrices, consumer, i, j);

@@ -211,11 +211,10 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         if (!world.isClient)
         {
             final Optional<ExtendedScreenHandlerFactory> containerProvider = combine(state, world, pos, false).apply(CONTAINER_GETTER);
-            containerProvider.ifPresent(provider ->
-                                        {
-                                            ContainerLibrary.INSTANCE.openContainer(player, provider);
-                                            player.incrementStat(getOpenStat());
-                                        });
+            containerProvider.ifPresent(provider -> {
+                ContainerLibrary.INSTANCE.openContainer(player, provider);
+                player.incrementStat(getOpenStat());
+            });
         }
         return ActionResult.SUCCESS;
     }
@@ -316,7 +315,6 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         }
         return getDefaultState().with(HORIZONTAL_FACING, direction_1).with(TYPE, chestType);
     }
-
 
     @Override
     @SuppressWarnings("deprecation")

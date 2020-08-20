@@ -18,7 +18,5 @@ public class Const
     public static final MutableText leftShiftRightClick = new TranslatableText("tooltip.expandedstorage.left_shift_right_click",
             new KeybindText("key.sneak"), new KeybindText("key.use")).formatted(Formatting.GOLD);
 
-
     public static Identifier id(final String path) { return new Identifier(MOD_ID, path); }
-
 }
