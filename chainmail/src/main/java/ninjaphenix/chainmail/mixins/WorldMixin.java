@@ -14,9 +14,6 @@ public abstract class WorldMixin
     @Inject(method = "addBlockEntity", at = @At("TAIL"))
     private void chainmail_addBlockEntity(final BlockEntity be, final CallbackInfoReturnable<Boolean> cir)
     {
-        if (be instanceof ExpandedBlockEntity)
-        {
-            ((ExpandedBlockEntity) be).onLoad();
-        }
+        if (be instanceof ExpandedBlockEntity) { ((ExpandedBlockEntity) be).onLoad(); }
     }
 }

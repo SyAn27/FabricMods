@@ -17,19 +17,19 @@ import org.apache.logging.log4j.MarkerManager;
 
 public class Main implements ModInitializer
 {
-    @SuppressWarnings("unused")
     public static Main INSTANCE = new Main();
 
     @Override
     public void onInitialize()
     {
-        final Block TEST_BLOCK = Registry.register(Registry.BLOCK, new Identifier("test_a", "test_block"), new TestBlock(Block.Settings.of(Material.BAMBOO)));
+        final Block TEST_BLOCK = Registry.register(Registry.BLOCK, new Identifier("test_a", "test_block"),
+                                                   new TestBlock(Block.Settings.of(Material.BAMBOO)));
         Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("test_a", "test_block_entity"),
-                BlockEntityType.Builder.create(TestBlockEntity::new, TEST_BLOCK).build(null));
+                          BlockEntityType.Builder.create(TestBlockEntity::new, TEST_BLOCK).build(null));
         Registry.register(Registry.ITEM, new Identifier("test_a", "test_block"), new BlockItem(TEST_BLOCK, new Item.Settings()));
-
-        Config g = new JanksonConfigParser.Builder().build().load(Config.class, Config::new,
-                FabricLoader.getInstance().getConfigDir().resolve("test/config.json"), new MarkerManager.Log4jMarker("chainmail-tests"));
+        final Config g = new JanksonConfigParser.Builder().build().load(Config.class, Config::new,
+                                                                  FabricLoader.getInstance().getConfigDir().resolve("test/config.json"),
+                                                                  new MarkerManager.Log4jMarker("chainmail-tests"));
         System.out.println(g.a);
         System.out.println(g.B);
 
