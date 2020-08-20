@@ -6,4 +6,3 @@
   - Updated to using screen handler api.
   - Item rendering for chests now uses fabric's BuiltinItemRendererRegistry.
   - Bunch of non major code style changes.
-  - Build info is now appended to the end of the curseforge changelog.
