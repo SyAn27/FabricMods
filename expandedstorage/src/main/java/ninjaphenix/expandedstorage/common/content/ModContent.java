@@ -2,7 +2,6 @@ package ninjaphenix.expandedstorage.common.content;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -23,9 +22,6 @@ import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockE
 import ninjaphenix.expandedstorage.common.content.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.common.content.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.common.content.block.OldChestBlock;
-import ninjaphenix.expandedstorage.client.screen.PagedScreen;
-import ninjaphenix.expandedstorage.client.screen.ScrollableScreen;
-import ninjaphenix.expandedstorage.client.screen.SingleScreen;
 import ninjaphenix.expandedstorage.common.inventory.PagedScreenHandler;
 import ninjaphenix.expandedstorage.common.inventory.ScrollableScreenHandler;
 import ninjaphenix.expandedstorage.common.inventory.SingleScreenHandler;
@@ -121,12 +117,5 @@ public final class ModContent
                 Registry.register(Registry.ITEM, id, new ChestConversionItem(new Item.Settings().group(group).maxCount(16), from, to));
             }
         }
-    }
-
-    public static void registerScreenHandlerScreens()
-    {
-        ScreenRegistry.register(SCROLLABLE_HANDLER_TYPE, ScrollableScreen::new);
-        ScreenRegistry.register(PAGED_HANDLER_TYPE, PagedScreen::new);
-        ScreenRegistry.register(SINGLE_HANDLER_TYPE, SingleScreen::new);
     }
 }
