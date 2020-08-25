@@ -142,8 +142,7 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         super.drawForeground(matrices, mouseX, mouseY);
         if (currentPageText != null)
         {
-            textRenderer.draw(matrices, currentPageText.asOrderedText(), pageTextX - x, backgroundHeight - 94,
-                              0x404040);
+            textRenderer.draw(matrices, currentPageText, pageTextX - x, backgroundHeight - 94, 0x404040);
         }
     }
 
