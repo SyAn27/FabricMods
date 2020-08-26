@@ -42,7 +42,7 @@ import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
-public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends BlockWithEntity
+public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends BlockWithEntity implements InventoryProvider
 {
     public static final EnumProperty<CursedChestType> TYPE = EnumProperty.of("type", CursedChestType.class);
     private final Supplier<BlockEntityType<T>> blockEntityType;
@@ -185,7 +185,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         builder.add(HORIZONTAL_FACING, TYPE);
     }
 
-    public final PropertySource<? extends T> combine(final BlockState state, final World world, final BlockPos pos,
+    public final PropertySource<? extends T> combine(final BlockState state, final WorldAccess world, final BlockPos pos,
                                                      final boolean alwaysOpen)
     {
         final BiPredicate<WorldAccess, BlockPos> isChestBlocked = alwaysOpen ? (_world, _pos) -> false : this::isBlocked;
@@ -367,4 +367,10 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
     public final boolean hasComparatorOutput(final BlockState state) { return true; }
 
     public abstract <R extends Registries.TierData> SimpleRegistry<R> getDataRegistry();
+
+    @Override // keep for hoppers.
+    public SidedInventory getInventory(final BlockState state, final WorldAccess world, final BlockPos pos)
+    {
+        return combine(state, world, pos, true).apply(INVENTORY_GETTER).orElse(null);
+    }
 }
