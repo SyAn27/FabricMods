@@ -2,7 +2,6 @@ package ninjaphenix.expandedstorage.client.models;
 
 public final class LeftChestModel extends SingleChestModel
 {
-
     public LeftChestModel()
     {
         super(64, 48);
