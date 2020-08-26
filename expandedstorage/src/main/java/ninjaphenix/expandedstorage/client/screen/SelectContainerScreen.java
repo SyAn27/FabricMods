@@ -11,7 +11,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.client.ContainerLibraryClient;
+import ninjaphenix.expandedstorage.client.ExpandedStorageClient;
 
 public final class SelectContainerScreen extends Screen
 {
@@ -64,14 +64,14 @@ public final class SelectContainerScreen extends Screen
     @Override
     public void onClose()
     {
-        ContainerLibraryClient.sendCallbackRemoveToServer();
+        ExpandedStorageClient.sendCallbackRemoveToServer();
         super.onClose();
     }
 
     private void updatePlayerPreference(final Identifier selection)
     {
-        ContainerLibraryClient.setPreference(selection);
-        ContainerLibraryClient.sendPreferencesToServer();
+        ExpandedStorageClient.setPreference(selection);
+        ExpandedStorageClient.sendPreferencesToServer();
         MinecraftClient.getInstance().openScreen(null);
     }
 

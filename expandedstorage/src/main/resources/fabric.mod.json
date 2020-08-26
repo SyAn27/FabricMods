@@ -21,8 +21,7 @@
       "ninjaphenix.expandedstorage.common.ContainerLibrary::INSTANCE"
     ],
     "client": [
-      "ninjaphenix.expandedstorage.client.ExpandedStorageClient::INSTANCE",
-      "ninjaphenix.expandedstorage.client.ContainerLibraryClient::INSTANCE"
+      "ninjaphenix.expandedstorage.client.ExpandedStorageClient::INSTANCE"
     ]
   },
   "accessWidener": "expandedstorage.accesswidener",
