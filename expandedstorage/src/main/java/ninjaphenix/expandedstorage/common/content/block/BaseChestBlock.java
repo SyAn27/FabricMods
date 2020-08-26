@@ -34,7 +34,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.common.ContainerLibrary;
+import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.content.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
@@ -93,7 +93,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             {
                                 first.checkLootInteraction(player);
                                 second.checkLootInteraction(player);
-                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
+                                return ExpandedStorage.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
                             }
                             return null;
                         }
@@ -121,7 +121,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             if (single.canPlayerUse(player))
                             {
                                 single.checkLootInteraction(player);
-                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
+                                return ExpandedStorage.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
                             }
                             return null;
                         }
@@ -212,7 +212,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         {
             final Optional<ExtendedScreenHandlerFactory> containerProvider = combine(state, world, pos, false).apply(CONTAINER_GETTER);
             containerProvider.ifPresent(provider -> {
-                ContainerLibrary.INSTANCE.openContainer(player, provider);
+                ExpandedStorage.INSTANCE.openContainer(player, provider);
                 player.incrementStat(getOpenStat());
             });
         }

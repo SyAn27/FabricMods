@@ -27,7 +27,7 @@ import ninjaphenix.expandedstorage.client.screen.ScrollableScreen;
 import ninjaphenix.expandedstorage.client.screen.SelectContainerScreen;
 import ninjaphenix.expandedstorage.client.screen.SingleScreen;
 import ninjaphenix.expandedstorage.common.Const;
-import ninjaphenix.expandedstorage.common.ContainerLibrary;
+import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
@@ -60,9 +60,9 @@ public final class ExpandedStorageClient implements ClientModInitializer
             for (int i = 0; i < count; i++)
             {
                 final Identifier containerFactoryId = buffer.readIdentifier();
-                if (ContainerLibrary.INSTANCE.isContainerTypeDeclared(containerFactoryId))
+                if (ExpandedStorage.INSTANCE.isContainerTypeDeclared(containerFactoryId))
                 {
-                    allowed.put(containerFactoryId, ContainerLibrary.INSTANCE.getScreenSettings(containerFactoryId));
+                    allowed.put(containerFactoryId, ExpandedStorage.INSTANCE.getScreenSettings(containerFactoryId));
                 }
             }
             MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed));
