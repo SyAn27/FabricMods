@@ -14,11 +14,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 import ninjaphenix.expandedstorage.client.models.*;
-import ninjaphenix.expandedstorage.common.content.ModContent;
-import ninjaphenix.expandedstorage.common.content.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.common.ModContent;
+import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
 
 public final class CursedChestBlockEntityRenderer extends BlockEntityRenderer<CursedChestBlockEntity>
 {

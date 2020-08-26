@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.content.item;
+package ninjaphenix.expandedstorage.common.item;
 
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;

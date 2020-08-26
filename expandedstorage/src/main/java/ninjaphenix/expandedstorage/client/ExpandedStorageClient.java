@@ -29,12 +29,12 @@ import ninjaphenix.expandedstorage.client.screen.SingleScreen;
 import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
-import ninjaphenix.expandedstorage.common.content.ModContent;
+import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.common.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.ModContent;
 import org.apache.logging.log4j.MarkerManager;
 
-import static ninjaphenix.expandedstorage.common.content.ModContent.*;
+import static ninjaphenix.expandedstorage.common.ModContent.*;
 
 public final class ExpandedStorageClient implements ClientModInitializer
 {

@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.content.block;
+package ninjaphenix.expandedstorage.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,7 +11,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.common.content.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
 
 import java.util.function.Supplier;
 

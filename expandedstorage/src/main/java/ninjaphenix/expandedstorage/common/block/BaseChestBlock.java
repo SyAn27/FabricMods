@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.content.block;
+package ninjaphenix.expandedstorage.common.block;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
@@ -36,8 +36,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.content.block.entity.AbstractChestBlockEntity;
-import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;

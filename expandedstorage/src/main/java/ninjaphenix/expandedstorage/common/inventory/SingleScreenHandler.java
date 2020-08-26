@@ -12,7 +12,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.expandedstorage.common.content.ModContent;
+import ninjaphenix.expandedstorage.common.ModContent;
 import ninjaphenix.expandedstorage.common.inventory.screen.SingleScreenMeta;
 
 public final class SingleScreenHandler extends AbstractScreenHandler<SingleScreenMeta>

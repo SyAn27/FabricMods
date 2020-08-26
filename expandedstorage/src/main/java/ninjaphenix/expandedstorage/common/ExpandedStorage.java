@@ -20,7 +20,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.chainmail.api.events.PlayerDisconnectCallback;
-import ninjaphenix.expandedstorage.common.content.ModContent;
 import ninjaphenix.expandedstorage.common.inventory.*;
 import javax.annotation.Nullable;
 import java.util.HashMap;

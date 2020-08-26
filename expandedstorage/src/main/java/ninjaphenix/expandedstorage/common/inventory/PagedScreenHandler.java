@@ -13,7 +13,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.common.content.ModContent;
+import ninjaphenix.expandedstorage.common.ModContent;
 import ninjaphenix.expandedstorage.common.inventory.screen.PagedScreenMeta;
 
 public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenMeta>

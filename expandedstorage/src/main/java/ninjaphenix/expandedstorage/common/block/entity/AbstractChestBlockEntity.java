@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.content.block.entity;
+package ninjaphenix.expandedstorage.common.block.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
