@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:chest"
+            "tag": "c:wooden_chests"
           }
         ]
       }
