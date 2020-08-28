@@ -1,6 +1,7 @@
 package ninjaphenix.container_library.impl.client.screen;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
@@ -15,14 +16,16 @@ import ninjaphenix.container_library.impl.common.Const;
 
 public final class SelectContainerScreen extends Screen
 {
-    private final HashMap<Identifier, Pair<Identifier, Text>> OPTIONS;
+    private final Map<Identifier, Pair<Identifier, Text>> OPTIONS;
+    private final Consumer<Identifier> CLOSE_CALLBACK;
     private final int PADDING = 24;
     private int TOP;
 
-    public SelectContainerScreen(final HashMap<Identifier, Pair<Identifier, Text>> options)
+    public SelectContainerScreen(final Map<Identifier, Pair<Identifier, Text>> options, Consumer<Identifier> onSuccessfulClose)
     {
         super(Const.translation("screen.%s.screen_picker_title"));
         OPTIONS = options;
+        CLOSE_CALLBACK = onSuccessfulClose;
     }
 
     @Override
@@ -40,7 +43,7 @@ public final class SelectContainerScreen extends Screen
         int leftPadding = MathHelper.ceil((width - 96 * maxColumns - PADDING * (maxColumns - 1)) / 2D);
         final int topPadding = MathHelper.ceil((height - 96 * totalRows - PADDING * (totalRows - 1)) / 2D);
         TOP = topPadding;
-        for (final HashMap.Entry<Identifier, Pair<Identifier, Text>> entry : OPTIONS.entrySet())
+        for (final Map.Entry<Identifier, Pair<Identifier, Text>> entry : OPTIONS.entrySet())
         {
             final Identifier id = entry.getKey();
             final Pair<Identifier, Text> settings = entry.getValue();
@@ -70,12 +73,8 @@ public final class SelectContainerScreen extends Screen
 
     private void updatePlayerPreference(final Identifier selection)
     {
-        ContainerLibraryClient.setPreference(selection);
-        ContainerLibraryClient.sendPreferencesToServer();
+        CLOSE_CALLBACK.accept(selection);
     }
-
-    @Override
-    public boolean shouldCloseOnEsc() { return false; }
 
     @Override
     public void render(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)

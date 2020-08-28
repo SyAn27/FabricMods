@@ -3,6 +3,7 @@ package ninjaphenix.container_library.api.common.inventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
@@ -83,6 +84,13 @@ public abstract class AbstractScreenHandler<T extends AbstractScreenHandler.Scre
             TEXTURE = texture;
             TEXTURE_WIDTH = textureWidth;
             TEXTURE_HEIGHT = textureHeight;
+        }
+
+        public void serialize(final PacketByteBuf buffer)
+        {
+            buffer.writeInt(WIDTH);
+            buffer.writeInt(HEIGHT);
+            buffer.writeInt(TOTAL_SLOTS);
         }
     }
 }

@@ -51,7 +51,11 @@ public class ContainerLibraryClient implements ClientModInitializer
                     allowed.put(containerFactoryId, ContainerLibrary.INSTANCE.getScreenSettings(containerFactoryId));
                 }
             }
-            MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed));
+            MinecraftClient.getInstance().openScreen(new SelectContainerScreen(allowed, id ->
+            {
+                ContainerLibraryClient.setPreference(id);
+                ContainerLibraryClient.sendPreferencesToServer();
+            }));
         });
 
         BuiltinScreenTypes.registerScreens();
