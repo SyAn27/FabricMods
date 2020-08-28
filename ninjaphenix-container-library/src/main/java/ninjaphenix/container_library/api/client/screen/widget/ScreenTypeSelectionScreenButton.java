@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.client.screen.widget;
+package ninjaphenix.container_library.api.client.screen.widget;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,18 +8,16 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.common.Const;
+import ninjaphenix.container_library.impl.common.Const;
 
 public final class ScreenTypeSelectionScreenButton extends ButtonWidget
 {
     private final Identifier TEXTURE;
 
-    @SuppressWarnings("ConstantConditions")
     public ScreenTypeSelectionScreenButton(final int x, final int y, final TooltipSupplier tooltipSupplier)
     {
-        super(x, y, 12, 12, new TranslatableText("screen.expandedstorage.change_screen_button"), button ->
+        super(x, y, 12, 12, Const.translation("screen.%s.change_screen_button"), button ->
         {
             ClientSidePacketRegistry.INSTANCE.sendToServer(Const.OPEN_SCREEN_SELECT, new PacketByteBuf(Unpooled.buffer()));
         }, tooltipSupplier);

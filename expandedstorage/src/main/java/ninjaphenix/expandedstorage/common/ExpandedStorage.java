@@ -28,6 +28,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+// todo: move into container library.
 public final class ExpandedStorage implements ModInitializer
 {
     public static final ExpandedStorage INSTANCE = new ExpandedStorage();

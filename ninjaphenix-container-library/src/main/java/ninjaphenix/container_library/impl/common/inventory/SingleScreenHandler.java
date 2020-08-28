@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.inventory;
+package ninjaphenix.container_library.impl.common.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Collections;
@@ -11,11 +11,11 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.expandedstorage.common.ModContent;
-import ninjaphenix.expandedstorage.common.inventory.screen.SingleScreenMeta;
+import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
 
-public final class SingleScreenHandler extends AbstractScreenHandler<SingleScreenMeta>
+public final class SingleScreenHandler extends AbstractScreenHandler<SingleScreenHandler.SingleScreenMeta>
 {
     // todo: replace with datapack extension
     private static final ImmutableMap<Integer, SingleScreenMeta> SIZES = ImmutableMap.<Integer, SingleScreenMeta>builder()
@@ -70,6 +70,18 @@ public final class SingleScreenHandler extends AbstractScreenHandler<SingleScree
             if (buffer == null) { return null; }
             return new SingleScreenHandler(syncId, buffer.readBlockPos(), new SimpleInventory(buffer.readInt()), playerInventory.player,
                                            null);
+        }
+    }
+
+    public static final class SingleScreenMeta extends AbstractScreenHandler.ScreenMeta
+    {
+        public final int BLANK_SLOTS;
+
+        public SingleScreenMeta(final int width, final int height, final int totalSlots, final Identifier texture, final int textureWidth,
+                                final int textureHeight)
+        {
+            super(width, height, totalSlots, texture, textureWidth, textureHeight);
+            BLANK_SLOTS = width * height - totalSlots;
         }
     }
 }

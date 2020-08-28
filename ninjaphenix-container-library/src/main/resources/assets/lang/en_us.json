@@ -1,0 +1,10 @@
+{
+  "screen.ninjaphenix-container-library.change_screen_button": "Change Screen Type",
+  "screen.ninjaphenix-container-library.next_page": "Next Page",
+  "screen.ninjaphenix-container-library.page_x_y": "%d/%d",
+  "screen.ninjaphenix-container-library.paged_screen": "Paginated Screen",
+  "screen.ninjaphenix-container-library.prev_page": "Previous Page",
+  "screen.ninjaphenix-container-library.screen_picker_title": "Select Screen Type",
+  "screen.ninjaphenix-container-library.scrollable_screen": "Scrollable Screen",
+  "screen.ninjaphenix-container-library.single_screen": "Single Page Screen"
+}

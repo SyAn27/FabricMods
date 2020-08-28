@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.inventory;
+package ninjaphenix.container_library.api.common.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

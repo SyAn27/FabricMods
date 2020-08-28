@@ -21,11 +21,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.config.JanksonConfigParser;
-import ninjaphenix.expandedstorage.client.config.ContainerConfig;
-import ninjaphenix.expandedstorage.client.screen.PagedScreen;
-import ninjaphenix.expandedstorage.client.screen.ScrollableScreen;
-import ninjaphenix.expandedstorage.client.screen.SelectContainerScreen;
-import ninjaphenix.expandedstorage.client.screen.SingleScreen;
+import ninjaphenix.container_library.api.client.Config;
 import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
@@ -36,11 +32,12 @@ import org.apache.logging.log4j.MarkerManager;
 
 import static ninjaphenix.expandedstorage.common.ModContent.*;
 
+// todo: move into container library
 public final class ExpandedStorageClient implements ClientModInitializer
 {
     public static final ExpandedStorageClient INSTANCE = new ExpandedStorageClient();
     private static final CursedChestBlockEntity CURSED_CHEST_RENDER_ENTITY = new CursedChestBlockEntity(null);
-    public static final ContainerConfig CONFIG = getConfigParser().load(ContainerConfig.class, ContainerConfig::new, getConfigPath(), new MarkerManager.Log4jMarker(Const.MOD_ID));
+    public static final Config CONFIG = getConfigParser().load(Config.class, Config::new, getConfigPath(), new MarkerManager.Log4jMarker(Const.MOD_ID));
 
     static
     {

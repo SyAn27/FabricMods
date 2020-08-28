@@ -1,14 +1,14 @@
-package ninjaphenix.expandedstorage.client.screen;
+package ninjaphenix.container_library.impl.client.screen;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
-import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.common.inventory.SingleScreenHandler;
-import ninjaphenix.expandedstorage.common.inventory.screen.SingleScreenMeta;
+import ninjaphenix.container_library.api.client.screen.AbstractScreen;
+import ninjaphenix.container_library.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.container_library.impl.common.inventory.SingleScreenHandler;
 
-public final class SingleScreen extends AbstractScreen<SingleScreenHandler, SingleScreenMeta>
+public final class SingleScreen extends AbstractScreen<SingleScreenHandler, SingleScreenHandler.SingleScreenMeta>
 {
     private Rectangle blankArea = null;
 

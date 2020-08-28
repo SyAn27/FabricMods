@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.inventory;
+package ninjaphenix.container_library.impl.common.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Collections;
@@ -11,12 +11,12 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.common.ModContent;
-import ninjaphenix.expandedstorage.common.inventory.screen.PagedScreenMeta;
+import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
 
-public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenMeta>
+public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenHandler.PagedScreenMeta>
 {
     private static final ImmutableMap<Integer, PagedScreenMeta> SIZES = ImmutableMap.<Integer, PagedScreenMeta>builder()
             .put(27, new PagedScreenMeta(9, 3, 1, 27, getTexture("shared", 9, 3), 208, 192)) // Wood
@@ -82,6 +82,19 @@ public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenM
             if (buffer == null) { return null; }
             return new PagedScreenHandler(syncId, buffer.readBlockPos(), new SimpleInventory(buffer.readInt()), playerInventory.player,
                                           null);
+        }
+    }
+
+    public static final class PagedScreenMeta extends AbstractScreenHandler.ScreenMeta
+    {
+        public final int BLANK_SLOTS, PAGES;
+
+        public PagedScreenMeta(final int width, final int height, final int pages, final int totalSlots, final Identifier texture,
+                               final int textureWidth, final int textureHeight)
+        {
+            super(width, height, totalSlots, texture, textureWidth, textureHeight);
+            PAGES = pages;
+            BLANK_SLOTS = pages * width * height - totalSlots;
         }
     }
 }

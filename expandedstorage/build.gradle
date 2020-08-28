@@ -14,8 +14,10 @@ repositories {
 
 dependencies {
     compile project(path: ":chainmail"), withoutUnwanted
+    compile project(path: ":ninjaphenix-container-library"), withoutUnwanted
 
     include project(path: ":chainmail")
+    include project(path: ":ninjaphenix-container-library")
     include "io.github.cottonmc:Jankson-Fabric:${jankson_version}"
 
     modCompileOnly("com.github.Virtuoel:Towelette:${towelette_commit}") {

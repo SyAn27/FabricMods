@@ -1,13 +1,13 @@
-package ninjaphenix.expandedstorage.client.config;
+package ninjaphenix.container_library.api.client;
 
 import blue.endless.jankson.Comment;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.common.Const;
+import ninjaphenix.container_library.impl.common.Const;
 
 @SuppressWarnings("CanBeFinal")
-public final class ContainerConfig
+public final class Config
 {
-    @Comment("\nPrefered container type, set to expandedstorage:auto to reuse selection screen.")
+    @Comment("\nPrefered container type, set to "+Const.MOD_ID+":auto to reuse selection screen.")
     public Identifier preferred_container_type = Const.id("auto");
 
     @Comment("\nOnly allows scrolling in scrollable screen whilst hovering over the scrollbar region.")

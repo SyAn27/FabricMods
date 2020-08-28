@@ -14,8 +14,9 @@
   "license": "MIT-0",
   "environment": "*",
   "mixins": [
-    "chainmail.common.mixins.json"
+    "ninjaphenix-container-library.common.mixins.json"
   ],
+  "accessWidener": "ninjaphenix-container-library.accesswidener",
   "depends": {
     "fabric": ">=${dep_fabric_version}"
   },

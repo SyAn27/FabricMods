@@ -7,7 +7,6 @@
     "ToweletteSupportMixin"
   ],
   "client": [
-    "ClientGameStart"
   ],
   "injectors": {
     "defaultRequire": 1

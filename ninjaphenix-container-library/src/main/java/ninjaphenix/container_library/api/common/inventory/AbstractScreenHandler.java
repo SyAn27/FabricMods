@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.inventory;
+package ninjaphenix.container_library.api.common.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -9,10 +9,9 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.expandedstorage.common.Const;
-import ninjaphenix.expandedstorage.common.inventory.screen.ScreenMeta;
+import ninjaphenix.container_library.impl.common.Const;
 
-public abstract class AbstractScreenHandler<T extends ScreenMeta> extends ScreenHandler
+public abstract class AbstractScreenHandler<T extends AbstractScreenHandler.ScreenMeta> extends ScreenHandler
 {
     public final BlockPos ORIGIN;
     public final T SCREEN_META;
@@ -66,6 +65,24 @@ public abstract class AbstractScreenHandler<T extends ScreenMeta> extends Screen
 
     public static Identifier getTexture(final String type, final int width, final int height)
     {
-        return new Identifier(Const.MOD_ID, String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
+        return Const.id(String.format("textures/gui/container/%s_%d_%d.png", type, width, height));
+    }
+
+    // todo: remove texture info from this class.
+    public static abstract class ScreenMeta
+    {
+        public final int WIDTH, HEIGHT, TOTAL_SLOTS, TEXTURE_WIDTH, TEXTURE_HEIGHT;
+        public final Identifier TEXTURE;
+
+        protected ScreenMeta(final int width, final int height, final int totalSlots, final Identifier texture, final int textureWidth,
+                             final int textureHeight)
+        {
+            WIDTH = width;
+            HEIGHT = height;
+            TOTAL_SLOTS = totalSlots;
+            TEXTURE = texture;
+            TEXTURE_WIDTH = textureWidth;
+            TEXTURE_HEIGHT = textureHeight;
+        }
     }
 }

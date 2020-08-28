@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.client.screen.widget;
+package ninjaphenix.container_library.api.client.screen.widget;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -7,9 +7,9 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import ninjaphenix.expandedstorage.common.Const;
+import ninjaphenix.container_library.impl.common.Const;
 
-public class PageButtonWidget extends ButtonWidget
+public final class PageButtonWidget extends ButtonWidget
 {
     private static final Identifier TEXTURE = Const.id("textures/gui/page_buttons.png");
     private final int TEXTURE_OFFSET;

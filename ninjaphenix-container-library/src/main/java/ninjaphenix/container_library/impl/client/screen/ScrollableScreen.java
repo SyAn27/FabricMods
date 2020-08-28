@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.client.screen;
+package ninjaphenix.container_library.impl.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.loader.api.FabricLoader;
@@ -7,12 +7,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.client.ExpandedStorageClient;
-import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.common.inventory.ScrollableScreenHandler;
-import ninjaphenix.expandedstorage.common.inventory.screen.ScrollableScreenMeta;
+import ninjaphenix.container_library.api.client.screen.AbstractScreen;
+import ninjaphenix.container_library.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.container_library.impl.common.inventory.ScrollableScreenHandler;
 
-public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandler, ScrollableScreenMeta>
+public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandler, ScrollableScreenHandler.ScrollableScreenMeta>
 {
     protected final boolean hasScrollbar;
     private final int renderBackgroundWidth;

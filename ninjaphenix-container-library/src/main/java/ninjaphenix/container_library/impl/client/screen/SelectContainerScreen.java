@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.client.screen;
+package ninjaphenix.container_library.impl.client.screen;
 
 import java.util.HashMap;
 import net.minecraft.client.MinecraftClient;
@@ -7,11 +7,10 @@ import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.client.ExpandedStorageClient;
+import ninjaphenix.container_library.impl.common.Const;
 
 public final class SelectContainerScreen extends Screen
 {
@@ -21,7 +20,7 @@ public final class SelectContainerScreen extends Screen
 
     public SelectContainerScreen(final HashMap<Identifier, Pair<Identifier, Text>> options)
     {
-        super(new TranslatableText("screen.expandedstorage.screen_picker_title"));
+        super(Const.translation("screen.%s.screen_picker_title"));
         OPTIONS = options;
     }
 

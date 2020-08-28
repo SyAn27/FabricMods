@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.client.screen;
+package ninjaphenix.container_library.impl.client.screen;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -6,12 +6,13 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import ninjaphenix.expandedstorage.client.screen.widget.PageButtonWidget;
-import ninjaphenix.expandedstorage.client.screen.widget.ScreenTypeSelectionScreenButton;
-import ninjaphenix.expandedstorage.common.inventory.PagedScreenHandler;
-import ninjaphenix.expandedstorage.common.inventory.screen.PagedScreenMeta;
+import ninjaphenix.container_library.api.client.screen.AbstractScreen;
+import ninjaphenix.container_library.api.client.screen.widget.PageButtonWidget;
+import ninjaphenix.container_library.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.container_library.impl.common.Const;
+import ninjaphenix.container_library.impl.common.inventory.PagedScreenHandler;
 
-public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedScreenMeta>
+public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedScreenHandler.PagedScreenMeta>
 {
     private Rectangle blankArea = null;
     private PageButtonWidget leftPageButton;
@@ -61,7 +62,7 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
         setPageText();
     }
 
-    private void setPageText() { currentPageText = new TranslatableText("screen.expandedstorage.page_x_y", page, SCREEN_META.PAGES); }
+    private void setPageText() { currentPageText = Const.translation("screen.%s.page_x_y", page, SCREEN_META.PAGES); }
 
     @Override
     public void render(final MatrixStack matrices, final int mouseX, final int mouseY, final float delta)
@@ -96,12 +97,12 @@ public final class PagedScreen extends AbstractScreen<PagedScreenHandler, PagedS
             page = 1;
             setPageText();
             leftPageButton = new PageButtonWidget(x + backgroundWidth - 61 + pageButtonsXOffset, y + backgroundHeight - 96, 0,
-                                                  new TranslatableText("screen.expandedstorage.prev_page"), button -> setPage(page, page - 1),
+                                                  Const.translation("screen.%s.prev_page"), button -> setPage(page, page - 1),
                                                   (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             leftPageButton.active = false;
             addButton(leftPageButton);
             rightPageButton = new PageButtonWidget(x + backgroundWidth - 19 + pageButtonsXOffset, y + backgroundHeight - 96, 1,
-                                                   new TranslatableText("screen.expandedstorage.next_page"), button -> setPage(page, page + 1),
+                                                   Const.translation("screen.%s.next_page"), button -> setPage(page, page + 1),
                                                    (button, matrices, bX, bY) -> renderTooltip(matrices, button.getMessage(), bX, bY));
             addButton(rightPageButton);
             pageTextX = (1 + leftPageButton.x + rightPageButton.x - rightPageButton.getWidth() / 2F) / 2F;

@@ -1,0 +1,11 @@
+minecraft {
+    accessWidener = file('src/main/resources/ninjaphenix-container-library.accesswidener')
+}
+
+dependencies {
+    compile project(path: ":chainmail"), withoutUnwanted
+
+    // todo: grab off curseforge
+    //modRuntime('local:InventorySorter:1.7.0-1.16')
+    //modRuntime('local:inventoryprofiles:fabric-1.16.1-0.4.2')
+}

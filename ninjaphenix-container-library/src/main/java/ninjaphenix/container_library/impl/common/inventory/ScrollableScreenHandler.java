@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.inventory;
+package ninjaphenix.container_library.impl.common.inventory;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Collections;
@@ -12,12 +12,12 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import ninjaphenix.expandedstorage.common.ModContent;
-import ninjaphenix.expandedstorage.common.inventory.screen.ScrollableScreenMeta;
+import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
 
-public final class ScrollableScreenHandler extends AbstractScreenHandler<ScrollableScreenMeta>
+public final class ScrollableScreenHandler extends AbstractScreenHandler<ScrollableScreenHandler.ScrollableScreenMeta>
 {
     private static final ImmutableMap<Integer, ScrollableScreenMeta> SIZES = ImmutableMap.<Integer, ScrollableScreenMeta>builder()
             .put(27, new ScrollableScreenMeta(9, 3, 27, getTexture("shared", 9, 3), 208, 192)) // Wood
@@ -83,6 +83,19 @@ public final class ScrollableScreenHandler extends AbstractScreenHandler<Scrolla
             if (buffer == null) { return null; }
             return new ScrollableScreenHandler(syncId, buffer.readBlockPos(), new SimpleInventory(buffer.readInt()), playerInventory.player,
                                                null);
+        }
+    }
+
+    public static final class ScrollableScreenMeta extends AbstractScreenHandler.ScreenMeta
+    {
+        public final int BLANK_SLOTS, TOTAL_ROWS;
+
+        public ScrollableScreenMeta(final int width, final int height, final int totalSlots, final Identifier texture,
+                                    final int textureWidth, final int textureHeight)
+        {
+            super(width, height, totalSlots, texture, textureWidth, textureHeight);
+            TOTAL_ROWS = MathHelper.ceil((double) totalSlots / width);
+            BLANK_SLOTS = TOTAL_ROWS * width - totalSlots;
         }
     }
 }
