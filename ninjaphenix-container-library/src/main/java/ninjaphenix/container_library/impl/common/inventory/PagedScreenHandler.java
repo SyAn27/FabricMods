@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
+import ninjaphenix.container_library.impl.BuiltinScreenTypes;
 
 public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenHandler.PagedScreenMeta>
 {
@@ -32,7 +33,7 @@ public final class PagedScreenHandler extends AbstractScreenHandler<PagedScreenH
     public PagedScreenHandler(final int syncId, final BlockPos pos, final Inventory inventory, final PlayerEntity player,
                               final Text displayName)
     {
-        super(ModContent.PAGED_HANDLER_TYPE, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
+        super(BuiltinScreenTypes.PAGED_HANDLER_TYPE, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
         resetSlotPositions(true);
         final Inventory playerInventory = player.inventory;
         final int left = (SCREEN_META.WIDTH * 18 + 14) / 2 - 80;

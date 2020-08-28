@@ -2,7 +2,6 @@ package ninjaphenix.expandedstorage.common;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
@@ -10,7 +9,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -20,27 +18,17 @@ import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.common.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.common.block.OldChestBlock;
-import ninjaphenix.expandedstorage.common.inventory.PagedScreenHandler;
-import ninjaphenix.expandedstorage.common.inventory.ScrollableScreenHandler;
-import ninjaphenix.expandedstorage.common.inventory.SingleScreenHandler;
 import ninjaphenix.expandedstorage.common.item.ChestConversionItem;
 import ninjaphenix.expandedstorage.common.item.ChestMutatorItem;
 
 public final class ModContent
 {
-    public static final ScreenHandlerType<PagedScreenHandler> PAGED_HANDLER_TYPE;
-    public static final ScreenHandlerType<SingleScreenHandler> SINGLE_HANDLER_TYPE;
-    public static final ScreenHandlerType<ScrollableScreenHandler> SCROLLABLE_HANDLER_TYPE;
     public static final BlockEntityType<CursedChestBlockEntity> CHEST;
     public static final BlockEntityType<OldChestBlockEntity> OLD_CHEST;
     public static final CursedChestBlock DIAMOND_CHEST;
 
     static
     {
-        // todo: move into container library
-        SCROLLABLE_HANDLER_TYPE = ScreenHandlerRegistry.registerExtended(Const.id("scrollable"), new ScrollableScreenHandler.Factory());
-        PAGED_HANDLER_TYPE = ScreenHandlerRegistry.registerExtended(Const.id("paged"), new PagedScreenHandler.Factory());
-        SINGLE_HANDLER_TYPE = ScreenHandlerRegistry.registerExtended(Const.id("single"), new SingleScreenHandler.Factory());
         final ItemGroup group = ChainmailCommonApi.INSTANCE.registerItemGroup((index) -> new ItemGroup(index, Const.MOD_ID)
         {
             @Override

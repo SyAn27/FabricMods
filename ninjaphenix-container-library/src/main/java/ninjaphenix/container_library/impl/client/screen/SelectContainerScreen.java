@@ -10,6 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.MathHelper;
+import ninjaphenix.container_library.impl.client.ContainerLibraryClient;
 import ninjaphenix.container_library.impl.common.Const;
 
 public final class SelectContainerScreen extends Screen
@@ -63,14 +64,14 @@ public final class SelectContainerScreen extends Screen
     @Override
     public void onClose()
     {
-        ExpandedStorageClient.sendCallbackRemoveToServer();
+        ContainerLibraryClient.sendCallbackRemoveToServer();
         super.onClose();
     }
 
     private void updatePlayerPreference(final Identifier selection)
     {
-        ExpandedStorageClient.setPreference(selection);
-        ExpandedStorageClient.sendPreferencesToServer();
+        ContainerLibraryClient.setPreference(selection);
+        ContainerLibraryClient.sendPreferencesToServer();
     }
 
     @Override

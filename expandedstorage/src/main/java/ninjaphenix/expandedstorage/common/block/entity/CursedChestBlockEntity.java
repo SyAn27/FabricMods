@@ -19,12 +19,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
+import ninjaphenix.container_library.api.common.inventory.DoubleSidedInventory;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.block.BaseChestBlock;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.common.ModContent;
-import ninjaphenix.expandedstorage.common.inventory.AbstractScreenHandler;
-import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 @EnvironmentInterfaces({@EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class)})
 public final class CursedChestBlockEntity extends AbstractChestBlockEntity implements ChestAnimationProgress, Tickable

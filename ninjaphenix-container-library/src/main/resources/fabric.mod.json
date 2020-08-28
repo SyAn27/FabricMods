@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "chainmail",
+  "id": "ninjaphenix-container-library",
   "version": "${mod_version}",
-  "name": "Chainmail",
-  "description": "Provides an expanded api for mod developers.",
+  "name": "NinjaPhenix's Container Library",
+  "description": "Provides an easy way to open chest like containers.",
   "authors": [
     "NinjaPhenix"
   ],
@@ -16,6 +16,14 @@
   "mixins": [
     "ninjaphenix-container-library.common.mixins.json"
   ],
+  "entrypoints": {
+    "main": [
+      "ninjaphenix.container_library.impl.common.ContainerLibrary::INSTANCE"
+    ],
+    "client": [
+      "ninjaphenix.container_library.impl.client.ContainerLibraryClient::INSTANCE"
+    ]
+  },
   "accessWidener": "ninjaphenix-container-library.accesswidener",
   "depends": {
     "fabric": ">=${dep_fabric_version}"

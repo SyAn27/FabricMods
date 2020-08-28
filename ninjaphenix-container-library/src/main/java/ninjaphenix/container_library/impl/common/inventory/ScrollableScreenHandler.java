@@ -16,6 +16,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
+import ninjaphenix.container_library.impl.BuiltinScreenTypes;
 
 public final class ScrollableScreenHandler extends AbstractScreenHandler<ScrollableScreenHandler.ScrollableScreenMeta>
 {
@@ -34,7 +35,7 @@ public final class ScrollableScreenHandler extends AbstractScreenHandler<Scrolla
     public ScrollableScreenHandler(final int syncId, final BlockPos pos, final Inventory inventory, final PlayerEntity player,
                                    final Text displayName)
     {
-        super(ModContent.SCROLLABLE_HANDLER_TYPE, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
+        super(BuiltinScreenTypes.SCROLLABLE_HANDLER_TYPE, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
         for (int i = 0; i < INVENTORY.size(); i++)
         {
             final int x = i % SCREEN_META.WIDTH;

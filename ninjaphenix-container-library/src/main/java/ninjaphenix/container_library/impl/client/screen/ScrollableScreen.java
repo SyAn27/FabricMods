@@ -9,6 +9,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import ninjaphenix.container_library.api.client.screen.AbstractScreen;
 import ninjaphenix.container_library.api.client.screen.widget.ScreenTypeSelectionScreenButton;
+import ninjaphenix.container_library.impl.client.ContainerLibraryClient;
 import ninjaphenix.container_library.impl.common.inventory.ScrollableScreenHandler;
 
 public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandler, ScrollableScreenHandler.ScrollableScreenMeta>
@@ -51,7 +52,7 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
         }
         else
         {
-            settingsXOffset = ExpandedStorageClient.CONFIG.settings_button_center_on_scrollbar ? -2 : -1;
+            settingsXOffset = ContainerLibraryClient.CONFIG.settings_button_center_on_scrollbar ? -2 : -1;
             isDragging = false;
             topRow = 0;
         }
@@ -153,7 +154,7 @@ public final class ScrollableScreen extends AbstractScreen<ScrollableScreenHandl
     @Override
     public boolean mouseScrolled(final double mouseX, final double mouseY, final double delta)
     {
-        if (hasScrollbar && (!ExpandedStorageClient.CONFIG.restrictive_scrolling || isMouseOverScrollbar(mouseX, mouseY)))
+        if (hasScrollbar && (!ContainerLibraryClient.CONFIG.restrictive_scrolling || isMouseOverScrollbar(mouseX, mouseY)))
         {
             final int newTop;
             if (delta < 0)

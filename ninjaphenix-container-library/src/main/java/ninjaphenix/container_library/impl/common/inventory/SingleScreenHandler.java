@@ -14,6 +14,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
+import ninjaphenix.container_library.impl.BuiltinScreenTypes;
 
 public final class SingleScreenHandler extends AbstractScreenHandler<SingleScreenHandler.SingleScreenMeta>
 {
@@ -32,7 +33,7 @@ public final class SingleScreenHandler extends AbstractScreenHandler<SingleScree
     public SingleScreenHandler(final int syncId, final BlockPos pos, final Inventory inventory, final PlayerEntity player,
                                final Text displayName)
     {
-        super(ModContent.SINGLE_HANDLER_TYPE, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
+        super(BuiltinScreenTypes.SINGLE_HANDLER_TYPE, syncId, pos, inventory, player, displayName, getNearestSize(inventory.size()));
         for (int i = 0; i < inventory.size(); i++)
         {
             final int x = i % SCREEN_META.WIDTH;

@@ -34,11 +34,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import ninjaphenix.container_library.api.common.inventory.DoubleSidedInventory;
+import ninjaphenix.container_library.impl.common.ContainerLibrary;
 import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
 import ninjaphenix.expandedstorage.common.misc.CursedChestType;
-import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
@@ -93,7 +94,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             {
                                 first.checkLootInteraction(player);
                                 second.checkLootInteraction(player);
-                                return ExpandedStorage.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
+                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
                             }
                             return null;
                         }
@@ -121,7 +122,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             if (single.canPlayerUse(player))
                             {
                                 single.checkLootInteraction(player);
-                                return ExpandedStorage.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
+                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
                             }
                             return null;
                         }
@@ -212,7 +213,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         {
             final Optional<ExtendedScreenHandlerFactory> containerProvider = combine(state, world, pos, false).apply(CONTAINER_GETTER);
             containerProvider.ifPresent(provider -> {
-                ExpandedStorage.INSTANCE.openContainer(player, provider);
+                ContainerLibrary.INSTANCE.openContainer(player, provider);
                 player.incrementStat(getOpenStat());
             });
         }
