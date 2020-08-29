@@ -50,7 +50,7 @@ allprojects {
                 exclude(module: "fabric-biomes-v1")
             }
         }
-        //modCompile "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
+        modCompile "me.shedaniel:RoughlyEnoughItems:${rei_version}", withoutUnwanted
 
         modCompile "io.github.prospector:modmenu:${modmenu_version}", withoutUnwanted
 

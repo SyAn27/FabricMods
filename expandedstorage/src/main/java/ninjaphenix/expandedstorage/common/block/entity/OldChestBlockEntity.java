@@ -1,10 +1,10 @@
-package ninjaphenix.expandedstorage.common.content.block.entity;
+package ninjaphenix.expandedstorage.common.block.entity;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.content.ModContent;
+import ninjaphenix.expandedstorage.common.ModContent;
 
 public final class OldChestBlockEntity extends AbstractChestBlockEntity
 {

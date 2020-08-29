@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.content.block;
+package ninjaphenix.expandedstorage.common.block;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
@@ -34,15 +34,15 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.common.ContainerLibrary;
+import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.content.block.entity.AbstractChestBlockEntity;
-import ninjaphenix.expandedstorage.common.content.misc.CursedChestType;
+import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
-public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends BlockWithEntity
+public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends BlockWithEntity implements InventoryProvider
 {
     public static final EnumProperty<CursedChestType> TYPE = EnumProperty.of("type", CursedChestType.class);
     private final Supplier<BlockEntityType<T>> blockEntityType;
@@ -93,7 +93,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             {
                                 first.checkLootInteraction(player);
                                 second.checkLootInteraction(player);
-                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
+                                return ExpandedStorage.INSTANCE.getScreenHandler(syncId, first.getPos(), inventory, player, getDisplayName());
                             }
                             return null;
                         }
@@ -121,7 +121,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                             if (single.canPlayerUse(player))
                             {
                                 single.checkLootInteraction(player);
-                                return ContainerLibrary.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
+                                return ExpandedStorage.INSTANCE.getScreenHandler(syncId, single.getPos(), single, player, getDisplayName());
                             }
                             return null;
                         }
@@ -185,7 +185,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         builder.add(HORIZONTAL_FACING, TYPE);
     }
 
-    public final PropertySource<? extends T> combine(final BlockState state, final World world, final BlockPos pos,
+    public final PropertySource<? extends T> combine(final BlockState state, final WorldAccess world, final BlockPos pos,
                                                      final boolean alwaysOpen)
     {
         final BiPredicate<WorldAccess, BlockPos> isChestBlocked = alwaysOpen ? (_world, _pos) -> false : this::isBlocked;
@@ -212,7 +212,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         {
             final Optional<ExtendedScreenHandlerFactory> containerProvider = combine(state, world, pos, false).apply(CONTAINER_GETTER);
             containerProvider.ifPresent(provider -> {
-                ContainerLibrary.INSTANCE.openContainer(player, provider);
+                ExpandedStorage.INSTANCE.openContainer(player, provider);
                 player.incrementStat(getOpenStat());
             });
         }
@@ -367,4 +367,10 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
     public final boolean hasComparatorOutput(final BlockState state) { return true; }
 
     public abstract <R extends Registries.TierData> SimpleRegistry<R> getDataRegistry();
+
+    @Override // keep for hoppers.
+    public SidedInventory getInventory(final BlockState state, final WorldAccess world, final BlockPos pos)
+    {
+        return combine(state, world, pos, true).apply(INVENTORY_GETTER).orElse(null);
+    }
 }

@@ -1,4 +1,4 @@
-package ninjaphenix.expandedstorage.common.content;
+package ninjaphenix.expandedstorage.common;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,17 +16,15 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.ChainmailCommonApi;
-import ninjaphenix.expandedstorage.common.Const;
-import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.content.block.entity.CursedChestBlockEntity;
-import ninjaphenix.expandedstorage.common.content.block.entity.OldChestBlockEntity;
-import ninjaphenix.expandedstorage.common.content.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.common.content.block.OldChestBlock;
+import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
+import ninjaphenix.expandedstorage.common.block.entity.OldChestBlockEntity;
+import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
+import ninjaphenix.expandedstorage.common.block.OldChestBlock;
 import ninjaphenix.expandedstorage.common.inventory.PagedScreenHandler;
 import ninjaphenix.expandedstorage.common.inventory.ScrollableScreenHandler;
 import ninjaphenix.expandedstorage.common.inventory.SingleScreenHandler;
-import ninjaphenix.expandedstorage.common.content.item.ChestConversionItem;
-import ninjaphenix.expandedstorage.common.content.item.ChestMutatorItem;
+import ninjaphenix.expandedstorage.common.item.ChestConversionItem;
+import ninjaphenix.expandedstorage.common.item.ChestMutatorItem;
 
 public final class ModContent
 {

@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
-import ninjaphenix.expandedstorage.client.ContainerLibraryClient;
+import ninjaphenix.expandedstorage.client.ExpandedStorageClient;
 import ninjaphenix.expandedstorage.common.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.common.inventory.screen.ScreenMeta;
 
@@ -53,7 +53,7 @@ public abstract class AbstractScreen<T extends AbstractScreenHandler<R>, R exten
     {
         if (keyCode == 256 || client.options.keyInventory.matchesKey(keyCode, scanCode))
         {
-            ContainerLibraryClient.sendCallbackRemoveToServer();
+            ExpandedStorageClient.sendCallbackRemoveToServer();
             client.player.closeHandledScreen();
             return true;
         }
