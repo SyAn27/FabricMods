@@ -177,7 +177,7 @@ public class TorcherinoScreen extends Screen
         client.getTextureManager().bindTexture(SCREEN_TEXTURE);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         drawTexture(matrixStack, left, top, 0, 0, screenWidth, screenHeight);
-        textRenderer.draw(matrixStack, cached_title.asOrderedText(), (width - textRenderer.getWidth(cached_title)) / 2.0f, top + 6, 4210752);
+        textRenderer.draw(matrixStack, cached_title, (width - textRenderer.getWidth(cached_title)) / 2.0f, top + 6, 4210752);
         super.render(matrixStack, x, y, partialTicks);
     }
 
