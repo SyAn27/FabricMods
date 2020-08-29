@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler;
 import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler.ScreenMeta;
 
 public class Networking
@@ -39,6 +38,7 @@ public class Networking
     {
         final PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeBlockPos(pos);
+        buffer.writeIdentifier(preference);
         meta.serialize(buffer);
         ClientSidePacketRegistry.INSTANCE.sendToServer(Const.OPEN_CONTAINER, buffer);
     }
