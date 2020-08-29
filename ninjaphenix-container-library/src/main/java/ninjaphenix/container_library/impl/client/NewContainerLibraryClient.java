@@ -1,4 +1,4 @@
-package ninjaphenix.container_library.api;
+package ninjaphenix.container_library.impl.client;
 
 import com.google.common.collect.ImmutableList;
 import java.util.*;
@@ -11,7 +11,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ninjaphenix.container_library.impl.client.ContainerLibraryClient;
 import ninjaphenix.container_library.impl.client.screen.SelectContainerScreen;
 import ninjaphenix.container_library.impl.common.Const;
 import ninjaphenix.container_library.impl.common.Networking;

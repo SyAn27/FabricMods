@@ -11,7 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import ninjaphenix.container_library.api.ContainerLibraryAPI;
-import ninjaphenix.container_library.api.NewContainerLibraryClient;
+import ninjaphenix.container_library.impl.client.NewContainerLibraryClient;
 import ninjaphenix.container_library.api.common.inventory.AbstractScreenHandler.ScreenMeta;
 
 public class NewContainerLibrary implements ContainerLibraryAPI
