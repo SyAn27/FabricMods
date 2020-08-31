@@ -1,0 +1,14 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "expandedstorage:old_obsidian_chest"
+    }
+  ],
+  "result": {
+    "item": "expandedstorage:old_netherite_chest"
+  }
+}
