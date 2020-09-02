@@ -16,6 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.ChainmailCommonApi;
+import ninjaphenix.expandedstorage.common.block.BarrelBlock;
+import ninjaphenix.expandedstorage.common.block.entity.BarrelBlockEntity;
 import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.common.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
@@ -33,6 +35,7 @@ public final class ModContent
     public static final ScreenHandlerType<ScrollableScreenHandler> SCROLLABLE_HANDLER_TYPE;
     public static final BlockEntityType<CursedChestBlockEntity> CHEST;
     public static final BlockEntityType<OldChestBlockEntity> OLD_CHEST;
+    public static final BlockEntityType<BarrelBlockEntity> BARREL;
     public static final CursedChestBlock DIAMOND_CHEST;
 
     static
@@ -64,6 +67,13 @@ public final class ModContent
                                                                      old(Blocks.DIAMOND_BLOCK, "diamond_chest", 12, group),
                                                                      old(Blocks.OBSIDIAN, "obsidian_chest", 12, group),
                                                                      old(Blocks.NETHERITE_BLOCK, "netherite_chest", 15, group)).build(null));
+        BARREL = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("barrel"),
+                                   BlockEntityType.Builder.create(() -> new BarrelBlockEntity(null),
+                                                                  barrel(Blocks.IRON_BLOCK, "iron_barrel", 6, group),
+                                                                  barrel(Blocks.GOLD_BLOCK, "gold_barrel", 9, group),
+                                                                  barrel(Blocks.DIAMOND_BLOCK, "diamond_barrel", 12, group),
+                                                                  barrel(Blocks.OBSIDIAN, "obsidian_barrel", 12, group),
+                                                                  barrel(Blocks.NETHERITE_BLOCK, "netherite_barrel", 15, group)).build(null));
         registerConversionPath(group,
                                new Pair<>(Const.id("wood_chest"), "wood"),
                                new Pair<>(Const.id("iron_chest"), "iron"),
@@ -72,6 +82,16 @@ public final class ModContent
                                new Pair<>(Const.id("obsidian_chest"), "obsidian"),
                                new Pair<>(Const.id("netherite_chest"), "netherite"));
         Registry.register(Registry.ITEM, Const.id("chest_mutator"), new ChestMutatorItem(new Item.Settings().maxCount(1).group(group)));
+    }
+
+    private static BarrelBlock barrel(final Block material, final String name, final int rows, final ItemGroup group)
+    {
+        final BarrelBlock block = new BarrelBlock(Block.Settings.copy(material));
+        final Identifier id = Const.id(name);
+        Registry.register(Registry.BLOCK, id, block);
+        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
+        Registry.register(Registries.BARREL, id, new Registries.TierData(rows * 9, new TranslatableText("container.expandedstorage." + name), id));
+        return block;
     }
 
     @SuppressWarnings("EmptyMethod")

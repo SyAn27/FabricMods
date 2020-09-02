@@ -1,2 +1,5 @@
-- Restored chest interaction with hoppers and other mods as it was broken by a recent change.
-- Fixed chest gui sometimes not appearing after selecting a screen type.
+- Added netherite chest advancement ( was missing )
+- Added old obsidian to old netherite chest recipe ( was missing ) Thanks Shnupbups
+- Made netherite recipes require a smithing table.
+- Changed wooden chest tag to one that other mods use
+- Added Barrels

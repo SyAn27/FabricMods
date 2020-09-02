@@ -1,6 +1,5 @@
 package ninjaphenix.expandedstorage.common.block;
 
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.passive.CatEntity;
@@ -15,7 +14,7 @@ import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.common.ModContent;
 
-public final class OldChestBlock extends BaseChestBlock<OldChestBlockEntity>
+public final class OldChestBlock extends ChestBlock<OldChestBlockEntity>
 {
     public OldChestBlock(final Settings settings) { super(settings, () -> ModContent.OLD_CHEST); }
 
@@ -36,9 +35,6 @@ public final class OldChestBlock extends BaseChestBlock<OldChestBlockEntity>
                                                                         pos.getY() + 2, pos.getZ() + 1))
                         .stream().anyMatch(CatEntity::isInSittingPose);
     }
-
-    @Override
-    public BlockRenderType getRenderType(final BlockState state) { return BlockRenderType.MODEL; }
 
     @Override
     @SuppressWarnings({"unchecked"})

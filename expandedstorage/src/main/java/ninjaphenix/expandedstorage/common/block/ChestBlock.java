@@ -8,41 +8,32 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.DoubleBlockProperties.PropertyRetriever;
 import net.minecraft.block.DoubleBlockProperties.PropertySource;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.*;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import ninjaphenix.expandedstorage.common.ExpandedStorage;
-import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.common.block.entity.StorageBlockEntity;
 import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
-public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends BlockWithEntity implements InventoryProvider
+public abstract class ChestBlock<T extends StorageBlockEntity> extends StorageBlock
 {
     public static final EnumProperty<CursedChestType> TYPE = EnumProperty.of("type", CursedChestType.class);
     private final Supplier<BlockEntityType<T>> blockEntityType;
@@ -132,7 +123,7 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                 public Optional<ExtendedScreenHandlerFactory> getFallback() { return Optional.empty(); }
             };
 
-    protected BaseChestBlock(final Settings builder, final Supplier<BlockEntityType<T>> blockEntityType)
+    protected ChestBlock(final Settings builder, final Supplier<BlockEntityType<T>> blockEntityType)
     {
         super(builder);
         this.blockEntityType = blockEntityType;
@@ -189,66 +180,12 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
                                                      final boolean alwaysOpen)
     {
         final BiPredicate<WorldAccess, BlockPos> isChestBlocked = alwaysOpen ? (_world, _pos) -> false : this::isBlocked;
-        return DoubleBlockProperties.toPropertySource(blockEntityType.get(), BaseChestBlock::getMergeType,
-                                                      BaseChestBlock::getDirectionToAttached, HORIZONTAL_FACING, state, world, pos,
+        return DoubleBlockProperties.toPropertySource(blockEntityType.get(), ChestBlock::getMergeType,
+                                                      ChestBlock::getDirectionToAttached, HORIZONTAL_FACING, state, world, pos,
                                                       isChestBlocked);
     }
 
-    protected boolean isBlocked(final WorldAccess world, final BlockPos pos) { return ChestBlock.isChestBlocked(world, pos); }
-
-    @Nullable
-    @Override
-    public NamedScreenHandlerFactory createScreenHandlerFactory(final BlockState state, final World world, final BlockPos pos)
-    {
-        return null;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public ActionResult onUse(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand,
-                              final BlockHitResult hit)
-    {
-        if (!world.isClient)
-        {
-            final Optional<ExtendedScreenHandlerFactory> containerProvider = combine(state, world, pos, false).apply(CONTAINER_GETTER);
-            containerProvider.ifPresent(provider -> {
-                ExpandedStorage.INSTANCE.openContainer(player, provider);
-                player.incrementStat(getOpenStat());
-            });
-        }
-        return ActionResult.SUCCESS;
-    }
-
-    @Override
-    public void onPlaced(final World world, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer,
-                         final ItemStack stack)
-    {
-        if (stack.hasCustomName())
-        {
-            final BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof AbstractChestBlockEntity)
-            {
-                ((AbstractChestBlockEntity) blockEntity).setCustomName(stack.getName());
-            }
-        }
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onStateReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState,
-                                final boolean moved)
-    {
-        if (state.getBlock() != newState.getBlock())
-        {
-            final BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof Inventory)
-            {
-                ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
-                world.updateNeighborsAlways(pos, this);
-            }
-            super.onStateReplaced(state, world, pos, newState, moved);
-        }
-    }
+    protected boolean isBlocked(final WorldAccess world, final BlockPos pos) { return net.minecraft.block.ChestBlock.isChestBlocked(world, pos); }
 
     // todo: look at and see if it can be updated, specifically want to remove "BlockState state;", "Direction direction_3;" if possible
     // todo: add config to prevent automatic merging of chests.
@@ -346,7 +283,8 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         return combine(state, world, pos, true).apply(INVENTORY_GETTER).map(ScreenHandler::calculateComparatorOutput).orElse(0);
     }
 
-    private Stat<Identifier> getOpenStat() { return Stats.CUSTOM.getOrCreateStat(Stats.OPEN_CHEST); }
+    @Override
+    protected Identifier getOpenStat() { return Stats.OPEN_CHEST; }
 
     @Override
     @SuppressWarnings("deprecation")
@@ -362,15 +300,15 @@ public abstract class BaseChestBlock<T extends AbstractChestBlockEntity> extends
         return state.with(HORIZONTAL_FACING, rotation.rotate(state.get(HORIZONTAL_FACING)));
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public final boolean hasComparatorOutput(final BlockState state) { return true; }
-
-    public abstract <R extends Registries.TierData> SimpleRegistry<R> getDataRegistry();
-
     @Override // keep for hoppers.
     public SidedInventory getInventory(final BlockState state, final WorldAccess world, final BlockPos pos)
     {
         return combine(state, world, pos, true).apply(INVENTORY_GETTER).orElse(null);
+    }
+
+    @Override
+    protected ExtendedScreenHandlerFactory createContainerFactory(final BlockState state, final WorldAccess world, final BlockPos pos)
+    {
+        return combine(state, world, pos, true).apply(CONTAINER_GETTER).orElse(null);
     }
 }

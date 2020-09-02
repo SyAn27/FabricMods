@@ -4,7 +4,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.client.item.TooltipContext;
@@ -30,7 +29,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.common.block.ChestBlock;
 import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 
 import java.util.List;
@@ -42,7 +41,7 @@ import static net.minecraft.util.BlockRotation.CLOCKWISE_90;
 @SuppressWarnings("ConstantConditions")
 public final class ChestMutatorItem extends ChestModifierItem
 {
-    private static final EnumProperty<CursedChestType> TYPE = BaseChestBlock.TYPE;
+    private static final EnumProperty<CursedChestType> TYPE = ChestBlock.TYPE;
 
     public ChestMutatorItem(final Settings settings) { super(settings); }
 
@@ -71,7 +70,7 @@ public final class ChestMutatorItem extends ChestModifierItem
                                 final int sum = vec.getX() + vec.getY() + vec.getZ();
                                 if (sum == 1 || sum == -1)
                                 {
-                                    final CursedChestType mainChestType = BaseChestBlock.getChestType(mainState.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
+                                    final CursedChestType mainChestType = ChestBlock.getChestType(mainState.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
                                     world.setBlockState(mainBlockPos, mainState.with(TYPE, mainChestType));
                                     world.setBlockState(pos, world.getBlockState(pos).with(TYPE, mainChestType.getOpposite()));
                                     tag.remove("pos");
@@ -110,7 +109,7 @@ public final class ChestMutatorItem extends ChestModifierItem
                 }
                 break;
             case ROTATE:
-                switch (mainState.get(BaseChestBlock.TYPE))
+                switch (mainState.get(ChestBlock.TYPE))
                 {
                     case SINGLE:
                         if (!world.isClient) { world.setBlockState(mainBlockPos, mainState.rotate(CLOCKWISE_90)); }
@@ -149,18 +148,18 @@ public final class ChestMutatorItem extends ChestModifierItem
         final World world = context.getWorld();
         final BlockPos mainPos = context.getBlockPos();
         final MutatorMode mode = getMode(stack);
-        if (state.getBlock() instanceof ChestBlock)
+        if (state.getBlock() instanceof net.minecraft.block.ChestBlock)
         {
             if (mode == MutatorMode.MERGE)
             {
                 final CompoundTag tag = stack.getOrCreateTag();
                 if (tag.contains("pos"))
                 {
-                    if (state.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
+                    if (state.get(net.minecraft.block.ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
                     {
                         final BlockPos otherPos = NbtHelper.toBlockPos(tag.getCompound("pos"));
                         final BlockState realOtherState = world.getBlockState(otherPos);
-                        if (realOtherState.getBlock() == state.getBlock() && realOtherState.get(Properties.HORIZONTAL_FACING) == state.get(Properties.HORIZONTAL_FACING) && realOtherState.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
+                        if (realOtherState.getBlock() == state.getBlock() && realOtherState.get(Properties.HORIZONTAL_FACING) == state.get(Properties.HORIZONTAL_FACING) && realOtherState.get(net.minecraft.block.ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
                         {
                             final BlockPos vec = otherPos.subtract(mainPos);
                             final int sum = vec.getX() + vec.getY() + vec.getZ();
@@ -170,7 +169,7 @@ public final class ChestMutatorItem extends ChestModifierItem
                                 {
                                     final Registries.TierData entry = Registries.CHEST.get(Const.id("wood_chest"));
                                     final BlockState defState = Registry.BLOCK.get(entry.getBlockId()).getDefaultState().with(Properties.HORIZONTAL_FACING, state.get(Properties.HORIZONTAL_FACING));
-                                    final CursedChestType mainChestType = BaseChestBlock.getChestType(state.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
+                                    final CursedChestType mainChestType = ChestBlock.getChestType(state.get(Properties.HORIZONTAL_FACING), Direction.fromVector(vec.getX(), vec.getY(), vec.getZ()));
                                     // todo: refactor into method.
                                     BlockEntity blockEntity = world.getBlockEntity(mainPos);
                                     DefaultedList<ItemStack> invData = DefaultedList.ofSize(entry.getSlotCount(), ItemStack.EMPTY);
@@ -200,7 +199,7 @@ public final class ChestMutatorItem extends ChestModifierItem
                 }
                 else
                 {
-                    if (state.get(ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
+                    if (state.get(net.minecraft.block.ChestBlock.CHEST_TYPE) == ChestType.SINGLE)
                     {
                         tag.put("pos", NbtHelper.fromBlockPos(mainPos));
                         player.sendMessage(new TranslatableText("tooltip.expandedstorage.chest_mutator.merge_start"), true);
@@ -213,19 +212,19 @@ public final class ChestMutatorItem extends ChestModifierItem
             else if (mode == MutatorMode.UNMERGE)
             {
                 final BlockPos otherPos;
-                switch (state.get(ChestBlock.CHEST_TYPE))
+                switch (state.get(net.minecraft.block.ChestBlock.CHEST_TYPE))
                 {
-                    case LEFT: otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYClockwise());
+                    case LEFT: otherPos = mainPos.offset(state.get(net.minecraft.block.ChestBlock.FACING).rotateYClockwise());
                         break;
-                    case RIGHT: otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYCounterclockwise());
+                    case RIGHT: otherPos = mainPos.offset(state.get(net.minecraft.block.ChestBlock.FACING).rotateYCounterclockwise());
                         break;
                     default:
                         return ActionResult.FAIL;
                 }
                 if (!world.isClient)
                 {
-                    world.setBlockState(mainPos, state.with(ChestBlock.CHEST_TYPE, ChestType.SINGLE));
-                    world.setBlockState(otherPos, world.getBlockState(otherPos).with(ChestBlock.CHEST_TYPE, ChestType.SINGLE));
+                    world.setBlockState(mainPos, state.with(net.minecraft.block.ChestBlock.CHEST_TYPE, ChestType.SINGLE));
+                    world.setBlockState(otherPos, world.getBlockState(otherPos).with(net.minecraft.block.ChestBlock.CHEST_TYPE, ChestType.SINGLE));
                 }
                 player.getItemCooldownManager().set(this, 5);
                 return ActionResult.SUCCESS;
@@ -233,11 +232,11 @@ public final class ChestMutatorItem extends ChestModifierItem
             else if (mode == MutatorMode.ROTATE)
             {
                 final BlockPos otherPos;
-                switch (state.get(ChestBlock.CHEST_TYPE))
+                switch (state.get(net.minecraft.block.ChestBlock.CHEST_TYPE))
                 {
-                    case LEFT: otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYClockwise());
+                    case LEFT: otherPos = mainPos.offset(state.get(net.minecraft.block.ChestBlock.FACING).rotateYClockwise());
                         break;
-                    case RIGHT: otherPos = mainPos.offset(state.get(ChestBlock.FACING).rotateYCounterclockwise());
+                    case RIGHT: otherPos = mainPos.offset(state.get(net.minecraft.block.ChestBlock.FACING).rotateYCounterclockwise());
                         break;
                     case SINGLE:
                         if (!world.isClient) { world.setBlockState(mainPos, state.rotate(CLOCKWISE_90)); }
@@ -249,8 +248,8 @@ public final class ChestMutatorItem extends ChestModifierItem
                 if (!world.isClient)
                 {
                     final BlockState otherState = world.getBlockState(otherPos);
-                    world.setBlockState(mainPos, state.rotate(CLOCKWISE_180).with(ChestBlock.CHEST_TYPE, state.get(ChestBlock.CHEST_TYPE).getOpposite()));
-                    world.setBlockState(otherPos, otherState.rotate(CLOCKWISE_180).with(ChestBlock.CHEST_TYPE, otherState.get(ChestBlock.CHEST_TYPE).getOpposite()));
+                    world.setBlockState(mainPos, state.rotate(CLOCKWISE_180).with(net.minecraft.block.ChestBlock.CHEST_TYPE, state.get(net.minecraft.block.ChestBlock.CHEST_TYPE).getOpposite()));
+                    world.setBlockState(otherPos, otherState.rotate(CLOCKWISE_180).with(net.minecraft.block.ChestBlock.CHEST_TYPE, otherState.get(net.minecraft.block.ChestBlock.CHEST_TYPE).getOpposite()));
                 }
                 player.getItemCooldownManager().set(this, 5);
                 return ActionResult.SUCCESS;

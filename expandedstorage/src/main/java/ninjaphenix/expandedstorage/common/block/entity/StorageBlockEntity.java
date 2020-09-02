@@ -1,7 +1,5 @@
 package ninjaphenix.expandedstorage.common.block.entity;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
@@ -16,7 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 
-public abstract class AbstractChestBlockEntity extends LootableContainerBlockEntity implements SidedInventory
+public abstract class StorageBlockEntity extends LootableContainerBlockEntity implements SidedInventory
 {
     protected Text defaultContainerName;
     protected int inventorySize;
@@ -24,18 +22,15 @@ public abstract class AbstractChestBlockEntity extends LootableContainerBlockEnt
     protected int[] SLOTS;
     protected Identifier block;
 
-    protected AbstractChestBlockEntity(final BlockEntityType type, final Identifier block)
+    protected StorageBlockEntity(final BlockEntityType<?> blockEntityType, final Identifier block)
     {
-        super(type);
+        super(blockEntityType);
         if (block != null) { initialize(block); }
     }
 
     protected abstract void initialize(final Identifier block);
 
     public Identifier getBlock() { return block; }
-
-    @Environment(EnvType.CLIENT)
-    public void setBlock(final Identifier block) { this.block = block; }
 
     @Override
     protected DefaultedList<ItemStack> getInvStackList() { return inventory; }
