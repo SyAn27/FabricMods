@@ -102,14 +102,13 @@ public final class ExpandedStorage implements ModInitializer
         declaredContainerTypes.add(containerTypeId);
     }
 
-    public Pair<Identifier, Text> getScreenSettings(final Identifier containerTypeId)
-    {
-        return screenMiscSettings.get(containerTypeId);
-    }
+    public Pair<Identifier, Text> getScreenSettings(final Identifier containerTypeId) { return screenMiscSettings.get(containerTypeId); }
 
     private void onReceivePlayerPreference(final PacketContext context, final PacketByteBuf buffer)
     {
-        context.getTaskQueue().submitAndJoin(() -> INSTANCE.setPlayerPreference(context.getPlayer(), buffer.readIdentifier()));
+        final PlayerEntity player = context.getPlayer();
+        final Identifier containerType = buffer.readIdentifier();
+        context.getTaskQueue().submit(() -> INSTANCE.setPlayerPreference(player, containerType));
     }
 
     private void onReceiveOpenSelectScreenPacket(final PacketContext context, final PacketByteBuf rOpenBuffer)
@@ -119,14 +118,14 @@ public final class ExpandedStorage implements ModInitializer
         if (currentScreenHandler instanceof AbstractScreenHandler)
         {
             final AbstractScreenHandler<?> screenHandler = (AbstractScreenHandler<?>) currentScreenHandler;
-            openSelectScreen(sender, (type) -> sender.openHandledScreen(new ExtendedScreenHandlerFactory()
+            context.getTaskQueue().submit(() -> openSelectScreen(sender, (type) -> sender.openHandledScreen(new ExtendedScreenHandlerFactory()
             {
                 @Nullable
                 @Override
                 public ScreenHandler createMenu(final int syncId, final PlayerInventory inv, final PlayerEntity player)
                 {
                     return INSTANCE.getScreenHandler(syncId, screenHandler.ORIGIN, screenHandler.getInventory(),
-                                                                      player, screenHandler.getDisplayName());
+                                                     player, screenHandler.getDisplayName());
                 }
 
                 @Override
@@ -137,9 +136,9 @@ public final class ExpandedStorage implements ModInitializer
                 {
                     wOpenBuffer.writeBlockPos(screenHandler.ORIGIN).writeInt(screenHandler.getInventory().size());
                 }
-            }));
+            })));
         }
-        else { INSTANCE.openSelectScreen(sender, null); }
+        else { context.getTaskQueue().submit(() -> INSTANCE.openSelectScreen(sender, null)); }
     }
 
     public ScreenHandler getScreenHandler(final int syncId, final BlockPos pos, final Inventory inventory, final PlayerEntity player,
