@@ -2,18 +2,19 @@
   "type": "crafting_shaped",
   "pattern": [
     "III",
-    "ICI",
+    "IBI",
     "III"
   ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "C": {
+    "B": {
       "tag": "c:wooden_barrels"
     }
   },
   "result": {
     "item": "expandedstorage:iron_barrel"
-  }
+  },
+  "group": "expandedstorage:iron_barrel"
 }

@@ -2,19 +2,19 @@
   "type": "crafting_shaped",
   "pattern": [
     "III",
-    "ICI",
+    "IBI",
     "III"
   ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "C": {
-      "item": "expandedstorage:old_wood_chest"
+    "B": {
+      "tag": "blockus:barrels"
     }
   },
   "result": {
-    "item": "expandedstorage:old_iron_chest"
+    "item": "expandedstorage:iron_barrel"
   },
-  "group": "expandedstorage:old_iron_chest"
+  "group": "expandedstorage:iron_barrel"
 }
