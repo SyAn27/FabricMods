@@ -13,6 +13,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import ninjaphenix.expandedstorage.common.block.BarrelBlock;
 import ninjaphenix.expandedstorage.common.block.ChestBlock;
 import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 
@@ -30,7 +31,11 @@ public abstract class ChestModifierItem extends Item
         final World world = context.getWorld();
         final BlockPos pos = context.getBlockPos();
         final BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof ChestBlock)
+        if(state.getBlock() instanceof BarrelBlock)
+        {
+            return useModifierOnBarrel(context, state, pos);
+        }
+        else if (state.getBlock() instanceof ChestBlock)
         {
             ActionResult result = ActionResult.FAIL;
             final CursedChestType type = state.get(TYPE);
@@ -69,6 +74,11 @@ public abstract class ChestModifierItem extends Item
             return result;
         }
         else { return useModifierOnBlock(context, state); }
+    }
+
+    protected ActionResult useModifierOnBarrel(final ItemUsageContext context, final BlockState state, final BlockPos pos)
+    {
+        return ActionResult.PASS;
     }
 
     @Override

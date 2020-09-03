@@ -34,6 +34,7 @@ import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 
 import java.util.List;
 
+import static net.minecraft.state.property.Properties.FACING;
 import static net.minecraft.state.property.Properties.WATERLOGGED;
 import static net.minecraft.util.BlockRotation.CLOCKWISE_180;
 import static net.minecraft.util.BlockRotation.CLOCKWISE_90;
@@ -44,6 +45,22 @@ public final class ChestMutatorItem extends ChestModifierItem
     private static final EnumProperty<CursedChestType> TYPE = ChestBlock.TYPE;
 
     public ChestMutatorItem(final Settings settings) { super(settings); }
+
+    @Override
+    protected ActionResult useModifierOnBarrel(final ItemUsageContext context, final BlockState state, final BlockPos pos)
+    {
+        final PlayerEntity player = context.getPlayer();
+        final World world = context.getWorld();
+        final ItemStack stack = context.getStack();
+        if (getMode(stack) == MutatorMode.ROTATE)
+        {
+            final Direction direction = state.get(FACING);
+            if (!world.isClient) { world.setBlockState(pos, state.with(FACING, Direction.byId(direction.getId() + 1))); }
+            player.getItemCooldownManager().set(this, 5);
+            return ActionResult.SUCCESS;
+        }
+        return ActionResult.FAIL;
+    }
 
     @Override
     protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos,

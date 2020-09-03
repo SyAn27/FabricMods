@@ -14,6 +14,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.BlockView;
+import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.block.entity.BarrelBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -60,7 +61,11 @@ public class BarrelBlock extends StorageBlock
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(final BlockView world) { return new BarrelBlockEntity(Registry.BLOCK.getId(this)); }
+    public BlockEntity createBlockEntity(final BlockView world)
+    {
+        final String path = Registry.BLOCK.getId(this).getPath();
+        return new BarrelBlockEntity(Const.id(path.replace("_barrel", "_chest")));
+    }
 
     @Override
     protected Identifier getOpenStat() { return Stats.OPEN_BARREL; }
