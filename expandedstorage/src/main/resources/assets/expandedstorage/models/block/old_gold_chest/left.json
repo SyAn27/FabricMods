@@ -1,10 +1,6 @@
 {
-  "parent": "expandedstorage:block/old_chest/other",
+  "parent": "expandedstorage:block/old_chest/left",
   "textures": {
-    "top": "expandedstorage:block/old_gold_chest/chest_top_left",
-    "front": "expandedstorage:block/old_gold_chest/chest_front_left",
-    "back": "expandedstorage:block/old_gold_chest/chest_back_left",
-    "left": "expandedstorage:block/old_gold_chest/chest_side",
-    "right": "expandedstorage:block/old_gold_chest/chest_side"
+    "atlas": "expandedstorage:block/old_gold_chest"
   }
 }

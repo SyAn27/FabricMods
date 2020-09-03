@@ -1,8 +1,6 @@
 {
-  "parent": "expandedstorage:block/old_chest/single",
+  "parent": "expandedstorage:block/old_chest/top",
   "textures": {
-    "top": "expandedstorage:block/old_iron_chest/chest_top",
-    "front": "expandedstorage:block/old_iron_chest/chest_front_top",
-    "side": "expandedstorage:block/old_iron_chest/chest_side_top"
+    "atlas": "expandedstorage:block/old_iron_chest"
   }
 }
