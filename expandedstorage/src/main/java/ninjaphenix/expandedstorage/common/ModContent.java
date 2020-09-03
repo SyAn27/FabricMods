@@ -2,10 +2,13 @@ package ninjaphenix.expandedstorage.common;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -91,6 +94,9 @@ public final class ModContent
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
         Registry.register(Registries.BARREL, id, new Registries.TierData(rows * 9, new TranslatableText("container.expandedstorage." + name), id));
+        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
+        }
         return block;
     }
 
