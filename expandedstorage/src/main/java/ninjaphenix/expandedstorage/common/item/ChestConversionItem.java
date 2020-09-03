@@ -29,9 +29,11 @@ import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.common.block.BarrelBlock;
+import ninjaphenix.expandedstorage.common.block.ChestBlock;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
-import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.common.block.StorageBlock;
+import ninjaphenix.expandedstorage.common.block.entity.StorageBlockEntity;
 import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 
 public final class ChestConversionItem extends ChestModifierItem
@@ -53,8 +55,8 @@ public final class ChestConversionItem extends ChestModifierItem
     @SuppressWarnings({"ConstantConditions", "unchecked"})
     private void upgradeCursedChest(final World world, final BlockPos pos, final BlockState state)
     {
-        AbstractChestBlockEntity blockEntity = (AbstractChestBlockEntity) world.getBlockEntity(pos);
-        final SimpleRegistry<Registries.TierData> registry = ((BaseChestBlock<AbstractChestBlockEntity>) state.getBlock()).getDataRegistry();
+        StorageBlockEntity blockEntity = (StorageBlockEntity) world.getBlockEntity(pos);
+        final SimpleRegistry<Registries.TierData> registry = ((StorageBlock) state.getBlock()).getDataRegistry();
         final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(registry.get(TO).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
@@ -65,7 +67,7 @@ public final class ChestConversionItem extends ChestModifierItem
         }
         world.setBlockState(pos, newState.with(Properties.HORIZONTAL_FACING, state.get(Properties.HORIZONTAL_FACING))
                 .with(CursedChestBlock.TYPE, state.get(CursedChestBlock.TYPE)));
-        blockEntity = (AbstractChestBlockEntity) world.getBlockEntity(pos);
+        blockEntity = (StorageBlockEntity) world.getBlockEntity(pos);
         blockEntity.fromTag(world.getBlockState(pos), Inventories.toTag(blockEntity.toTag(new CompoundTag()), inventoryData));
     }
 
@@ -91,7 +93,7 @@ public final class ChestConversionItem extends ChestModifierItem
     {
         final World world = context.getWorld();
         final PlayerEntity player = context.getPlayer();
-        final BaseChestBlock<AbstractChestBlockEntity> chestBlock = (BaseChestBlock<AbstractChestBlockEntity>) mainState.getBlock();
+        final StorageBlock chestBlock = (StorageBlock) mainState.getBlock();
         if (Registry.BLOCK.getId(chestBlock) != chestBlock.getDataRegistry().get(FROM).getBlockId()) { return ActionResult.FAIL; }
         final ItemStack handStack = player.getStackInHand(context.getHand());
         if (otherBlockPos == null)
@@ -114,6 +116,41 @@ public final class ChestConversionItem extends ChestModifierItem
             return ActionResult.SUCCESS;
         }
         return ActionResult.FAIL;
+    }
+
+    @Override
+    protected ActionResult useModifierOnBarrel(final ItemUsageContext context, final BlockState state, final BlockPos pos)
+    {
+        final BarrelBlock block = (BarrelBlock) state.getBlock();
+        if (Registry.BLOCK.getId(block) != block.getDataRegistry().get(FROM).getBlockId()) { return ActionResult.FAIL; }
+        upgradeBarrel(context.getWorld(), pos, state);
+        context.getPlayer().getStackInHand(context.getHand()).decrement(1);
+        return ActionResult.SUCCESS;
+    }
+
+    private void upgradeVanillaBarrel(final World world, final BlockPos pos, final BlockState state)
+    {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.BARREL.get(FROM).getSlotCount(), ItemStack.EMPTY);
+        Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
+        world.removeBlockEntity(pos);
+        final BlockState newState = Registry.BLOCK.get(Registries.BARREL.get(TO).getBlockId()).getDefaultState();
+        world.setBlockState(pos, newState.with(Properties.FACING, state.get(Properties.FACING)));
+        blockEntity = world.getBlockEntity(pos);
+        blockEntity.fromTag(world.getBlockState(pos), Inventories.toTag(blockEntity.toTag(new CompoundTag()), inventoryData));
+    }
+
+    private void upgradeBarrel(final World world, final BlockPos pos, final BlockState state)
+    {
+        StorageBlockEntity blockEntity = (StorageBlockEntity) world.getBlockEntity(pos);
+        final SimpleRegistry<Registries.TierData> registry = ((StorageBlock) state.getBlock()).getDataRegistry();
+        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(registry.get(TO).getSlotCount(), ItemStack.EMPTY);
+        Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
+        world.removeBlockEntity(pos);
+        BlockState newState = Registry.BLOCK.get(registry.get(TO).getBlockId()).getDefaultState();
+        world.setBlockState(pos, newState.with(Properties.FACING, state.get(Properties.FACING)));
+        blockEntity = (StorageBlockEntity) world.getBlockEntity(pos);
+        blockEntity.fromTag(world.getBlockState(pos), Inventories.toTag(blockEntity.toTag(new CompoundTag()), inventoryData));
     }
 
     @Override
@@ -157,6 +194,19 @@ public final class ChestConversionItem extends ChestModifierItem
                 }
                 return ActionResult.SUCCESS;
             }
+        }
+        else if(state.getBlock() == Blocks.BARREL && FROM.equals(Const.id("wood_chest")))
+        {
+            final World world = context.getWorld();
+            final BlockPos mainPos = context.getBlockPos();
+            final PlayerEntity player = context.getPlayer();
+            final ItemStack handStack = player.getStackInHand(context.getHand());
+            if (!world.isClient)
+            {
+                upgradeVanillaBarrel(world, mainPos, state);
+                handStack.decrement(1);
+            }
+            return ActionResult.SUCCESS;
         }
         return ActionResult.FAIL;
     }

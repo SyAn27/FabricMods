@@ -2,20 +2,24 @@ package ninjaphenix.expandedstorage.common;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.item.*;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import ninjaphenix.chainmail.api.ChainmailCommonApi;
+import ninjaphenix.expandedstorage.common.block.BarrelBlock;
+import ninjaphenix.expandedstorage.common.block.entity.BarrelBlockEntity;
 import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.common.block.entity.OldChestBlockEntity;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
@@ -33,6 +37,7 @@ public final class ModContent
     public static final ScreenHandlerType<ScrollableScreenHandler> SCROLLABLE_HANDLER_TYPE;
     public static final BlockEntityType<CursedChestBlockEntity> CHEST;
     public static final BlockEntityType<OldChestBlockEntity> OLD_CHEST;
+    public static final BlockEntityType<BarrelBlockEntity> BARREL;
     public static final CursedChestBlock DIAMOND_CHEST;
 
     static
@@ -64,6 +69,14 @@ public final class ModContent
                                                                      old(Blocks.DIAMOND_BLOCK, "diamond_chest", 12, group),
                                                                      old(Blocks.OBSIDIAN, "obsidian_chest", 12, group),
                                                                      old(Blocks.NETHERITE_BLOCK, "netherite_chest", 15, group)).build(null));
+        Registry.register(Registries.BARREL, Const.id("wood_chest"), new Registries.TierData(27, null, null));
+        BARREL = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("barrel"),
+                                   BlockEntityType.Builder.create(() -> new BarrelBlockEntity(null),
+                                                                  barrel(1, 5, 6, "iron", 6, group),
+                                                                  barrel(2, 3, 6, "gold", 9, group),
+                                                                  barrel(2, 5, 6, "diamond", 12, group),
+                                                                  barrel(3, 50, 1200, "obsidian", 12, group),
+                                                                  barrel(4, 50, 1200, "netherite", 15, group)).build(null));
         registerConversionPath(group,
                                new Pair<>(Const.id("wood_chest"), "wood"),
                                new Pair<>(Const.id("iron_chest"), "iron"),
@@ -74,12 +87,27 @@ public final class ModContent
         Registry.register(Registry.ITEM, Const.id("chest_mutator"), new ChestMutatorItem(new Item.Settings().maxCount(1).group(group)));
     }
 
+    private static BarrelBlock barrel(final int miningLevel, final float hardness, final float resistance, final String name, final int rows, final ItemGroup group)
+    {
+        final FabricBlockSettings settings = FabricBlockSettings.copyOf(Blocks.BARREL).strength(hardness, resistance)
+                .requiresTool().breakByTool(FabricToolTags.AXES, miningLevel);
+        final BarrelBlock block = new BarrelBlock(settings);
+        final Identifier id = Const.id(name+"_barrel");
+        Registry.register(Registry.BLOCK, id, block);
+        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
+        Registry.register(Registries.BARREL, Const.id(name+"_chest"), new Registries.TierData(rows * 9, new TranslatableText("container.expandedstorage." + name+"_barrel"), id));
+        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
+        }
+        return block;
+    }
+
     @SuppressWarnings("EmptyMethod")
     public static void register() { }
 
     private static OldChestBlock old(final Block material, final String name, final int rows, final ItemGroup group)
     {
-        final OldChestBlock block = new OldChestBlock(Block.Settings.copy(material));
+        final OldChestBlock block = new OldChestBlock(FabricBlockSettings.copyOf(material));
         final Identifier id = Const.id("old_" + name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
@@ -90,7 +118,7 @@ public final class ModContent
 
     private static CursedChestBlock chest(final Block material, final String name, final int rows, final ItemGroup group)
     {
-        final CursedChestBlock block = new CursedChestBlock(Block.Settings.copy(material));
+        final CursedChestBlock block = new CursedChestBlock(FabricBlockSettings.copyOf(material));
         final Identifier id = Const.id(name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));

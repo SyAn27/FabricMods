@@ -16,6 +16,8 @@ public final class Registries
     public static final SimpleRegistry<ChestTierData> CHEST = new SimpleRegistry<>(CHEST_KEY, Lifecycle.experimental());
     private static final RegistryKey<Registry<TierData>> OLD_CHEST_KEY = RegistryKey.of(Const.id("root"), Const.id("old_chest"));
     public static final SimpleRegistry<TierData> OLD_CHEST = new SimpleRegistry<>(OLD_CHEST_KEY, Lifecycle.experimental());
+    private static final RegistryKey<Registry<TierData>> BARREL_KEY = RegistryKey.of(Const.id("root"), Const.id("barrel"));
+    public static final SimpleRegistry<TierData> BARREL = new SimpleRegistry<>(BARREL_KEY, Lifecycle.experimental());
 
     public static class ChestTierData extends TierData
     {

@@ -1,6 +1,7 @@
 package ninjaphenix.expandedstorage.common.block.entity;
 
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
 import net.fabricmc.api.EnvironmentInterfaces;
 import net.minecraft.block.Block;
@@ -8,6 +9,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.DoubleBlockProperties;
 import net.minecraft.client.block.ChestAnimationProgress;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -20,34 +23,42 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.common.Registries;
-import ninjaphenix.expandedstorage.common.block.BaseChestBlock;
+import ninjaphenix.expandedstorage.common.block.ChestBlock;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.common.ModContent;
 import ninjaphenix.expandedstorage.common.inventory.AbstractScreenHandler;
 import ninjaphenix.expandedstorage.common.inventory.DoubleSidedInventory;
 
 @EnvironmentInterfaces({@EnvironmentInterface(value = EnvType.CLIENT, itf = ChestAnimationProgress.class)})
-public final class CursedChestBlockEntity extends AbstractChestBlockEntity implements ChestAnimationProgress, Tickable
+public final class CursedChestBlockEntity extends StorageBlockEntity implements ChestAnimationProgress, Tickable
 {
     private float animationAngle, lastAnimationAngle;
     private int viewerCount, ticksOpen;
 
     public CursedChestBlockEntity(final Identifier block) { super(ModContent.CHEST, block); }
 
+    public static int countViewers(final World world, final SidedInventory instance, final int x, final int y, final int z)
+    {
+        return world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6)).stream()
+                .filter(player -> player.currentScreenHandler instanceof AbstractScreenHandler)
+                .map(player -> ((AbstractScreenHandler<?>) player.currentScreenHandler).getInventory())
+                .filter(inventory -> inventory == instance ||
+                        inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance))
+                .mapToInt(inv -> 1).sum();
+    }
+
     private static int tickViewerCount(final World world, final CursedChestBlockEntity instance, final int ticksOpen, final int x,
                                        final int y, final int z, final int viewCount)
     {
         if (!world.isClient && viewCount != 0 && (ticksOpen + x + y + z) % 200 == 0)
         {
-            return world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6)).stream()
-                    .filter(player -> player.currentScreenHandler instanceof AbstractScreenHandler)
-                    .map(player -> ((AbstractScreenHandler<?>) player.currentScreenHandler).getInventory())
-                    .filter(inventory -> inventory == instance ||
-                            inventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) inventory).isPart(instance))
-                    .mapToInt(inv -> 1).sum();
+            return countViewers(world, instance, x, y, z);
         }
         return viewCount;
     }
+
+    @Environment(EnvType.CLIENT)
+    public void setBlock(final Identifier block) { this.block = block; }
 
     @Override
     @SuppressWarnings({"ConstantConditions"})
@@ -93,12 +104,12 @@ public final class CursedChestBlockEntity extends AbstractChestBlockEntity imple
     private void playSound(final SoundEvent soundEvent)
     {
         final BlockState state = getCachedState();
-        final DoubleBlockProperties.Type mergeType = BaseChestBlock.getMergeType(state);
+        final DoubleBlockProperties.Type mergeType = ChestBlock.getMergeType(state);
         final Vec3d soundPos;
         if (mergeType == DoubleBlockProperties.Type.SINGLE) { soundPos = Vec3d.ofCenter(pos); }
         else if (mergeType == DoubleBlockProperties.Type.FIRST)
         {
-            soundPos = Vec3d.ofCenter(pos).add(Vec3d.of(BaseChestBlock.getDirectionToAttached(state).getVector()).multiply(0.5D));
+            soundPos = Vec3d.ofCenter(pos).add(Vec3d.of(ChestBlock.getDirectionToAttached(state).getVector()).multiply(0.5D));
         }
         else { return; }
         world.playSound(null, soundPos.getX(), soundPos.getY(), soundPos.getZ(), soundEvent, SoundCategory.BLOCKS, 0.5F,

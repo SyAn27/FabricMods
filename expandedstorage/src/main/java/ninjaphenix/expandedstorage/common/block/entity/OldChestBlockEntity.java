@@ -6,7 +6,7 @@ import net.minecraft.util.collection.DefaultedList;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.ModContent;
 
-public final class OldChestBlockEntity extends AbstractChestBlockEntity
+public final class OldChestBlockEntity extends StorageBlockEntity
 {
     public OldChestBlockEntity(final Identifier block) { super(ModContent.OLD_CHEST, block); }
 

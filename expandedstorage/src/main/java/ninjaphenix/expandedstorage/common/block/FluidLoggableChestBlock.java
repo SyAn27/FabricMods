@@ -11,14 +11,14 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
-import ninjaphenix.expandedstorage.common.block.entity.AbstractChestBlockEntity;
+import ninjaphenix.expandedstorage.common.block.entity.StorageBlockEntity;
 
 import java.util.function.Supplier;
 
 import static net.minecraft.state.property.Properties.WATERLOGGED;
 
 @SuppressWarnings("deprecation")
-public abstract class FluidLoggableChestBlock<T extends AbstractChestBlockEntity> extends BaseChestBlock<T> implements Waterloggable
+public abstract class FluidLoggableChestBlock<T extends StorageBlockEntity> extends ChestBlock<T> implements Waterloggable
 {
     protected FluidLoggableChestBlock(final Settings settings, final Supplier<BlockEntityType<T>> blockEntityType)
     {

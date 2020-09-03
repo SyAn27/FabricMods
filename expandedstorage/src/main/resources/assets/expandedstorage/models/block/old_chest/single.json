@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube",
+  "parent": "block/block",
   "display": {
     "firstperson_righthand": {
       "rotation": [
@@ -20,12 +20,21 @@
     }
   },
   "textures": {
-    "particle": "#front",
-    "down": "#top",
-    "up": "#top",
-    "north": "#front",
-    "east": "#side",
-    "south": "#side",
-    "west": "#side"
-  }
+    "particle": "#atlas",
+    "all": "#atlas"
+  },
+  "elements": [
+        {
+           "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+              "down":  { "uv": [4,0, 0,4], "texture": "#all", "cullface": "down" },
+                "up":    { "uv": [4,4, 0,0], "texture": "#all", "cullface": "up" },
+                "north": { "uv": [0,8, 4,12], "texture": "#all", "cullface": "north" },
+                "south": { "uv": [0,4, 4,8], "texture": "#all", "cullface": "south" },
+                "west":  { "uv": [0,4, 4,8], "texture": "#all", "cullface": "west" },
+                "east":  { "uv": [0,4, 4,8], "texture": "#all", "cullface": "east" }
+            }
+        }
+    ]
 }
