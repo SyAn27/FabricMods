@@ -137,7 +137,7 @@ public abstract class StorageBlock extends BlockWithEntity implements InventoryP
             {
                 ExpandedStorage.INSTANCE.openContainer(player, factory);
                 player.incrementStat(getOpenStat());
-                PiglinBrain.onGuardedBlockBroken(player, true);
+                PiglinBrain.onGuardedBlockInteracted(player, true);
             }
             return ActionResult.CONSUME;
         }
