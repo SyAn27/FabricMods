@@ -51,52 +51,62 @@ public final class ModContent
             @Environment(EnvType.CLIENT)
             public ItemStack createIcon() { return new ItemStack(DIAMOND_CHEST); }
         });
+
+        final Identifier WOOD = Const.id("wood");
+        final Identifier IRON = Const.id("iron");
+        final Identifier GOLD = Const.id("gold");
+        final Identifier DIAMOND = Const.id("diamond");
+        final Identifier OBSIDIAN = Const.id("obsidian");
+        final Identifier NETHERITE = Const.id("netherite");
+
         CHEST = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("cursed_chest"),
                                   BlockEntityType.Builder.create(() -> new CursedChestBlockEntity(null),
-                                                                 chest(Blocks.OAK_PLANKS, "wood_chest", 3, group),
-                                                                 chest(Blocks.PUMPKIN, "pumpkin_chest", 3, group),
-                                                                 chest(Blocks.OAK_PLANKS, "christmas_chest", 3, group),
-                                                                 chest(Blocks.IRON_BLOCK, "iron_chest", 6, group),
-                                                                 chest(Blocks.GOLD_BLOCK, "gold_chest", 9, group),
-                                                                 DIAMOND_CHEST = chest(Blocks.DIAMOND_BLOCK, "diamond_chest", 12, group),
-                                                                 chest(Blocks.OBSIDIAN, "obsidian_chest", 12, group),
-                                                                 chest(Blocks.NETHERITE_BLOCK, "netherite_chest", 15, group)).build(null));
+                                                                 chest(Blocks.OAK_PLANKS, Const.id("wood_chest"), WOOD, 3, group),
+                                                                 chest(Blocks.PUMPKIN, Const.id("pumpkin_chest"), Const.id("pumpkin"), 3, group),
+                                                                 chest(Blocks.OAK_PLANKS, Const.id("christmas_chest"), Const.id("christmas"), 3, group),
+                                                                 chest(Blocks.IRON_BLOCK, Const.id("iron_chest"), IRON, 6, group),
+                                                                 chest(Blocks.GOLD_BLOCK, Const.id("gold_chest"), GOLD, 9, group),
+                                                                 DIAMOND_CHEST = chest(Blocks.DIAMOND_BLOCK, Const.id("diamond_chest"), DIAMOND, 12, group),
+                                                                 chest(Blocks.OBSIDIAN, Const.id("obsidian_chest"), OBSIDIAN, 12, group),
+                                                                 chest(Blocks.NETHERITE_BLOCK, Const.id("netherite_chest"), NETHERITE, 15, group)).build(null));
         OLD_CHEST = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("old_cursed_chest"),
                                       BlockEntityType.Builder.create(() -> new OldChestBlockEntity(null),
-                                                                     old(Blocks.OAK_PLANKS, "wood_chest", 3, group),
-                                                                     old(Blocks.IRON_BLOCK, "iron_chest", 6, group),
-                                                                     old(Blocks.GOLD_BLOCK, "gold_chest", 9, group),
-                                                                     old(Blocks.DIAMOND_BLOCK, "diamond_chest", 12, group),
-                                                                     old(Blocks.OBSIDIAN, "obsidian_chest", 12, group),
-                                                                     old(Blocks.NETHERITE_BLOCK, "netherite_chest", 15, group)).build(null));
-        Registry.register(Registries.BARREL, Const.id("wood_chest"), new Registries.TierData(27, null, null));
+                                                                     old(Blocks.OAK_PLANKS, "wood_chest", WOOD, 3, group),
+                                                                     old(Blocks.IRON_BLOCK, "iron_chest", IRON, 6, group),
+                                                                     old(Blocks.GOLD_BLOCK, "gold_chest", GOLD, 9, group),
+                                                                     old(Blocks.DIAMOND_BLOCK, "diamond_chest", DIAMOND, 12, group),
+                                                                     old(Blocks.OBSIDIAN, "obsidian_chest", OBSIDIAN, 12, group),
+                                                                     old(Blocks.NETHERITE_BLOCK, "netherite_chest", NETHERITE, 15, group))
+                                              .build(null));
         BARREL = Registry.register(Registry.BLOCK_ENTITY_TYPE, Const.id("barrel"),
                                    BlockEntityType.Builder.create(() -> new BarrelBlockEntity(null),
-                                                                  barrel(1, 5, 6, "iron", 6, group),
-                                                                  barrel(2, 3, 6, "gold", 9, group),
-                                                                  barrel(2, 5, 6, "diamond", 12, group),
-                                                                  barrel(3, 50, 1200, "obsidian", 12, group),
-                                                                  barrel(4, 50, 1200, "netherite", 15, group)).build(null));
+                                                                  barrel(1, 5, 6, Const.id("iron_barrel"), IRON, 6, group),
+                                                                  barrel(2, 3, 6, Const.id("gold_barrel"), GOLD, 9, group),
+                                                                  barrel(2, 5, 6, Const.id("diamond_barrel"), DIAMOND, 12, group),
+                                                                  barrel(3, 50, 1200, Const.id("obsidian_barrel"), OBSIDIAN, 12, group),
+                                                                  barrel(4, 50, 1200, Const.id("netherite_barrel"), NETHERITE, 15, group)).build(null));
         registerConversionPath(group,
-                               new Pair<>(Const.id("wood_chest"), "wood"),
-                               new Pair<>(Const.id("iron_chest"), "iron"),
-                               new Pair<>(Const.id("gold_chest"), "gold"),
-                               new Pair<>(Const.id("diamond_chest"), "diamond"),
-                               new Pair<>(Const.id("obsidian_chest"), "obsidian"),
-                               new Pair<>(Const.id("netherite_chest"), "netherite"));
+                               new Pair<>(WOOD, "wood"),
+                               new Pair<>(IRON, "iron"),
+                               new Pair<>(GOLD, "gold"),
+                               new Pair<>(DIAMOND, "diamond"),
+                               new Pair<>(OBSIDIAN, "obsidian"),
+                               new Pair<>(NETHERITE, "netherite"));
         Registry.register(Registry.ITEM, Const.id("chest_mutator"), new ChestMutatorItem(new Item.Settings().maxCount(1).group(group)));
     }
 
-    private static BarrelBlock barrel(final int miningLevel, final float hardness, final float resistance, final String name, final int rows, final ItemGroup group)
+    private static BarrelBlock barrel(final int miningLevel, final float hardness, final float resistance, final Identifier registryId,
+                                      final Identifier genericTier, final int rows, final ItemGroup group)
     {
         final FabricBlockSettings settings = FabricBlockSettings.copyOf(Blocks.BARREL).strength(hardness, resistance)
                 .requiresTool().breakByTool(FabricToolTags.AXES, miningLevel);
-        final BarrelBlock block = new BarrelBlock(settings);
-        final Identifier id = Const.id(name+"_barrel");
-        Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
-        Registry.register(Registries.BARREL, Const.id(name+"_chest"), new Registries.TierData(rows * 9, new TranslatableText("container.expandedstorage." + name+"_barrel"), id));
-        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+        final BarrelBlock block = new BarrelBlock(settings, genericTier);
+        Registry.register(Registry.BLOCK, registryId, block);
+        Registry.register(Registry.ITEM, registryId, new BlockItem(block, new Item.Settings().group(group)));
+        Registry.register(Registries.BARREL, genericTier, new Registries.TierData(
+                rows * 9, new TranslatableText("container.expandedstorage." + registryId.getPath()), registryId));
+        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+        {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped());
         }
         return block;
@@ -105,26 +115,27 @@ public final class ModContent
     @SuppressWarnings("EmptyMethod")
     public static void register() { }
 
-    private static OldChestBlock old(final Block material, final String name, final int rows, final ItemGroup group)
+    private static OldChestBlock old(final Block material, final String name, final Identifier genericTier, final int rows,
+                                     final ItemGroup group)
     {
-        final OldChestBlock block = new OldChestBlock(FabricBlockSettings.copyOf(material));
-        final Identifier id = Const.id("old_" + name);
-        Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
-        Registry.register(Registries.OLD_CHEST, Const.id(name), new Registries.TierData(
-                rows * 9, new TranslatableText("container.expandedstorage." + name), id));
+        final Identifier registryId = Const.id("old_" + name);
+        final OldChestBlock block = new OldChestBlock(FabricBlockSettings.copyOf(material), genericTier);
+        Registry.register(Registry.BLOCK, registryId, block);
+        Registry.register(Registry.ITEM, registryId, new BlockItem(block, new Item.Settings().group(group)));
+        Registry.register(Registries.OLD_CHEST, genericTier, new Registries.TierData(
+                rows * 9, new TranslatableText("container.expandedstorage." + name), registryId));
         return block;
     }
 
-    private static CursedChestBlock chest(final Block material, final String name, final int rows, final ItemGroup group)
+    private static CursedChestBlock chest(final Block material, final Identifier registryId, final Identifier genericTier, final int rows,
+                                          final ItemGroup group)
     {
-        final CursedChestBlock block = new CursedChestBlock(FabricBlockSettings.copyOf(material));
-        final Identifier id = Const.id(name);
-        Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(group)));
-        Registry.register(Registries.CHEST, id, new Registries.ChestTierData(
-                rows * 9, new TranslatableText("container.expandedstorage." + name), id,
-                type -> Const.id(String.format("entity/%s/%s", name, type.asString()))));
+        final CursedChestBlock block = new CursedChestBlock(FabricBlockSettings.copyOf(material), genericTier);
+        Registry.register(Registry.BLOCK, registryId, block);
+        Registry.register(Registry.ITEM, registryId, new BlockItem(block, new Item.Settings().group(group)));
+        Registry.register(Registries.CHEST, genericTier, new Registries.ChestTierData(
+                rows * 9, new TranslatableText("container.expandedstorage." + registryId.getPath()), registryId,
+                type -> Const.id(String.format("entity/%s/%s", registryId.getPath(), type.asString()))));
         return block;
     }
 

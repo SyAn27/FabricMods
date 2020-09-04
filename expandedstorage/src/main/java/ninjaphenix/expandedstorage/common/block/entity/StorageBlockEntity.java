@@ -13,6 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
+import ninjaphenix.expandedstorage.common.block.StorageBlock;
 
 public abstract class StorageBlockEntity extends LootableContainerBlockEntity implements SidedInventory
 {
@@ -29,8 +30,6 @@ public abstract class StorageBlockEntity extends LootableContainerBlockEntity im
     }
 
     protected abstract void initialize(final Identifier block);
-
-    public Identifier getBlock() { return block; }
 
     @Override
     protected DefaultedList<ItemStack> getInvStackList() { return inventory; }
@@ -63,7 +62,7 @@ public abstract class StorageBlockEntity extends LootableContainerBlockEntity im
     public void fromTag(final BlockState state, final CompoundTag tag)
     {
         super.fromTag(state, tag);
-        initialize(new Identifier(tag.getString("type")));
+        initialize(((StorageBlock) state.getBlock()).TIER_ID);
         if (!deserializeLootTable(tag)) { Inventories.fromTag(tag, inventory); }
     }
 
@@ -71,16 +70,7 @@ public abstract class StorageBlockEntity extends LootableContainerBlockEntity im
     public CompoundTag toTag(final CompoundTag tag)
     {
         super.toTag(tag);
-        tag.putString("type", block.toString());
         if (!serializeLootTable(tag)) { Inventories.toTag(tag, inventory); }
         return tag;
-    }
-
-    @Override
-    public CompoundTag toInitialChunkDataTag()
-    {
-        final CompoundTag initialChunkTag = super.toTag(new CompoundTag());
-        initialChunkTag.putString("type", block.toString());
-        return initialChunkTag;
     }
 }

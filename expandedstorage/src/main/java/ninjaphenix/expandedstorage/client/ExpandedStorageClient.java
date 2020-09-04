@@ -15,6 +15,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.item.BlockItem;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -29,6 +30,7 @@ import ninjaphenix.expandedstorage.client.screen.SingleScreen;
 import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.ExpandedStorage;
 import ninjaphenix.expandedstorage.common.Registries;
+import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.common.block.entity.CursedChestBlockEntity;
 import ninjaphenix.expandedstorage.common.misc.CursedChestType;
 import ninjaphenix.expandedstorage.common.ModContent;
@@ -74,7 +76,8 @@ public final class ExpandedStorageClient implements ClientModInitializer
         ModContent.CHEST.blocks.forEach(block -> BuiltinItemRendererRegistry.INSTANCE.register(
                 block.asItem(), (stack, matrices, vertexConsumers, light, overlay) ->
                 {
-                    CURSED_CHEST_RENDER_ENTITY.setBlock(Registry.ITEM.getId(stack.getItem()));
+                    CursedChestBlock renderBlock = (CursedChestBlock) ((BlockItem) stack.getItem()).getBlock();
+                    CURSED_CHEST_RENDER_ENTITY.setBlock(renderBlock.TIER_ID);
                     BlockEntityRenderDispatcher.INSTANCE.renderEntity(CURSED_CHEST_RENDER_ENTITY, matrices, vertexConsumers, light, overlay);
                 }));
         ScreenRegistry.register(SCROLLABLE_HANDLER_TYPE, ScrollableScreen::new);

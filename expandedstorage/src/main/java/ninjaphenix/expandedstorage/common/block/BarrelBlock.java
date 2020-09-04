@@ -11,10 +11,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.BlockView;
-import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.block.entity.BarrelBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -24,9 +22,9 @@ import static net.minecraft.state.property.Properties.OPEN;
 
 public class BarrelBlock extends StorageBlock
 {
-    public BarrelBlock(final Settings builder)
+    public BarrelBlock(final Settings builder, final Identifier tierId)
     {
-        super(builder);
+        super(builder, tierId);
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(OPEN, false));
     }
 
@@ -61,11 +59,7 @@ public class BarrelBlock extends StorageBlock
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(final BlockView world)
-    {
-        final String path = Registry.BLOCK.getId(this).getPath();
-        return new BarrelBlockEntity(Const.id(path.replace("_barrel", "_chest")));
-    }
+    public BlockEntity createBlockEntity(final BlockView world) { return new BarrelBlockEntity(TIER_ID); }
 
     @Override
     protected Identifier getOpenStat() { return Stats.OPEN_BARREL; }

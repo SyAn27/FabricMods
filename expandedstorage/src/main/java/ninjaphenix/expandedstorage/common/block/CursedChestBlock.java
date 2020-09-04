@@ -4,9 +4,9 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -29,14 +29,14 @@ public final class CursedChestBlock extends FluidLoggableChestBlock<CursedChestB
             createCuboidShape(0, 0, 1, 15, 14, 15)
     };
 
-    public CursedChestBlock(final Settings settings)
+    public CursedChestBlock(final Settings settings, final Identifier tierId)
     {
-        super(settings, () -> ModContent.CHEST);
+        super(settings, tierId, () -> ModContent.CHEST);
         setDefaultState(getDefaultState().with(HORIZONTAL_FACING, Direction.SOUTH));
     }
 
     @Override
-    public BlockEntity createBlockEntity(final BlockView view) { return new CursedChestBlockEntity(Registry.BLOCK.getId(this)); }
+    public BlockEntity createBlockEntity(final BlockView view) { return new CursedChestBlockEntity(TIER_ID); }
 
     @Override
     @SuppressWarnings("deprecation")

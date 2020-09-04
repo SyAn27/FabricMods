@@ -37,6 +37,8 @@ public final class CursedChestBlockEntity extends StorageBlockEntity implements 
 
     public CursedChestBlockEntity(final Identifier block) { super(ModContent.CHEST, block); }
 
+    public Identifier getBlock() { return block; }
+
     public static int countViewers(final World world, final SidedInventory instance, final int x, final int y, final int z)
     {
         return world.getNonSpectatingEntities(PlayerEntity.class, new Box(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6)).stream()

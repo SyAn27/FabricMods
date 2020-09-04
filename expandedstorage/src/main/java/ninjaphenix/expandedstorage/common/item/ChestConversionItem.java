@@ -30,7 +30,6 @@ import net.minecraft.world.World;
 import ninjaphenix.expandedstorage.common.Const;
 import ninjaphenix.expandedstorage.common.Registries;
 import ninjaphenix.expandedstorage.common.block.BarrelBlock;
-import ninjaphenix.expandedstorage.common.block.ChestBlock;
 import ninjaphenix.expandedstorage.common.block.CursedChestBlock;
 import ninjaphenix.expandedstorage.common.block.StorageBlock;
 import ninjaphenix.expandedstorage.common.block.entity.StorageBlockEntity;
@@ -75,7 +74,7 @@ public final class ChestConversionItem extends ChestModifierItem
     private void upgradeChest(final World world, final BlockPos pos, final BlockState state)
     {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.CHEST.get(FROM).getSlotCount(), ItemStack.EMPTY);
+        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.CHEST.get(TO).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
         final BlockState newState = Registry.BLOCK.get(Registries.CHEST.get(TO).getBlockId()).getDefaultState();
@@ -88,13 +87,13 @@ public final class ChestConversionItem extends ChestModifierItem
 
     @Override
     @SuppressWarnings({"ConstantConditions", "unchecked"})
-    protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos, final BlockState otherState,
-                                                   final BlockPos otherBlockPos)
+    protected ActionResult useModifierOnChestBlock(final ItemUsageContext context, final BlockState mainState, final BlockPos mainBlockPos,
+                                                   final BlockState otherState, final BlockPos otherBlockPos)
     {
         final World world = context.getWorld();
         final PlayerEntity player = context.getPlayer();
         final StorageBlock chestBlock = (StorageBlock) mainState.getBlock();
-        if (Registry.BLOCK.getId(chestBlock) != chestBlock.getDataRegistry().get(FROM).getBlockId()) { return ActionResult.FAIL; }
+        if (chestBlock.TIER_ID != FROM) { return ActionResult.FAIL; }
         final ItemStack handStack = player.getStackInHand(context.getHand());
         if (otherBlockPos == null)
         {
@@ -122,7 +121,7 @@ public final class ChestConversionItem extends ChestModifierItem
     protected ActionResult useModifierOnBarrel(final ItemUsageContext context, final BlockState state, final BlockPos pos)
     {
         final BarrelBlock block = (BarrelBlock) state.getBlock();
-        if (Registry.BLOCK.getId(block) != block.getDataRegistry().get(FROM).getBlockId()) { return ActionResult.FAIL; }
+        if (block.TIER_ID != FROM) { return ActionResult.FAIL; }
         upgradeBarrel(context.getWorld(), pos, state);
         context.getPlayer().getStackInHand(context.getHand()).decrement(1);
         return ActionResult.SUCCESS;
@@ -131,7 +130,7 @@ public final class ChestConversionItem extends ChestModifierItem
     private void upgradeVanillaBarrel(final World world, final BlockPos pos, final BlockState state)
     {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.BARREL.get(FROM).getSlotCount(), ItemStack.EMPTY);
+        final DefaultedList<ItemStack> inventoryData = DefaultedList.ofSize(Registries.BARREL.get(TO).getSlotCount(), ItemStack.EMPTY);
         Inventories.fromTag(blockEntity.toTag(new CompoundTag()), inventoryData);
         world.removeBlockEntity(pos);
         final BlockState newState = Registry.BLOCK.get(Registries.BARREL.get(TO).getBlockId()).getDefaultState();
@@ -159,7 +158,7 @@ public final class ChestConversionItem extends ChestModifierItem
     {
         // todo: fix this for other mods.
         //  Perhaps allow mods to define equivalents or use tags somehow e.g. Tag<Identifier>("expandedstorage:wood")
-        if (state.getBlock() == Blocks.CHEST && FROM.equals(Const.id("wood_chest")))
+        if (state.getBlock() == Blocks.CHEST && FROM.equals(Const.id("wood")))
         {
             final World world = context.getWorld();
             final BlockPos mainPos = context.getBlockPos();
@@ -195,7 +194,7 @@ public final class ChestConversionItem extends ChestModifierItem
                 return ActionResult.SUCCESS;
             }
         }
-        else if(state.getBlock() == Blocks.BARREL && FROM.equals(Const.id("wood_chest")))
+        else if(state.getBlock() == Blocks.BARREL && FROM.equals(Const.id("wood")))
         {
             final World world = context.getWorld();
             final BlockPos mainPos = context.getBlockPos();

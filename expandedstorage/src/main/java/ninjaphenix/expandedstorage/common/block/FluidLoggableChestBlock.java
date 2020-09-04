@@ -8,6 +8,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
@@ -20,9 +21,10 @@ import static net.minecraft.state.property.Properties.WATERLOGGED;
 @SuppressWarnings("deprecation")
 public abstract class FluidLoggableChestBlock<T extends StorageBlockEntity> extends ChestBlock<T> implements Waterloggable
 {
-    protected FluidLoggableChestBlock(final Settings settings, final Supplier<BlockEntityType<T>> blockEntityType)
+    protected FluidLoggableChestBlock(final Settings settings, final Identifier tierId,
+                                      final Supplier<BlockEntityType<T>> blockEntityType)
     {
-        super(settings, blockEntityType);
+        super(settings, tierId, blockEntityType);
         setDefaultState(getDefaultState().with(WATERLOGGED, false));
     }
 

@@ -34,7 +34,13 @@ import ninjaphenix.expandedstorage.common.block.entity.StorageBlockEntity;
 
 public abstract class StorageBlock extends BlockWithEntity implements InventoryProvider
 {
-    protected StorageBlock(final Settings settings) { super(settings); }
+    public final Identifier TIER_ID;
+
+    protected StorageBlock(final Settings settings, final Identifier tierId)
+    {
+        super(settings);
+        TIER_ID = tierId;
+    }
 
     protected abstract Identifier getOpenStat();
 

@@ -6,7 +6,6 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
@@ -16,14 +15,10 @@ import ninjaphenix.expandedstorage.common.ModContent;
 
 public final class OldChestBlock extends ChestBlock<OldChestBlockEntity>
 {
-    public OldChestBlock(final Settings settings) { super(settings, () -> ModContent.OLD_CHEST); }
+    public OldChestBlock(final Settings settings, final Identifier tierId) { super(settings, tierId, () -> ModContent.OLD_CHEST); }
 
     @Override
-    public BlockEntity createBlockEntity(final BlockView view)
-    {
-        final Identifier blockId = Registry.BLOCK.getId(this);
-        return new OldChestBlockEntity(new Identifier(blockId.getNamespace(), blockId.getPath().substring(4)));
-    }
+    public BlockEntity createBlockEntity(final BlockView view) { return new OldChestBlockEntity(TIER_ID); }
 
     @Override
     protected boolean isBlocked(final WorldAccess world, final BlockPos pos)

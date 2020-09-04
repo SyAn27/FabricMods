@@ -123,9 +123,9 @@ public abstract class ChestBlock<T extends StorageBlockEntity> extends StorageBl
                 public Optional<ExtendedScreenHandlerFactory> getFallback() { return Optional.empty(); }
             };
 
-    protected ChestBlock(final Settings builder, final Supplier<BlockEntityType<T>> blockEntityType)
+    protected ChestBlock(final Settings builder, final Identifier tierId, final Supplier<BlockEntityType<T>> blockEntityType)
     {
-        super(builder);
+        super(builder, tierId);
         this.blockEntityType = blockEntityType;
         setDefaultState(getDefaultState().with(HORIZONTAL_FACING, Direction.NORTH).with(TYPE, CursedChestType.SINGLE));
     }
