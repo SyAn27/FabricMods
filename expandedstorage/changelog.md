@@ -1,1 +1,3 @@
-- Fix potential issues in networking code.
+- Reworked internal registries
+- Chest modifiers should now be able to be used on any blockus barrel and trapped chests too.
+- Reworked blockus support to use optional tags.

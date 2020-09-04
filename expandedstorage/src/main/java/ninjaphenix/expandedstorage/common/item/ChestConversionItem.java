@@ -2,9 +2,7 @@ package ninjaphenix.expandedstorage.common.item;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.client.item.TooltipContext;
@@ -156,9 +154,8 @@ public final class ChestConversionItem extends ChestModifierItem
     @SuppressWarnings("ConstantConditions")
     protected ActionResult useModifierOnBlock(final ItemUsageContext context, final BlockState state)
     {
-        // todo: fix this for other mods.
-        //  Perhaps allow mods to define equivalents or use tags somehow e.g. Tag<Identifier>("expandedstorage:wood")
-        if (state.getBlock() == Blocks.CHEST && FROM.equals(Const.id("wood")))
+        final Block block = state.getBlock();
+        if (block instanceof ChestBlock && block.isIn(Const.WOODEN_CHESTS) && FROM.equals(Const.id("wood")))
         {
             final World world = context.getWorld();
             final BlockPos mainPos = context.getBlockPos();
@@ -194,7 +191,7 @@ public final class ChestConversionItem extends ChestModifierItem
                 return ActionResult.SUCCESS;
             }
         }
-        else if(state.getBlock() == Blocks.BARREL && FROM.equals(Const.id("wood")))
+        else if(block instanceof net.minecraft.block.BarrelBlock && block.isIn(Const.WOODEN_BARRELS) && FROM.equals(Const.id("wood")))
         {
             final World world = context.getWorld();
             final BlockPos mainPos = context.getBlockPos();
